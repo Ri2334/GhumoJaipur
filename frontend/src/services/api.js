@@ -1,0 +1,132 @@
+import axios from "axios";
+
+// Create axios instance with base URL from environment
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+
+const apiClient = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem("ghumo_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Test API functions
+export const getTestData = async () => {
+  try {
+    const response = await apiClient.get("/test");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching test data:", error);
+    throw error;
+  }
+};
+
+export const postTestData = async (name) => {
+  try {
+    const response = await apiClient.post("/test", { name });
+    return response.data;
+  } catch (error) {
+    console.error("Error posting test data:", error);
+    throw error;
+  }
+};
+
+export const sendOtpApi = async (email, purpose = "signup") => {
+  const response = await apiClient.post("/auth/send-otp", { email, purpose });
+  return response.data;
+};
+
+export const verifyOtpApi = async (email, otp, purpose = "signup") => {
+  const response = await apiClient.post("/auth/verify-otp", { email, otp, purpose });
+  return response.data;
+};
+
+export const signupApi = async (payload) => {
+  const response = await apiClient.post("/auth/signup", payload);
+  return response.data;
+};
+
+export const loginApi = async (payload) => {
+  const response = await apiClient.post("/auth/login", payload);
+  return response.data;
+};
+
+export const forgotPasswordApi = async (email) => {
+  const response = await apiClient.post("/auth/forgot-password", { email });
+  return response.data;
+};
+
+export const resetPasswordApi = async (payload) => {
+  const response = await apiClient.post("/auth/reset-password", payload);
+  return response.data;
+};
+
+export const getPlacesApi = async (params = {}) => {
+  const response = await apiClient.get("/places", { params });
+  return response.data;
+};
+
+export const getPlaceByIdApi = async (id) => {
+  const response = await apiClient.get(`/places/${id}`);
+  return response.data;
+};
+
+export const createPlaceApi = async (payload) => {
+  const response = await apiClient.post("/places", payload);
+  return response.data;
+};
+
+export const updatePlaceApi = async (id, payload) => {
+  const response = await apiClient.put(`/places/${id}`, payload);
+  return response.data;
+};
+
+export const deletePlaceApi = async (id) => {
+  const response = await apiClient.delete(`/places/${id}`);
+  return response.data;
+};
+
+export const addPlaceReviewApi = async (id, payload) => {
+  const response = await apiClient.post(`/places/${id}/reviews`, payload);
+  return response.data;
+};
+
+export const getSavedTripsApi = async () => {
+  const response = await apiClient.get("/saved-trips");
+  return response.data;
+};
+
+export const saveTripApi = async (placeId) => {
+  const response = await apiClient.post("/saved-trips", { placeId });
+  return response.data;
+};
+
+export const deleteSavedTripApi = async (placeId) => {
+  const response = await apiClient.delete(`/saved-trips/${placeId}`);
+  return response.data;
+};
+
+export const getMetroStationsApi = async () => {
+  const response = await apiClient.get("/transport/stations");
+  return response.data;
+};
+
+export const getTouristLocationsApi = async () => {
+  const response = await apiClient.get("/transport/locations");
+  return response.data;
+};
+
+export const searchTransportApi = async (payload) => {
+  const response = await apiClient.post("/transport/search", payload);
+  return response.data;
+};
+
+export default apiClient;
