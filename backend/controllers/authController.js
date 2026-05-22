@@ -83,12 +83,27 @@ export const verifyOtp = async (req, res) => {
     }
 
     verifiedEmails.set(normalizedEmail, { purpose, verifiedAt: Date.now() });
-    return res.status(200).json({ success: true, message: "OTP verified successfully" });
-  } catch (error) {
+    return res.status(200).json({ success: true, user, token, message: "Logged in successfully" });
+    } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
-  }
-};
+    }
+    };
 
+    export const getMe = async (req, res) => {
+      try {
+        const user = await User.findById(req.user._id);
+        if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
+        let driverProfile = null;
+        if (user.role === 'driver') {
+          driverProfile = await Driver.findOne({ userId: user._id });
+        }
+
+        return res.status(200).json({ success: true, user, driverProfile });
+      } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+      }
+    };
 export const signup = async (req, res) => {
   try {
     const { fullName, email, mobile, password, otp, role = "user", vehicle, vehicleNumber, type = "cab" } = req.body;

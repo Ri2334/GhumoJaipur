@@ -113,6 +113,7 @@ export default function Navbar() {
                     <div className="px-4 py-3 border-b border-gray-50 mb-1">
                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Signed in as</p>
                        <p className="font-bold text-gray-900 truncate">{user.email}</p>
+                       <p className="text-[10px] font-bold text-amber-500 mt-1 uppercase tracking-tighter">Rating: ⭐ {user.rating?.toFixed(1) || '5.0'}</p>
                     </div>
                     <button
                       onClick={() => { navigate('/profile'); setOpen(false); }}

@@ -38,19 +38,23 @@ export const AuthProvider = ({ children }) => {
     else localStorage.removeItem("ghumo_token");
   }, [token]);
 
-  const normalizeUser = (payloadUser) => ({
-    id: payloadUser?.id,
+  const normalizeUser = (payloadUser, driverProfile = null) => ({
+    id: payloadUser?.id || payloadUser?._id,
     name: payloadUser?.name || payloadUser?.fullName,
     email: payloadUser?.email,
     mobile: payloadUser?.mobile,
     role: payloadUser?.role || "user",
+    rating: payloadUser?.rating || 5.0,
+    driverRating: driverProfile?.rating,
+    vehicle: driverProfile?.vehicle,
+    vehicleNumber: driverProfile?.vehicleNumber,
   });
 
   const login = async ({ email, password, remember }) => {
     setLoading(true);
     try {
       const res = await loginApi({ email, password, remember });
-      const nextUser = normalizeUser(res.user);
+      const nextUser = normalizeUser(res.user, res.driverProfile);
       setUser(nextUser);
       setToken(res.token || "");
       return { success: true, user: nextUser };
@@ -65,7 +69,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await signupApi(payload);
-      const nextUser = normalizeUser(res.user);
+      const nextUser = normalizeUser(res.user, res.driverProfile);
       setUser(nextUser);
       setToken(res.token || "");
       return { success: true, user: nextUser };
@@ -129,6 +133,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const refreshUser = async () => {
+    try {
+      const res = await apiClient.get("/auth/me");
+      if (res.data.success) {
+        const nextUser = normalizeUser(res.data.user, res.data.driverProfile);
+        setUser(nextUser);
+      }
+    } catch (error) {
+      console.error("Failed to refresh user data", error);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -144,6 +160,7 @@ export const AuthProvider = ({ children }) => {
         verifyOTP,
         forgotPassword,
         resetPassword,
+        refreshUser,
       }}
     >
       {children}

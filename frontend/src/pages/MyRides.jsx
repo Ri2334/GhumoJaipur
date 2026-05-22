@@ -90,9 +90,24 @@ export default function MyRides() {
                       <p className="text-gray-500 text-xs font-medium">{r.pickup} to {r.destination}</p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-black text-gray-900">₹{r.fare}</div>
-                    <div className={`text-[10px] font-bold uppercase ${r.status === 'completed' ? 'text-green-500' : 'text-red-400'}`}>{r.status}</div>
+                  <div className="flex flex-col items-end gap-2">
+                    <div className="text-right">
+                      <div className="font-black text-gray-900">₹{r.fare}</div>
+                      <div className={`text-[10px] font-bold uppercase ${r.status === 'completed' ? 'text-green-500' : 'text-red-400'}`}>{r.status}</div>
+                    </div>
+                    {r.status === 'completed' && !r.isRated && (
+                      <button 
+                        onClick={() => navigate(`/book/success/${r._id}`)}
+                        className="text-[10px] font-bold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-lg hover:bg-indigo-600 hover:text-white transition"
+                      >
+                        Rate Driver
+                      </button>
+                    )}
+                    {r.isRated && (
+                       <div className="text-[10px] font-bold text-amber-500 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-100 flex items-center gap-1">
+                         ⭐ {r.userRating}
+                       </div>
+                    )}
                   </div>
                 </div>
               ))}

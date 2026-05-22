@@ -12,7 +12,12 @@ export default function PlaceCard({ place }) {
   return (
     <div className="group overflow-hidden rounded-3xl border border-white/50 bg-white/80 backdrop-blur shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
       <div className="relative h-56 overflow-hidden">
-        <img src={image} alt={place.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+        <img 
+          src={image} 
+          alt={place.name} 
+          onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1200&q=80"; }}
+          className="h-full w-full object-cover transition duration-500 group-hover:scale-105" 
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
         <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-gray-800">
           {place.category}

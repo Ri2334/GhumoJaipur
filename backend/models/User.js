@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, select: false },
     emailVerified: { type: Boolean, default: false },
     role: { type: String, enum: ["user", "admin", "driver"], default: "user" },
+    rating: { type: Number, default: 5.0 },
   },
   { timestamps: true }
 );

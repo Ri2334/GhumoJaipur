@@ -20,3 +20,13 @@ export const getMyBookingsApi = async () => {
   const response = await apiClient.get('/bookings/my');
   return response.data;
 };
+
+export const cancelBookingApi = async (id) => {
+  const response = await apiClient.post(`/bookings/${id}/cancel`);
+  return response.data;
+};
+
+export const rateDriverApi = async (id, rating) => {
+  const response = await apiClient.post(`/bookings/${id}/rate-driver`, { rating });
+  return response.data;
+};

@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getBookingApi, confirmBookingApi } from '../services/bookingApi';
+import { getBookingApi, confirmBookingApi, cancelBookingApi, rateDriverApi } from '../services/bookingApi';
+import { AuthContext } from '../context/AuthContext';
 import DriverMap from '../components/DriverMap';
 import PaymentModal from '../components/PaymentModal';
 
 export default function BookingSuccess() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { refreshUser } = useContext(AuthContext);
   const [booking, setBooking] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
+  const [driverRating, setDriverRating] = useState(0);
+  const [rated, setRated] = useState(false);
 
   // Poll for status updates every 5 seconds
   useEffect(() => {
@@ -34,6 +38,29 @@ export default function BookingSuccess() {
       alert("Payment successful! Thank you for riding with us.");
     } catch (err) {
       alert("Payment confirmation failed");
+    }
+  };
+
+  const handleCancelRide = async () => {
+    if (!window.confirm("Are you sure you want to cancel? Your user rating will decrease by 0.1.")) return;
+    try {
+      const res = await cancelBookingApi(id);
+      await refreshUser();
+      alert(`Ride cancelled. Your rating has been updated.`);
+      navigate('/dashboard');
+    } catch (err) {
+      alert("Cancellation failed");
+    }
+  };
+
+  const handleRateDriver = async (score) => {
+    try {
+      await rateDriverApi(id, score);
+      setDriverRating(score);
+      setRated(true);
+      alert("Thank you for your feedback!");
+    } catch (err) {
+      alert("Failed to submit rating");
     }
   };
 
@@ -84,6 +111,29 @@ export default function BookingSuccess() {
                </div>
              )}
 
+             {booking.status === 'completed' && (
+               <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100 text-center">
+                 <h3 className="text-lg font-bold text-amber-900 mb-3">
+                   {booking.isRated ? "Your Feedback" : "Rate your Driver"}
+                 </h3>
+                 <div className="flex justify-center gap-2">
+                   {[1, 2, 3, 4, 5].map(star => (
+                     <button 
+                       key={star} 
+                       disabled={booking.isRated || rated}
+                       onClick={() => handleRateDriver(star)}
+                       className={`text-3xl transition ${(booking.userRating || driverRating) >= star ? 'scale-110' : 'opacity-30'}`}
+                     >
+                       {(booking.userRating || driverRating) >= star ? '⭐' : '☆'}
+                     </button>
+                   ))}
+                 </div>
+                 {booking.isRated && (
+                   <p className="text-xs font-bold text-amber-600 mt-3 uppercase tracking-widest">You rated this ride {booking.userRating} stars</p>
+                 )}
+               </div>
+             )}
+
              <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100/50">
                    <div className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Fare</div>
@@ -107,6 +157,14 @@ export default function BookingSuccess() {
              </div>
 
              <div className="pt-4 flex flex-wrap gap-3">
+                {['requested', 'accepted'].includes(booking.status) && (
+                  <button 
+                    onClick={handleCancelRide}
+                    className="flex-1 py-4 bg-white border-2 border-red-500 text-red-600 hover:bg-red-50 rounded-2xl font-bold transition"
+                  >
+                    Cancel Ride
+                  </button>
+                )}
                 {booking.status === 'completed' && booking.paymentStatus !== 'paid' && (
                   <button onClick={() => setShowPayment(true)} className="flex-1 py-4 bg-green-600 hover:bg-green-700 text-white rounded-2xl font-bold shadow-lg shadow-green-100 transition">Pay Now ₹{booking.fare}</button>
                 )}

@@ -114,7 +114,7 @@ export default function TransportSearch() {
     setError(null);
     try {
       const response = await searchTransportApi({ source, destination });
-      if (response && response.data) {
+      if (response && response.success) {
         setResult(response.data);
       } else {
         throw new Error("Invalid response from server");

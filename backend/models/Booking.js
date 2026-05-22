@@ -17,6 +17,8 @@ const bookingSchema = new mongoose.Schema(
     paymentStatus: { type: String, enum: ["pending", "paid"], default: "pending" },
     paymentRef: { type: String },
     etaMinutes: { type: Number },
+    isRated: { type: Boolean, default: false },
+    userRating: { type: Number },
     metadata: { type: Object },
     map: { type: Object },
   },

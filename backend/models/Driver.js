@@ -6,6 +6,7 @@ const driverSchema = new mongoose.Schema(
     vehicle: { type: String, required: true },
     vehicleNumber: { type: String, required: true },
     rating: { type: Number, default: 4.7 },
+    totalRatings: { type: Number, default: 1 },
     currentLocation: {
       latitude: { type: Number, default: 26.9124 },
       longitude: { type: Number, default: 75.7873 },
