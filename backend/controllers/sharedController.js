@@ -81,6 +81,15 @@ export const createSharedRide = async (req, res) => {
   try {
     const { sourceName, destinationName, sourceCoord, destCoord, totalFare, vehicleType } = req.body;
     if (!sourceName || !destinationName) return res.status(400).json({ success: false, message: 'Missing names' });
+
+    // If a driver is trying to create a ride, check verification
+    if (req.user.role === 'driver') {
+      const driver = await Driver.findOne({ userId: req.user._id });
+      if (!driver || !driver.isVerified) {
+        return res.status(403).json({ success: false, message: "Only verified drivers can post shared rides" });
+      }
+    }
+
     const ride = await SharedRide.create({ sourceName, destinationName, sourceCoord, destCoord, totalFare: totalFare || 100, vehicleType: vehicleType || 'auto', splitFare: totalFare || 100 });
     return res.status(201).json({ success: true, data: ride });
   } catch (err) {

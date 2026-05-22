@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import apiClient from '../services/api';
 
 export default function SharedRides(){
+  const { user } = useContext(AuthContext);
   const [matches, setMatches] = useState([]);
   const [coords, setCoords] = useState(null);
   const [destination, setDestination] = useState('Badi Chopar');
@@ -57,6 +59,11 @@ export default function SharedRides(){
   };
 
   const handleCreate = async () => {
+    if (user?.role === 'driver' && !user?.isVerified) {
+      alert('Your driver account must be verified before you can post rides.');
+      return;
+    }
+
     try{
       setCreating(true);
       const payload = { ...form, sourceCoord: coords || { lat: 26.92, lng: 75.8 }, destCoord: coords || { lat: 26.92, lng: 75.8 } };
@@ -64,7 +71,10 @@ export default function SharedRides(){
       setCreating(false);
       alert('Shared ride created');
       setMatches(prev => [res.data?.data || res.data, ...(Array.isArray(prev) ? prev : [])]);
-    }catch(e){ setCreating(false); alert('Failed to create'); }
+    }catch(e){ 
+      setCreating(false); 
+      alert(e.response?.data?.message || 'Failed to create'); 
+    }
   };
 
   return (

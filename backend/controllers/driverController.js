@@ -16,14 +16,22 @@ export const getMyDriverProfile = async (req, res) => {
 export const updateDriverProfile = async (req, res) => {
   try {
     const updates = req.body;
-    const driver = await Driver.findOneAndUpdate(
-      { userId: req.user._id },
-      updates,
-      { new: true, runValidators: true }
-    );
+    const driver = await Driver.findOne({ userId: req.user._id });
     if (!driver) {
       return res.status(404).json({ success: false, message: "Driver profile not found" });
     }
+
+    // Prevent unverified drivers from going Online
+    if (updates.availability === 'Available' && !driver.isVerified) {
+      return res.status(403).json({ 
+        success: false, 
+        message: "Access Denied: Your profile must be verified by an admin before you can go online." 
+      });
+    }
+
+    Object.assign(driver, updates);
+    await driver.save();
+
     return res.status(200).json({ success: true, data: driver });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -74,6 +82,11 @@ export const getRideRequests = async (req, res) => {
     const driver = await Driver.findOne({ userId: req.user._id });
     if (!driver) return res.status(404).json({ success: false, message: "Driver not found" });
 
+    // Restrict access to unverified drivers
+    if (!driver.isVerified) {
+      return res.status(403).json({ success: false, message: "Verification Required" });
+    }
+
     // Find requested or accepted/started bookings for this driver
     const bookings = await Booking.find({ 
       driver: driver._id, 
@@ -89,6 +102,12 @@ export const getRideRequests = async (req, res) => {
 export const acceptRide = async (req, res) => {
   try {
     const { bookingId } = req.body;
+
+    const driver = await Driver.findOne({ userId: req.user._id });
+    if (!driver || !driver.isVerified) {
+      return res.status(403).json({ success: false, message: "Only verified drivers can accept rides" });
+    }
+
     const booking = await Booking.findById(bookingId);
     if (!booking) return res.status(404).json({ success: false, message: "Booking not found" });
     

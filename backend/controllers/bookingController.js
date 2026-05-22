@@ -12,6 +12,14 @@ export const createBooking = async (req, res) => {
     const etaMinutes = Math.max(3, Math.round(Math.random() * 10));
     const rideOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
+    // Verification check for the driver
+    if (driverId) {
+      const driver = await Driver.findById(driverId);
+      if (!driver || !driver.isVerified) {
+        return res.status(400).json({ success: false, message: "Selected driver is not verified or available." });
+      }
+    }
+
     // try to find coordinates for pickup/destination from TouristLocation
     let map = {};
     let destinationCoords = null;

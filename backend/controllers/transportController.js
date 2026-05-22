@@ -270,12 +270,14 @@ export const searchTransport = async (req, res) => {
     const availableCabs = await Driver.find({ 
       type: "cab", 
       availability: "Available",
+      isVerified: true,
       "currentLocation.areaName": { $regex: new RegExp(sourceArea, "i") }
     }).populate('userId', 'fullName mobile');
 
     const availableAutos = await Driver.find({ 
       type: "auto", 
       availability: "Available",
+      isVerified: true,
       "currentLocation.areaName": { $regex: new RegExp(sourceArea, "i") }
     }).populate('userId', 'fullName mobile');
 

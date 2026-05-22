@@ -122,7 +122,23 @@ export default function DriverDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 py-10">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mb-8 rounded-3xl bg-white p-8 shadow-xl">
+        {!driverInfo.isVerified && (
+          <div className="mb-8 rounded-3xl bg-red-50 border-2 border-red-100 p-8 shadow-xl text-center">
+            <div className="text-4xl mb-4">🛡️</div>
+            <h2 className="text-2xl font-black text-red-900">Verification Required</h2>
+            <p className="text-red-700 font-medium mt-2">
+              Your account is not yet verified. You must complete your profile and wait for admin approval before you can go online or accept rides.
+            </p>
+            <button 
+              onClick={() => window.location.href = '/profile'}
+              className="mt-6 bg-red-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-red-700 transition shadow-lg shadow-red-100"
+            >
+              Complete Profile
+            </button>
+          </div>
+        )}
+
+        <div className={`mb-8 rounded-3xl bg-white p-8 shadow-xl ${!driverInfo.isVerified ? 'opacity-50 pointer-events-none' : ''}`}>
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-black text-gray-900">Welcome, {user?.name}</h1>
@@ -185,7 +201,7 @@ export default function DriverDashboard() {
           </div>
 
           <div className="lg:col-span-2">
-            <div className="rounded-3xl bg-white p-6 shadow-xl min-h-[500px]">
+            <div className={`rounded-3xl bg-white p-6 shadow-xl min-h-[500px] ${!driverInfo.isVerified ? 'opacity-50 pointer-events-none' : ''}`}>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-black text-gray-900">Active Requests</h2>
                 <button onClick={fetchRideRequests} className="text-sm text-indigo-600 font-bold hover:underline">Refresh</button>
