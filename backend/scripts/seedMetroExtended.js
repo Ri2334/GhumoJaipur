@@ -15,7 +15,8 @@ const stations = [
   { name: 'Railway Station', line: 'Pink Line', area: 'Station Road', sequence: 6, latitude: 26.918, longitude: 75.789 },
   { name: 'Sindhi Camp', line: 'Pink Line', area: 'Sindhi Camp', sequence: 7, latitude: 26.919, longitude: 75.795 },
   { name: 'Chandpole', line: 'Pink Line', area: 'Old City', sequence: 8, latitude: 26.923, longitude: 75.810 },
-  { name: 'Badi Chopar', line: 'Pink Line', area: 'Old City', sequence: 9, latitude: 26.924, longitude: 75.823 },
+  { name: 'Chhoti Chaupar', line: 'Pink Line', area: 'Old City', sequence: 9, latitude: 26.924, longitude: 75.817 },
+  { name: 'Badi Chaupar', line: 'Pink Line', area: 'Old City', sequence: 10, latitude: 26.924, longitude: 75.823 },
 ];
 
 const run = async () => {

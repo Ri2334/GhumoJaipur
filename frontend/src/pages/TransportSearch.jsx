@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { getTouristLocationsApi, searchTransportApi, default as apiClient } from "../services/api";
+import { getPlacesApi, getMetroStationsApi, getTouristLocationsApi, searchTransportApi, default as apiClient } from "../services/api";
 import TransportCard from "../components/TransportCard";
 import RouteTimeline from "../components/RouteTimeline";
 
@@ -10,16 +10,27 @@ export default function TransportSearch() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
-  const [locationOptions, setLocationOptions] = useState([]);
+  const [placeOptions, setPlaceOptions] = useState([]);
+  const [metroStationOptions, setMetroStationOptions] = useState([]);
+  const [touristLocationOptions, setTouristLocationOptions] = useState([]);
   const [suggestionsVisible, setSuggestionsVisible] = useState(false);
+  const [activeField, setActiveField] = useState("source");
 
   useEffect(() => {
     const loadLocations = async () => {
       try {
-        const response = await getTouristLocationsApi();
-        setLocationOptions(response.data || []);
+        const [placesResponse, metroResponse, touristResponse] = await Promise.all([
+          getPlacesApi({ sort: "rating" }),
+          getMetroStationsApi(),
+          getTouristLocationsApi(),
+        ]);
+        setPlaceOptions(placesResponse.data || []);
+        setMetroStationOptions(metroResponse.data || []);
+        setTouristLocationOptions(touristResponse.data || []);
       } catch {
-        setLocationOptions([]);
+        setPlaceOptions([]);
+        setMetroStationOptions([]);
+        setTouristLocationOptions([]);
       }
     };
 
@@ -27,19 +38,31 @@ export default function TransportSearch() {
   }, []);
 
   const suggestions = useMemo(() => {
-    const sourceQuery = source.trim().toLowerCase();
-    const destinationQuery = destination.trim().toLowerCase();
-    return locationOptions
-      .filter((location) => {
-        const name = location.name.toLowerCase();
-        const area = location.area.toLowerCase();
-        return (
-          !sourceQuery || name.includes(sourceQuery) || area.includes(sourceQuery) ||
-          !destinationQuery || name.includes(destinationQuery) || area.includes(destinationQuery)
-        );
+    const query = (activeField === "destination" ? destination : source).trim().toLowerCase();
+    const combined = [
+      ...placeOptions.map((place) => ({ id: `place-${place._id}`, name: place.name, subtitle: place.location || place.category || "Famous place", kind: "place" })),
+      ...metroStationOptions.map((station) => ({ id: `metro-${station._id}`, name: station.name, subtitle: `${station.line || "Pink Line"} metro`, kind: "metro" })),
+      ...touristLocationOptions.map((location) => ({ id: `tourist-${location._id}`, name: location.name, subtitle: location.nearestStation ? `Near ${location.nearestStation}` : location.category || "Transit", kind: "tourist" })),
+    ];
+
+    const seen = new Set();
+    return combined
+      .map((item) => {
+        const name = item.name.toLowerCase();
+        const subtitle = item.subtitle.toLowerCase();
+        const exactMatch = query && name === query ? 4 : 0;
+        const startsWithMatch = query && name.startsWith(query) ? 3 : 0;
+        const includesMatch = query && (name.includes(query) || subtitle.includes(query)) ? 2 : 0;
+        return { ...item, score: exactMatch + startsWithMatch + includesMatch };
       })
-      .slice(0, 6);
-  }, [locationOptions, source, destination]);
+      .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name))
+      .filter((item) => {
+        if (seen.has(item.name.toLowerCase())) return false;
+        seen.add(item.name.toLowerCase());
+        return true;
+      })
+      .slice(0, 12);
+  }, [activeField, destination, metroStationOptions, placeOptions, source, touristLocationOptions]);
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -90,15 +113,27 @@ export default function TransportSearch() {
           <p className="mt-3 max-w-2xl text-gray-600">Search a source and destination to see realistic fares, travel times, metro routing and recommendation badges.</p>
 
           <form onSubmit={handleSearch} className="mt-6 grid gap-3 lg:grid-cols-[1.1fr_1.1fr_0.7fr]">
-            <input value={source} onChange={(e) => setSource(e.target.value)} onFocus={() => setSuggestionsVisible(true)} placeholder="Source e.g. Jaipur Railway Station" className="rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm outline-none focus:border-blue-500" />
-            <input value={destination} onChange={(e) => setDestination(e.target.value)} onFocus={() => setSuggestionsVisible(true)} placeholder="Destination e.g. Badi Chopar" className="rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm outline-none focus:border-blue-500" />
+            <input value={source} onChange={(e) => setSource(e.target.value)} onFocus={() => { setSuggestionsVisible(true); setActiveField("source"); }} placeholder="Source e.g. Jaipur Railway Station" className="rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm outline-none focus:border-blue-500" />
+            <input value={destination} onChange={(e) => setDestination(e.target.value)} onFocus={() => { setSuggestionsVisible(true); setActiveField("destination"); }} placeholder="Destination e.g. Badi Chopar" className="rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm outline-none focus:border-blue-500" />
             <button type="submit" className="rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 font-semibold text-white">Find route</button>
           </form>
 
           {suggestionsVisible && suggestions.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
               {suggestions.map((location) => (
-                <button key={location._id} type="button" onClick={() => { setSource(location.name); setDestination(location.nearestStation || destination); }} className="rounded-full bg-blue-50 px-3 py-2 text-sm text-blue-700 transition hover:bg-blue-100">
+                <button
+                  key={location.id}
+                  type="button"
+                  onClick={() => {
+                    if (activeField === "destination") {
+                      setDestination(location.name);
+                    } else {
+                      setSource(location.name);
+                    }
+                  }}
+                  className="rounded-full bg-blue-50 px-3 py-2 text-sm text-blue-700 transition hover:bg-blue-100"
+                  title={location.subtitle}
+                >
                   {location.name}
                 </button>
               ))}

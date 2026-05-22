@@ -28,34 +28,74 @@ const stationLookup = {
   "rajasthan railway station": "Railway Station",
   "jaipur railway station": "Railway Station",
   railway: "Railway Station",
-  "badi chopar": "Badi Chopar",
-  "badi choupad": "Badi Chopar",
-  chandi: "Chandpole",
-  chandpole: "Chandpole",
+  mansarovar: "Mansarovar",
+  "new aatish market": "New Aatish Market",
+  "new atish market": "New Aatish Market",
+  "vivek vihar": "Vivek Vihar",
+  "shyam nagar": "Shyam Nagar",
+  "ram nagar": "Ram Nagar",
   "civil lines": "Civil Lines",
   "sindhi camp": "Sindhi Camp",
-  "ram nagar": "Ram Nagar",
+  chandpole: "Chandpole",
+  "badi chopar": "Badi Chaupar",
+  "choti chaupar": "Chhoti Chaupar",
+  "chhoti chaupar": "Chhoti Chaupar",
+  "choti chopar": "Chhoti Chaupar",
+  "badi chaupar": "Badi Chaupar",
+  "badi choupad": "Badi Chaupar",
 };
 
-const metroRouteBlueprint = {
-  "Railway Station|Badi Chopar": ["Railway Station", "Sindhi Camp", "Chandpole", "Badi Chopar"],
-  "Railway Station|Chandpole": ["Railway Station", "Sindhi Camp", "Chandpole"],
-  "Railway Station|Sindhi Camp": ["Railway Station", "Sindhi Camp"],
-  "Sindhi Camp|Badi Chopar": ["Sindhi Camp", "Chandpole", "Badi Chopar"],
-  "Civil Lines|Badi Chopar": ["Civil Lines", "Chandpole", "Badi Chopar"],
-  "Ram Nagar|Badi Chopar": ["Ram Nagar", "Civil Lines", "Chandpole", "Badi Chopar"],
+const placeStationHints = {
+  "amber fort": "Badi Chaupar",
+  "albert hall museum": "Railway Station",
+  "birla mandir": "Civil Lines",
+  "city palace": "Badi Chaupar",
+  galtaji: "Mansarovar",
+  "govind dev ji temple": "Railway Station",
+  "hawa mahal": "Badi Chaupar",
+  "jantar mantar": "Badi Chaupar",
+  "jal mahal": "Chandpole",
+  "jaigarh fort": "Badi Chaupar",
+  "nahargarh fort": "Chandpole",
+  "patrika gate": "New Aatish Market",
+  "ram niwas garden": "Railway Station",
+  "sisodia rani garden": "Badi Chaupar",
+  "sms hospital": "Railway Station",
+  "walled city": "Badi Chaupar",
 };
 
-const routeOrder = ["Railway Station", "Sindhi Camp", "Civil Lines", "Ram Nagar", "Chandpole", "Badi Chopar"];
+const routeOrder = [
+  "Mansarovar",
+  "New Aatish Market",
+  "Vivek Vihar",
+  "Shyam Nagar",
+  "Ram Nagar",
+  "Civil Lines",
+  "Railway Station",
+  "Sindhi Camp",
+  "Chandpole",
+  "Chhoti Chaupar",
+  "Badi Chaupar",
+];
 
 const buildMetroRoute = async (sourceStation, destinationStation) => {
   const sourceName = sourceStation.name;
   const destinationName = destinationStation.name;
-  const key = `${sourceName}|${destinationName}`;
-  const reverseKey = `${destinationName}|${sourceName}`;
-  const blueprint = metroRouteBlueprint[key] || metroRouteBlueprint[reverseKey] || [sourceName, destinationName];
-  const stationDocs = await MetroStation.find({ name: { $in: blueprint } }).sort({ sequence: 1 });
-  const stationSequence = blueprint.map((stationName) => stationDocs.find((station) => station.name === stationName)).filter(Boolean);
+  const sourceIndex = routeOrder.indexOf(sourceName);
+  const destinationIndex = routeOrder.indexOf(destinationName);
+
+  const orderedStationNames =
+    sourceIndex >= 0 && destinationIndex >= 0
+      ? sourceIndex <= destinationIndex
+        ? routeOrder.slice(sourceIndex, destinationIndex + 1)
+        : routeOrder.slice(destinationIndex, sourceIndex + 1).reverse()
+      : [sourceName, destinationName];
+
+  const stationDocs = await MetroStation.find({ name: { $in: orderedStationNames } }).sort({ sequence: 1 });
+  const stationSequence = orderedStationNames
+    .map((stationName) => stationDocs.find((station) => station.name === stationName))
+    .filter(Boolean);
+
   const hops = Math.max(stationSequence.length - 1, 1);
   const fare = Math.max(10, 10 + hops * 8);
   const travelTimeMinutes = 8 + hops * 9;
@@ -181,12 +221,15 @@ export const searchTransport = async (req, res) => {
       return res.status(400).json({ success: false, message: "Source and destination are required" });
     }
 
+    const sourceKey = normalizeName(source);
+    const destinationKey = normalizeName(destination);
+
     const sourceLocation = await getOrCreateTouristLocation(source, {
       description: `${source} tourist pickup`,
       area: source,
       latitude: 26.9196,
       longitude: 75.7878,
-      nearestStation: "Railway Station",
+      nearestStation: stationLookup[sourceKey] || placeStationHints[sourceKey] || "Railway Station",
       category: "Transit",
     });
     const destinationLocation = await getOrCreateTouristLocation(destination, {
@@ -194,14 +237,14 @@ export const searchTransport = async (req, res) => {
       area: destination,
       latitude: 26.9265,
       longitude: 75.8242,
-      nearestStation: "Badi Chopar",
+      nearestStation: stationLookup[destinationKey] || placeStationHints[destinationKey] || "Badi Chaupar",
       category: "Transit",
     });
 
     const distanceKm = getDistanceKm(sourceLocation, destinationLocation);
     const walkingAllowed = distanceKm <= 2;
-    const sourceStationName = stationLookup[normalizeName(source)] || sourceLocation.nearestStation || "Railway Station";
-    const destinationStationName = stationLookup[normalizeName(destination)] || destinationLocation.nearestStation || "Badi Chopar";
+    const sourceStationName = stationLookup[sourceKey] || sourceLocation.nearestStation || "Railway Station";
+    const destinationStationName = stationLookup[destinationKey] || destinationLocation.nearestStation || "Badi Chaupar";
 
     const sourceStation = await getOrCreateStation(sourceStationName, {
       line: "Pink Line",
@@ -214,7 +257,7 @@ export const searchTransport = async (req, res) => {
     const destinationStation = await getOrCreateStation(destinationStationName, {
       line: "Pink Line",
       area: destinationStationName,
-      sequence: routeOrder.indexOf(destinationStationName) >= 0 ? routeOrder.indexOf(destinationStationName) : 5,
+      sequence: routeOrder.indexOf(destinationStationName) >= 0 ? routeOrder.indexOf(destinationStationName) : 10,
       latitude: 26.92,
       longitude: 75.82,
       nearbyPlaces: [],
