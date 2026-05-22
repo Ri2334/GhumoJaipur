@@ -4,6 +4,7 @@ import TouristLocation from "../models/TouristLocation.js";
 import TransportRoute from "../models/TransportRoute.js";
 import CabRide from "../models/CabRide.js";
 import SharedRide from "../models/SharedRide.js";
+import Driver from "../models/Driver.js";
 
 const normalizeName = (value = "") => String(value).trim().toLowerCase();
 
@@ -146,7 +147,7 @@ const getOrCreateStation = async (name, defaults) => {
   return MetroStation.create({ name, ...defaults });
 };
 
-const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, walkingAllowed, busFare, busTime, isMetroBeneficial, sourceToMetroDist, metroToDestDist }) => {
+const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, autoRide, walkingAllowed, isMetroBeneficial, sourceToMetroDist, metroToDestDist }) => {
   const items = [];
 
   if (walkingAllowed) {
@@ -159,30 +160,37 @@ const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, walkingAl
     });
   }
 
-  items.push(
-    {
+  if (autoRide) {
+    items.push({
       mode: "Auto",
-      fare: Math.max(35, Math.round(18 * distanceKm + 20)),
-      time: `${Math.max(8, toMinutes(distanceKm, 18))} mins`,
+      fare: autoRide.estimatedFare,
+      time: `${autoRide.estimatedDurationMinutes} mins`,
       badge: !isMetroBeneficial && distanceKm <= 5 ? "best" : "default",
       note: "Balanced city travel option.",
-    },
-    {
+    });
+  } else {
+    items.push({ mode: "Auto", fare: 0, time: "--", badge: "default", note: "No autos available nearby." });
+  }
+
+  if (cabRide) {
+    items.push({
       mode: "Cab",
       fare: cabRide.estimatedFare,
       time: `${cabRide.estimatedDurationMinutes} mins`,
       badge: "fastest",
-      note: `Surge ${cabRide.surgeMultiplier.toFixed(1)}x, availability: ${cabRide.availability.toLowerCase()}.`,
-    },
-  );
+      note: `Professional service, available now.`,
+    });
+  } else {
+    items.push({ mode: "Cab", fare: 0, time: "--", badge: "default", note: "No cabs available nearby." });
+  }
 
-  if (sharedRide) {
+  if (sharedRide && cabRide) {
     items.push({
       mode: "Shared Cab",
       fare: sharedRide.splitFare,
       time: `${Math.max(10, sharedRide.timeWindowMinutes)} mins`,
       badge: sharedRide.recommended && !isMetroBeneficial ? "best" : "default",
-      note: `Split fare with ${sharedRide.riderCount} riders and ${sharedRide.sharedProbability}% match chance.`,
+      note: `Split fare with ${sharedRide.riderCount} riders.`,
     });
   }
 
@@ -251,48 +259,41 @@ export const searchTransport = async (req, res) => {
       const destMetroCoords = stationCoordinates[destinationStationName];
       sourceToMetroDist = getDistanceKm(sourceInfo.lat, sourceInfo.lng, srcMetroCoords.lat, srcMetroCoords.lng);
       metroToDestDist = getDistanceKm(destInfo.lat, destInfo.lng, destMetroCoords.lat, destMetroCoords.lng);
-      
-      // Metro is beneficial if walking to/from metro is reasonable (< 3km total) or it's a long journey
       if (sourceToMetroDist + metroToDestDist < 4 || distanceKm > 6) {
         isMetroBeneficial = true;
       }
     }
 
-    const cabBaseFare = Math.max(60, Math.round(distanceKm * 22 + 20));
-    const cabSurgeMultiplier = distanceKm > 12 ? 1.4 : distanceKm > 6 ? 1.2 : 1.0;
-    const cabRide = await CabRide.create({
-      sourceName: source,
-      destinationName: destination,
-      baseFare: cabBaseFare,
-      surgeMultiplier: cabSurgeMultiplier,
-      estimatedFare: Math.round(cabBaseFare * cabSurgeMultiplier),
-      estimatedDurationMinutes: Math.max(8, toMinutes(distanceKm, 22)),
-      estimatedArrivalMinutes: Math.max(2, Math.round(distanceKm / 3)),
-      availability: distanceKm > 10 ? "High" : "Medium",
-    });
-
-    const sharedRide = await SharedRide.create({
-      sourceName: source,
-      destinationName: destination,
-      riderCount: distanceKm > 8 ? 3 : 2,
-      totalFare: Math.round(cabBaseFare * 0.75),
-      splitFare: Math.round((cabBaseFare * 0.75) / (distanceKm > 8 ? 3 : 2)),
-      timeWindowMinutes: distanceKm > 8 ? 15 : 10,
-      sharedProbability: distanceKm > 8 ? 72 : 58,
-      recommended: distanceKm > 4,
-    });
-
-    const busFare = Math.max(10, Math.round(distanceKm * 3));
-    const busTime = Math.max(20, toMinutes(distanceKm, 12));
+    // NEW: Query real available drivers from DB with proximity matching
+    const sourceArea = sourceInfo.matchedName || source;
     
+    const availableCabs = await Driver.find({ 
+      type: "cab", 
+      availability: "Available",
+      "currentLocation.areaName": { $regex: new RegExp(sourceArea, "i") }
+    }).populate('userId', 'fullName mobile');
+
+    const availableAutos = await Driver.find({ 
+      type: "auto", 
+      availability: "Available",
+      "currentLocation.areaName": { $regex: new RegExp(sourceArea, "i") }
+    }).populate('userId', 'fullName mobile');
+
+    // For simplicity in this version, we take the first available driver if any exists
+    // Future expansion: Calculate proximity and choose nearest
+    const cabDriver = availableCabs[0];
+    const autoDriver = availableAutos[0];
+
+    const cabBaseFare = cabDriver ? Math.round(cabDriver.baseFare + (distanceKm * cabDriver.perKmRate)) : 0;
+    const autoBaseFare = autoDriver ? Math.round(autoDriver.baseFare + (distanceKm * autoDriver.perKmRate)) : 0;
+
     const recommendations = buildRecommendation({
       distanceKm,
       route: metroRoute,
-      cabRide,
-      sharedRide,
+      cabRide: cabDriver ? { estimatedFare: cabBaseFare, estimatedDurationMinutes: Math.max(8, toMinutes(distanceKm, 22)), surgeMultiplier: 1.0, availability: "High" } : null,
+      sharedRide: cabDriver ? { splitFare: Math.round(cabBaseFare * 0.4), riderCount: 2, timeWindowMinutes: 15, sharedProbability: 60, recommended: distanceKm > 4 } : null,
+      autoRide: autoDriver ? { estimatedFare: autoBaseFare, estimatedDurationMinutes: Math.max(8, toMinutes(distanceKm, 18)) } : null,
       walkingAllowed,
-      busFare,
-      busTime,
       isMetroBeneficial,
       sourceToMetroDist,
       metroToDestDist
@@ -314,8 +315,8 @@ export const searchTransport = async (req, res) => {
       data: {
         route: routeRecord,
         metroRoute: isMetroBeneficial ? metroRoute : null,
-        cabRide,
-        sharedRide,
+        cabDriver: cabDriver ? { _id: cabDriver._id, name: cabDriver.userId.fullName, vehicle: cabDriver.vehicle, vehicleNumber: cabDriver.vehicleNumber, rating: cabDriver.rating } : null,
+        autoDriver: autoDriver ? { _id: autoDriver._id, name: autoDriver.userId.fullName, vehicle: autoDriver.vehicle, vehicleNumber: autoDriver.vehicleNumber, rating: autoDriver.rating } : null,
         recommendations,
         map: {
           source: { latitude: sourceInfo.lat, longitude: sourceInfo.lng, name: source },

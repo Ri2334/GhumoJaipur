@@ -9,6 +9,7 @@ import savedTripRoutes from "./routes/savedTripRoutes.js";
 import transportRoutes from "./routes/transportRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import sharedRoutes from "./routes/sharedRoutes.js";
+import driverRoutes from "./routes/driverRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -44,6 +45,7 @@ app.use("/api/saved-trips", savedTripRoutes);
 app.use("/api/transport", transportRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use('/api/shared-rides', sharedRoutes);
+app.use("/api/driver", driverRoutes);
 
 // Basic health check route
 app.get("/", (req, res) => {
@@ -63,7 +65,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`🌍 Server running on http://localhost:${PORT}`);
 });

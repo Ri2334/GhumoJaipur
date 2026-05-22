@@ -129,4 +129,14 @@ export const searchTransportApi = async (payload) => {
   return response.data;
 };
 
+export const getDriverProfileApi = async () => {
+  const response = await apiClient.get("/driver/me");
+  return response.data;
+};
+
+export const updateDriverProfileApi = async (payload) => {
+  const response = await apiClient.put("/driver/update", payload);
+  return response.data;
+};
+
 export default apiClient;

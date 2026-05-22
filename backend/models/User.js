@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     mobile: { type: String, required: true, trim: true },
     password: { type: String, required: true, select: false },
     emailVerified: { type: Boolean, default: false },
-    role: { type: String, enum: ["user", "admin"], default: "user" },
+    role: { type: String, enum: ["user", "admin", "driver"], default: "user" },
   },
   { timestamps: true }
 );

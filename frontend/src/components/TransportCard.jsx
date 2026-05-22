@@ -31,29 +31,31 @@ const getModeDetails = (mode) => {
   return { comfort: 'Standard', crowd: 'Medium', eco: 'B', availability: 'Medium' };
 };
 
-export default function TransportCard({ mode, fare, time, badge, note, source, destination }) {
+export default function TransportCard({ mode, fare, time, badge, note, source, destination, driver }) {
   const navigate = useNavigate();
   const details = getModeDetails(mode);
 
   const handleClick = () => {
+    if (fare <= 0 && (mode === 'Cab' || mode === 'Auto')) return;
+
     const m = String(mode).toLowerCase();
     if (m.includes('shared')) {
-      navigate('/shared-rides', { state: { source, destination } });
+      navigate('/shared-rides', { state: { source, destination, driver } });
       return;
     }
     if (m.includes('auto')) {
-      navigate('/book/auto', { state: { source, destination } });
+      navigate('/book/auto', { state: { source, destination, driver } });
       return;
     }
     if (m.includes('cab') || m.includes('car')) {
-      navigate('/book/cab', { state: { source, destination } });
+      navigate('/book/cab', { state: { source, destination, driver } });
       return;
     }
     // default
   };
 
   return (
-    <div role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleClick()} onClick={handleClick} data-transport-card className={`cursor-pointer rounded-3xl border p-5 shadow-sm transition transform hover:-translate-y-1 ${toneClass[badge] || toneClass.default}`}>
+    <div role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleClick()} onClick={handleClick} data-transport-card className={`cursor-pointer rounded-3xl border p-5 shadow-sm transition transform hover:-translate-y-1 ${fare <= 0 && (mode === 'Cab' || mode === 'Auto') ? 'opacity-60 grayscale cursor-not-allowed' : ''} ${toneClass[badge] || toneClass.default}`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="rounded-xl bg-white/60 p-3 shadow-inner">{iconFor(mode)}</div>

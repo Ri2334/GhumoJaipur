@@ -18,6 +18,7 @@ import TransportSearch from "../pages/TransportSearch";
 import BookCab from "../pages/BookCab";
 import BookAuto from "../pages/BookAuto";
 import BookingSuccess from "../pages/BookingSuccess";
+import DriverDashboard from "../pages/DriverDashboard";
 
 export default function AppRoutes() {
   return (
@@ -34,6 +35,7 @@ export default function AppRoutes() {
       <Route path="/my-rides" element={<ProtectedRoute><MyRides /></ProtectedRoute>} />
       <Route path="/shared-rides" element={<ProtectedRoute><SharedRides /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route path="/driver/dashboard" element={<ProtectedRoute><DriverDashboard /></ProtectedRoute>} />
       <Route path="/admin/places" element={<ProtectedRoute adminOnly><AdminPlaces /></ProtectedRoute>} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />

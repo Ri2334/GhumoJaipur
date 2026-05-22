@@ -7,8 +7,14 @@ const bookingSchema = new mongoose.Schema(
     pickup: { type: String, required: true },
     destination: { type: String, required: true },
     fare: { type: Number, required: true },
-    status: { type: String, enum: ["initiated", "paid", "confirmed", "ongoing", "completed", "cancelled"], default: "initiated" },
+    status: { type: String, enum: ["requested", "accepted", "started", "completed", "cancelled"], default: "requested" },
     driver: { type: mongoose.Schema.Types.ObjectId, ref: "Driver" },
+    rideOtp: { type: String },
+    destinationCoords: {
+      latitude: { type: Number },
+      longitude: { type: Number }
+    },
+    paymentStatus: { type: String, enum: ["pending", "paid"], default: "pending" },
     paymentRef: { type: String },
     etaMinutes: { type: Number },
     metadata: { type: Object },

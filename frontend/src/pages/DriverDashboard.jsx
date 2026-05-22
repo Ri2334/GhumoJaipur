@@ -1,0 +1,286 @@
+import React, { useContext, useState, useEffect } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { jaipurPlaces } from "../data/jaipurPlaces";
+import { default as apiClient } from "../services/api";
+
+export default function DriverDashboard() {
+  const { user } = useContext(AuthContext);
+  const [driverInfo, setDriverInfo] = useState(null);
+  const [rideRequests, setRideRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [otpInputs, setOtpInputs] = useState({});
+
+  const fetchDriverData = async () => {
+    try {
+      const res = await apiClient.get("/driver/me");
+      setDriverInfo(res.data.data);
+    } catch (err) {
+      console.error("Failed to fetch driver data", err);
+    }
+  };
+
+  const fetchRideRequests = async () => {
+    try {
+      const res = await apiClient.get("/driver/requests");
+      setRideRequests(res.data.data);
+    } catch (err) {
+      console.error("Failed to fetch ride requests", err);
+    }
+  };
+
+  useEffect(() => {
+    const init = async () => {
+      setLoading(true);
+      await Promise.all([fetchDriverData(), fetchRideRequests()]);
+      setLoading(false);
+    };
+    init();
+
+    // Poll for new requests every 10 seconds
+    const interval = setInterval(fetchRideRequests, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleUpdateStatus = async (status) => {
+    setSaving(true);
+    try {
+      const res = await apiClient.put("/driver/update", { availability: status });
+      setDriverInfo(res.data.data);
+    } catch (err) {
+      alert("Failed to update status");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleUpdateLocation = async (areaName) => {
+    const place = jaipurPlaces.find(p => p.name === areaName);
+    if (!place) return;
+
+    setSaving(true);
+    try {
+      const res = await apiClient.put("/driver/update", { 
+        currentLocation: { 
+          areaName: place.name, 
+          latitude: place.coordinates.lat, 
+          longitude: place.coordinates.lng 
+        } 
+      });
+      setDriverInfo(res.data.data);
+    } catch (err) {
+      alert("Failed to update location");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleAcceptRide = async (bookingId) => {
+    try {
+      await apiClient.post("/driver/accept", { bookingId });
+      fetchRideRequests();
+    } catch (err) {
+      alert("Failed to accept ride");
+    }
+  };
+
+  const handleStartRide = async (bookingId) => {
+    const otp = otpInputs[bookingId];
+    if (!otp || otp.length !== 4) {
+      alert("Please enter a valid 4-digit OTP");
+      return;
+    }
+
+    try {
+      await apiClient.post("/driver/start", { bookingId, otp });
+      fetchRideRequests();
+      fetchDriverData(); // Update status to Busy
+    } catch (err) {
+      alert(err.response?.data?.message || "Invalid OTP");
+    }
+  };
+
+  const handleCompleteRide = async (bookingId) => {
+    try {
+      await apiClient.post("/driver/complete", { bookingId });
+      fetchRideRequests();
+      fetchDriverData(); // Update status to Available and new location
+    } catch (err) {
+      alert("Failed to complete ride");
+    }
+  };
+
+  const handleOtpChange = (bookingId, value) => {
+    setOtpInputs(prev => ({ ...prev, [bookingId]: value }));
+  };
+
+  const hasActiveRide = rideRequests.some(r => r.status === 'accepted' || r.status === 'started');
+
+  if (loading) return <div className="p-10 text-center">Loading Driver Dashboard...</div>;
+  if (!driverInfo) return <div className="p-10 text-center text-red-500">Only drivers can access this page.</div>;
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-10">
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="mb-8 rounded-3xl bg-white p-8 shadow-xl">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-black text-gray-900">Welcome, {user?.name}</h1>
+              <p className="text-gray-500">{driverInfo.vehicle} • {driverInfo.vehicleNumber}</p>
+            </div>
+            <div className={`rounded-full px-4 py-2 text-sm font-bold ${driverInfo.availability === 'Available' ? 'bg-green-100 text-green-700' : driverInfo.availability === 'Busy' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-500'}`}>
+              {driverInfo.availability}
+            </div>
+          </div>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-4">
+            <button 
+              disabled={saving || hasActiveRide}
+              onClick={() => handleUpdateStatus('Available')}
+              className={`rounded-2xl p-4 text-center border-2 transition ${driverInfo.availability === 'Available' ? 'border-green-500 bg-green-50' : 'border-transparent bg-gray-100 hover:bg-gray-200'} disabled:opacity-50`}
+            >
+              <div className="text-2xl mb-1">🚗</div>
+              <div className="font-bold">Go Online</div>
+              <div className="text-xs text-gray-500">Ready for rides</div>
+            </button>
+            <button 
+              disabled={saving || hasActiveRide}
+              onClick={() => handleUpdateStatus('Offline')}
+              className={`rounded-2xl p-4 text-center border-2 transition ${driverInfo.availability === 'Offline' ? 'border-gray-500 bg-gray-50' : 'border-transparent bg-gray-100 hover:bg-gray-200'} disabled:opacity-50`}
+            >
+              <div className="text-2xl mb-1">💤</div>
+              <div className="font-bold">Go Offline</div>
+              <div className="text-xs text-gray-500">Take a break</div>
+            </button>
+            <div className="rounded-2xl p-4 text-center bg-indigo-50 border-2 border-indigo-100">
+              <div className="text-2xl mb-1">📍</div>
+              <div className="font-bold truncate px-2">{driverInfo.currentLocation.areaName}</div>
+              <div className="text-xs text-gray-500">Current Position</div>
+            </div>
+            <div className="rounded-2xl p-4 text-center bg-indigo-50 border-2 border-indigo-100">
+              <div className="text-2xl mb-1">⭐</div>
+              <div className="font-bold">{driverInfo.rating} Rating</div>
+              <div className="text-xs text-gray-500">Keep it up!</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-1">
+            <div className="rounded-3xl bg-white p-6 shadow-xl sticky top-24">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Set Current Location</h2>
+              <p className="text-sm text-gray-500 mb-4">Select the Jaipur area where you are currently waiting.</p>
+              <div className="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                {jaipurPlaces.map(place => (
+                  <button
+                    key={place.id}
+                    onClick={() => handleUpdateLocation(place.name)}
+                    className={`text-left px-3 py-2 rounded-xl text-xs transition ${driverInfo.currentLocation.areaName === place.name ? 'bg-indigo-600 text-white font-bold' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'}`}
+                  >
+                    {place.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-2">
+            <div className="rounded-3xl bg-white p-6 shadow-xl min-h-[500px]">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-black text-gray-900">Active Requests</h2>
+                <button onClick={fetchRideRequests} className="text-sm text-indigo-600 font-bold hover:underline">Refresh</button>
+              </div>
+
+              {rideRequests.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20 text-center">
+                  <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center text-3xl mb-4">🔔</div>
+                  <p className="text-gray-500 max-w-xs">No active ride requests right now. Make sure you are "Online" to see new ones.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {rideRequests.map(request => (
+                    <div key={request._id} className="border-2 border-gray-50 rounded-2xl p-6 bg-white hover:border-indigo-100 transition">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase mb-2 ${
+                            request.status === 'requested' ? 'bg-amber-100 text-amber-700' :
+                            request.status === 'accepted' ? 'bg-blue-100 text-blue-700' :
+                            'bg-green-100 text-green-700'
+                          }`}>
+                            {request.status}
+                          </span>
+                          <h3 className="font-bold text-lg text-gray-900">{request.user?.fullName}</h3>
+                          <p className="text-gray-500 text-sm">📞 {request.user?.mobile}</p>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-2xl font-black text-indigo-600">₹{request.fare}</div>
+                          <div className="text-xs text-gray-400 font-bold">ESTIMATED FARE</div>
+                        </div>
+                      </div>
+
+                      <div className="grid gap-4 mb-6 border-y border-gray-50 py-4">
+                        <div className="flex gap-3">
+                          <div className="w-2 h-2 rounded-full bg-green-500 mt-1.5 flex-shrink-0"></div>
+                          <div>
+                            <p className="text-[10px] font-bold text-gray-400 uppercase leading-none mb-1">Pickup</p>
+                            <p className="text-sm font-semibold text-gray-800">{request.pickup}</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-3">
+                          <div className="w-2 h-2 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
+                          <div>
+                            <p className="text-[10px] font-bold text-gray-400 uppercase leading-none mb-1">Destination</p>
+                            <p className="text-sm font-semibold text-gray-800">{request.destination}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap gap-3">
+                        {request.status === 'requested' && (
+                          <button 
+                            onClick={() => handleAcceptRide(request._id)}
+                            className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-indigo-100"
+                          >
+                            Accept Request
+                          </button>
+                        )}
+
+                        {request.status === 'accepted' && (
+                          <div className="flex-1 flex gap-2">
+                            <input 
+                              type="text" 
+                              placeholder="Enter Ride OTP"
+                              maxLength="4"
+                              value={otpInputs[request._id] || ''}
+                              onChange={(e) => handleOtpChange(request._id, e.target.value)}
+                              className="flex-1 border-2 border-gray-100 rounded-xl px-4 font-bold text-center tracking-widest focus:border-indigo-600 outline-none"
+                            />
+                            <button 
+                              onClick={() => handleStartRide(request._id)}
+                              className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-green-100"
+                            >
+                              Start Ride
+                            </button>
+                          </div>
+                        )}
+
+                        {request.status === 'started' && (
+                          <button 
+                            onClick={() => handleCompleteRide(request._id)}
+                            className="flex-1 bg-gray-900 hover:bg-black text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-gray-200"
+                          >
+                            Mark as Completed
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

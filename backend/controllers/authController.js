@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import Driver from "../models/Driver.js";
 import { sendOtpEmail } from "../utils/mailer.js";
 
 const otpStore = new Map();
@@ -90,7 +91,7 @@ export const verifyOtp = async (req, res) => {
 
 export const signup = async (req, res) => {
   try {
-    const { fullName, email, mobile, password, otp } = req.body;
+    const { fullName, email, mobile, password, otp, role = "user", vehicle, vehicleNumber, type = "cab" } = req.body;
     if (!fullName || !email || !mobile || !password) {
       return res.status(400).json({ success: false, message: "All fields are required" });
     }
@@ -117,8 +118,18 @@ export const signup = async (req, res) => {
       mobile,
       password: hashedPassword,
       emailVerified: true,
-      role: isAdminEmail(normalizedEmail) ? "admin" : "user",
+      role: isAdminEmail(normalizedEmail) ? "admin" : role,
     });
+
+    if (user.role === "driver") {
+      await Driver.create({
+        userId: user._id,
+        vehicle: vehicle || "Standard Sedan",
+        vehicleNumber: vehicleNumber || "RJ-14-XX-0000",
+        type: type || "cab",
+        availability: "Offline",
+      });
+    }
 
     otpStore.delete(normalizedEmail);
     verifiedEmails.delete(normalizedEmail);

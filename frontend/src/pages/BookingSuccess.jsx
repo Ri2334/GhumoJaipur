@@ -1,54 +1,133 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { getBookingApi } from '../services/bookingApi';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getBookingApi, confirmBookingApi } from '../services/bookingApi';
 import DriverMap from '../components/DriverMap';
-import OTPModal from '../components/OTPModal';
-import apiClient from '../services/api';
+import PaymentModal from '../components/PaymentModal';
 
-export default function BookingSuccess(){
+export default function BookingSuccess() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [booking, setBooking] = useState(null);
-  const [otpOpen, setOtpOpen] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
 
-  useEffect(()=>{
-    (async ()=>{
-      try{
+  // Poll for status updates every 5 seconds
+  useEffect(() => {
+    const fetchBooking = async () => {
+      try {
         const res = await getBookingApi(id);
-        console.log('GetBooking response:', res);
         setBooking(res.data);
-      }catch(e){
+      } catch (e) {
         console.error('Fetch booking failed:', e);
       }
-    })();
-  },[id]);
+    };
 
-  if(!booking) return <div className="p-8">Loading booking...</div>;
+    fetchBooking();
+    const timer = setInterval(fetchBooking, 5000);
+    return () => clearInterval(timer);
+  }, [id]);
+
+  const handlePaymentSuccess = async () => {
+    try {
+      await confirmBookingApi(id);
+      const res = await getBookingApi(id);
+      setBooking(res.data);
+      alert("Payment successful! Thank you for riding with us.");
+    } catch (err) {
+      alert("Payment confirmation failed");
+    }
+  };
+
+  if (!booking) return <div className="p-10 text-center">Loading booking details...</div>;
+
+  const getStatusDisplay = () => {
+    switch (booking.status) {
+      case 'requested': return { text: 'Waiting for Driver', color: 'bg-amber-100 text-amber-700', sub: 'Your request has been sent to the driver.' };
+      case 'accepted': return { text: 'Driver Arriving', color: 'bg-blue-100 text-blue-700', sub: `Please share OTP ${booking.rideOtp} with the driver.` };
+      case 'started': return { text: 'Ride Ongoing', color: 'bg-green-100 text-green-700', sub: 'Enjoy your trip through Jaipur!' };
+      case 'completed': return { text: 'Ride Completed', color: 'bg-indigo-100 text-indigo-700', sub: 'You have reached your destination.' };
+      case 'cancelled': return { text: 'Cancelled', color: 'bg-red-100 text-red-700', sub: 'This ride was cancelled.' };
+      default: return { text: booking.status, color: 'bg-gray-100 text-gray-700', sub: '' };
+    }
+  };
+
+  const statusInfo = getStatusDisplay();
 
   return (
-    <div className="max-w-3xl mx-auto p-8">
-      <div className="rounded-3xl p-6 bg-white/80 shadow-xl">
-        <h2 className="text-2xl font-bold">Ride Confirmed</h2>
-        <p className="mt-2">Booking ID: <strong>{booking._id}</strong></p>
-        <p>Pickup: {booking.pickup}</p>
-        <p>Destination: {booking.destination}</p>
-        <p>Fare: ₹{booking.fare}</p>
-        <p>Status: {booking.status}</p>
-        {booking.driver && (
-          <div className="mt-4">
-            <h3 className="font-semibold">Driver</h3>
-            <div>{booking.driver.name} · {booking.driver.vehicle} · {booking.driver.vehicleNumber}</div>
-            <div className="mt-4">
-              <DriverMap driver={booking.driver} pickupCoord={{ lat: booking.map?.source?.latitude || 26.9196, lng: booking.map?.source?.longitude || 75.7878 }} destCoord={{ lat: booking.map?.destination?.latitude || 26.9265, lng: booking.map?.destination?.longitude || 75.8242 }} />
-            </div>
+    <div className="max-w-4xl mx-auto p-4 py-8">
+      <div className="rounded-3xl p-8 bg-white shadow-xl border border-gray-100">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <h2 className="text-3xl font-black text-gray-900">Ride Details</h2>
+            <p className="text-sm text-gray-500 font-medium">Booking ID: {booking._id}</p>
           </div>
-        )}
-        <div className="mt-6 flex gap-3">
-          <button onClick={async ()=>{ await apiClient.post(`/bookings/${id}/send-otp`); setOtpOpen(true); }} className="px-4 py-2 bg-amber-500 text-white rounded">Send ride OTP</button>
-          <button onClick={async ()=>{ await apiClient.post(`/bookings/${id}/cancel`); alert('Ride cancelled'); }} className="px-4 py-2 border rounded">Cancel Ride</button>
-          <Link to="/" className="px-4 py-2 bg-indigo-600 text-white rounded">Back to dashboard</Link>
+          <div className="text-right">
+             <div className={`inline-block px-4 py-2 rounded-full font-bold text-sm ${statusInfo.color}`}>
+                {statusInfo.text}
+             </div>
+             <p className="text-xs text-gray-500 mt-1 font-medium">{statusInfo.sub}</p>
+          </div>
         </div>
-        <OTPModal open={otpOpen} onClose={()=>setOtpOpen(false)} onVerify={async (otp)=>{ try{ await apiClient.post(`/bookings/${id}/verify-otp`, { otp }); alert('OTP verified'); setOtpOpen(false); }catch(e){ alert('OTP invalid or expired'); } }} />
+
+        <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr]">
+          <div className="space-y-6">
+             {booking.driver && (
+               <div className="p-6 bg-gray-50 rounded-3xl border border-gray-100">
+                  <h3 className="text-xs font-bold uppercase text-gray-400 mb-4 tracking-widest">Your Driver</h3>
+                  <div className="flex items-center gap-4">
+                     <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-2xl shadow-sm">🚕</div>
+                     <div>
+                        <div className="font-bold text-gray-900 text-lg">{booking.driver.userId?.fullName || 'Driver'}</div>
+                        <div className="text-sm text-gray-500 font-medium">{booking.driver.vehicle} • {booking.driver.vehicleNumber}</div>
+                        <div className="flex items-center gap-1 text-sm text-amber-500 mt-1">⭐ <strong>{booking.driver.rating}</strong></div>
+                     </div>
+                  </div>
+               </div>
+             )}
+
+             <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-indigo-50/50 rounded-2xl border border-indigo-100/50">
+                   <div className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Fare</div>
+                   <div className="text-xl font-black text-indigo-900">₹{booking.fare}</div>
+                </div>
+                <div className="p-4 bg-pink-50/50 rounded-2xl border border-pink-100/50">
+                   <div className="text-[10px] font-bold text-pink-400 uppercase tracking-widest">Type</div>
+                   <div className="text-xl font-black text-pink-900 capitalize">{booking.type}</div>
+                </div>
+             </div>
+
+             <div className="space-y-4">
+                <div>
+                  <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Pickup Location</label>
+                  <div className="mt-1 font-bold text-gray-800">{booking.pickup}</div>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Destination</label>
+                  <div className="mt-1 font-bold text-gray-800">{booking.destination}</div>
+                </div>
+             </div>
+
+             <div className="pt-4 flex flex-wrap gap-3">
+                {booking.status === 'completed' && booking.paymentStatus !== 'paid' && (
+                  <button onClick={() => setShowPayment(true)} className="flex-1 py-4 bg-green-600 hover:bg-green-700 text-white rounded-2xl font-bold shadow-lg shadow-green-100 transition">Pay Now ₹{booking.fare}</button>
+                )}
+                {booking.paymentStatus === 'paid' && (
+                  <div className="flex-1 py-4 bg-emerald-100 text-emerald-700 rounded-2xl font-bold text-center">Paid Successfully ✅</div>
+                )}
+                <button onClick={() => navigate('/dashboard')} className="px-6 py-4 border border-gray-200 hover:bg-gray-50 rounded-2xl font-bold transition text-gray-600">Back to Home</button>
+             </div>
+          </div>
+
+          <div className="h-[400px] md:h-auto overflow-hidden rounded-3xl border border-gray-100 shadow-inner">
+             <DriverMap 
+                driver={booking.driver} 
+                pickupCoord={{ lat: booking.map?.source?.latitude || 26.9124, lng: booking.map?.source?.longitude || 75.7873 }} 
+                destCoord={{ lat: booking.map?.destination?.latitude || 26.9265, lng: booking.map?.destination?.longitude || 75.8242 }} 
+             />
+          </div>
+        </div>
       </div>
+
+      {showPayment && <PaymentModal amount={booking.fare} onSuccess={handlePaymentSuccess} onClose={() => setShowPayment(false)} />}
     </div>
   );
 }

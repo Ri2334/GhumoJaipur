@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { createBookingApi, confirmBookingApi } from '../services/bookingApi';
-import PaymentModal from '../components/PaymentModal';
+import { createBookingApi } from '../services/bookingApi';
 import DriverCard from '../components/DriverCard';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -9,69 +8,91 @@ export default function BookCab() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const [pickup, setPickup] = useState('Jaipur Railway Station');
-  const [destination, setDestination] = useState('Badi Chopar');
-  const [fare, setFare] = useState(120);
-  const [eta, setEta] = useState(6);
-  const [showPayment, setShowPayment] = useState(false);
-  const [bookingId, setBookingId] = useState(null);
+  
+  const [pickup] = useState(location?.state?.source || 'Jaipur Railway Station');
+  const [destination] = useState(location?.state?.destination || 'Badi Chaupar');
+  const [fare] = useState(location?.state?.fare || 120);
+  const [eta] = useState(location?.state?.time || '6 mins');
+  const [loading, setLoading] = useState(false);
+
+  const matchedDriver = location?.state?.driver;
 
   const handleBook = async () => {
-    try {
-      const payload = { userId: user?.id || null, type: 'cab', pickup, destination, fare };
-      const res = await createBookingApi(payload);
-      console.log('CreateBooking response:', res);
-      const id = res.data?._id || res.data?.id;
-      setBookingId(id);
-      setShowPayment(true);
-    } catch (err) {
-      console.error('Booking creation failed:', err);
-      alert('Booking failed: ' + (err?.response?.data?.message || err.message));
-    }
-  };
-
-  const handlePaymentSuccess = async () => {
-    if (!bookingId) {
-      console.error('No bookingId set');
+    if (!matchedDriver) {
+      alert("No driver selected");
       return;
     }
+    setLoading(true);
     try {
-      const res = await confirmBookingApi(bookingId);
-      console.log('Confirm response:', res);
+      const payload = { 
+        userId: user?.id, 
+        type: 'cab', 
+        pickup, 
+        destination, 
+        fare, 
+        driverId: matchedDriver._id || matchedDriver.id 
+      };
+      const res = await createBookingApi(payload);
+      const bookingId = res.data?._id || res.data?.id;
       navigate(`/book/success/${bookingId}`);
     } catch (err) {
-      console.error('Confirm booking failed:', err);
-      alert('Failed to confirm booking: ' + (err?.response?.data?.message || err.message));
+      alert('Booking failed: ' + (err?.response?.data?.message || err.message));
+    } finally {
+      setLoading(false);
     }
   };
 
-  React.useEffect(() => {
-    if (location?.state?.source) setPickup(location.state.source);
-    if (location?.state?.destination) setDestination(location.state.destination);
-  }, [location]);
+  if (!matchedDriver) {
+    return <div className="p-10 text-center text-red-500">Please select a driver from the transport search page first.</div>;
+  }
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
-      <div className="rounded-3xl p-6 bg-white/80 shadow-xl">
-        <h2 className="text-2xl font-bold">Book Cab</h2>
-        <div className="mt-4 grid gap-3">
-          <input value={pickup} onChange={(e)=>setPickup(e.target.value)} className="p-3 border rounded" />
-          <input value={destination} onChange={(e)=>setDestination(e.target.value)} className="p-3 border rounded" />
-          <div className="flex items-center justify-between">
-            <div>Estimated fare: <strong>₹{fare}</strong></div>
-            <div>ETA: <strong>{eta} mins</strong></div>
+    <div className="max-w-4xl mx-auto py-8 px-4">
+      <div className="rounded-3xl p-8 bg-white shadow-xl border border-gray-100">
+        <h2 className="text-3xl font-black text-gray-900 mb-6">Confirm Your Cab</h2>
+        
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="space-y-4">
+             <div>
+               <label className="text-xs font-bold uppercase text-gray-400">Pickup</label>
+               <input value={pickup} readOnly className="mt-1 w-full p-3 bg-gray-50 border rounded-xl font-medium" />
+             </div>
+             <div>
+               <label className="text-xs font-bold uppercase text-gray-400">Destination</label>
+               <input value={destination} readOnly className="mt-1 w-full p-3 bg-gray-50 border rounded-xl font-medium" />
+             </div>
+             <div className="flex items-center justify-between p-4 bg-indigo-50 rounded-2xl border border-indigo-100">
+                <div>
+                  <div className="text-xs font-bold text-indigo-600 uppercase">Fare</div>
+                  <div className="text-2xl font-black text-indigo-900">₹{fare}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-xs font-bold text-indigo-600 uppercase">ETA</div>
+                  <div className="text-xl font-bold text-indigo-900">{eta}</div>
+                </div>
+             </div>
           </div>
-          <div className="mt-4">
-            <DriverCard driver={{ name: 'Rahul Sharma', vehicle: 'WagonR (White)', vehicleNumber: 'RJ14 AB 1234', rating: 4.8, arrival: '3 mins' }} />
-          </div>
-          <div className="flex gap-3 mt-4">
-            <button onClick={handleBook} className="px-4 py-2 bg-indigo-600 text-white rounded">Book Ride</button>
-            <button onClick={()=>navigate(-1)} className="px-4 py-2 border rounded">Cancel</button>
+
+          <div className="space-y-4">
+            <label className="text-xs font-bold uppercase text-gray-400">Your Driver</label>
+            <DriverCard driver={matchedDriver} />
+            <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100 text-xs text-amber-800">
+              Your driver is waiting in <strong>{pickup}</strong> area. 
+              Please confirm the booking to send a request to the driver.
+            </div>
+            <div className="flex gap-3 pt-2">
+              <button 
+                onClick={handleBook} 
+                disabled={loading}
+                className="flex-1 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-lg transition shadow-indigo-200 disabled:opacity-50"
+              >
+                {loading ? 'Requesting...' : 'Request Ride'}
+              </button>
+              <button onClick={()=>navigate(-1)} className="px-6 py-4 border border-gray-200 hover:bg-gray-50 rounded-2xl font-bold transition text-gray-600">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
-
-      {showPayment && <PaymentModal amount={fare} onSuccess={handlePaymentSuccess} onClose={()=>setShowPayment(false)} />}
     </div>
   );
 }

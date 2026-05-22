@@ -11,6 +11,10 @@ export default function Signup() {
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [role, setRole] = useState("user");
+  const [vehicle, setVehicle] = useState("");
+  const [vehicleNumber, setVehicleNumber] = useState("");
+  const [vehicleType, setVehicleType] = useState("cab");
   const [stage, setStage] = useState("form"); // form | otp
   const [otp, setOtp] = useState("");
   const [errors, setErrors] = useState({});
@@ -34,6 +38,12 @@ export default function Signup() {
     if (!validateMobile(mobile)) e.mobile = "Enter a valid mobile number";
     if (!validatePassword(password)) e.password = "Password must be 8+ chars, include uppercase, lowercase, digit and special";
     if (password !== confirm) e.confirm = "Passwords do not match";
+    
+    if (role === "driver") {
+      if (!vehicle.trim()) e.vehicle = "Vehicle name is required";
+      if (!vehicleNumber.trim()) e.vehicleNumber = "Vehicle number is required";
+    }
+
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -63,10 +73,13 @@ export default function Signup() {
       return setServerError("Invalid OTP");
     }
     // verified -> create account
-    const payload = { fullName, email, mobile, password, otp };
+    const payload = { fullName, email, mobile, password, otp, role, vehicle, vehicleNumber, type: vehicleType };
     const res = await signup(payload);
     setSending(false);
-    if (res.success) navigate('/');
+    if (res.success) {
+      if (res.user.role === 'driver') navigate('/driver/dashboard');
+      else navigate('/');
+    }
     else setServerError(res.message || 'Signup failed. Please go back and check the form fields.');
   };
 
@@ -86,6 +99,43 @@ export default function Signup() {
 
         {stage === 'form' && (
           <form onSubmit={handleSubmit} className="space-y-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">I am a...</label>
+              <div className="mt-1 flex gap-4">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" checked={role === 'user'} onChange={() => setRole('user')} />
+                  <span>Passenger</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input type="radio" checked={role === 'driver'} onChange={() => setRole('driver')} />
+                  <span>Driver</span>
+                </label>
+              </div>
+            </div>
+
+            {role === 'driver' && (
+              <div className="space-y-3 p-4 bg-indigo-50 rounded-xl border border-indigo-100">
+                <p className="text-xs font-bold uppercase text-indigo-600">Vehicle Details</p>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600">Vehicle Name (e.g. Swift Dzire)</label>
+                  <input value={vehicle} onChange={(e) => setVehicle(e.target.value)} className="mt-1 w-full border px-3 py-2 rounded text-sm" />
+                  {errors.vehicle && <div className="text-[10px] text-red-500">{errors.vehicle}</div>}
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600">Vehicle Number (e.g. RJ-14-XX-0000)</label>
+                  <input value={vehicleNumber} onChange={(e) => setVehicleNumber(e.target.value)} className="mt-1 w-full border px-3 py-2 rounded text-sm" />
+                  {errors.vehicleNumber && <div className="text-[10px] text-red-500">{errors.vehicleNumber}</div>}
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600">Vehicle Type</label>
+                  <select value={vehicleType} onChange={(e) => setVehicleType(e.target.value)} className="mt-1 w-full border px-3 py-2 rounded text-sm bg-white">
+                    <option value="cab">Cab / Taxi</option>
+                    <option value="auto">Auto Rickshaw</option>
+                  </select>
+                </div>
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-medium text-gray-700">Full name</label>
               <input value={fullName} onChange={(e)=> setFullName(e.target.value)} className="mt-1 w-full border px-3 py-2 rounded" />

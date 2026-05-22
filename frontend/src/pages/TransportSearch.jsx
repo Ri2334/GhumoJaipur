@@ -258,18 +258,22 @@ export default function TransportSearch() {
               </div>
 
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {(result.recommendations || []).map((item) => (
-                  <TransportCard
-                    key={item.mode}
-                    mode={item.mode}
-                    fare={item.fare}
-                    time={item.time}
-                    badge={item.isRecommended ? "best" : item.isCheapest ? "cheapest" : item.isFastest ? "fastest" : item.badge}
-                    note={item.note}
-                    source={source}
-                    destination={destination}
-                  />
-                ))}
+                {(result.recommendations || []).map((item) => {
+                  const driverInfo = item.mode === 'Cab' ? result.cabDriver : item.mode === 'Auto' ? result.autoDriver : null;
+                  return (
+                    <TransportCard
+                      key={item.mode}
+                      mode={item.mode}
+                      fare={item.fare}
+                      time={item.time}
+                      badge={item.isRecommended ? "best" : item.isCheapest ? "cheapest" : item.isFastest ? "fastest" : item.badge}
+                      note={item.note}
+                      source={source}
+                      destination={destination}
+                      driver={driverInfo}
+                    />
+                  );
+                })}
               </div>
 
               <RouteTimeline stations={result.metroRoute?.stationSequence || []} />

@@ -1,7 +1,7 @@
 import apiClient from './api';
 
 export const createBookingApi = async (payload) => {
-  const response = await apiClient.post('/bookings/create', payload);
+  const response = await apiClient.post('/bookings', payload);
   // Backend returns { success: true, data: {...} }, so we pass that directly
   return response.data;
 };
