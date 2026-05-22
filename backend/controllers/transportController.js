@@ -16,7 +16,12 @@ const getDistanceKm = (lat1, lon1, lat2, lon2) => {
   const deltaLon = radians(lon2 - lon1);
   const a = Math.sin(deltaLat / 2) ** 2 + Math.cos(radians(lat1)) * Math.cos(radians(lat2)) * Math.sin(deltaLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return Number((earthRadius * c).toFixed(1));
+  const straightLineDist = earthRadius * c;
+  
+  // Real world road distance is typically 1.3x to 1.5x the straight line distance
+  // Using 1.35 as a realistic multiplier for Jaipur city traffic/roads
+  const ROAD_FACTOR = 1.35;
+  return Number((straightLineDist * ROAD_FACTOR).toFixed(1));
 };
 
 const routeOrder = [
@@ -58,7 +63,22 @@ const placeCoordinates = {
   "world trade park": { lat: 26.8270, lng: 75.8058, nearest: "New Aatish Market" },
   "wtp": { lat: 26.8270, lng: 75.8058, nearest: "New Aatish Market" },
   "albert hall museum": { lat: 26.9116, lng: 75.8195, nearest: "Chhoti Chaupar" },
-  "birla mandir": { lat: 26.8922, lng: 75.8156, nearest: "Sindhi Camp" }
+  "birla mandir": { lat: 26.8922, lng: 75.8156, nearest: "Sindhi Camp" },
+  "malviya nagar": { lat: 26.8549, lng: 75.8243, nearest: "New Aatish Market" },
+  "vaishali nagar": { lat: 26.9075, lng: 75.7396, nearest: "Mansarovar" },
+  "c-scheme": { lat: 26.9133, lng: 75.8031, nearest: "Civil Lines" },
+  "raja park": { lat: 26.8979, lng: 75.8271, nearest: "Sindhi Camp" },
+  "bani park": { lat: 26.9273, lng: 75.7903, nearest: "Railway Station" },
+  "mansarovar area": { lat: 26.8584, lng: 75.7615, nearest: "Mansarovar" },
+  "jhotwara": { lat: 26.9444, lng: 75.7317, nearest: "Chandpole" },
+  "vidhyadhar nagar": { lat: 26.9587, lng: 75.7761, nearest: "Chandpole" },
+  "pink city": { lat: 26.9239, lng: 75.8267, nearest: "Badi Chaupar" },
+  "mi road": { lat: 26.9157, lng: 75.8111, nearest: "Sindhi Camp" },
+  "tonk road": { lat: 26.8688, lng: 75.8066, nearest: "New Aatish Market" },
+  "gopalpura": { lat: 26.8644, lng: 75.7753, nearest: "Ram Nagar" },
+  "sitapura": { lat: 26.7900, lng: 75.8500, nearest: "New Aatish Market" },
+  "shastri nagar": { lat: 26.9400, lng: 75.8000, nearest: "Sindhi Camp" },
+  "lalkothi": { lat: 26.8900, lng: 75.8000, nearest: "Civil Lines" }
 };
 
 const getPlaceInfo = (name) => {
