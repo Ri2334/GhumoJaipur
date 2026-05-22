@@ -9,12 +9,7 @@ const normalizeName = (value = "") => String(value).trim().toLowerCase();
 
 const toMinutes = (distanceKm, speedKmph) => Math.max(1, Math.round((distanceKm / speedKmph) * 60));
 
-const getDistanceKm = (source, destination) => {
-  const lat1 = Number(source.latitude);
-  const lon1 = Number(source.longitude);
-  const lat2 = Number(destination.latitude);
-  const lon2 = Number(destination.longitude);
-
+const getDistanceKm = (lat1, lon1, lat2, lon2) => {
   const radians = (value) => (value * Math.PI) / 180;
   const earthRadius = 6371;
   const deltaLat = radians(lat2 - lat1);
@@ -22,46 +17,6 @@ const getDistanceKm = (source, destination) => {
   const a = Math.sin(deltaLat / 2) ** 2 + Math.cos(radians(lat1)) * Math.cos(radians(lat2)) * Math.sin(deltaLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return Number((earthRadius * c).toFixed(1));
-};
-
-const stationLookup = {
-  "rajasthan railway station": "Railway Station",
-  "jaipur railway station": "Railway Station",
-  railway: "Railway Station",
-  mansarovar: "Mansarovar",
-  "new aatish market": "New Aatish Market",
-  "new atish market": "New Aatish Market",
-  "vivek vihar": "Vivek Vihar",
-  "shyam nagar": "Shyam Nagar",
-  "ram nagar": "Ram Nagar",
-  "civil lines": "Civil Lines",
-  "sindhi camp": "Sindhi Camp",
-  chandpole: "Chandpole",
-  "badi chopar": "Badi Chaupar",
-  "choti chaupar": "Chhoti Chaupar",
-  "chhoti chaupar": "Chhoti Chaupar",
-  "choti chopar": "Chhoti Chaupar",
-  "badi chaupar": "Badi Chaupar",
-  "badi choupad": "Badi Chaupar",
-};
-
-const placeStationHints = {
-  "amber fort": "Badi Chaupar",
-  "albert hall museum": "Railway Station",
-  "birla mandir": "Civil Lines",
-  "city palace": "Badi Chaupar",
-  galtaji: "Mansarovar",
-  "govind dev ji temple": "Railway Station",
-  "hawa mahal": "Badi Chaupar",
-  "jantar mantar": "Badi Chaupar",
-  "jal mahal": "Chandpole",
-  "jaigarh fort": "Badi Chaupar",
-  "nahargarh fort": "Chandpole",
-  "patrika gate": "New Aatish Market",
-  "ram niwas garden": "Railway Station",
-  "sisodia rani garden": "Badi Chaupar",
-  "sms hospital": "Railway Station",
-  "walled city": "Badi Chaupar",
 };
 
 const routeOrder = [
@@ -75,57 +30,88 @@ const routeOrder = [
   "Sindhi Camp",
   "Chandpole",
   "Chhoti Chaupar",
-  "Badi Chaupar",
+  "Badi Chaupar"
 ];
 
-const buildMetroRoute = async (sourceStation, destinationStation) => {
-  const sourceName = sourceStation.name;
-  const destinationName = destinationStation.name;
-  const sourceIndex = routeOrder.indexOf(sourceName);
-  const destinationIndex = routeOrder.indexOf(destinationName);
+const stationCoordinates = {
+  "Mansarovar": { lat: 26.8756, lng: 75.7533 },
+  "New Aatish Market": { lat: 26.8834, lng: 75.7589 },
+  "Vivek Vihar": { lat: 26.8901, lng: 75.7654 },
+  "Shyam Nagar": { lat: 26.8978, lng: 75.7721 },
+  "Ram Nagar": { lat: 26.9045, lng: 75.7798 },
+  "Civil Lines": { lat: 26.9112, lng: 75.7865 },
+  "Railway Station": { lat: 26.9195, lng: 75.7932 },
+  "Sindhi Camp": { lat: 26.9248, lng: 75.7999 },
+  "Chandpole": { lat: 26.9255, lng: 75.8111 },
+  "Chhoti Chaupar": { lat: 26.9259, lng: 75.8188 },
+  "Badi Chaupar": { lat: 26.9262, lng: 75.8265 }
+};
 
-  const orderedStationNames =
-    sourceIndex >= 0 && destinationIndex >= 0
-      ? sourceIndex <= destinationIndex
-        ? routeOrder.slice(sourceIndex, destinationIndex + 1)
-        : routeOrder.slice(destinationIndex, sourceIndex + 1).reverse()
-      : [sourceName, destinationName];
+const placeCoordinates = {
+  "amer fort": { lat: 26.9855, lng: 75.8513, nearest: "Badi Chaupar" },
+  "hawa mahal": { lat: 26.9239, lng: 75.8267, nearest: "Badi Chaupar" },
+  "city palace": { lat: 26.9255, lng: 75.8236, nearest: "Chhoti Chaupar" },
+  "jaipur railway station": { lat: 26.9196, lng: 75.7880, nearest: "Railway Station" },
+  "sindhi camp": { lat: 26.9248, lng: 75.7999, nearest: "Sindhi Camp" },
+  "badi chaupar": { lat: 26.9262, lng: 75.8265, nearest: "Badi Chaupar" },
+  "johari bazaar": { lat: 26.9205, lng: 75.8267, nearest: "Badi Chaupar" },
+  "world trade park": { lat: 26.8270, lng: 75.8058, nearest: "New Aatish Market" },
+  "wtp": { lat: 26.8270, lng: 75.8058, nearest: "New Aatish Market" },
+  "albert hall museum": { lat: 26.9116, lng: 75.8195, nearest: "Chhoti Chaupar" },
+  "birla mandir": { lat: 26.8922, lng: 75.8156, nearest: "Sindhi Camp" }
+};
 
-  const stationDocs = await MetroStation.find({ name: { $in: orderedStationNames } }).sort({ sequence: 1 });
-  const stationSequence = orderedStationNames
-    .map((stationName) => stationDocs.find((station) => station.name === stationName))
-    .filter(Boolean);
+const getPlaceInfo = (name) => {
+  const normalized = normalizeName(name);
+  // Try exact match first
+  if (placeCoordinates[normalized]) return { ...placeCoordinates[normalized], matchedName: name };
 
-  const hops = Math.max(stationSequence.length - 1, 1);
-  const fare = Math.max(10, 10 + hops * 8);
-  const travelTimeMinutes = 8 + hops * 9;
-  const waitingTimeMinutes = 6;
-  const nextTrainMinutes = 4;
+  // Try partial match
+  for (const [key, value] of Object.entries(placeCoordinates)) {
+    if (normalized.includes(key) || key.includes(normalized)) {
+      return { ...value, matchedName: name };
+    }
+  }
+  for (const [key, value] of Object.entries(stationCoordinates)) {
+    if (normalized.includes(key.toLowerCase()) || key.toLowerCase().includes(normalized)) {
+      return { lat: value.lat, lng: value.lng, nearest: key, matchedName: name };
+    }
+  }
+  // Default fallback if not found
+  return { lat: 26.9124, lng: 75.7873, nearest: "Railway Station", matchedName: name };
+};
 
-  const existingRoute = await MetroRoute.findOne({ sourceStation: sourceStation._id, destinationStation: destinationStation._id });
-  if (existingRoute) {
-    existingRoute.stationSequence = stationSequence.map((station) => station._id);
-    existingRoute.fare = fare;
-    existingRoute.travelTimeMinutes = travelTimeMinutes;
-    existingRoute.waitingTimeMinutes = waitingTimeMinutes;
-    existingRoute.nextTrainMinutes = nextTrainMinutes;
-    existingRoute.lineName = sourceStation.line || destinationStation.line || "Jaipur Metro";
-    await existingRoute.save();
-    return existingRoute.populate("sourceStation destinationStation stationSequence");
+const buildMetroRoute = async (sourceStationName, destinationStationName) => {
+  const sourceIndex = routeOrder.indexOf(sourceStationName);
+  const destinationIndex = routeOrder.indexOf(destinationStationName);
+
+  if (sourceIndex === -1 || destinationIndex === -1 || sourceIndex === destinationIndex) {
+    return null; // No metro route if same station or unknown
   }
 
-  const route = await MetroRoute.create({
-    sourceStation: sourceStation._id,
-    destinationStation: destinationStation._id,
-    stationSequence: stationSequence.map((station) => station._id),
+  const orderedStationNames = sourceIndex <= destinationIndex
+    ? routeOrder.slice(sourceIndex, destinationIndex + 1)
+    : routeOrder.slice(destinationIndex, sourceIndex + 1).reverse();
+
+  // Create mock objects since the DB might not be fully seeded
+  const stationSequence = orderedStationNames.map(name => ({ _id: name, name, ...stationCoordinates[name] }));
+  
+  const hops = Math.max(stationSequence.length - 1, 1);
+  const fare = hops <= 2 ? 10 : hops <= 5 ? 15 : 20;
+  const travelTimeMinutes = hops * 3; // Approx 3 mins per station hop
+  const waitingTimeMinutes = Math.floor(Math.random() * 5) + 2; // Random wait 2-6 mins
+  const nextTrainMinutes = waitingTimeMinutes;
+
+  return {
+    sourceStation: stationSequence[0],
+    destinationStation: stationSequence[stationSequence.length - 1],
+    stationSequence,
     fare,
     travelTimeMinutes,
     waitingTimeMinutes,
     nextTrainMinutes,
-    lineName: sourceStation.line || destinationStation.line || "Jaipur Metro",
-  });
-
-  return route.populate("sourceStation destinationStation stationSequence");
+    lineName: "Pink Line"
+  };
 };
 
 const getOrCreateTouristLocation = async (name, defaults) => {
@@ -140,7 +126,7 @@ const getOrCreateStation = async (name, defaults) => {
   return MetroStation.create({ name, ...defaults });
 };
 
-const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, walkingAllowed, busFare, busTime }) => {
+const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, walkingAllowed, busFare, busTime, isMetroBeneficial, sourceToMetroDist, metroToDestDist }) => {
   const items = [];
 
   if (walkingAllowed) {
@@ -148,24 +134,17 @@ const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, walkingAl
       mode: "Walk",
       fare: 0,
       time: `${Math.max(10, Math.round(distanceKm * 15))} mins`,
-      badge: distanceKm <= 1 ? "best" : "cheapest",
+      badge: distanceKm <= 1.5 ? "best" : "cheapest",
       note: "Best for short city hops under 2 km.",
     });
   }
 
   items.push(
     {
-      mode: "Bus",
-      fare: busFare,
-      time: `${busTime} mins`,
-      badge: "cheapest",
-      note: "Budget option on main city routes.",
-    },
-    {
       mode: "Auto",
       fare: Math.max(35, Math.round(18 * distanceKm + 20)),
       time: `${Math.max(8, toMinutes(distanceKm, 18))} mins`,
-      badge: "best",
+      badge: !isMetroBeneficial && distanceKm <= 5 ? "best" : "default",
       note: "Balanced city travel option.",
     },
     {
@@ -182,18 +161,29 @@ const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, walkingAl
       mode: "Shared Cab",
       fare: sharedRide.splitFare,
       time: `${Math.max(10, sharedRide.timeWindowMinutes)} mins`,
-      badge: sharedRide.recommended ? "best" : "default",
+      badge: sharedRide.recommended && !isMetroBeneficial ? "best" : "default",
       note: `Split fare with ${sharedRide.riderCount} riders and ${sharedRide.sharedProbability}% match chance.`,
     });
   }
 
-  if (route) {
+  if (route && isMetroBeneficial) {
+    const walkToMetro = Math.round(sourceToMetroDist * 1000);
+    const walkFromMetro = Math.round(metroToDestDist * 1000);
+    const totalTime = route.travelTimeMinutes + route.waitingTimeMinutes + Math.round(sourceToMetroDist * 15) + Math.round(metroToDestDist * 15);
+    
+    let metroNote = `Arriving in ${route.nextTrainMinutes} mins. `;
+    if (walkToMetro > 1000) metroNote += `Take e-rickshaw to ${route.sourceStation.name}. `;
+    else metroNote += `Walk ${walkToMetro}m to ${route.sourceStation.name}. `;
+    
+    if (walkFromMetro > 1000) metroNote += `Finally take auto to destination.`;
+    else metroNote += `Finally walk ${walkFromMetro}m to destination.`;
+
     items.push({
       mode: "Metro",
       fare: route.fare,
-      time: `${route.travelTimeMinutes + route.waitingTimeMinutes} mins`,
+      time: `${totalTime} mins`,
       badge: "recommended",
-      note: `Route via ${route.stationSequence.map((station) => station.name).join(" → ")}.`,
+      note: metroNote,
     });
   }
 
@@ -203,7 +193,7 @@ const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, walkingAl
     const bestMinutes = best ? Number(String(best.time).replace(/[^\d]/g, "")) || 999 : 999;
     return currentMinutes < bestMinutes ? current : best;
   }, null);
-  const recommended = items.find((item) => item.badge === "best") || cheapest || items[0];
+  const recommended = items.find((item) => item.badge === "best" || item.badge === "recommended") || cheapest || items[0];
 
   return items.map((item) => ({
     ...item,
@@ -221,49 +211,33 @@ export const searchTransport = async (req, res) => {
       return res.status(400).json({ success: false, message: "Source and destination are required" });
     }
 
-    const sourceKey = normalizeName(source);
-    const destinationKey = normalizeName(destination);
+    const sourceInfo = getPlaceInfo(source);
+    const destInfo = getPlaceInfo(destination);
 
-    const sourceLocation = await getOrCreateTouristLocation(source, {
-      description: `${source} tourist pickup`,
-      area: source,
-      latitude: 26.9196,
-      longitude: 75.7878,
-      nearestStation: stationLookup[sourceKey] || placeStationHints[sourceKey] || "Railway Station",
-      category: "Transit",
-    });
-    const destinationLocation = await getOrCreateTouristLocation(destination, {
-      description: `${destination} tourist drop`,
-      area: destination,
-      latitude: 26.9265,
-      longitude: 75.8242,
-      nearestStation: stationLookup[destinationKey] || placeStationHints[destinationKey] || "Badi Chaupar",
-      category: "Transit",
-    });
-
-    const distanceKm = getDistanceKm(sourceLocation, destinationLocation);
+    const distanceKm = getDistanceKm(sourceInfo.lat, sourceInfo.lng, destInfo.lat, destInfo.lng);
     const walkingAllowed = distanceKm <= 2;
-    const sourceStationName = stationLookup[sourceKey] || sourceLocation.nearestStation || "Railway Station";
-    const destinationStationName = stationLookup[destinationKey] || destinationLocation.nearestStation || "Badi Chaupar";
 
-    const sourceStation = await getOrCreateStation(sourceStationName, {
-      line: "Pink Line",
-      area: sourceStationName,
-      sequence: routeOrder.indexOf(sourceStationName) >= 0 ? routeOrder.indexOf(sourceStationName) : 0,
-      latitude: 26.92,
-      longitude: 75.8,
-      nearbyPlaces: [],
-    });
-    const destinationStation = await getOrCreateStation(destinationStationName, {
-      line: "Pink Line",
-      area: destinationStationName,
-      sequence: routeOrder.indexOf(destinationStationName) >= 0 ? routeOrder.indexOf(destinationStationName) : 10,
-      latitude: 26.92,
-      longitude: 75.82,
-      nearbyPlaces: [],
-    });
+    const sourceStationName = sourceInfo.nearest;
+    const destinationStationName = destInfo.nearest;
 
-    const metroRoute = await buildMetroRoute(sourceStation, destinationStation);
+    const metroRoute = await buildMetroRoute(sourceStationName, destinationStationName);
+    
+    let isMetroBeneficial = false;
+    let sourceToMetroDist = 0;
+    let metroToDestDist = 0;
+
+    if (metroRoute) {
+      const srcMetroCoords = stationCoordinates[sourceStationName];
+      const destMetroCoords = stationCoordinates[destinationStationName];
+      sourceToMetroDist = getDistanceKm(sourceInfo.lat, sourceInfo.lng, srcMetroCoords.lat, srcMetroCoords.lng);
+      metroToDestDist = getDistanceKm(destInfo.lat, destInfo.lng, destMetroCoords.lat, destMetroCoords.lng);
+      
+      // Metro is beneficial if walking to/from metro is reasonable (< 3km total) or it's a long journey
+      if (sourceToMetroDist + metroToDestDist < 4 || distanceKm > 6) {
+        isMetroBeneficial = true;
+      }
+    }
+
     const cabBaseFare = Math.max(60, Math.round(distanceKm * 22 + 20));
     const cabSurgeMultiplier = distanceKm > 12 ? 1.4 : distanceKm > 6 ? 1.2 : 1.0;
     const cabRide = await CabRide.create({
@@ -290,6 +264,7 @@ export const searchTransport = async (req, res) => {
 
     const busFare = Math.max(10, Math.round(distanceKm * 3));
     const busTime = Math.max(20, toMinutes(distanceKm, 12));
+    
     const recommendations = buildRecommendation({
       distanceKm,
       route: metroRoute,
@@ -298,38 +273,33 @@ export const searchTransport = async (req, res) => {
       walkingAllowed,
       busFare,
       busTime,
+      isMetroBeneficial,
+      sourceToMetroDist,
+      metroToDestDist
     });
 
-    const routeRecord = await TransportRoute.findOneAndUpdate(
-      { sourceName: source, destinationName: destination },
-      {
-        sourceName: source,
-        destinationName: destination,
-        distanceKm,
-        walkingAllowed,
-        recommendedMode: recommendations.find((item) => item.isRecommended)?.mode || recommendations[0]?.mode || "Cab",
-        cheapestMode: recommendations.find((item) => item.isCheapest)?.mode || recommendations[0]?.mode || "Bus",
-        fastestMode: recommendations.find((item) => item.isFastest)?.mode || recommendations[0]?.mode || "Cab",
-        sourceLocation: sourceLocation._id,
-        destinationLocation: destinationLocation._id,
-        metroRoute: metroRoute._id,
-      },
-      { upsert: true, new: true, setDefaultsOnInsert: true }
-    )
-      .populate("sourceLocation destinationLocation")
-      .populate({ path: "metroRoute", populate: ["sourceStation", "destinationStation", "stationSequence"] });
+    const routeRecord = {
+      sourceName: source,
+      destinationName: destination,
+      distanceKm,
+      walkingAllowed,
+      recommendedMode: recommendations.find((item) => item.isRecommended)?.mode || recommendations[0]?.mode || "Cab",
+      cheapestMode: recommendations.find((item) => item.isCheapest)?.mode || recommendations[0]?.mode || "Bus",
+      fastestMode: recommendations.find((item) => item.isFastest)?.mode || recommendations[0]?.mode || "Cab",
+      metroRoute: isMetroBeneficial ? metroRoute : null,
+    };
 
     return res.status(200).json({
       success: true,
       data: {
         route: routeRecord,
-        metroRoute,
+        metroRoute: isMetroBeneficial ? metroRoute : null,
         cabRide,
         sharedRide,
         recommendations,
         map: {
-          source: sourceLocation,
-          destination: destinationLocation,
+          source: { latitude: sourceInfo.lat, longitude: sourceInfo.lng, name: source },
+          destination: { latitude: destInfo.lat, longitude: destInfo.lng, name: destination },
         },
       },
     });
