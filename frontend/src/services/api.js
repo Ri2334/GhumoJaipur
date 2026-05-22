@@ -139,4 +139,28 @@ export const updateDriverProfileApi = async (payload) => {
   return response.data;
 };
 
+export const uploadDriverDocsApi = async (formData) => {
+  const response = await apiClient.post("/driver/upload-docs", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+};
+
+export const requestDriverVerificationApi = async () => {
+  const response = await apiClient.post("/driver/request-verification");
+  return response.data;
+};
+
+export const getPendingDriversApi = async () => {
+  const response = await apiClient.get("/admin/drivers?status=pending");
+  return response.data;
+};
+
+export const verifyDriverApi = async (driverId, status) => {
+  const response = await apiClient.put(`/admin/drivers/verify/${driverId}`, { status });
+  return response.data;
+};
+
 export default apiClient;

@@ -73,7 +73,12 @@ export default function Navbar() {
               </NavLink>
             )}
             {user?.role === "driver" && <NavLink to="/driver/dashboard" className={activeClass}>Driver Dashboard</NavLink>}
-            {user?.role === "admin" && <NavLink to="/admin/places" className={activeClass}>Admin</NavLink>}
+            {user?.role === "admin" && (
+              <>
+                <NavLink to="/admin/places" className={activeClass}>Places</NavLink>
+                <NavLink to="/admin/drivers" className={activeClass}>Drivers</NavLink>
+              </>
+            )}
             <NavLink to="/saved-trips" className={activeClass}>Saved</NavLink>
           </nav>
 
@@ -185,7 +190,12 @@ export default function Navbar() {
             <NavLink to="/transport" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Smart Transport</NavLink>
             <NavLink to="/saved-trips" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Saved Trips</NavLink>
             {user?.role === "driver" && <NavLink to="/driver/dashboard" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Driver Dashboard</NavLink>}
-            {user?.role === "admin" && <NavLink to="/admin/places" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Admin</NavLink>}
+            {user?.role === "admin" && (
+              <>
+                <NavLink to="/admin/places" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Admin Places</NavLink>
+                <NavLink to="/admin/drivers" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Admin Drivers</NavLink>
+              </>
+            )}
             <NavLink to="/" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">About</NavLink>
             <NavLink to="/" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Contact</NavLink>
 

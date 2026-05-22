@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import {
+import apiClient, {
   sendOtpApi,
   verifyOtpApi,
   signupApi,
@@ -48,6 +48,12 @@ export const AuthProvider = ({ children }) => {
     driverRating: driverProfile?.rating,
     vehicle: driverProfile?.vehicle,
     vehicleNumber: driverProfile?.vehicleNumber,
+    isVerified: driverProfile?.isVerified,
+    status: driverProfile?.status,
+    profilePicture: driverProfile?.profilePicture,
+    idProof: driverProfile?.idProof,
+    licenseProof: driverProfile?.licenseProof,
+    vehicleProof: driverProfile?.vehicleProof,
   });
 
   const login = async ({ email, password, remember }) => {

@@ -14,6 +14,7 @@ import MyRides from "../pages/MyRides";
 import SharedRides from "../pages/SharedRides";
 import PlaceDetails from "../pages/PlaceDetails";
 import AdminPlaces from "../pages/AdminPlaces";
+import AdminDrivers from "../pages/AdminDrivers";
 import TransportSearch from "../pages/TransportSearch";
 import BookCab from "../pages/BookCab";
 import BookAuto from "../pages/BookAuto";
@@ -37,6 +38,7 @@ export default function AppRoutes() {
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       <Route path="/driver/dashboard" element={<ProtectedRoute><DriverDashboard /></ProtectedRoute>} />
       <Route path="/admin/places" element={<ProtectedRoute adminOnly><AdminPlaces /></ProtectedRoute>} />
+      <Route path="/admin/drivers" element={<ProtectedRoute adminOnly><AdminDrivers /></ProtectedRoute>} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/login" element={<Login />} />

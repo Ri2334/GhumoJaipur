@@ -15,7 +15,13 @@ const driverSchema = new mongoose.Schema(
     availability: { type: String, enum: ["Available", "Busy", "Offline"], default: "Offline" },
     type: { type: String, enum: ["cab", "auto"], default: "cab" },
     baseFare: { type: Number, default: 60 },
-    perKmRate: { type: Number, default: 15 }
+    perKmRate: { type: Number, default: 15 },
+    isVerified: { type: Boolean, default: false },
+    status: { type: String, enum: ["unverified", "pending", "verified", "rejected"], default: "unverified" },
+    profilePicture: { type: String },
+    idProof: { type: String }, // Aadhaar/VoterID
+    licenseProof: { type: String }, // Driving License
+    vehicleProof: { type: String }, // RC/Insurance
   },
   { timestamps: true }
 );

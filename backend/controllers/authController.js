@@ -83,11 +83,11 @@ export const verifyOtp = async (req, res) => {
     }
 
     verifiedEmails.set(normalizedEmail, { purpose, verifiedAt: Date.now() });
-    return res.status(200).json({ success: true, user, token, message: "Logged in successfully" });
-    } catch (error) {
+    return res.status(200).json({ success: true, message: "OTP verified successfully" });
+  } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
-    }
-    };
+  }
+};
 
     export const getMe = async (req, res) => {
       try {

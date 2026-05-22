@@ -10,6 +10,7 @@ import transportRoutes from "./routes/transportRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import sharedRoutes from "./routes/sharedRoutes.js";
 import driverRoutes from "./routes/driverRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -46,6 +47,7 @@ app.use("/api/transport", transportRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use('/api/shared-rides', sharedRoutes);
 app.use("/api/driver", driverRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Basic health check route
 app.get("/", (req, res) => {

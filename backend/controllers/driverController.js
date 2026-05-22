@@ -30,6 +30,45 @@ export const updateDriverProfile = async (req, res) => {
   }
 };
 
+export const uploadDocuments = async (req, res) => {
+  try {
+    const driver = await Driver.findOne({ userId: req.user._id });
+    if (!driver) return res.status(404).json({ success: false, message: "Driver profile not found" });
+
+    if (req.files) {
+      if (req.files.profilePicture) driver.profilePicture = req.files.profilePicture[0].path;
+      if (req.files.idProof) driver.idProof = req.files.idProof[0].path;
+      if (req.files.licenseProof) driver.licenseProof = req.files.licenseProof[0].path;
+      if (req.files.vehicleProof) driver.vehicleProof = req.files.vehicleProof[0].path;
+      
+      await driver.save();
+    }
+
+    return res.status(200).json({ success: true, message: "Documents uploaded successfully", data: driver });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const requestVerification = async (req, res) => {
+  try {
+    const driver = await Driver.findOne({ userId: req.user._id });
+    if (!driver) return res.status(404).json({ success: false, message: "Driver profile not found" });
+
+    // Check if all required fields are present
+    if (!driver.profilePicture || !driver.idProof || !driver.licenseProof || !driver.vehicleProof) {
+      return res.status(400).json({ success: false, message: "Please upload all required documents before requesting verification" });
+    }
+
+    driver.status = "pending";
+    await driver.save();
+
+    return res.status(200).json({ success: true, message: "Verification request submitted", data: driver });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export const getRideRequests = async (req, res) => {
   try {
     const driver = await Driver.findOne({ userId: req.user._id });
