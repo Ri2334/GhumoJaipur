@@ -6,8 +6,17 @@ import CabRide from "../models/CabRide.js";
 import SharedRide from "../models/SharedRide.js";
 import Driver from "../models/Driver.js";
 import BusRoute from "../models/BusRoute.js";
+import User from "../models/User.js";
 
-const normalizeName = (value = "") => String(value).trim().toLowerCase();
+const normalizeName = (value = "") => {
+  let normalized = String(value).trim().toLowerCase();
+  // Handle common Jaipur variations
+  normalized = normalized.replace(/chaupar/g, "chopar");
+  normalized = normalized.replace(/chopad/g, "chopar");
+  normalized = normalized.replace(/station/g, "stn");
+  normalized = normalized.replace(/\s+/g, "");
+  return normalized;
+};
 
 const toMinutes = (distanceKm, speedKmph) => Math.max(1, Math.round((distanceKm / speedKmph) * 60));
 
@@ -53,106 +62,101 @@ const stationCoordinates = {
 };
 
 const getPlaceInfo = async (name) => {
-  const normalized = normalizeName(name);
+  const inputNorm = normalizeName(name);
   
-  // 1. Try exact or partial match in TouristLocation (which now includes Bus Stops)
-  const location = await TouristLocation.findOne({ 
-    name: { $regex: new RegExp(`^${normalized}$`, "i") } 
-  });
+  // 1. Try to find in TouristLocation
+  const allLocations = await TouristLocation.find();
+  let matchedLoc = allLocations.find(l => normalizeName(l.name) === inputNorm);
+  
+  if (!matchedLoc) {
+    matchedLoc = allLocations.find(l => normalizeName(l.name).includes(inputNorm) || inputNorm.includes(normalizeName(l.name)));
+  }
 
-  if (location) {
+  if (matchedLoc) {
+    // Find canonical metro station name
+    let nearestStation = matchedLoc.nearestStation || "Railway Station";
+    const canonicalStation = routeOrder.find(s => normalizeName(s) === normalizeName(nearestStation)) || nearestStation;
+
     return {
-      lat: location.latitude,
-      lng: location.longitude,
-      nearest: location.nearestStation || "Railway Station",
-      matchedName: location.name
+      lat: matchedLoc.latitude,
+      lng: matchedLoc.longitude,
+      nearest: canonicalStation,
+      matchedName: matchedLoc.name
     };
   }
 
-  // 2. Try partial match in TouristLocation
-  const partialLocation = await TouristLocation.findOne({ 
-    name: { $regex: new RegExp(normalized, "i") } 
-  });
-
-  if (partialLocation) {
-    return {
-      lat: partialLocation.latitude,
-      lng: partialLocation.longitude,
-      nearest: partialLocation.nearestStation || "Railway Station",
-      matchedName: partialLocation.name
-    };
-  }
-
-  // 3. Try to match directly against Metro Stations
+  // 2. Try to match directly against Metro Stations
   for (const [key, value] of Object.entries(stationCoordinates)) {
-    const stationName = key.toLowerCase();
-    if (normalized.includes(stationName) || stationName.includes(normalized)) {
+    const stationNorm = normalizeName(key);
+    if (inputNorm.includes(stationNorm) || stationNorm.includes(inputNorm)) {
       return { 
         lat: value.lat, 
         lng: value.lng, 
         nearest: key, 
-        matchedName: key // Use the official station name
+        matchedName: key 
       };
     }
   }
 
-  // 4. Default fallback if not found
   return { lat: 26.9124, lng: 75.7873, nearest: "Railway Station", matchedName: name };
 };
 
 const findBusRoutes = async (sourceName, destName) => {
   const allRoutes = await BusRoute.find();
+  const sNorm = normalizeName(sourceName);
+  const dNorm = normalizeName(destName);
   
-  const matches = (stopList, targetName) => {
-    const normTarget = normalizeName(targetName);
+  const matches = (stopList, targetNorm) => {
     return stopList.some(stop => {
-       const normStop = normalizeName(stop);
-       return normStop.includes(normTarget) || normTarget.includes(normStop);
+       const stopNorm = normalizeName(stop);
+       return stopNorm.includes(targetNorm) || targetNorm.includes(stopNorm);
     });
   };
 
-  const getStopNameInRoute = (stopList, targetName) => {
-    const normTarget = normalizeName(targetName);
+  const getStopNameInRoute = (stopList, targetNorm) => {
     return stopList.find(stop => {
-       const normStop = normalizeName(stop);
-       return normStop.includes(normTarget) || normTarget.includes(normStop);
+       const stopNorm = normalizeName(stop);
+       return stopNorm.includes(targetNorm) || targetNorm.includes(stopNorm);
     });
   };
 
-  const directRoutes = allRoutes.filter(r => matches(r.stops, sourceName) && matches(r.stops, destName));
+  const directRoutes = allRoutes.filter(r => matches(r.stops, sNorm) && matches(r.stops, dNorm));
 
   if (directRoutes.length > 0) {
     const bestRoute = directRoutes[0];
-    const sName = getStopNameInRoute(bestRoute.stops, sourceName);
-    const dName = getStopNameInRoute(bestRoute.stops, destName);
-    const sourceIndex = bestRoute.stops.indexOf(sName);
-    const destIndex = bestRoute.stops.indexOf(dName);
+    const sNameFound = getStopNameInRoute(bestRoute.stops, sNorm);
+    const dNameFound = getStopNameInRoute(bestRoute.stops, dNorm);
+    const sourceIndex = bestRoute.stops.indexOf(sNameFound);
+    const destIndex = bestRoute.stops.indexOf(dNameFound);
     const stopsCount = Math.abs(destIndex - sourceIndex);
 
     return {
       type: "direct",
       route: bestRoute,
-      sourceStop: sName,
-      destStop: dName,
+      sourceStop: sNameFound,
+      destStop: dNameFound,
       fare: stopsCount <= 5 ? 10 : stopsCount <= 10 ? 15 : 20,
       time: stopsCount * 5 + 10
     };
   }
 
-  const sourceRoutes = allRoutes.filter(r => matches(r.stops, sourceName));
-  const destRoutes = allRoutes.filter(r => matches(r.stops, destName));
+  const sourceRoutes = allRoutes.filter(r => matches(r.stops, sNorm));
+  const destRoutes = allRoutes.filter(r => matches(r.stops, dNorm));
 
   for (const sRoute of sourceRoutes) {
     for (const dRoute of destRoutes) {
-      const commonStop = sRoute.stops.find(stop => dRoute.stops.includes(stop));
+      const commonStop = sRoute.stops.find(stop => {
+        const stopNorm = normalizeName(stop);
+        return dRoute.stops.some(dStop => normalizeName(dStop) === stopNorm);
+      });
       if (commonStop) {
         return {
           type: "indirect",
           route1: sRoute,
           route2: dRoute,
           transferStop: commonStop,
-          sourceStop: getStopNameInRoute(sRoute.stops, sourceName),
-          destStop: getStopNameInRoute(dRoute.stops, destName),
+          sourceStop: getStopNameInRoute(sRoute.stops, sNorm),
+          destStop: getStopNameInRoute(dRoute.stops, dNorm),
           fare: 20,
           time: 60
         };
@@ -164,8 +168,12 @@ const findBusRoutes = async (sourceName, destName) => {
 };
 
 const buildMetroRoute = async (sourceStationName, destinationStationName) => {
-  const sourceIndex = routeOrder.indexOf(sourceStationName);
-  const destinationIndex = routeOrder.indexOf(destinationStationName);
+  // Normalize both for comparison with routeOrder
+  const sNorm = normalizeName(sourceStationName);
+  const dNorm = normalizeName(destinationStationName);
+
+  const sourceIndex = routeOrder.findIndex(s => normalizeName(s) === sNorm);
+  const destinationIndex = routeOrder.findIndex(s => normalizeName(s) === dNorm);
 
   if (sourceIndex === -1 || destinationIndex === -1 || sourceIndex === destinationIndex) {
     return null; // No metro route if same station or unknown

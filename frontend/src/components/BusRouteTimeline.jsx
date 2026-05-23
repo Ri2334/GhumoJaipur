@@ -25,13 +25,13 @@ export default function BusRouteTimeline({ busRoute }) {
         <h4 className="text-sm font-bold text-gray-700 mb-3">{title}</h4>
         <div className="space-y-3">
           {relevantStops.map((stop, index) => (
-            <div key={`${stop}-${index}`} className="flex items-start gap-3">
+            <div key={`${stop}-${index}`} className="flex items-start gap-3 group">
               <div className="mt-1 flex flex-col items-center">
-                <span className={`h-3 w-3 rounded-full ${index === 0 ? "bg-sky-600" : index === relevantStops.length - 1 ? "bg-sky-500" : "bg-gray-300"}`} />
-                {index < relevantStops.length - 1 && <span className="h-8 w-px bg-gradient-to-b from-sky-300 to-sky-100" />}
+                <div className={`h-3 w-3 rounded-full transition-all duration-300 group-hover:scale-125 ${index === 0 ? "bg-sky-600 ring-4 ring-sky-100" : index === relevantStops.length - 1 ? "bg-sky-500 ring-4 ring-pink-100" : "bg-gray-300"}`} />
+                {index < relevantStops.length - 1 && <div className="h-10 w-0.5 bg-gradient-to-b from-sky-200 via-gray-200 to-sky-100" />}
               </div>
-              <div>
-                <div className="font-semibold text-gray-900 text-sm">{stop}</div>
+              <div className="pb-2">
+                <div className="font-bold text-gray-900 text-sm">{stop}</div>
               </div>
             </div>
           ))}
