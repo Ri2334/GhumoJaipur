@@ -120,6 +120,26 @@ export const cancelBooking = async (req, res) => {
     booking.status = 'cancelled';
     await booking.save();
 
+    // If it's a shared ride, update the pool and recalculate fares for others
+    if (booking.type === 'shared' && booking.sharedRide) {
+      const SharedRide = (await import('../models/SharedRide.js')).default;
+      const ride = await SharedRide.findById(booking.sharedRide);
+      if (ride) {
+        ride.riderCount = Math.max(1, ride.riderCount - 1);
+        ride.seatsAvailable += 1;
+        ride.splitFare = Math.round(ride.totalFare / ride.riderCount);
+        
+        // If it was waiting for approval, we might need to reset or handle it
+        // For now, just update the fare for remaining passengers
+        await Booking.updateMany(
+          { sharedRide: ride._id, status: { $ne: 'cancelled' } },
+          { fare: ride.splitFare }
+        );
+        
+        await ride.save();
+      }
+    }
+
     // Reduce user rating by 0.1
     const user = await User.findById(booking.user);
     if (user) {
@@ -127,7 +147,7 @@ export const cancelBooking = async (req, res) => {
       await user.save();
     }
 
-    if (booking.driver) {
+    if (booking.driver && booking.type !== 'shared') {
       const driver = await Driver.findById(booking.driver);
       if (driver) {
         driver.availability = 'Available';

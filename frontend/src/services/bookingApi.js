@@ -27,6 +27,11 @@ export const cancelBookingApi = async (id) => {
 };
 
 export const rateDriverApi = async (id, rating) => {
-  const response = await apiClient.post(`/bookings/${id}/rate-driver`, { rating });
+  const response = await apiClient.post(`/bookings/${id}/rate`, { rating });
+  return response.data;
+};
+
+export const passengerApproveStartApi = async (bookingId) => {
+  const response = await apiClient.post('/shared-rides/approve', { bookingId });
   return response.data;
 };

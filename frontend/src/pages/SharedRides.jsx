@@ -52,10 +52,11 @@ export default function SharedRides(){
   const handleJoin = async (id) => {
     try{
       const res = await apiClient.post('/shared-rides/join', { rideId: id });
-      const newRide = res.data.ride || res.data;
-      setMatches(m => (Array.isArray(m) ? m : []).map(x => x._id === id ? newRide : x));
-      alert('Joined shared ride — booking created');
-    }catch(e){ alert('Failed to join'); }
+      alert('Joined shared ride! Your fare will be dynamically updated as more people join.');
+      window.location.href = `/book/success/${res.data.booking._id}`;
+    }catch(e){ 
+      alert(e.response?.data?.message || 'Failed to join'); 
+    }
   };
 
   const handleCreate = async () => {
@@ -69,8 +70,13 @@ export default function SharedRides(){
       const payload = { ...form, sourceCoord: coords || { lat: 26.92, lng: 75.8 }, destCoord: coords || { lat: 26.92, lng: 75.8 } };
       const res = await apiClient.post('/shared-rides/create', payload);
       setCreating(false);
-      alert('Shared ride created');
-      setMatches(prev => [res.data?.data || res.data, ...(Array.isArray(prev) ? prev : [])]);
+      alert('Shared ride created!');
+      if (res.data.booking) {
+        window.location.href = `/book/success/${res.data.booking._id}`;
+      } else {
+        // Driver created it
+        setMatches(prev => [res.data?.data || res.data, ...(Array.isArray(prev) ? prev : [])]);
+      }
     }catch(e){ 
       setCreating(false); 
       alert(e.response?.data?.message || 'Failed to create'); 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getBookingApi, confirmBookingApi, cancelBookingApi, rateDriverApi } from '../services/bookingApi';
+import { getBookingApi, confirmBookingApi, cancelBookingApi, rateDriverApi, passengerApproveStartApi } from '../services/bookingApi';
 import { AuthContext } from '../context/AuthContext';
 import DriverMap from '../components/DriverMap';
 import PaymentModal from '../components/PaymentModal';
@@ -13,6 +13,7 @@ export default function BookingSuccess() {
   const [showPayment, setShowPayment] = useState(false);
   const [driverRating, setDriverRating] = useState(0);
   const [rated, setRated] = useState(false);
+  const [approving, setApproving] = useState(false);
 
   // Poll for status updates every 5 seconds
   useEffect(() => {
@@ -64,12 +65,28 @@ export default function BookingSuccess() {
     }
   };
 
+  const handleApproveRide = async () => {
+    try {
+      setApproving(true);
+      await passengerApproveStartApi(id);
+      const res = await getBookingApi(id);
+      setBooking(res.data);
+      alert("Ride approved! Waiting for the driver to start.");
+    } catch (err) {
+      alert("Approval failed");
+    } finally {
+      setApproving(false);
+    }
+  };
+
   if (!booking) return <div className="p-10 text-center">Loading booking details...</div>;
 
   const getStatusDisplay = () => {
     switch (booking.status) {
       case 'requested': return { text: 'Waiting for Driver', color: 'bg-amber-100 text-amber-700', sub: 'Your request has been sent to the driver.' };
       case 'accepted': return { text: 'Driver Arriving', color: 'bg-blue-100 text-blue-700', sub: `Please share OTP ${booking.rideOtp} with the driver.` };
+      case 'waiting_approval': return { text: 'Approval Required', color: 'bg-purple-100 text-purple-700', sub: 'The driver is ready to start. Please approve the ride.' };
+      case 'approved': return { text: 'Ready to Go', color: 'bg-indigo-100 text-indigo-700', sub: 'You have approved. Waiting for others or driver to start.' };
       case 'started': return { text: 'Ride Ongoing', color: 'bg-green-100 text-green-700', sub: 'Enjoy your trip through Jaipur!' };
       case 'completed': return { text: 'Ride Completed', color: 'bg-indigo-100 text-indigo-700', sub: 'You have reached your destination.' };
       case 'cancelled': return { text: 'Cancelled', color: 'bg-red-100 text-red-700', sub: 'This ride was cancelled.' };
@@ -81,6 +98,32 @@ export default function BookingSuccess() {
 
   return (
     <div className="max-w-4xl mx-auto p-4 py-8">
+      {booking.status === 'waiting_approval' && (
+        <div className="mb-8 p-6 bg-purple-600 text-white rounded-[2rem] shadow-2xl animate-pulse">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-xl font-black text-white">Driver is ready to start! 🚖</h3>
+              <p className="font-bold text-purple-100">Your final split fare is ₹{booking.fare}</p>
+            </div>
+            <div className="flex gap-2">
+              <button 
+                onClick={handleApproveRide}
+                disabled={approving}
+                className="px-6 py-3 bg-white text-purple-600 rounded-xl font-black shadow-lg hover:bg-purple-50 transition disabled:opacity-50"
+              >
+                Approve Ride
+              </button>
+              <button 
+                onClick={handleCancelRide}
+                className="px-6 py-3 bg-purple-800 text-white rounded-xl font-bold hover:bg-purple-900 transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="rounded-3xl p-8 bg-white shadow-xl border border-gray-100">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
@@ -157,7 +200,7 @@ export default function BookingSuccess() {
              </div>
 
              <div className="pt-4 flex flex-wrap gap-3">
-                {['requested', 'accepted'].includes(booking.status) && (
+                {['requested', 'accepted', 'waiting_approval', 'approved'].includes(booking.status) && (
                   <button 
                     onClick={handleCancelRide}
                     className="flex-1 py-4 bg-white border-2 border-red-500 text-red-600 hover:bg-red-50 rounded-2xl font-bold transition"

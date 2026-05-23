@@ -7,6 +7,8 @@ export default function DriverDashboard() {
   const { user } = useContext(AuthContext);
   const [driverInfo, setDriverInfo] = useState(null);
   const [rideRequests, setRideRequests] = useState([]);
+  const [availableShared, setAvailableShared] = useState([]);
+  const [mySharedRide, setMySharedRide] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [otpInputs, setOtpInputs] = useState({});
@@ -24,21 +26,43 @@ export default function DriverDashboard() {
     try {
       const res = await apiClient.get("/driver/requests");
       setRideRequests(res.data.data);
+      
+      // Look for a shared ride in active bookings
+      const shared = res.data.data.find(r => r.type === 'shared');
+      if (shared && shared.sharedRide) {
+        const rideRes = await apiClient.get(`/shared-rides/matches`); // We'll need a better way to get specific ride, but for now we can filter
+        const rideData = (rideRes.data.data || []).find(r => r._id === shared.sharedRide);
+        setMySharedRide(rideData);
+      } else {
+        setMySharedRide(null);
+      }
     } catch (err) {
       console.error("Failed to fetch ride requests", err);
+    }
+  };
+
+  const fetchAvailableShared = async () => {
+    try {
+      const res = await apiClient.get("/shared-rides/available");
+      setAvailableShared(res.data.data);
+    } catch (err) {
+      console.error("Failed to fetch available shared rides", err);
     }
   };
 
   useEffect(() => {
     const init = async () => {
       setLoading(true);
-      await Promise.all([fetchDriverData(), fetchRideRequests()]);
+      await Promise.all([fetchDriverData(), fetchRideRequests(), fetchAvailableShared()]);
       setLoading(false);
     };
     init();
 
     // Poll for new requests every 10 seconds
-    const interval = setInterval(fetchRideRequests, 10000);
+    const interval = setInterval(() => {
+      fetchRideRequests();
+      fetchAvailableShared();
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -48,9 +72,37 @@ export default function DriverDashboard() {
       const res = await apiClient.put("/driver/update", { availability: status });
       setDriverInfo(res.data.data);
     } catch (err) {
-      alert("Failed to update status");
+      alert(err.response?.data?.message || "Failed to update status");
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleAcceptShared = async (rideId) => {
+    try {
+      await apiClient.post("/shared-rides/accept", { rideId });
+      fetchRideRequests();
+      fetchAvailableShared();
+    } catch (err) {
+      alert("Failed to accept shared ride");
+    }
+  };
+
+  const handleRequestSharedStart = async (rideId) => {
+    try {
+      await apiClient.post("/shared-rides/request-start", { rideId });
+      fetchRideRequests();
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to request start");
+    }
+  };
+
+  const handleConfirmSharedStart = async (rideId) => {
+    try {
+      await apiClient.post("/shared-rides/confirm-start", { rideId });
+      fetchRideRequests();
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to start ride. Make sure all passengers have approved.");
     }
   };
 
@@ -183,20 +235,52 @@ export default function DriverDashboard() {
 
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-1">
-            <div className="rounded-3xl bg-white p-6 shadow-xl sticky top-24">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Set Current Location</h2>
-              <p className="text-sm text-gray-500 mb-4">Select the Jaipur area where you are currently waiting.</p>
-              <div className="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                {jaipurPlaces.map(place => (
-                  <button
-                    key={place.id}
-                    onClick={() => handleUpdateLocation(place.name)}
-                    className={`text-left px-3 py-2 rounded-xl text-xs transition ${driverInfo.currentLocation.areaName === place.name ? 'bg-indigo-600 text-white font-bold' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'}`}
-                  >
-                    {place.name}
-                  </button>
-                ))}
+            <div className="rounded-3xl bg-white p-6 shadow-xl sticky top-24 space-y-8">
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Set Current Location</h2>
+                <p className="text-sm text-gray-500 mb-4">Select the Jaipur area where you are currently waiting.</p>
+                <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                  {jaipurPlaces.map(place => (
+                    <button
+                      key={place.id}
+                      onClick={() => handleUpdateLocation(place.name)}
+                      className={`text-left px-3 py-2 rounded-xl text-xs transition ${driverInfo.currentLocation.areaName === place.name ? 'bg-indigo-600 text-white font-bold' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'}`}
+                    >
+                      {place.name}
+                    </button>
+                  ))}
+                </div>
               </div>
+
+              {driverInfo.isVerified && (
+                <div>
+                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <span>👥</span> Shared Pools
+                  </h2>
+                  <p className="text-xs text-gray-500 mb-4 uppercase font-black tracking-widest">Available Near You</p>
+                  <div className="space-y-3">
+                    {availableShared.length === 0 ? (
+                      <div className="p-4 bg-gray-50 rounded-2xl text-xs text-center text-gray-400">No open pools currently</div>
+                    ) : (
+                      availableShared.map(ride => (
+                        <div key={ride._id} className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl">
+                          <div className="flex justify-between items-start mb-2">
+                            <span className="text-[10px] font-black bg-indigo-600 text-white px-2 py-0.5 rounded-full uppercase">₹{ride.totalFare} Total</span>
+                            <span className="text-[10px] font-bold text-indigo-400">{ride.riderCount} Riders</span>
+                          </div>
+                          <p className="text-xs font-bold text-indigo-900 truncate">To {ride.destinationName}</p>
+                          <button 
+                            onClick={() => handleAcceptShared(ride._id)}
+                            className="mt-3 w-full py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl hover:bg-indigo-700 transition"
+                          >
+                            Accept Pool
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -218,21 +302,41 @@ export default function DriverDashboard() {
                     <div key={request._id} className="border-2 border-gray-50 rounded-2xl p-6 bg-white hover:border-indigo-100 transition">
                       <div className="flex items-start justify-between mb-4">
                         <div>
-                          <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase mb-2 ${
-                            request.status === 'requested' ? 'bg-amber-100 text-amber-700' :
-                            request.status === 'accepted' ? 'bg-blue-100 text-blue-700' :
-                            'bg-green-100 text-green-700'
-                          }`}>
-                            {request.status}
-                          </span>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase ${
+                              request.status === 'requested' || request.status === 'waiting_approval' ? 'bg-amber-100 text-amber-700' :
+                              request.status === 'accepted' || request.status === 'approved' ? 'bg-blue-100 text-blue-700' :
+                              'bg-green-100 text-green-700'
+                            }`}>
+                              {request.status.replace('_', ' ')}
+                            </span>
+                            {request.type === 'shared' && (
+                              <span className="text-[10px] font-black bg-purple-100 text-purple-600 px-3 py-1 rounded-full uppercase">Shared Pool</span>
+                            )}
+                          </div>
                           <h3 className="font-bold text-lg text-gray-900">{request.user?.fullName}</h3>
                           <p className="text-gray-500 text-sm">📞 {request.user?.mobile}</p>
                         </div>
                         <div className="text-right">
                           <div className="text-2xl font-black text-indigo-600">₹{request.fare}</div>
-                          <div className="text-xs text-gray-400 font-bold">ESTIMATED FARE</div>
+                          <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Fare</div>
                         </div>
                       </div>
+
+                      {request.type === 'shared' && mySharedRide && (
+                        <div className="mb-4 p-4 bg-purple-50 rounded-2xl border border-purple-100">
+                          <div className="flex justify-between items-center text-xs font-bold text-purple-900 mb-2">
+                            <span>POOL PROGRESS</span>
+                            <span>{mySharedRide.riderCount} / 4 Riders</span>
+                          </div>
+                          <div className="w-full bg-purple-200 rounded-full h-1.5 overflow-hidden">
+                            <div className="bg-purple-600 h-full" style={{ width: `${(mySharedRide.riderCount / 4) * 100}%` }}></div>
+                          </div>
+                          <p className="mt-3 text-[10px] text-purple-600 font-medium">
+                            {mySharedRide.status === 'open' ? 'Waiting for more passengers to join...' : 'Approval phase initiated.'}
+                          </p>
+                        </div>
+                      )}
 
                       <div className="grid gap-4 mb-6 border-y border-gray-50 py-4">
                         <div className="flex gap-3">
@@ -261,11 +365,29 @@ export default function DriverDashboard() {
                           </button>
                         )}
 
-                        {request.status === 'accepted' && (
+                        {request.type === 'shared' && mySharedRide?.status === 'open' && (
+                          <button 
+                            onClick={() => handleRequestSharedStart(mySharedRide._id)}
+                            className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-amber-100"
+                          >
+                            Request Approval to Start
+                          </button>
+                        )}
+
+                        {request.type === 'shared' && mySharedRide?.status === 'waiting_approval' && (
+                          <button 
+                            onClick={() => handleConfirmSharedStart(mySharedRide._id)}
+                            className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-green-100"
+                          >
+                            Start Ride (Confirm Approvals)
+                          </button>
+                        )}
+
+                        {(request.status === 'accepted' || request.status === 'approved') && request.type !== 'shared' && (
                           <div className="flex-1 flex gap-2">
                             <input 
                               type="text" 
-                              placeholder="Enter Ride OTP"
+                              placeholder="Ride OTP"
                               maxLength="4"
                               value={otpInputs[request._id] || ''}
                               onChange={(e) => handleOtpChange(request._id, e.target.value)}
@@ -275,7 +397,7 @@ export default function DriverDashboard() {
                               onClick={() => handleStartRide(request._id)}
                               className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-green-100"
                             >
-                              Start Ride
+                              Start
                             </button>
                           </div>
                         )}

@@ -12,6 +12,12 @@ const SharedRideSchema = new mongoose.Schema({
   splitFare: { type: Number, default: 100 },
   vehicleType: { type: String, enum: ['auto','car'], default: 'auto' },
   seatsAvailable: { type: Number, default: 3 },
+  driver: { type: mongoose.Schema.Types.ObjectId, ref: 'Driver' },
+  status: { 
+    type: String, 
+    enum: ['open', 'waiting_approval', 'started', 'completed', 'cancelled'], 
+    default: 'open' 
+  },
   timeWindowMinutes: { type: Number, default: 30 },
   sharedProbability: { type: Number, default: 50 },
   recommended: { type: Boolean, default: false },
