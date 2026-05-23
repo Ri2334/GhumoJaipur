@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { searchTransportApi, default as apiClient } from "../services/api";
 import { jaipurPlaces } from "../data/jaipurPlaces";
 import { jaipurMetroLines } from "../data/jaipurMetroData";
+import { jaipurBusStops } from "../data/jaipurBusStops";
 import TransportCard from "../components/TransportCard";
 import RouteTimeline from "../components/RouteTimeline";
 import TransportRouteMap from "../components/TransportRouteMap";
@@ -67,6 +68,14 @@ export default function TransportSearch() {
         kind: "metro", 
         searchStr: (s.name || "").toLowerCase() 
       })),
+      ...jaipurBusStops.map(b => ({
+        id: b.id,
+        name: b.name,
+        subtitle: `Bus Stop`,
+        nearest: null,
+        kind: "bus",
+        searchStr: (b.name || "").toLowerCase()
+      })),
     ];
 
     if (!query) {
@@ -100,7 +109,8 @@ export default function TransportSearch() {
     // Validation: Check if places exist in our data
     const allValidNames = [
       ...jaipurPlaces.map(p => p.name.toLowerCase()),
-      ...metroStations.map(s => s.name.toLowerCase())
+      ...metroStations.map(s => s.name.toLowerCase()),
+      ...jaipurBusStops.map(b => b.name.toLowerCase())
     ];
 
     if (!allValidNames.includes(source.toLowerCase()) || !allValidNames.includes(destination.toLowerCase())) {
@@ -204,6 +214,11 @@ export default function TransportSearch() {
                          {location.subtitle === 'Area' ? 'Neighborhood' : 'Tourist Spot'}
                        </span>
                     )}
+                    {location.kind === 'bus' && (
+                       <span className="text-[9px] bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                         Bus Stop
+                       </span>
+                    )}
                     {location.nearest && (
                       <span className="text-[10px] bg-pink-100 text-pink-700 px-2 py-1 rounded-full whitespace-nowrap font-bold">
                         🚇 Near {location.nearest}
@@ -224,6 +239,15 @@ export default function TransportSearch() {
                 className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-400 hover:text-blue-600 shadow-sm"
               >
                 📍 {area.name}
+              </button>
+            ))}
+            {jaipurBusStops.slice(0, 4).map(bus => (
+              <button 
+                key={bus.id}
+                onClick={() => setSource(bus.name)}
+                className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-400 hover:text-blue-600 shadow-sm"
+              >
+                🚌 {bus.name}
               </button>
             ))}
           </div>
@@ -257,7 +281,7 @@ export default function TransportSearch() {
                 </div>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {(result.recommendations || []).map((item) => {
                   const driverInfo = item.mode === 'Cab' ? result.cabDriver : item.mode === 'Auto' ? result.autoDriver : null;
                   const cabFare = result.recommendations.find(r => r.mode === 'Cab')?.fare;
@@ -278,6 +302,25 @@ export default function TransportSearch() {
                   );
                 })}
               </div>
+
+              {result.busRoute && (
+                <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-xl backdrop-blur">
+                  <h2 className="text-xl font-bold text-gray-900">Bus details</h2>
+                  <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-600">
+                    <div><span className="font-semibold text-gray-900">Board at:</span> {result.busRoute.sourceStop || source}</div>
+                    <div><span className="font-semibold text-gray-900">Alight at:</span> {result.busRoute.destStop || destination}</div>
+                    <div><span className="font-semibold text-gray-900">Bus Fare:</span> ₹{result.busRoute.fare || 0}</div>
+                    <div><span className="font-semibold text-gray-900">Est. Time:</span> {result.busRoute.time || 0} mins</div>
+                    <div className="col-span-2">
+                      <span className="font-semibold text-gray-900">Route info:</span> {
+                        result.busRoute.type === 'direct' 
+                        ? `Direct Route ${result.busRoute.route.routeNumber} (${result.busRoute.route.routeName})`
+                        : `Take ${result.busRoute.route1.routeNumber} and transfer to ${result.busRoute.route2.routeNumber} at ${result.busRoute.transferStop}`
+                      }
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <RouteTimeline stations={result.metroRoute?.stationSequence || []} />
             </div>

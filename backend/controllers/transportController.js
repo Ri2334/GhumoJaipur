@@ -5,6 +5,7 @@ import TransportRoute from "../models/TransportRoute.js";
 import CabRide from "../models/CabRide.js";
 import SharedRide from "../models/SharedRide.js";
 import Driver from "../models/Driver.js";
+import BusRoute from "../models/BusRoute.js";
 
 const normalizeName = (value = "") => String(value).trim().toLowerCase();
 
@@ -19,8 +20,6 @@ const getDistanceKm = (lat1, lon1, lat2, lon2) => {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const straightLineDist = earthRadius * c;
   
-  // Real world road distance is typically 1.3x to 1.5x the straight line distance
-  // Using 1.35 as a realistic multiplier for Jaipur city traffic/roads
   const ROAD_FACTOR = 1.35;
   return Number((straightLineDist * ROAD_FACTOR).toFixed(1));
 };
@@ -53,53 +52,105 @@ const stationCoordinates = {
   "Badi Chaupar": { lat: 26.9262, lng: 75.8265 }
 };
 
-const placeCoordinates = {
-  "amer fort": { lat: 26.9855, lng: 75.8513, nearest: "Badi Chaupar" },
-  "hawa mahal": { lat: 26.9239, lng: 75.8267, nearest: "Badi Chaupar" },
-  "city palace": { lat: 26.9255, lng: 75.8236, nearest: "Chhoti Chaupar" },
-  "jaipur railway station": { lat: 26.9196, lng: 75.7880, nearest: "Railway Station" },
-  "sindhi camp": { lat: 26.9248, lng: 75.7999, nearest: "Sindhi Camp" },
-  "badi chaupar": { lat: 26.9262, lng: 75.8265, nearest: "Badi Chaupar" },
-  "johari bazaar": { lat: 26.9205, lng: 75.8267, nearest: "Badi Chaupar" },
-  "world trade park": { lat: 26.8270, lng: 75.8058, nearest: "New Aatish Market" },
-  "wtp": { lat: 26.8270, lng: 75.8058, nearest: "New Aatish Market" },
-  "albert hall museum": { lat: 26.9116, lng: 75.8195, nearest: "Chhoti Chaupar" },
-  "birla mandir": { lat: 26.8922, lng: 75.8156, nearest: "Sindhi Camp" },
-  "malviya nagar": { lat: 26.8549, lng: 75.8243, nearest: "New Aatish Market" },
-  "vaishali nagar": { lat: 26.9075, lng: 75.7396, nearest: "Mansarovar" },
-  "c-scheme": { lat: 26.9133, lng: 75.8031, nearest: "Civil Lines" },
-  "raja park": { lat: 26.8979, lng: 75.8271, nearest: "Sindhi Camp" },
-  "bani park": { lat: 26.9273, lng: 75.7903, nearest: "Railway Station" },
-  "mansarovar area": { lat: 26.8584, lng: 75.7615, nearest: "Mansarovar" },
-  "jhotwara": { lat: 26.9444, lng: 75.7317, nearest: "Chandpole" },
-  "vidhyadhar nagar": { lat: 26.9587, lng: 75.7761, nearest: "Chandpole" },
-  "pink city": { lat: 26.9239, lng: 75.8267, nearest: "Badi Chaupar" },
-  "mi road": { lat: 26.9157, lng: 75.8111, nearest: "Sindhi Camp" },
-  "tonk road": { lat: 26.8688, lng: 75.8066, nearest: "New Aatish Market" },
-  "gopalpura": { lat: 26.8644, lng: 75.7753, nearest: "Ram Nagar" },
-  "sitapura": { lat: 26.7900, lng: 75.8500, nearest: "New Aatish Market" },
-  "shastri nagar": { lat: 26.9400, lng: 75.8000, nearest: "Sindhi Camp" },
-  "lalkothi": { lat: 26.8900, lng: 75.8000, nearest: "Civil Lines" }
-};
-
-const getPlaceInfo = (name) => {
+const getPlaceInfo = async (name) => {
   const normalized = normalizeName(name);
-  // Try exact match first
-  if (placeCoordinates[normalized]) return { ...placeCoordinates[normalized], matchedName: name };
+  
+  const location = await TouristLocation.findOne({ 
+    name: { $regex: new RegExp(`^${normalized}$`, "i") } 
+  });
 
-  // Try partial match
-  for (const [key, value] of Object.entries(placeCoordinates)) {
-    if (normalized.includes(key) || key.includes(normalized)) {
-      return { ...value, matchedName: name };
-    }
+  if (location) {
+    return {
+      lat: location.latitude,
+      lng: location.longitude,
+      nearest: location.nearestStation || "Railway Station",
+      matchedName: location.name
+    };
   }
+
+  const partialLocation = await TouristLocation.findOne({ 
+    name: { $regex: new RegExp(normalized, "i") } 
+  });
+
+  if (partialLocation) {
+    return {
+      lat: partialLocation.latitude,
+      lng: partialLocation.longitude,
+      nearest: partialLocation.nearestStation || "Railway Station",
+      matchedName: partialLocation.name
+    };
+  }
+
   for (const [key, value] of Object.entries(stationCoordinates)) {
     if (normalized.includes(key.toLowerCase()) || key.toLowerCase().includes(normalized)) {
       return { lat: value.lat, lng: value.lng, nearest: key, matchedName: name };
     }
   }
-  // Default fallback if not found
+
   return { lat: 26.9124, lng: 75.7873, nearest: "Railway Station", matchedName: name };
+};
+
+const findBusRoutes = async (sourceName, destName) => {
+  const allRoutes = await BusRoute.find();
+  
+  const matches = (stopList, targetName) => {
+    const normTarget = normalizeName(targetName);
+    return stopList.some(stop => {
+       const normStop = normalizeName(stop);
+       return normStop.includes(normTarget) || normTarget.includes(normStop);
+    });
+  };
+
+  const getStopNameInRoute = (stopList, targetName) => {
+    const normTarget = normalizeName(targetName);
+    return stopList.find(stop => {
+       const normStop = normalizeName(stop);
+       return normStop.includes(normTarget) || normTarget.includes(normStop);
+    });
+  };
+
+  const directRoutes = allRoutes.filter(r => matches(r.stops, sourceName) && matches(r.stops, destName));
+
+  if (directRoutes.length > 0) {
+    const bestRoute = directRoutes[0];
+    const sName = getStopNameInRoute(bestRoute.stops, sourceName);
+    const dName = getStopNameInRoute(bestRoute.stops, destName);
+    const sourceIndex = bestRoute.stops.indexOf(sName);
+    const destIndex = bestRoute.stops.indexOf(dName);
+    const stopsCount = Math.abs(destIndex - sourceIndex);
+
+    return {
+      type: "direct",
+      route: bestRoute,
+      sourceStop: sName,
+      destStop: dName,
+      fare: stopsCount <= 5 ? 10 : stopsCount <= 10 ? 15 : 20,
+      time: stopsCount * 5 + 10
+    };
+  }
+
+  const sourceRoutes = allRoutes.filter(r => matches(r.stops, sourceName));
+  const destRoutes = allRoutes.filter(r => matches(r.stops, destName));
+
+  for (const sRoute of sourceRoutes) {
+    for (const dRoute of destRoutes) {
+      const commonStop = sRoute.stops.find(stop => dRoute.stops.includes(stop));
+      if (commonStop) {
+        return {
+          type: "indirect",
+          route1: sRoute,
+          route2: dRoute,
+          transferStop: commonStop,
+          sourceStop: getStopNameInRoute(sRoute.stops, sourceName),
+          destStop: getStopNameInRoute(dRoute.stops, destName),
+          fare: 20,
+          time: 60
+        };
+      }
+    }
+  }
+
+  return null;
 };
 
 const buildMetroRoute = async (sourceStationName, destinationStationName) => {
@@ -147,7 +198,7 @@ const getOrCreateStation = async (name, defaults) => {
   return MetroStation.create({ name, ...defaults });
 };
 
-const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, autoRide, walkingAllowed, isMetroBeneficial, sourceToMetroDist, metroToDestDist }) => {
+const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, autoRide, busRoute, walkingAllowed, isMetroBeneficial, sourceToMetroDist, metroToDestDist }) => {
   const items = [];
 
   if (walkingAllowed) {
@@ -157,6 +208,18 @@ const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, autoRide,
       time: `${Math.max(10, Math.round(distanceKm * 15))} mins`,
       badge: distanceKm <= 1.5 ? "best" : "cheapest",
       note: "Best for short city hops under 2 km.",
+    });
+  }
+
+  if (busRoute) {
+    items.push({
+      mode: "Bus",
+      fare: busRoute.fare,
+      time: `${busRoute.time} mins`,
+      badge: busRoute.type === "direct" ? "cheapest" : "default",
+      note: busRoute.type === "direct" 
+        ? `Direct Bus Route ${busRoute.route.routeNumber} available.` 
+        : `Take ${busRoute.route1.routeNumber} and transfer to ${busRoute.route2.routeNumber} at ${busRoute.transferStop}.`
     });
   }
 
@@ -215,7 +278,7 @@ const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, autoRide,
     });
   }
 
-  const cheapest = items.reduce((best, current) => (!best || current.fare < best.fare ? current : best), null);
+  const cheapest = items.reduce((best, current) => (!best || (current.fare > 0 && current.fare < (best.fare || 999)) ? current : best), null);
   const fastest = items.reduce((best, current) => {
     const currentMinutes = Number(String(current.time).replace(/[^\d]/g, "")) || 999;
     const bestMinutes = best ? Number(String(best.time).replace(/[^\d]/g, "")) || 999 : 999;
@@ -239,8 +302,8 @@ export const searchTransport = async (req, res) => {
       return res.status(400).json({ success: false, message: "Source and destination are required" });
     }
 
-    const sourceInfo = getPlaceInfo(source);
-    const destInfo = getPlaceInfo(destination);
+    const sourceInfo = await getPlaceInfo(source);
+    const destInfo = await getPlaceInfo(destination);
 
     const distanceKm = getDistanceKm(sourceInfo.lat, sourceInfo.lng, destInfo.lat, destInfo.lng);
     const walkingAllowed = distanceKm <= 2;
@@ -264,6 +327,9 @@ export const searchTransport = async (req, res) => {
       }
     }
 
+    // BUS ROUTE SEARCH
+    const busRoute = await findBusRoutes(sourceInfo.matchedName, destInfo.matchedName);
+
     // NEW: Query real available drivers from DB with proximity matching
     const sourceArea = sourceInfo.matchedName || source;
     
@@ -281,15 +347,12 @@ export const searchTransport = async (req, res) => {
       "currentLocation.areaName": { $regex: new RegExp(sourceArea, "i") }
     }).populate('userId', 'fullName mobile');
 
-    // For simplicity in this version, we take the first available driver if any exists
-    // Future expansion: Calculate proximity and choose nearest
     const cabDriver = availableCabs[0];
     const autoDriver = availableAutos[0];
 
     const cabBaseFare = cabDriver ? Math.round(cabDriver.baseFare + (distanceKm * cabDriver.perKmRate)) : 0;
     const autoBaseFare = autoDriver ? Math.round(autoDriver.baseFare + (distanceKm * autoDriver.perKmRate)) : 0;
 
-    // REAL SHARED RIDE DATA - Match both source and destination proximity
     const realSharedRides = await SharedRide.find({ 
       sourceName: { $regex: new RegExp(sourceInfo.matchedName || source, "i") },
       destinationName: { $regex: new RegExp(destInfo.matchedName || destination, "i") },
@@ -310,7 +373,7 @@ export const searchTransport = async (req, res) => {
     } else {
       sharedRideData = {
         isAvailable: false,
-        lowestFare: cabBaseFare, // Show private fare as the starting price
+        lowestFare: cabBaseFare, 
         splitFare: cabBaseFare,
         note: "No shared cabs available for this location. Create one shared cab and wait for another passengers to join."
       };
@@ -327,6 +390,7 @@ export const searchTransport = async (req, res) => {
         recommended: distanceKm > 4 
       } : null,
       autoRide: autoDriver ? { estimatedFare: autoBaseFare, estimatedDurationMinutes: Math.max(8, toMinutes(distanceKm, 18)) } : null,
+      busRoute,
       walkingAllowed,
       isMetroBeneficial,
       sourceToMetroDist,
@@ -342,6 +406,7 @@ export const searchTransport = async (req, res) => {
       cheapestMode: recommendations.find((item) => item.isCheapest)?.mode || recommendations[0]?.mode || "Bus",
       fastestMode: recommendations.find((item) => item.isFastest)?.mode || recommendations[0]?.mode || "Cab",
       metroRoute: isMetroBeneficial ? metroRoute : null,
+      busRoute: busRoute
     };
 
     return res.status(200).json({
@@ -349,6 +414,7 @@ export const searchTransport = async (req, res) => {
       data: {
         route: routeRecord,
         metroRoute: isMetroBeneficial ? metroRoute : null,
+        busRoute,
         cabDriver: cabDriver ? { _id: cabDriver._id, name: cabDriver.userId.fullName, vehicle: cabDriver.vehicle, vehicleNumber: cabDriver.vehicleNumber, rating: cabDriver.rating } : null,
         autoDriver: autoDriver ? { _id: autoDriver._id, name: autoDriver.userId.fullName, vehicle: autoDriver.vehicle, vehicleNumber: autoDriver.vehicleNumber, rating: autoDriver.rating } : null,
         recommendations,

@@ -221,7 +221,7 @@ export default function BookingSuccess() {
              </div>
           </div>
 
-          <div className="h-[400px] md:h-auto overflow-hidden rounded-3xl border border-gray-100 shadow-inner">
+          <div className="h-[400px] overflow-hidden rounded-3xl border border-gray-100 shadow-inner">
              <DriverMap 
                 driver={booking.driver} 
                 pickupCoord={{ lat: booking.map?.source?.latitude || 26.9124, lng: booking.map?.source?.longitude || 75.7873 }} 
