@@ -190,7 +190,7 @@ const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, autoRide,
       fare: sharedRide.splitFare,
       time: `${Math.max(10, sharedRide.timeWindowMinutes)} mins`,
       badge: sharedRide.recommended && !isMetroBeneficial ? "best" : "default",
-      note: `Split fare with ${sharedRide.riderCount} riders.`,
+      note: sharedRide.note || `Split fare with ${sharedRide.riderCount} riders.`,
     });
   }
 
@@ -289,11 +289,43 @@ export const searchTransport = async (req, res) => {
     const cabBaseFare = cabDriver ? Math.round(cabDriver.baseFare + (distanceKm * cabDriver.perKmRate)) : 0;
     const autoBaseFare = autoDriver ? Math.round(autoDriver.baseFare + (distanceKm * autoDriver.perKmRate)) : 0;
 
+    // REAL SHARED RIDE DATA - Match both source and destination proximity
+    const realSharedRides = await SharedRide.find({ 
+      sourceName: { $regex: new RegExp(sourceInfo.matchedName || source, "i") },
+      destinationName: { $regex: new RegExp(destInfo.matchedName || destination, "i") },
+      status: 'open',
+      seatsAvailable: { $gt: 0 }
+    });
+
+    let sharedRideData = null;
+    if (realSharedRides.length > 0) {
+      const minFare = Math.min(...realSharedRides.map(r => r.splitFare));
+      sharedRideData = {
+        isAvailable: true,
+        lowestFare: minFare,
+        rideCount: realSharedRides.length,
+        splitFare: minFare,
+        note: `As low as ₹${minFare} with ${realSharedRides.length} active pools.`
+      };
+    } else {
+      sharedRideData = {
+        isAvailable: false,
+        lowestFare: cabBaseFare, // Show private fare as the starting price
+        splitFare: cabBaseFare,
+        note: "No shared cabs available for this location. Create one shared cab and wait for another passengers to join."
+      };
+    }
+
     const recommendations = buildRecommendation({
       distanceKm,
       route: metroRoute,
       cabRide: cabDriver ? { estimatedFare: cabBaseFare, estimatedDurationMinutes: Math.max(8, toMinutes(distanceKm, 22)), surgeMultiplier: 1.0, availability: "High" } : null,
-      sharedRide: cabDriver ? { splitFare: Math.round(cabBaseFare * 0.4), riderCount: 2, timeWindowMinutes: 15, sharedProbability: 60, recommended: distanceKm > 4 } : null,
+      sharedRide: cabDriver ? { 
+        ...sharedRideData,
+        timeWindowMinutes: 15, 
+        sharedProbability: 60, 
+        recommended: distanceKm > 4 
+      } : null,
       autoRide: autoDriver ? { estimatedFare: autoBaseFare, estimatedDurationMinutes: Math.max(8, toMinutes(distanceKm, 18)) } : null,
       walkingAllowed,
       isMetroBeneficial,

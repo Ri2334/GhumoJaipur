@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import SharedRide from '../models/SharedRide.js';
 import Booking from '../models/Booking.js';
 import Driver from '../models/Driver.js';
@@ -18,13 +19,14 @@ const haversineKm = (a, b) => {
 
 export const findMatches = async (req, res) => {
   try {
-    const { sourceLat, sourceLng, destination } = req.query;
+    const { sourceLat, sourceLng, destination, source } = req.query;
     const userCoord = sourceLat && sourceLng ? { lat: parseFloat(sourceLat), lng: parseFloat(sourceLng) } : null;
 
-    let rides = await SharedRide.find().limit(50);
+    let query = {};
+    if (destination) query.destinationName = { $regex: new RegExp(destination, "i") };
+    if (source) query.sourceName = { $regex: new RegExp(source, "i") };
 
-    // Filter by destination text closeness first
-    if (destination) rides = rides.filter(r => r.destinationName.toLowerCase().includes(destination.toLowerCase()));
+    let rides = await SharedRide.find(query).limit(50);
 
     // If user coord provided, compute distance and sort by proximity
     if (userCoord) {
@@ -62,15 +64,17 @@ export const joinSharedRide = async (req, res) => {
     await ride.save();
 
     // Create booking for the new joiner
+    const rideOtp = Math.floor(1000 + Math.random() * 9000).toString();
     const booking = await Booking.create({ 
       user: user._id, 
       type: 'shared', 
       pickup: ride.sourceName, 
       destination: ride.destinationName, 
       fare: ride.splitFare, 
-      status: 'requested', 
+      status: ride.driver ? 'accepted' : 'requested', 
       sharedRide: ride._id,
       driver: ride.driver, // Link existing driver if assigned
+      rideOtp,
       etaMinutes: Math.max(3, Math.round(Math.random()*10)) 
     });
 
@@ -90,6 +94,22 @@ export const createSharedRide = async (req, res) => {
   try {
     const { sourceName, destinationName, sourceCoord, destCoord, totalFare, vehicleType } = req.body;
     if (!sourceName || !destinationName) return res.status(400).json({ success: false, message: 'Missing names' });
+
+    // Prevent multiple active shared rides for the same user
+    if (req.user.role === 'user') {
+      const activeBooking = await Booking.findOne({ 
+        user: req.user._id, 
+        type: 'shared', 
+        status: { $in: ['requested', 'accepted', 'waiting_approval', 'approved', 'started'] } 
+      });
+      if (activeBooking) {
+        return res.status(400).json({ 
+          success: false, 
+          message: "You already have an active shared ride. Please complete or cancel it before starting a new pool.",
+          bookingId: activeBooking._id
+        });
+      }
+    }
 
     // If a driver is trying to create a ride, check verification
     if (req.user.role === 'driver') {
@@ -116,6 +136,7 @@ export const createSharedRide = async (req, res) => {
     // Automatically create a booking for the creator (if passenger)
     let booking = null;
     if (req.user.role === 'user') {
+      const rideOtp = Math.floor(1000 + Math.random() * 9000).toString();
       booking = await Booking.create({
         user: req.user._id,
         type: 'shared',
@@ -124,6 +145,7 @@ export const createSharedRide = async (req, res) => {
         fare: ride.totalFare,
         status: 'requested',
         sharedRide: ride._id,
+        rideOtp,
         etaMinutes: Math.max(3, Math.round(Math.random()*10))
       });
     }
@@ -136,10 +158,17 @@ export const createSharedRide = async (req, res) => {
 
 export const getAvailableSharedRides = async (req, res) => {
   try {
+    const driver = await Driver.findOne({ userId: req.user._id });
+    if (!driver) return res.status(404).json({ success: false, message: "Driver not found" });
+
+    const driverArea = driver.currentLocation?.areaName;
+
     const rides = await SharedRide.find({ 
       status: 'open', 
-      driver: { $exists: false } 
+      driver: { $exists: false },
+      sourceName: { $regex: new RegExp(driverArea, "i") } 
     }).sort({ createdAt: -1 });
+    
     return res.status(200).json({ success: true, data: rides });
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message });
@@ -161,10 +190,10 @@ export const driverAcceptSharedRide = async (req, res) => {
     ride.driver = driver._id;
     await ride.save();
 
-    // Link driver to all existing bookings for this ride
+    // Link driver to all existing bookings for this ride and auto-accept them
     await Booking.updateMany(
-      { sharedRide: ride._id, status: { $ne: 'cancelled' } },
-      { driver: driver._id }
+      { sharedRide: new mongoose.Types.ObjectId(rideId), status: { $ne: 'cancelled' } },
+      { driver: driver._id, status: 'accepted' }
     );
 
     return res.status(200).json({ success: true, data: ride });
@@ -188,7 +217,7 @@ export const driverRequestStart = async (req, res) => {
 
     // Update all bookings to waiting_approval
     await Booking.updateMany(
-      { sharedRide: ride._id, status: 'requested' },
+      { sharedRide: new mongoose.Types.ObjectId(rideId), status: { $in: ['requested', 'accepted'] } },
       { status: 'waiting_approval' }
     );
 
@@ -227,13 +256,17 @@ export const driverConfirmStart = async (req, res) => {
       return res.status(403).json({ success: false, message: "Unauthorized" });
     }
 
-    // Check if there are any passengers who haven't approved yet
-    const pendingBookings = await Booking.find({ sharedRide: ride._id, status: 'waiting_approval' });
-    if (pendingBookings.length > 0) {
-      return res.status(400).json({ success: false, message: "Wait for all passengers to approve or cancel" });
+    // Check if there are any passengers who haven't approved yet (requested, accepted, or waiting_approval)
+    const nonApprovedBookings = await Booking.find({ 
+      sharedRide: new mongoose.Types.ObjectId(rideId), 
+      status: { $in: ['requested', 'accepted', 'waiting_approval'] } 
+    });
+    
+    if (nonApprovedBookings.length > 0) {
+      return res.status(400).json({ success: false, message: "Wait for all passengers to approve. Some are still pending." });
     }
 
-    const approvedBookings = await Booking.find({ sharedRide: ride._id, status: 'approved' });
+    const approvedBookings = await Booking.find({ sharedRide: new mongoose.Types.ObjectId(rideId), status: 'approved' });
     if (approvedBookings.length === 0) {
       return res.status(400).json({ success: false, message: "No approved passengers to start the ride" });
     }
@@ -242,7 +275,7 @@ export const driverConfirmStart = async (req, res) => {
     await ride.save();
 
     await Booking.updateMany(
-      { sharedRide: ride._id, status: 'approved' },
+      { sharedRide: new mongoose.Types.ObjectId(rideId), status: 'approved' },
       { status: 'started' }
     );
 

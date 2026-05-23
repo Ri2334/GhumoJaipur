@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import apiClient from "../services/api";
 
 // Sticky responsive navbar with auth-aware links
 export default function Navbar() {
@@ -23,12 +24,10 @@ export default function Navbar() {
 
     const checkActiveRide = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/bookings/my`, {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('ghumo_token')}` }
-        });
-        const body = await res.json();
+        const res = await apiClient.get('/bookings/my');
+        const bookings = res.data.data || res.data || [];
         // Find if there is any booking that is not completed or cancelled
-        const active = (body.data || []).find(r => ['requested', 'accepted', 'started'].includes(r.status));
+        const active = bookings.find(r => ['requested', 'accepted', 'waiting_approval', 'approved', 'started'].includes(r.status));
         setActiveRideId(active ? active._id : null);
       } catch (err) {
         console.error("Failed to check active ride", err);
@@ -36,7 +35,7 @@ export default function Navbar() {
     };
 
     checkActiveRide();
-    const interval = setInterval(checkActiveRide, 30000); // Check every 30s
+    const interval = setInterval(checkActiveRide, 10000); // Check every 10s
     return () => clearInterval(interval);
   }, [user]);
 

@@ -83,7 +83,10 @@ export default function BookingSuccess() {
 
   const getStatusDisplay = () => {
     switch (booking.status) {
-      case 'requested': return { text: 'Waiting for Driver', color: 'bg-amber-100 text-amber-700', sub: 'Your request has been sent to the driver.' };
+      case 'requested': 
+        return booking.type === 'shared' 
+          ? { text: 'Pooling Active', color: 'bg-purple-100 text-purple-700', sub: 'Waiting for more passengers to join and a driver to accept.' }
+          : { text: 'Waiting for Driver', color: 'bg-amber-100 text-amber-700', sub: 'Your request has been sent to the driver.' };
       case 'accepted': return { text: 'Driver Arriving', color: 'bg-blue-100 text-blue-700', sub: `Please share OTP ${booking.rideOtp} with the driver.` };
       case 'waiting_approval': return { text: 'Approval Required', color: 'bg-purple-100 text-purple-700', sub: 'The driver is ready to start. Please approve the ride.' };
       case 'approved': return { text: 'Ready to Go', color: 'bg-indigo-100 text-indigo-700', sub: 'You have approved. Waiting for others or driver to start.' };

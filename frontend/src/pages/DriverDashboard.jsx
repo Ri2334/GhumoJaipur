@@ -8,7 +8,6 @@ export default function DriverDashboard() {
   const [driverInfo, setDriverInfo] = useState(null);
   const [rideRequests, setRideRequests] = useState([]);
   const [availableShared, setAvailableShared] = useState([]);
-  const [mySharedRide, setMySharedRide] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [otpInputs, setOtpInputs] = useState({});
@@ -26,16 +25,6 @@ export default function DriverDashboard() {
     try {
       const res = await apiClient.get("/driver/requests");
       setRideRequests(res.data.data);
-      
-      // Look for a shared ride in active bookings
-      const shared = res.data.data.find(r => r.type === 'shared');
-      if (shared && shared.sharedRide) {
-        const rideRes = await apiClient.get(`/shared-rides/matches`); // We'll need a better way to get specific ride, but for now we can filter
-        const rideData = (rideRes.data.data || []).find(r => r._id === shared.sharedRide);
-        setMySharedRide(rideData);
-      } else {
-        setMySharedRide(null);
-      }
     } catch (err) {
       console.error("Failed to fetch ride requests", err);
     }
@@ -323,17 +312,17 @@ export default function DriverDashboard() {
                         </div>
                       </div>
 
-                      {request.type === 'shared' && mySharedRide && (
+                      {request.type === 'shared' && request.sharedRide && (
                         <div className="mb-4 p-4 bg-purple-50 rounded-2xl border border-purple-100">
                           <div className="flex justify-between items-center text-xs font-bold text-purple-900 mb-2">
                             <span>POOL PROGRESS</span>
-                            <span>{mySharedRide.riderCount} / 4 Riders</span>
+                            <span>{request.sharedRide.riderCount} / 4 Riders</span>
                           </div>
                           <div className="w-full bg-purple-200 rounded-full h-1.5 overflow-hidden">
-                            <div className="bg-purple-600 h-full" style={{ width: `${(mySharedRide.riderCount / 4) * 100}%` }}></div>
+                            <div className="bg-purple-600 h-full" style={{ width: `${(request.sharedRide.riderCount / 4) * 100}%` }}></div>
                           </div>
                           <p className="mt-3 text-[10px] text-purple-600 font-medium">
-                            {mySharedRide.status === 'open' ? 'Waiting for more passengers to join...' : 'Approval phase initiated.'}
+                            {request.sharedRide.status === 'open' ? 'Waiting for more passengers to join...' : 'Approval phase initiated.'}
                           </p>
                         </div>
                       )}
@@ -365,18 +354,18 @@ export default function DriverDashboard() {
                           </button>
                         )}
 
-                        {request.type === 'shared' && mySharedRide?.status === 'open' && (
+                        {request.type === 'shared' && request.sharedRide?.status === 'open' && (
                           <button 
-                            onClick={() => handleRequestSharedStart(mySharedRide._id)}
+                            onClick={() => handleRequestSharedStart(request.sharedRide._id)}
                             className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-amber-100"
                           >
                             Request Approval to Start
                           </button>
                         )}
 
-                        {request.type === 'shared' && mySharedRide?.status === 'waiting_approval' && (
+                        {request.type === 'shared' && request.sharedRide?.status === 'waiting_approval' && (
                           <button 
-                            onClick={() => handleConfirmSharedStart(mySharedRide._id)}
+                            onClick={() => handleConfirmSharedStart(request.sharedRide._id)}
                             className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-green-100"
                           >
                             Start Ride (Confirm Approvals)

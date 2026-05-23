@@ -260,6 +260,8 @@ export default function TransportSearch() {
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {(result.recommendations || []).map((item) => {
                   const driverInfo = item.mode === 'Cab' ? result.cabDriver : item.mode === 'Auto' ? result.autoDriver : null;
+                  const cabFare = result.recommendations.find(r => r.mode === 'Cab')?.fare;
+                  
                   return (
                     <TransportCard
                       key={item.mode}
@@ -271,6 +273,7 @@ export default function TransportSearch() {
                       source={source}
                       destination={destination}
                       driver={driverInfo}
+                      cabFare={cabFare}
                     />
                   );
                 })}

@@ -90,8 +90,8 @@ export const getRideRequests = async (req, res) => {
     // Find requested or accepted/started bookings for this driver
     const bookings = await Booking.find({ 
       driver: driver._id, 
-      status: { $in: ["requested", "accepted", "started"] } 
-    }).populate('user', 'fullName mobile');
+      status: { $in: ["requested", "accepted", "waiting_approval", "approved", "started"] } 
+    }).populate('user', 'fullName mobile').populate('sharedRide');
 
     return res.status(200).json({ success: true, data: bookings });
   } catch (error) {
