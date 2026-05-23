@@ -55,6 +55,7 @@ const stationCoordinates = {
 const getPlaceInfo = async (name) => {
   const normalized = normalizeName(name);
   
+  // 1. Try exact or partial match in TouristLocation (which now includes Bus Stops)
   const location = await TouristLocation.findOne({ 
     name: { $regex: new RegExp(`^${normalized}$`, "i") } 
   });
@@ -68,6 +69,7 @@ const getPlaceInfo = async (name) => {
     };
   }
 
+  // 2. Try partial match in TouristLocation
   const partialLocation = await TouristLocation.findOne({ 
     name: { $regex: new RegExp(normalized, "i") } 
   });
@@ -81,12 +83,20 @@ const getPlaceInfo = async (name) => {
     };
   }
 
+  // 3. Try to match directly against Metro Stations
   for (const [key, value] of Object.entries(stationCoordinates)) {
-    if (normalized.includes(key.toLowerCase()) || key.toLowerCase().includes(normalized)) {
-      return { lat: value.lat, lng: value.lng, nearest: key, matchedName: name };
+    const stationName = key.toLowerCase();
+    if (normalized.includes(stationName) || stationName.includes(normalized)) {
+      return { 
+        lat: value.lat, 
+        lng: value.lng, 
+        nearest: key, 
+        matchedName: key // Use the official station name
+      };
     }
   }
 
+  // 4. Default fallback if not found
   return { lat: 26.9124, lng: 75.7873, nearest: "Railway Station", matchedName: name };
 };
 

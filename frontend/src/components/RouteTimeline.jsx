@@ -10,17 +10,17 @@ export default function RouteTimeline({ stations = [] }) {
         {stations.map((station, index) => {
           if (!station) return null;
           const name = station.name || "Station";
-          const subtitle = station.area || station.line || "Metro Station";
+          const subtitle = station.area || "Metro Station";
           
           return (
-            <div key={`${name}-${index}`} className="flex items-start gap-3">
+            <div key={`${name}-${index}`} className="flex items-start gap-3 group">
               <div className="mt-1 flex flex-col items-center">
-                <span className={`h-3 w-3 rounded-full ${index === 0 ? "bg-indigo-600" : index === stations.length - 1 ? "bg-pink-500" : "bg-gray-300"}`} />
-                {index < stations.length - 1 && <span className="h-8 w-px bg-gradient-to-b from-indigo-300 to-pink-300" />}
+                <div className={`h-3 w-3 rounded-full transition-all duration-300 group-hover:scale-125 ${index === 0 ? "bg-indigo-600 ring-4 ring-indigo-100" : index === stations.length - 1 ? "bg-pink-500 ring-4 ring-pink-100" : "bg-gray-300"}`} />
+                {index < stations.length - 1 && <div className="h-10 w-0.5 bg-gradient-to-b from-indigo-200 via-gray-200 to-pink-200" />}
               </div>
-              <div>
-                <div className="font-semibold text-gray-900">{name}</div>
-                <div className="text-sm text-gray-500">{subtitle}</div>
+              <div className="pb-2">
+                <div className="font-bold text-gray-900 text-sm">{name}</div>
+                <div className="text-[11px] font-medium text-gray-400 uppercase tracking-wider">{subtitle}</div>
               </div>
             </div>
           );

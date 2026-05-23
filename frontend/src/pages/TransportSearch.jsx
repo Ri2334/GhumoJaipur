@@ -286,87 +286,114 @@ export default function TransportSearch() {
               </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {(result.recommendations || []).map((item) => {
-                  const driverInfo = item.mode === 'Cab' ? result.cabDriver : item.mode === 'Auto' ? result.autoDriver : null;
-                  const cabFare = result.recommendations.find(r => r.mode === 'Cab')?.fare;
-                  
-                  return (
-                    <TransportCard
-                      key={item.mode}
-                      mode={item.mode}
-                      fare={item.fare}
-                      time={item.time}
-                      badge={item.isRecommended ? "best" : item.isCheapest ? "cheapest" : item.isFastest ? "fastest" : item.badge}
-                      note={item.note}
-                      source={source}
-                      destination={destination}
-                      driver={driverInfo}
-                      cabFare={cabFare}
-                      onSelect={() => {
-                        if (item.mode === 'Metro') setActiveTimeline("metro");
-                        if (item.mode === 'Bus') setActiveTimeline("bus");
-                      }}
-                    />
-                  );
-                })}
-              </div>
+              {(result.recommendations || []).map((item) => {
+                const driverInfo = item.mode === 'Cab' ? result.cabDriver : item.mode === 'Auto' ? result.autoDriver : null;
+                const cabFare = result.recommendations.find(r => r.mode === 'Cab')?.fare;
 
-              {result.busRoute && (
-                <div 
-                  onClick={() => setActiveTimeline("bus")}
-                  className={`cursor-pointer rounded-3xl border p-6 shadow-xl backdrop-blur transition transform hover:scale-[1.01] ${activeTimeline === 'bus' ? 'border-sky-400 bg-sky-50/50' : 'border-white/70 bg-white/80'}`}
-                >
-                  <h2 className="text-xl font-bold text-gray-900 flex justify-between items-center">
-                    Bus details
-                    {activeTimeline === 'bus' && <span className="text-[10px] bg-sky-600 text-white px-2 py-1 rounded-full uppercase tracking-tighter animate-pulse">Viewing Route</span>}
-                  </h2>
-                  <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-600">
-                    <div><span className="font-semibold text-gray-900">Board at:</span> {result.busRoute.sourceStop || source}</div>
-                    <div><span className="font-semibold text-gray-900">Alight at:</span> {result.busRoute.destStop || destination}</div>
-                    <div><span className="font-semibold text-gray-900">Bus Fare:</span> ₹{result.busRoute.fare || 0}</div>
-                    <div><span className="font-semibold text-gray-900">Est. Time:</span> {result.busRoute.time || 0} mins</div>
-                    <div className="col-span-2">
-                      <span className="font-semibold text-gray-900">Route info:</span> {
-                        result.busRoute.type === 'direct' 
-                        ? `Direct Route ${result.busRoute.route.routeNumber} (${result.busRoute.route.routeName})`
-                        : `Take ${result.busRoute.route1.routeNumber} and transfer to ${result.busRoute.route2.routeNumber} at ${result.busRoute.transferStop}`
-                      }
-                    </div>
-                  </div>
+                return (
+                  <TransportCard
+                    key={item.mode}
+                    mode={item.mode}
+                    fare={item.fare}
+                    time={item.time}
+                    badge={item.isRecommended ? "best" : item.isCheapest ? "cheapest" : item.isFastest ? "fastest" : item.badge}
+                    note={item.note}
+                    source={source}
+                    destination={destination}
+                    driver={driverInfo}
+                    cabFare={cabFare}
+                    onSelect={() => {
+                      if (item.mode === 'Metro') setActiveTimeline("metro");
+                      if (item.mode === 'Bus') setActiveTimeline("bus");
+                    }}
+                  />
+                );
+              })}
+            </div>
+
+            {(result.metroRoute || result.busRoute) && (
+              <div className="mt-8">
+                <div className="flex items-center gap-2 mb-4 border-b border-gray-100 pb-2">
+                  {result.metroRoute && (
+                    <button 
+                      onClick={() => setActiveTimeline("metro")}
+                      className={`px-4 py-2 rounded-xl text-sm font-bold transition ${activeTimeline === 'metro' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'bg-white text-gray-500 hover:bg-indigo-50'}`}
+                    >
+                      🚇 Metro Route
+                    </button>
+                  )}
+                  {result.busRoute && (
+                    <button 
+                      onClick={() => setActiveTimeline("bus")}
+                      className={`px-4 py-2 rounded-xl text-sm font-bold transition ${activeTimeline === 'bus' ? 'bg-sky-600 text-white shadow-lg shadow-sky-100' : 'bg-white text-gray-500 hover:bg-sky-50'}`}
+                    >
+                      🚌 Bus Route
+                    </button>
+                  )}
                 </div>
-              )}
 
-              {activeTimeline === 'metro' && result.metroRoute && (
-                <RouteTimeline stations={result.metroRoute?.stationSequence || []} />
-              )}
-              {activeTimeline === 'bus' && result.busRoute && (
-                <BusRouteTimeline busRoute={result.busRoute} />
-              )}
+                {activeTimeline === 'metro' && result.metroRoute && (
+                  <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <RouteTimeline stations={result.metroRoute?.stationSequence || []} />
+                  </div>
+                )}
+                {activeTimeline === 'bus' && result.busRoute && (
+                  <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <BusRouteTimeline busRoute={result.busRoute} />
+                  </div>
+                )}
+              </div>
+            )}
             </div>
 
             <div className="space-y-6">
-              {result.metroRoute && (
-                <div 
-                  onClick={() => setActiveTimeline("metro")}
-                  className={`cursor-pointer rounded-3xl border p-6 shadow-xl backdrop-blur transition transform hover:scale-[1.01] ${activeTimeline === 'metro' ? 'border-indigo-400 bg-indigo-50/50' : 'border-white/70 bg-white/80'}`}
-                >
-                  <h2 className="text-xl font-bold text-gray-900 flex justify-between items-center">
-                    Metro details
-                    {activeTimeline === 'metro' && <span className="text-[10px] bg-indigo-600 text-white px-2 py-1 rounded-full uppercase tracking-tighter animate-pulse">Viewing Route</span>}
-                  </h2>
-                  <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-600">
-                    <div><span className="font-semibold text-gray-900">Board at:</span> {result.metroRoute?.sourceStation?.name || "Nearest Station"}</div>
-                    <div><span className="font-semibold text-gray-900">Alight at:</span> {result.metroRoute?.destinationStation?.name || "Nearest Station"}</div>
-                    <div><span className="font-semibold text-gray-900">Metro Fare:</span> ₹{result.metroRoute?.fare || 0}</div>
-                    <div><span className="font-semibold text-gray-900">Travel time:</span> {result.metroRoute?.travelTimeMinutes || 0} mins</div>
-                    <div><span className="font-semibold text-gray-900">Wait time:</span> {result.metroRoute?.waitingTimeMinutes || 0} mins</div>
-                    <div><span className="font-semibold text-gray-900 text-pink-600">Next train in:</span> {result.metroRoute?.nextTrainMinutes || 0} mins</div>
+            {result.metroRoute && (
+              <div 
+                onClick={() => setActiveTimeline("metro")}
+                className={`cursor-pointer rounded-3xl border p-6 shadow-xl backdrop-blur transition transform hover:scale-[1.01] ${activeTimeline === 'metro' ? 'border-indigo-400 bg-indigo-50/50' : 'border-white/70 bg-white/80'}`}
+              >
+                <h2 className="text-xl font-bold text-gray-900 flex justify-between items-center">
+                  Metro details
+                  {activeTimeline === 'metro' && <span className="text-[10px] bg-indigo-600 text-white px-2 py-1 rounded-full uppercase tracking-tighter animate-pulse">Viewing Route</span>}
+                </h2>
+                <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-600">
+                  <div><span className="font-semibold text-gray-900">Board at:</span> {result.metroRoute?.sourceStation?.name || "Nearest Station"}</div>
+                  <div><span className="font-semibold text-gray-900">Alight at:</span> {result.metroRoute?.destinationStation?.name || "Nearest Station"}</div>
+                  <div><span className="font-semibold text-gray-900">Metro Fare:</span> ₹{result.metroRoute?.fare || 0}</div>
+                  <div><span className="font-semibold text-gray-900">Travel time:</span> {result.metroRoute?.travelTimeMinutes || 0} mins</div>
+                  <div><span className="font-semibold text-gray-900">Wait time:</span> {result.metroRoute?.waitingTimeMinutes || 0} mins</div>
+                  <div><span className="font-semibold text-gray-900 text-pink-600">Next train in:</span> {result.metroRoute?.nextTrainMinutes || 0} mins</div>
+                </div>
+              </div>
+            )}
+
+            {result.busRoute && (
+              <div 
+                onClick={() => setActiveTimeline("bus")}
+                className={`cursor-pointer rounded-3xl border p-6 shadow-xl backdrop-blur transition transform hover:scale-[1.01] ${activeTimeline === 'bus' ? 'border-sky-400 bg-sky-50/50' : 'border-white/70 bg-white/80'}`}
+              >
+                <h2 className="text-xl font-bold text-gray-900 flex justify-between items-center">
+                  Bus details
+                  {activeTimeline === 'bus' && <span className="text-[10px] bg-sky-600 text-white px-2 py-1 rounded-full uppercase tracking-tighter animate-pulse">Viewing Route</span>}
+                </h2>
+                <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-600">
+                  <div><span className="font-semibold text-gray-900">Board at:</span> {result.busRoute.sourceStop || source}</div>
+                  <div><span className="font-semibold text-gray-900">Alight at:</span> {result.busRoute.destStop || destination}</div>
+                  <div><span className="font-semibold text-gray-900">Bus Fare:</span> ₹{result.busRoute.fare || 0}</div>
+                  <div><span className="font-semibold text-gray-900">Est. Time:</span> {result.busRoute.time || 0} mins</div>
+                  <div className="col-span-2">
+                    <span className="font-semibold text-gray-900">Route info:</span> {
+                      result.busRoute.type === 'direct' 
+                      ? `Direct Route ${result.busRoute.route.routeNumber} (${result.busRoute.route.routeName})`
+                      : `Take ${result.busRoute.route1.routeNumber} and transfer to ${result.busRoute.route2.routeNumber} at ${result.busRoute.transferStop}`
+                    }
                   </div>
                 </div>
-              )}
+              </div>
+            )}
 
-              <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-xl backdrop-blur h-[400px] flex flex-col">
-                <div className="border-b border-gray-100 px-6 py-4 bg-white/90">
+            <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-xl backdrop-blur h-[400px] flex flex-col">
+            ...                <div className="border-b border-gray-100 px-6 py-4 bg-white/90">
                   <h2 className="text-xl font-bold text-gray-900">Route map</h2>
                 </div>
                 <div className="flex-1 w-full z-0 relative min-h-0">
