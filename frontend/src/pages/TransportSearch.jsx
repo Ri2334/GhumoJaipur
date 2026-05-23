@@ -6,6 +6,7 @@ import { jaipurMetroLines } from "../data/jaipurMetroData";
 import { jaipurBusStops } from "../data/jaipurBusStops";
 import TransportCard from "../components/TransportCard";
 import RouteTimeline from "../components/RouteTimeline";
+import BusRouteTimeline from "../components/BusRouteTimeline";
 import TransportRouteMap from "../components/TransportRouteMap";
 
 class MapErrorBoundary extends React.Component {
@@ -45,6 +46,7 @@ export default function TransportSearch() {
   const [result, setResult] = useState(null);
   const [suggestionsVisible, setSuggestionsVisible] = useState(false);
   const [activeField, setActiveField] = useState("source");
+  const [activeTimeline, setActiveTimeline] = useState("metro");
 
   const metroStations = jaipurMetroLines[0].stations;
 
@@ -126,6 +128,8 @@ export default function TransportSearch() {
       const response = await searchTransportApi({ source, destination });
       if (response && response.success) {
         setResult(response.data);
+        if (response.data.metroRoute) setActiveTimeline("metro");
+        else if (response.data.busRoute) setActiveTimeline("bus");
       } else {
         throw new Error("Invalid response from server");
       }
@@ -298,14 +302,24 @@ export default function TransportSearch() {
                       destination={destination}
                       driver={driverInfo}
                       cabFare={cabFare}
+                      onSelect={() => {
+                        if (item.mode === 'Metro') setActiveTimeline("metro");
+                        if (item.mode === 'Bus') setActiveTimeline("bus");
+                      }}
                     />
                   );
                 })}
               </div>
 
               {result.busRoute && (
-                <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-xl backdrop-blur">
-                  <h2 className="text-xl font-bold text-gray-900">Bus details</h2>
+                <div 
+                  onClick={() => setActiveTimeline("bus")}
+                  className={`cursor-pointer rounded-3xl border p-6 shadow-xl backdrop-blur transition transform hover:scale-[1.01] ${activeTimeline === 'bus' ? 'border-sky-400 bg-sky-50/50' : 'border-white/70 bg-white/80'}`}
+                >
+                  <h2 className="text-xl font-bold text-gray-900 flex justify-between items-center">
+                    Bus details
+                    {activeTimeline === 'bus' && <span className="text-[10px] bg-sky-600 text-white px-2 py-1 rounded-full uppercase tracking-tighter animate-pulse">Viewing Route</span>}
+                  </h2>
                   <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-600">
                     <div><span className="font-semibold text-gray-900">Board at:</span> {result.busRoute.sourceStop || source}</div>
                     <div><span className="font-semibold text-gray-900">Alight at:</span> {result.busRoute.destStop || destination}</div>
@@ -322,13 +336,24 @@ export default function TransportSearch() {
                 </div>
               )}
 
-              <RouteTimeline stations={result.metroRoute?.stationSequence || []} />
+              {activeTimeline === 'metro' && result.metroRoute && (
+                <RouteTimeline stations={result.metroRoute?.stationSequence || []} />
+              )}
+              {activeTimeline === 'bus' && result.busRoute && (
+                <BusRouteTimeline busRoute={result.busRoute} />
+              )}
             </div>
 
             <div className="space-y-6">
               {result.metroRoute && (
-                <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-xl backdrop-blur">
-                  <h2 className="text-xl font-bold text-gray-900">Metro details</h2>
+                <div 
+                  onClick={() => setActiveTimeline("metro")}
+                  className={`cursor-pointer rounded-3xl border p-6 shadow-xl backdrop-blur transition transform hover:scale-[1.01] ${activeTimeline === 'metro' ? 'border-indigo-400 bg-indigo-50/50' : 'border-white/70 bg-white/80'}`}
+                >
+                  <h2 className="text-xl font-bold text-gray-900 flex justify-between items-center">
+                    Metro details
+                    {activeTimeline === 'metro' && <span className="text-[10px] bg-indigo-600 text-white px-2 py-1 rounded-full uppercase tracking-tighter animate-pulse">Viewing Route</span>}
+                  </h2>
                   <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-600">
                     <div><span className="font-semibold text-gray-900">Board at:</span> {result.metroRoute?.sourceStation?.name || "Nearest Station"}</div>
                     <div><span className="font-semibold text-gray-900">Alight at:</span> {result.metroRoute?.destinationStation?.name || "Nearest Station"}</div>

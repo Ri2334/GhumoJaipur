@@ -31,7 +31,7 @@ const getModeDetails = (mode) => {
   return { comfort: 'Standard', crowd: 'Medium', eco: 'B', availability: 'Medium' };
 };
 
-export default function TransportCard({ mode, fare, time, badge, note, source, destination, driver, cabFare }) {
+export default function TransportCard({ mode, fare, time, badge, note, source, destination, driver, cabFare, onSelect }) {
   const navigate = useNavigate();
   const details = getModeDetails(mode);
 
@@ -39,6 +39,10 @@ export default function TransportCard({ mode, fare, time, badge, note, source, d
   const noSharedAvailable = isShared && note?.includes('No shared');
 
   const handleClick = () => {
+    if (onSelect) {
+      onSelect();
+    }
+
     if (!noSharedAvailable && fare <= 0 && (mode === 'Cab' || mode === 'Auto')) return;
 
     const m = String(mode).toLowerCase();
