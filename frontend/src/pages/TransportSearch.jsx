@@ -294,19 +294,6 @@ export default function TransportSearch() {
                 </div>
               )}
 
-              <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-xl backdrop-blur">
-                <h2 className="text-xl font-bold text-gray-900">Shared cab</h2>
-                <div className="mt-4 grid gap-3 text-sm text-gray-600">
-                  <div><span className="font-semibold text-gray-900">Riders:</span> {result.sharedRide?.riderCount || 0}</div>
-                  <div><span className="font-semibold text-gray-900">Split fare:</span> ₹{result.sharedRide?.splitFare || 0}</div>
-                  <div><span className="font-semibold text-gray-900">Match chance:</span> {result.sharedRide?.sharedProbability || 0}%</div>
-                  <div><span className="font-semibold text-gray-900">Time window:</span> {result.sharedRide?.timeWindowMinutes || 0} mins</div>
-                  <div className="mt-3">
-                    <button onClick={() => navigate('/shared-rides', { state: { source, destination } })} className="rounded-lg bg-blue-600 px-3 py-2 text-white text-sm">Open shared rides</button>
-                  </div>
-                </div>
-              </div>
-
               <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-xl backdrop-blur h-[400px] flex flex-col">
                 <div className="border-b border-gray-100 px-6 py-4 bg-white/90">
                   <h2 className="text-xl font-bold text-gray-900">Route map</h2>
