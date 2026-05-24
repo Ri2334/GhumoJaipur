@@ -270,7 +270,13 @@ export default function TransportSearch() {
               <div className="rounded-3xl border border-white/70 bg-white/80 p-6 shadow-xl backdrop-blur">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-bold text-gray-900">Route summary</h2>
-                  <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">{result.route?.distanceKm || 0} km total</span>
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-full bg-indigo-50 px-3 py-1 text-[10px] font-bold text-indigo-600 border border-indigo-100 flex items-center gap-1">
+                       <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                       Live Traffic Optimized
+                    </span>
+                    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">{result.route?.distanceKm || 0} km total</span>
+                  </div>
                 </div>
                 <div className="mt-4 flex items-center gap-4">
                   <div className="flex-1 rounded-2xl bg-blue-50/50 p-4 text-center overflow-hidden">
@@ -282,6 +288,10 @@ export default function TransportSearch() {
                     <div className="text-xs font-semibold uppercase text-blue-600">To</div>
                     <div className="mt-1 font-medium text-gray-900 truncate">{destination}</div>
                   </div>
+                </div>
+                <div className="mt-4 flex items-center justify-center gap-2 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                   Departure Time: {new Date(result.currentTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
 
@@ -362,16 +372,16 @@ export default function TransportSearch() {
                   <div><span className="font-semibold text-gray-900">Metro Fare:</span> ₹{result.metroRoute?.fare || 0}</div>
                   <div><span className="font-semibold text-gray-900">Travel time:</span> {result.metroRoute?.travelTimeMinutes || 0} mins</div>
                   <div><span className="font-semibold text-gray-900">Wait time:</span> {result.metroRoute?.waitingTimeMinutes || 0} mins</div>
-                  <div><span className="font-semibold text-gray-900 text-pink-600">Next train in:</span> {result.metroRoute?.nextTrainMinutes || 0} mins</div>
+                  <div><span className="font-semibold text-gray-900 text-pink-600">Next train at:</span> {result.metroRoute?.nextDepartureTime ? new Date(result.metroRoute.nextDepartureTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "--"}</div>
                 </div>
-              </div>
-            )}
+                </div>
+                )}
 
-            {result.busRoute && (
-              <div 
+                {result.busRoute && (
+                <div 
                 onClick={() => setActiveTimeline("bus")}
                 className={`cursor-pointer rounded-3xl border p-6 shadow-xl backdrop-blur transition transform hover:scale-[1.01] ${activeTimeline === 'bus' ? 'border-sky-400 bg-sky-50/50' : 'border-white/70 bg-white/80'}`}
-              >
+                >
                 <h2 className="text-xl font-bold text-gray-900 flex justify-between items-center">
                   Bus details
                   {activeTimeline === 'bus' && <span className="text-[10px] bg-sky-600 text-white px-2 py-1 rounded-full uppercase tracking-tighter animate-pulse">Viewing Route</span>}
@@ -381,8 +391,9 @@ export default function TransportSearch() {
                   <div><span className="font-semibold text-gray-900">Alight at:</span> {result.busRoute.destStop || destination}</div>
                   <div><span className="font-semibold text-gray-900">Bus Fare:</span> ₹{result.busRoute.fare || 0}</div>
                   <div><span className="font-semibold text-gray-900">Est. Time:</span> {result.busRoute.time || 0} mins</div>
-                  <div className="col-span-2">
-                    <span className="font-semibold text-gray-900">Route info:</span> {
+                  <div><span className="font-semibold text-gray-900">Wait time:</span> {result.busRoute?.waitingTimeMinutes || 0} mins</div>
+                  <div><span className="font-semibold text-gray-900 text-sky-600">Next bus at:</span> {result.busRoute?.nextDepartureTime ? new Date(result.busRoute.nextDepartureTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "--"}</div>
+                  <div className="col-span-2">                    <span className="font-semibold text-gray-900">Route info:</span> {
                       result.busRoute.type === 'direct' 
                       ? `Direct Route ${result.busRoute.route.routeNumber} (${result.busRoute.route.routeName})`
                       : `Take ${result.busRoute.route1.routeNumber} and transfer to ${result.busRoute.route2.routeNumber} at ${result.busRoute.transferStop}`
