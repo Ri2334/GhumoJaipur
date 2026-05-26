@@ -8,6 +8,8 @@ export default function DriverDashboard() {
   const [driverInfo, setDriverInfo] = useState(null);
   const [rideRequests, setRideRequests] = useState([]);
   const [availableShared, setAvailableShared] = useState([]);
+  const [allLocations, setAllLocations] = useState([]);
+  const [locationSearch, setLocationSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [otpInputs, setOtpInputs] = useState({});
@@ -39,10 +41,28 @@ export default function DriverDashboard() {
     }
   };
 
+  const fetchAllLocations = async () => {
+    try {
+      const [locRes, staRes] = await Promise.all([
+        apiClient.get("/transport/locations"),
+        apiClient.get("/transport/stations")
+      ]);
+      
+      const combined = [
+        ...locRes.data.data.map(l => ({ name: l.name, lat: l.latitude, lng: l.longitude, category: l.category })),
+        ...staRes.data.data.map(s => ({ name: s.name, lat: s.latitude, lng: s.longitude, category: "Metro Station" }))
+      ].sort((a, b) => a.name.localeCompare(b.name));
+
+      setAllLocations(combined);
+    } catch (err) {
+      console.error("Failed to fetch locations", err);
+    }
+  };
+
   useEffect(() => {
     const init = async () => {
       setLoading(true);
-      await Promise.all([fetchDriverData(), fetchRideRequests(), fetchAvailableShared()]);
+      await Promise.all([fetchDriverData(), fetchRideRequests(), fetchAvailableShared(), fetchAllLocations()]);
       setLoading(false);
     };
     init();
@@ -95,17 +115,14 @@ export default function DriverDashboard() {
     }
   };
 
-  const handleUpdateLocation = async (areaName) => {
-    const place = jaipurPlaces.find(p => p.name === areaName);
-    if (!place) return;
-
+  const handleUpdateLocation = async (loc) => {
     setSaving(true);
     try {
       const res = await apiClient.put("/driver/update", { 
         currentLocation: { 
-          areaName: place.name, 
-          latitude: place.coordinates.lat, 
-          longitude: place.coordinates.lng 
+          areaName: loc.name, 
+          latitude: loc.lat, 
+          longitude: loc.lng 
         } 
       });
       setDriverInfo(res.data.data);
@@ -227,15 +244,27 @@ export default function DriverDashboard() {
             <div className="rounded-3xl bg-white p-6 shadow-xl sticky top-24 space-y-8">
               <div>
                 <h2 className="text-xl font-bold text-gray-900 mb-4">Set Current Location</h2>
-                <p className="text-sm text-gray-500 mb-4">Select the Jaipur area where you are currently waiting.</p>
-                <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                  {jaipurPlaces.map(place => (
+                <div className="mb-4 relative">
+                  <input 
+                    type="text" 
+                    placeholder="Search area or stop..."
+                    value={locationSearch}
+                    onChange={(e) => setLocationSearch(e.target.value)}
+                    className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2 text-sm focus:border-indigo-400 outline-none transition"
+                  />
+                  <span className="absolute right-3 top-2.5 text-gray-400">🔍</span>
+                </div>
+                <div className="grid grid-cols-1 gap-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                  {allLocations.filter(l => l.name.toLowerCase().includes(locationSearch.toLowerCase())).map(loc => (
                     <button
-                      key={place.id}
-                      onClick={() => handleUpdateLocation(place.name)}
-                      className={`text-left px-3 py-2 rounded-xl text-xs transition ${driverInfo.currentLocation.areaName === place.name ? 'bg-indigo-600 text-white font-bold' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'}`}
+                      key={loc.name}
+                      onClick={() => handleUpdateLocation(loc)}
+                      className={`flex justify-between items-center text-left px-3 py-2.5 rounded-xl text-xs transition ${driverInfo.currentLocation.areaName === loc.name ? 'bg-indigo-600 text-white font-bold' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'}`}
                     >
-                      {place.name}
+                      <span className="truncate">{loc.name}</span>
+                      <span className={`text-[9px] px-2 py-0.5 rounded-full uppercase tracking-tighter ${driverInfo.currentLocation.areaName === loc.name ? 'bg-indigo-500 text-indigo-100' : loc.category === 'Bus Stop' ? 'bg-sky-100 text-sky-600' : loc.category === 'Metro Station' ? 'bg-pink-100 text-pink-600' : 'bg-blue-100 text-blue-600'}`}>
+                        {loc.category === 'Bus Stop' ? 'Bus' : loc.category === 'Metro Station' ? 'Metro' : 'Place'}
+                      </span>
                     </button>
                   ))}
                 </div>

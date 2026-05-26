@@ -51,11 +51,11 @@ export default function TransportCard({ mode, fare, time, badge, note, source, d
       return;
     }
     if (m.includes('auto')) {
-      navigate('/book/auto', { state: { source, destination, driver } });
+      navigate('/book/auto', { state: { source, destination, driver, fare, time } });
       return;
     }
     if (m.includes('cab') || m.includes('car')) {
-      navigate('/book/cab', { state: { source, destination, driver } });
+      navigate('/book/cab', { state: { source, destination, driver, fare, time } });
       return;
     }
     // default
