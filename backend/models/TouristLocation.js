@@ -8,6 +8,7 @@ const touristLocationSchema = new mongoose.Schema(
     latitude: { type: Number, required: true },
     longitude: { type: Number, required: true },
     nearestStation: { type: String, trim: true },
+    nearestBusStop: { type: String, trim: true },
     category: { type: String, trim: true },
   },
   { timestamps: true }

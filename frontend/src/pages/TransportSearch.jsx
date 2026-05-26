@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { searchTransportApi, default as apiClient } from "../services/api";
 import { jaipurPlaces } from "../data/jaipurPlaces";
 import { jaipurMetroLines } from "../data/jaipurMetroData";
@@ -39,8 +39,11 @@ class MapErrorBoundary extends React.Component {
 }
 
 export default function TransportSearch() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [source, setSource] = useState("Jaipur Railway Station");
-  const [destination, setDestination] = useState("Badi Chaupar");
+  const [destination, setDestination] = useState(location.state?.destination || "Badi Chaupar");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
@@ -49,6 +52,21 @@ export default function TransportSearch() {
   const [activeTimeline, setActiveTimeline] = useState("metro");
 
   const metroStations = jaipurMetroLines[0].stations;
+
+  useEffect(() => {
+    if (location.state?.destination) {
+      setDestination(location.state.destination);
+      // We'll let the user click search or we can auto-trigger
+      const allValidNames = [
+        ...jaipurPlaces.map(p => p.name.toLowerCase()),
+        ...metroStations.map(s => s.name.toLowerCase()),
+        ...jaipurBusStops.map(b => b.name.toLowerCase())
+      ];
+      if (allValidNames.includes(source.toLowerCase()) && allValidNames.includes(location.state.destination.toLowerCase())) {
+        handleSearch(null, source, location.state.destination);
+      }
+    }
+  }, [location.state, metroStations]);
 
   const suggestions = useMemo(() => {
     const query = (activeField === "destination" ? destination : source || "").trim().toLowerCase();
@@ -104,9 +122,11 @@ export default function TransportSearch() {
       .slice(0, 12);
   }, [activeField, destination, source, metroStations]);
 
-  const handleSearch = async (event) => {
-    event.preventDefault();
-    if (!source || !destination) return;
+  const handleSearch = async (event, overrideSource, overrideDest) => {
+    if (event) event.preventDefault();
+    const finalSource = overrideSource || source;
+    const finalDest = overrideDest || destination;
+    if (!finalSource || !finalDest) return;
 
     // Validation: Check if places exist in our data
     const allValidNames = [
@@ -115,7 +135,7 @@ export default function TransportSearch() {
       ...jaipurBusStops.map(b => b.name.toLowerCase())
     ];
 
-    if (!allValidNames.includes(source.toLowerCase()) || !allValidNames.includes(destination.toLowerCase())) {
+    if (!allValidNames.includes(finalSource.toLowerCase()) || !allValidNames.includes(finalDest.toLowerCase())) {
       setError("No routes found for the provided places in Jaipur. Please select from the suggestions.");
       setResult(null);
       return;
@@ -125,7 +145,7 @@ export default function TransportSearch() {
     setSuggestionsVisible(false);
     setError(null);
     try {
-      const response = await searchTransportApi({ source, destination });
+      const response = await searchTransportApi({ source: finalSource, destination: finalDest });
       if (response && response.success) {
         setResult(response.data);
         if (response.data.metroRoute) setActiveTimeline("metro");
@@ -175,8 +195,6 @@ export default function TransportSearch() {
       setLoading(false);
     }
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.14),_transparent_36%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-10">
@@ -236,7 +254,7 @@ export default function TransportSearch() {
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Popular Areas:</span>
-            {jaipurPlaces.filter(p => p.category === 'Area').slice(0, 6).map(area => (
+            {jaipurPlaces.filter(p => p.category === 'Area' || p.category === 'Market').slice(0, 8).map(area => (
               <button 
                 key={area.id}
                 onClick={() => setSource(area.name)}
@@ -245,7 +263,7 @@ export default function TransportSearch() {
                 📍 {area.name}
               </button>
             ))}
-            {jaipurBusStops.slice(0, 4).map(bus => (
+            {jaipurBusStops.filter(b => ["Amer", "Jal Mahal", "Badi Chopad", "Ajmeri Gate", "Transport Nagar"].includes(b.name)).map(bus => (
               <button 
                 key={bus.id}
                 onClick={() => setSource(bus.name)}

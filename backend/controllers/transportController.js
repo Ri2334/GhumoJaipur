@@ -10,10 +10,19 @@ import User from "../models/User.js";
 
 const normalizeName = (value = "") => {
   let normalized = String(value).trim().toLowerCase();
-  // Handle common Jaipur variations
+  // Standardize common Jaipur variations
   normalized = normalized.replace(/chaupar/g, "chopar");
   normalized = normalized.replace(/chopad/g, "chopar");
+  normalized = normalized.replace(/choupad/g, "chopar");
+  normalized = normalized.replace(/amber/g, "amer");
   normalized = normalized.replace(/station/g, "stn");
+  normalized = normalized.replace(/hospital/g, "hosp");
+  normalized = normalized.replace(/fort/g, ""); 
+  normalized = normalized.replace(/temple/g, ""); 
+  normalized = normalized.replace(/bazaar/g, "");
+  normalized = normalized.replace(/bazar/g, "");
+  normalized = normalized.replace(/garden/g, "");
+  normalized = normalized.replace(/railway/g, "rly");
   normalized = normalized.replace(/\s+/g, "");
   return normalized;
 };
@@ -83,41 +92,31 @@ const getDistanceKm = (lat1, lon1, lat2, lon2, sourceName = "", destName = "") =
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const straightLineDist = earthRadius * c;
   
-  // Specific known road distances for accuracy (Google Maps Verified)
+  // Specific known road distances for accuracy
   const knownDistances = {
     "chomupulia-collectorycircle": 3.5,
-    "jaipurrailwaystation-badichaupar": 4.8,
-    "jaipurrailwaystation-sindhicamp": 1.8,
+    "jaipurrlystn-badichaupar": 4.8,
+    "jaipurrlystn-sindhicamp": 1.8,
     "sindhicamp-chandpole": 1.2,
     "chandpole-badichaupar": 2.2,
     "malviyanagar-airport": 5.0,
-    "mansarovar-railwaystation": 9.5,
-    "amerfort-badichaupar": 11.0,
-    "vaishalinagar-railwaystation": 6.5,
-    "rajapark-citypalace": 4.5
+    "mansarovar-rlystn": 9.5,
+    "amer-badichaupar": 11.0,
+    "vaishalinagar-rlystn": 6.5,
+    "rajapark-citypalace": 4.5,
+    "jaipurrlystn-sisodiaranigarden": 8.5,
+    "transportnagar-sisodiaranigarden": 1.2
   };
+
 
   const key = `${normalizeName(sourceName)}-${normalizeName(destName)}`;
   const revKey = `${normalizeName(destName)}-${normalizeName(sourceName)}`;
   if (knownDistances[key]) return knownDistances[key];
   if (knownDistances[revKey]) return knownDistances[revKey];
 
-  // Smart Road Factor based on areas
-  const isPinkCity = (name) => {
-    const n = normalizeName(name);
-    return n.includes("chaupar") || n.includes("chopar") || n.includes("hawa") || n.includes("johari") || n.includes("pinkcity");
-  };
-
-  let roadFactor = 1.25; // Default average for Jaipur
-  
-  // Pink City has dense, winding roads
-  if (isPinkCity(sourceName) || isPinkCity(destName)) {
-    roadFactor = 1.35;
-  } 
-  // Main arterial roads (outside Pink City) are straighter
-  else if (straightLineDist > 3) {
-    roadFactor = 1.15;
-  }
+  let roadFactor = 1.25; 
+  if (straightLineDist > 5) roadFactor = 1.2;
+  if (straightLineDist < 1) roadFactor = 1.4; 
 
   return Number((straightLineDist * roadFactor).toFixed(1));
 };
@@ -152,12 +151,24 @@ const stationCoordinates = {
 
 const getPlaceInfo = async (name) => {
   const inputNorm = normalizeName(name);
+  const inputWords = name.toLowerCase().split(/\s+/).filter(w => w.length > 2 && w !== "jaipur");
   
   const allLocations = await TouristLocation.find();
+  
+  // 1. Exact match
   let matchedLoc = allLocations.find(l => normalizeName(l.name) === inputNorm);
   
+  // 2. Substring match
   if (!matchedLoc) {
     matchedLoc = allLocations.find(l => normalizeName(l.name).includes(inputNorm) || inputNorm.includes(normalizeName(l.name)));
+  }
+
+  // 3. Word-intersection match
+  if (!matchedLoc && inputWords.length > 0) {
+    matchedLoc = allLocations.find(l => {
+      const locNameLow = l.name.toLowerCase();
+      return inputWords.every(word => locNameLow.includes(word));
+    });
   }
 
   if (matchedLoc) {
@@ -168,10 +179,12 @@ const getPlaceInfo = async (name) => {
       lat: matchedLoc.latitude,
       lng: matchedLoc.longitude,
       nearest: canonicalStation,
+      nearestBus: matchedLoc.nearestBusStop || matchedLoc.name,
       matchedName: matchedLoc.name
     };
   }
 
+  // Metro station check
   for (const [key, value] of Object.entries(stationCoordinates)) {
     const stationNorm = normalizeName(key);
     if (inputNorm.includes(stationNorm) || stationNorm.includes(inputNorm)) {
@@ -179,78 +192,162 @@ const getPlaceInfo = async (name) => {
         lat: value.lat, 
         lng: value.lng, 
         nearest: key, 
+        nearestBus: key, 
         matchedName: key 
       };
     }
   }
 
-  return { lat: 26.9124, lng: 75.7873, nearest: "Railway Station", matchedName: name };
+  return { lat: 26.9124, lng: 75.7873, nearest: "Railway Station", nearestBus: name, matchedName: name };
 };
 
-const findBusRoutes = async (sourceName, destName) => {
+const findNearbyBusStops = async (lat, lng, limit = 5) => {
+  const allPossibleStops = await TouristLocation.find({ 
+    $or: [
+      { category: "Bus Stop" },
+      { category: "Transit" },
+      { name: { $regex: /Bus Stop|Chaupar|Circle|Gate|Station|Mod|Phatak/i } }
+    ]
+  });
+
+  const stopsWithDist = allPossibleStops.map(stop => ({
+    name: stop.name,
+    lat: stop.latitude,
+    lng: stop.longitude,
+    distance: getDistanceKm(lat, lng, stop.latitude, stop.longitude)
+  }));
+
+  const sorted = stopsWithDist.sort((a, b) => a.distance - b.distance);
+  return sorted.slice(0, limit);
+};
+
+const findBusRoutes = async (sourcePlace, destPlace) => {
   const allRoutes = await BusRoute.find();
-  const sNorm = normalizeName(sourceName);
-  const dNorm = normalizeName(destName);
-  
-  const matches = (stopList, targetNorm) => {
+  const srcInfo = await getPlaceInfo(sourcePlace);
+  const dstInfo = await getPlaceInfo(destPlace);
+
+  if (normalizeName(srcInfo.matchedName) === normalizeName(dstInfo.matchedName)) return null;
+
+  const srcNearbyStops = await findNearbyBusStops(srcInfo.lat, srcInfo.lng, 5);
+  const dstNearbyStops = await findNearbyBusStops(dstInfo.lat, dstInfo.lng, 5);
+
+  const freqMap = {
+    "3A": 9, "RBP2": 10, "7": 12, "9A": 12, "3": 13, "AC2": 15, "14": 20, "16": 20, "28": 22, "AC7": 22, "26": 23, "AC1": 24, "1": 26, "AC8": 28, "15": 30, "24": 30, "34": 30, "30": 35, "32": 44, "11": 45, "6A": 48, "1A": 50, "27": 60, "10B": 75, "23A": 120, "MiniBus1": 12, "MiniBus2": 12, "AC5": 24
+  };
+
+  const matches = (stopList, targetName) => {
+    const tNorm = normalizeName(targetName);
     return stopList.some(stop => {
        const stopNorm = normalizeName(stop);
-       return stopNorm === targetNorm || stopNorm.includes(targetNorm) || targetNorm.includes(stopNorm);
+       return stopNorm === tNorm || stopNorm.includes(tNorm) || tNorm.includes(stopNorm);
     });
   };
 
-  const getStopNameInRoute = (stopList, targetNorm) => {
+  const getStopNameInRoute = (stopList, targetName) => {
+    const tNorm = normalizeName(targetName);
     return stopList.find(stop => {
        const stopNorm = normalizeName(stop);
-       return stopNorm === targetNorm || stopNorm.includes(targetNorm) || targetNorm.includes(stopNorm);
+       return stopNorm === tNorm || stopNorm.includes(tNorm) || tNorm.includes(stopNorm);
     });
   };
 
-  const directRoutes = allRoutes.filter(r => matches(r.stops, sNorm) && matches(r.stops, dNorm));
+  let candidateRoutes = [];
 
-  if (directRoutes.length > 0) {
-    const bestRoute = directRoutes[0];
-    const sNameFound = getStopNameInRoute(bestRoute.stops, sNorm);
-    const dNameFound = getStopNameInRoute(bestRoute.stops, dNorm);
-    const sourceIndex = bestRoute.stops.indexOf(sNameFound);
-    const destIndex = bestRoute.stops.indexOf(dNameFound);
-    const stopsCount = Math.abs(destIndex - sourceIndex);
+  for (const sStop of srcNearbyStops) {
+    for (const dStop of dstNearbyStops) {
+      const sNorm = normalizeName(sStop.name);
+      const dNorm = normalizeName(dStop.name);
+      if (sNorm === dNorm) continue;
 
-    return {
-      type: "direct",
-      route: bestRoute,
-      sourceStop: sNameFound,
-      destStop: dNameFound,
-      fare: stopsCount <= 5 ? 10 : stopsCount <= 10 ? 15 : 20,
-      time: stopsCount * 5 + 10
-    };
-  }
-
-  const sourceRoutes = allRoutes.filter(r => matches(r.stops, sNorm));
-  const destRoutes = allRoutes.filter(r => matches(r.stops, dNorm));
-
-  for (const sRoute of sourceRoutes) {
-    for (const dRoute of destRoutes) {
-      const commonStop = sRoute.stops.find(stop => {
-        const stopNorm = normalizeName(stop);
-        return dRoute.stops.some(dStop => normalizeName(dStop) === stopNorm);
-      });
-      if (commonStop) {
-        return {
-          type: "indirect",
-          route1: sRoute,
-          route2: dRoute,
-          transferStop: commonStop,
-          sourceStop: getStopNameInRoute(sRoute.stops, sNorm),
-          destStop: getStopNameInRoute(dRoute.stops, dNorm),
-          fare: 20,
-          time: 60
+      // 1. Direct Routes
+      const directRoutes = allRoutes.filter(r => matches(r.stops, sNorm) && matches(r.stops, dNorm));
+      for (const dr of directRoutes) {
+        const sNameInRoute = getStopNameInRoute(dr.stops, sNorm);
+        const dNameInRoute = getStopNameInRoute(dr.stops, dNorm);
+        const sIdx = dr.stops.indexOf(sNameInRoute);
+        const dIdx = dr.stops.indexOf(dNameInRoute);
+        
+        if (sIdx === dIdx) continue;
+        
+        const stopsCount = Math.abs(dIdx - sIdx);
+        
+        const travelTime = (stopsCount * 5) + 8;
+        const waitTime = Math.floor((freqMap[dr.routeNumber] || 15) / 2);
+        
+        const getLegTime = (dist) => {
+          const baseTime = dist <= 1.0 ? dist * 15 : (dist * 4) + 3;
+          const bias = dist > 1.5 ? 1.5 : 1.0; 
+          return baseTime * bias;
         };
+        const leg1Time = getLegTime(sStop.distance);
+        const leg2Time = getLegTime(dStop.distance);
+        const totalTime = leg1Time + waitTime + travelTime + leg2Time;
+
+        candidateRoutes.push({
+          type: "direct",
+          route: dr,
+          sourceStop: sNameInRoute,
+          destStop: dNameInRoute,
+          fare: stopsCount <= 5 ? 10 : stopsCount <= 10 ? 15 : 20,
+          time: travelTime,
+          walkToStopDist: sStop.distance,
+          walkFromStopDist: dStop.distance,
+          totalTime,
+          frequency: freqMap[dr.routeNumber] || 20
+        });
+      }
+
+      // 2. Indirect (1 transfer)
+      if (directRoutes.length === 0) {
+        const sourceRoutes = allRoutes.filter(r => matches(r.stops, sNorm));
+        const destRoutes = allRoutes.filter(r => matches(r.stops, dNorm));
+
+        for (const sr of sourceRoutes) {
+          for (const dr of destRoutes) {
+            const commonStop = sr.stops.find(stop => {
+              const stopNorm = normalizeName(stop);
+              return dr.stops.some(dStopInRoute => normalizeName(dStopInRoute) === stopNorm);
+            });
+
+            if (commonStop) {
+              const sNameInRoute = getStopNameInRoute(sr.stops, sNorm);
+              const dNameInRoute = getStopNameInRoute(dr.stops, dNorm);
+              
+              const travelTime = 55; 
+              const waitTime = 15; 
+              const getLegTime = (dist) => {
+                const baseTime = dist <= 1.0 ? dist * 15 : (dist * 4) + 3;
+                const bias = dist > 1.5 ? 1.5 : 1.0; 
+                return baseTime * bias;
+              };
+              const leg1Time = getLegTime(sStop.distance);
+              const leg2Time = getLegTime(dStop.distance);
+              const totalTime = leg1Time + waitTime + travelTime + leg2Time;
+
+              candidateRoutes.push({
+                type: "indirect",
+                route1: sr,
+                route2: dr,
+                transferStop: commonStop,
+                sourceStop: sNameInRoute,
+                destStop: dNameInRoute,
+                fare: 25,
+                time: travelTime,
+                walkToStopDist: sStop.distance,
+                walkFromStopDist: dStop.distance,
+                totalTime,
+                frequency: freqMap[sr.routeNumber] || 20
+              });
+            }
+          }
+        }
       }
     }
   }
 
-  return null;
+  if (candidateRoutes.length === 0) return null;
+
+  return candidateRoutes.sort((a, b) => a.totalTime - b.totalTime)[0];
 };
 
 const buildMetroRoute = async (sourceStationName, destinationStationName) => {
@@ -304,22 +401,39 @@ const buildRecommendation = ({ distanceKm, route, cabRide, sharedRide, autoRide,
 
   if (busRoute) {
     const operating = isBusOperating(time);
-    const frequency = busRoute.route?.frequencyMinutes || 15;
+    const frequency = busRoute.route?.frequencyMinutes || busRoute.route1?.frequencyMinutes || 15;
     const nextDeparture = getNextDepartureTime(time, frequency);
     const waitTime = Math.round((nextDeparture - time) / 60000);
+    
+    const walkToBus = Math.round((busRoute.walkToStopDist || 0) * 1000);
+    const walkFromBus = Math.round((busRoute.walkFromStopDist || 0) * 1000);
+    
     const travelTime = busRoute.time;
-    const totalTime = waitTime + travelTime;
+    // Total time = walk to + wait + travel + walk from
+    const totalTime = Math.round((busRoute.walkToStopDist || 0) * 15) + waitTime + travelTime + Math.round((busRoute.walkFromStopDist || 0) * 15);
+
+    let busNote = !operating 
+        ? "Bus service currently offline (Operates 5:30 AM - 9:30 PM)"
+        : `Next bus at ${formatTime(nextDeparture)}. `;
+    
+    if (operating) {
+        if (walkToBus > 800) busNote += `Take e-rickshaw to ${busRoute.sourceStop}. `;
+        else if (walkToBus > 50) busNote += `Walk ${walkToBus}m to ${busRoute.sourceStop}. `;
+        
+        if (busRoute.type === "indirect") {
+           busNote += `Transfer at ${busRoute.transferStop}. `;
+        }
+
+        if (walkFromBus > 800) busNote += `Finally take auto to destination.`;
+        else if (walkFromBus > 50) busNote += `Finally walk ${walkFromBus}m to destination.`;
+    }
 
     items.push({
       mode: "Bus",
       fare: operating ? busRoute.fare : 0,
       time: operating ? `${totalTime} mins` : "--",
-      badge: operating && busRoute.type === "direct" ? "cheapest" : "default",
-      note: !operating 
-        ? "Bus service currently offline (Operates 5:30 AM - 9:30 PM)"
-        : busRoute.type === "direct" 
-          ? `Direct Route ${busRoute.route.routeNumber} at ${formatTime(nextDeparture)}.` 
-          : `Take ${busRoute.route1.routeNumber} at ${formatTime(nextDeparture)} and transfer at ${busRoute.transferStop}.`
+      badge: operating && busRoute.type === "direct" && totalTime < 45 ? "cheapest" : "default",
+      note: busNote
     });
   }
 
@@ -454,17 +568,8 @@ export const searchTransport = async (req, res) => {
     }
 
     // BUS ROUTE SEARCH
-    const busRouteFound = await findBusRoutes(sourceInfo.matchedName, destInfo.matchedName);
+    const busRoute = await findBusRoutes(source, destination);
     
-    // Add real frequencies to busRoute if found
-    let busRoute = busRouteFound;
-    if (busRoute && busRoute.type === 'direct') {
-      const freqMap = {
-        "3A": 9, "RBP2": 10, "7": 12, "9A": 12, "3": 13, "AC2": 15, "14": 20, "16": 20, "28": 22, "AC7": 22, "26": 23, "AC1": 24, "1": 26, "AC8": 28, "15": 30, "24": 30, "34": 30, "30": 35, "32": 44, "11": 45, "6A": 48, "1A": 50, "27": 60, "10B": 75, "23A": 120, "MiniBus1": 12, "MiniBus2": 12, "AC5": 24
-      };
-      busRoute.route.frequencyMinutes = freqMap[busRoute.route.routeNumber] || 20;
-    }
-
     const sourceArea = sourceInfo.matchedName || source;
     
     const availableCabs = await Driver.find({ 

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { addPlaceReviewApi, deleteSavedTripApi, getPlaceByIdApi, getSavedTripsApi, saveTripApi } from "../services/api";
 import ImageCarousel from "../components/ImageCarousel";
 import { AuthContext } from "../context/AuthContext";
@@ -14,6 +14,7 @@ const infoCard = (title, value) => (
 
 export default function PlaceDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -598,6 +599,16 @@ export default function PlaceDetails() {
                   }`}
                 >
                   {saved ? "In My Trips" : "Save Spot"}
+                </button>
+              </div>
+
+              <div className="mt-6">
+                <button
+                  onClick={() => navigate('/transport', { state: { destination: place.name } })}
+                  className="w-full rounded-2xl bg-indigo-600 px-8 py-5 text-sm font-black uppercase tracking-[0.2em] text-white shadow-2xl shadow-indigo-100 transition-all hover:bg-indigo-700 hover:-translate-y-1 flex items-center justify-center gap-3 group"
+                >
+                  <span className="text-xl group-hover:animate-bounce">🚀</span>
+                  Travel Now
                 </button>
               </div>
               

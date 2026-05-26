@@ -1,158 +1,186 @@
 export const jaipurPlaces = [
   {
     id: "amer_fort",
-    name: "Amer Fort",
-    category: "Historical",
-    description: "A majestic hill fort built of red sandstone and marble, known for its artistic Hindu style elements.",
-    image: "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&q=80&w=800",
+    name: "Amber Fort",
+    category: "Heritage",
     nearestMetro: "Badi Chaupar",
-    connectivity: "E-rickshaw/Cab available from Badi Chaupar (approx 10km)",
     coordinates: { lat: 26.9855, lng: 75.8513 },
-    tags: ["Fort", "History", "Architecture", "Must Visit"],
-    crowdLevel: "High",
-    recommendedTime: "2-3 hours",
-    foodNearby: ["1135 AD", "The Stag Restro"]
+    tags: ["Fort", "History", "Architecture"]
   },
   {
     id: "hawa_mahal",
     name: "Hawa Mahal",
-    category: "Historical",
-    description: "The Palace of Winds, a unique five-storey exterior that is akin to the honeycomb of a beehive.",
-    image: "https://images.unsplash.com/photo-1599661559886-444f2c01d4a0?auto=format&fit=crop&q=80&w=800",
+    category: "Heritage",
     nearestMetro: "Badi Chaupar",
-    connectivity: "Walking distance from Badi Chaupar (100m)",
     coordinates: { lat: 26.9239, lng: 75.8267 },
-    tags: ["Palace", "Architecture", "Photography"],
-    crowdLevel: "High",
-    recommendedTime: "1 hour",
-    foodNearby: ["Wind View Cafe", "Tattoo Cafe"]
+    tags: ["Palace", "Architecture"]
   },
   {
     id: "city_palace",
     name: "City Palace",
-    category: "Historical",
-    description: "A complex of courtyards, gardens and buildings, the impressive City Palace is right in the centre of the Old City.",
-    image: "https://images.unsplash.com/photo-1600100486001-9f931d683664?auto=format&fit=crop&q=80&w=800",
-    nearestMetro: "Chhoti Chaupar",
-    connectivity: "Walking distance from Chhoti Chaupar (500m)",
-    coordinates: { lat: 26.9255, lng: 75.8236 },
-    tags: ["Palace", "Museum", "History"],
-    crowdLevel: "Medium",
-    recommendedTime: "2 hours",
-    foodNearby: ["Baradari Restaurant"]
-  },
-  {
-    id: "railway_station",
-    name: "Jaipur Railway Station",
-    category: "Transport Hub",
-    description: "Main railway station of Jaipur, connecting to major cities.",
-    image: "https://images.unsplash.com/photo-1614619717789-9fc6215707de?auto=format&fit=crop&q=80&w=800",
-    nearestMetro: "Railway Station",
-    connectivity: "Direct interchange available",
-    coordinates: { lat: 26.9196, lng: 75.7880 },
-    tags: ["Train", "Transport", "Hub"],
-    crowdLevel: "High",
-    recommendedTime: "Transit",
-    foodNearby: ["Kanha", "Rawat Kachori"]
-  },
-  {
-    id: "sindhi_camp",
-    name: "Sindhi Camp Bus Stand",
-    category: "Transport Hub",
-    description: "Inter-state bus terminal of Jaipur.",
-    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&q=80&w=800",
-    nearestMetro: "Sindhi Camp",
-    connectivity: "Direct interchange available",
-    coordinates: { lat: 26.9248, lng: 75.7999 },
-    tags: ["Bus", "Transport", "Hub"],
-    crowdLevel: "High",
-    recommendedTime: "Transit",
-    foodNearby: ["LMB", "Bikanerwala"]
-  },
-  {
-    id: "badi_chaupar",
-    name: "Badi Chaupar",
-    category: "Market",
-    description: "Famous city square in the walled city of Jaipur.",
-    image: "https://images.unsplash.com/photo-1627885408711-d731de8ce0f2?auto=format&fit=crop&q=80&w=800",
+    category: "Heritage",
     nearestMetro: "Badi Chaupar",
-    connectivity: "Right at the station",
-    coordinates: { lat: 26.9262, lng: 75.8265 },
-    tags: ["Market", "Shopping", "Food"],
-    crowdLevel: "High",
-    recommendedTime: "1-2 hours",
-    foodNearby: ["LMB", "Falahaar"]
+    coordinates: { lat: 26.9259, lng: 75.8237 },
+    tags: ["Palace", "Museum"]
   },
   {
-    id: "johari_bazaar",
-    name: "Johari Bazaar",
-    category: "Market",
-    description: "Famous market for jewelry and traditional clothes.",
-    image: "https://images.unsplash.com/photo-1596702334863-718a38c23f26?auto=format&fit=crop&q=80&w=800",
+    id: "jantar_mantar",
+    name: "Jantar Mantar",
+    category: "Heritage",
     nearestMetro: "Badi Chaupar",
-    connectivity: "Walking distance (200m)",
-    coordinates: { lat: 26.9205, lng: 75.8267 },
-    tags: ["Market", "Shopping", "Jewelry"],
-    crowdLevel: "High",
-    recommendedTime: "2 hours",
-    foodNearby: ["LMB"]
+    coordinates: { lat: 26.9248, lng: 75.8245 },
+    tags: ["UNESCO", "Science"]
   },
   {
-    id: "wtp",
-    name: "World Trade Park",
-    category: "Shopping",
-    description: "Modern shopping mall with an iconic building design.",
-    image: "https://images.unsplash.com/photo-1519999482648-25049ddd37b1?auto=format&fit=crop&q=80&w=800",
-    nearestMetro: "New Aatish Market",
-    connectivity: "Cab/Auto required from New Aatish Market (approx 6km)",
-    coordinates: { lat: 26.8270, lng: 75.8058 },
-    tags: ["Mall", "Shopping", "Modern"],
-    crowdLevel: "High",
-    recommendedTime: "2-3 hours",
-    foodNearby: ["WTP Food Court", "Zolocrust"]
+    id: "nahargarh_fort",
+    name: "Nahargarh Fort",
+    category: "Heritage",
+    nearestMetro: "Chandpole",
+    coordinates: { lat: 26.9371, lng: 75.8066 },
+    tags: ["Fort", "Sunset"]
+  },
+  {
+    id: "jaigarh_fort",
+    name: "Jaigarh Fort",
+    category: "Heritage",
+    nearestMetro: "Badi Chaupar",
+    coordinates: { lat: 26.9850, lng: 75.8450 },
+    tags: ["Fort", "Cannon"]
   },
   {
     id: "albert_hall",
     name: "Albert Hall Museum",
     category: "Museum",
-    description: "The oldest museum in Rajasthan, functioning as the state museum.",
-    image: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&q=80&w=800",
     nearestMetro: "Chhoti Chaupar",
-    connectivity: "Auto/Cab required (approx 3km)",
     coordinates: { lat: 26.9116, lng: 75.8195 },
-    tags: ["Museum", "History", "Architecture"],
-    crowdLevel: "Medium",
-    recommendedTime: "1-2 hours",
-    foodNearby: ["Masala Chowk"]
+    tags: ["Museum", "Art"]
+  },
+  {
+    id: "jal_mahal",
+    name: "Jal Mahal",
+    category: "Heritage",
+    nearestMetro: "Badi Chaupar",
+    coordinates: { lat: 26.9535, lng: 75.8462 },
+    tags: ["Palace", "Lake"]
   },
   {
     id: "birla_mandir",
     name: "Birla Mandir",
-    category: "Temple",
-    description: "A beautiful white marble temple located at the foot of Moti Dungri fort.",
-    image: "https://images.unsplash.com/photo-1621360841013-c76831f1f51c?auto=format&fit=crop&q=80&w=800",
-    nearestMetro: "Sindhi Camp",
-    connectivity: "Auto/Cab required (approx 5km)",
+    category: "Spiritual",
+    nearestMetro: "Civil Lines",
     coordinates: { lat: 26.8922, lng: 75.8156 },
-    tags: ["Temple", "Peace", "Architecture"],
-    crowdLevel: "Medium",
-    recommendedTime: "1 hour",
-    foodNearby: ["Tapri Central"]
+    tags: ["Temple", "Peace"]
   },
-  // Jaipur Neighborhoods & Areas
-  { id: "malviya_nagar", name: "Malviya Nagar", category: "Area", tags: ["Residential", "Shopping", "WTP"], coordinates: { lat: 26.8549, lng: 75.8243 }, nearestMetro: "New Aatish Market" },
-  { id: "vaishali_nagar", name: "Vaishali Nagar", category: "Area", tags: ["Residential", "Posh", "Food"], coordinates: { lat: 26.9075, lng: 75.7396 }, nearestMetro: "Mansarovar" },
-  { id: "c_scheme", name: "C-Scheme", category: "Area", tags: ["Posh", "Cafes", "Corporate"], coordinates: { lat: 26.9133, lng: 75.8031 }, nearestMetro: "Civil Lines" },
-  { id: "raja_park", name: "Raja Park", category: "Area", tags: ["Food", "Shopping", "Youth"], coordinates: { lat: 26.8979, lng: 75.8271 }, nearestMetro: "Sindhi Camp" },
-  { id: "bani_park", name: "Bani Park", category: "Area", tags: ["Hotels", "Residential"], coordinates: { lat: 26.9273, lng: 75.7903 }, nearestMetro: "Railway Station" },
-  { id: "mansarovar_area", name: "Mansarovar Area", category: "Area", tags: ["Residential", "Large"], coordinates: { lat: 26.8584, lng: 75.7615 }, nearestMetro: "Mansarovar" },
-  { id: "jhotwara", name: "Jhotwara", category: "Area", tags: ["Residential", "Industrial"], coordinates: { lat: 26.9444, lng: 75.7317 }, nearestMetro: "Chandpole" },
-  { id: "vidhyadhar_nagar", name: "Vidhyadhar Nagar", category: "Area", tags: ["Planned", "Residential"], coordinates: { lat: 26.9587, lng: 75.7761 }, nearestMetro: "Chandpole" },
-  { id: "adjoining_pink_city", name: "Pink City (Old City)", category: "Area", tags: ["Heritage", "Market"], coordinates: { lat: 26.9239, lng: 75.8267 }, nearestMetro: "Badi Chaupar" },
-  { id: "mi_road", name: "MI Road", category: "Area", tags: ["Shopping", "Main Road"], coordinates: { lat: 26.9157, lng: 75.8111 }, nearestMetro: "Sindhi Camp" },
-  { id: "tonk_road", name: "Tonk Road", category: "Area", tags: ["Hotels", "Main Road"], coordinates: { lat: 26.8688, lng: 75.8066 }, nearestMetro: "New Aatish Market" },
-  { id: "gopalpura", name: "Gopalpura", category: "Area", tags: ["Coaching Hub", "Residential"], coordinates: { lat: 26.8644, lng: 75.7753 }, nearestMetro: "Ram Nagar" },
-  { id: "sitapura", name: "Sitapura", category: "Area", tags: ["Industrial", "Institutional"], coordinates: { lat: 26.7900, lng: 75.8500 }, nearestMetro: "New Aatish Market" },
-  { id: "shastri_nagar", name: "Shastri Nagar", category: "Area", tags: ["Residential"], coordinates: { lat: 26.9400, lng: 75.8000 }, nearestMetro: "Sindhi Camp" },
-  { id: "lalkothi", name: "Lalkothi", category: "Area", tags: ["Commercial", "Residential"], coordinates: { lat: 26.8900, lng: 75.8000 }, nearestMetro: "Civil Lines" }
+  {
+    id: "galtaji",
+    name: "Galtaji Temple",
+    category: "Spiritual",
+    nearestMetro: "Badi Chaupar",
+    coordinates: { lat: 26.9168, lng: 75.8587 },
+    tags: ["Temple", "Monkeys"]
+  },
+  {
+    id: "govind_dev",
+    name: "Govind Dev Ji Temple",
+    category: "Spiritual",
+    nearestMetro: "Badi Chaupar",
+    coordinates: { lat: 26.9270, lng: 75.8230 },
+    tags: ["Temple", "Aarti"]
+  },
+  {
+    id: "patrika_gate",
+    name: "Patrika Gate",
+    category: "Landmark",
+    nearestMetro: "New Aatish Market",
+    coordinates: { lat: 26.8488, lng: 75.8000 },
+    tags: ["Arches", "Photography"]
+  },
+  {
+    id: "isarlat",
+    name: "Isarlat Sargasuli",
+    category: "Heritage",
+    nearestMetro: "Chhoti Chaupar",
+    coordinates: { lat: 26.9240, lng: 75.8220 },
+    tags: ["Tower", "View"]
+  },
+  {
+    id: "johari_bazaar",
+    name: "Johari Bazaar",
+    category: "Market",
+    nearestMetro: "Badi Chaupar",
+    coordinates: { lat: 26.9205, lng: 75.8267 },
+    tags: ["Jewelry", "Gems"]
+  },
+  {
+    id: "bapu_bazaar",
+    name: "Bapu Bazaar",
+    category: "Market",
+    nearestMetro: "Chhoti Chaupar",
+    coordinates: { lat: 26.9189, lng: 75.8208 },
+    tags: ["Mojari", "Textiles"]
+  },
+  {
+    id: "chokhi_dhani",
+    name: "Chokhi Dhani",
+    category: "Experience",
+    nearestMetro: "New Aatish Market",
+    coordinates: { lat: 26.7667, lng: 75.8427 },
+    tags: ["Village", "Food", "Culture"]
+  },
+  {
+    id: "jhalana_safari",
+    name: "Jhalana Leopard Safari",
+    category: "Experience",
+    nearestMetro: "New Aatish Market",
+    coordinates: { lat: 26.8778, lng: 75.8222 },
+    tags: ["Wildlife", "Leopard"]
+  },
+  {
+    id: "kanak_vrindavan",
+    name: "Kanak Vrindavan Garden",
+    category: "Nature",
+    nearestMetro: "Badi Chaupar",
+    coordinates: { lat: 26.9530, lng: 75.8480 },
+    tags: ["Garden", "Fountain"]
+  },
+  {
+    id: "sisodia_rani",
+    name: "Sisodia Rani Garden",
+    category: "Nature",
+    nearestMetro: "Badi Chaupar",
+    coordinates: { lat: 26.9117, lng: 75.8643 },
+    tags: ["Garden", "Palace"]
+  },
+  {
+    id: "rambagh_palace",
+    name: "Rambagh Palace",
+    category: "Heritage",
+    nearestMetro: "Civil Lines",
+    coordinates: { lat: 26.8981, lng: 75.8063 },
+    tags: ["Luxury", "Hotel"]
+  },
+  {
+    id: "jkk",
+    name: "Jawahar Kala Kendra",
+    category: "Cultural",
+    nearestMetro: "Civil Lines",
+    coordinates: { lat: 26.8917, lng: 75.8083 },
+    tags: ["Art", "Architecture"]
+  },
+  {
+    id: "railway_station",
+    name: "Jaipur Railway Station",
+    category: "Area",
+    nearestMetro: "Railway Station",
+    coordinates: { lat: 26.9195, lng: 75.7932 },
+    tags: ["Transport", "Hub"]
+  },
+  {
+    id: "sindhi_camp",
+    name: "Sindhi Camp Bus Stand",
+    category: "Area",
+    nearestMetro: "Sindhi Camp",
+    coordinates: { lat: 26.9248, lng: 75.7999 },
+    tags: ["Bus", "Transport"]
+  }
 ];
