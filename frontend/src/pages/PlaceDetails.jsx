@@ -282,6 +282,100 @@ export default function PlaceDetails() {
       shopping: [
         { title: "Johari Bazaar", description: "Right outside the temple gates for Jaipur's best jewelry and textiles.", category: "Shopping" }
       ]
+    },
+    "Chokhi Dhani": {
+      attractions: [
+        { title: "Cultural Performances", description: "Watch live Kalbelia (snake charmer dance), Ghoomar, and daring fire acts under the stars.", category: "Highlight", rating: 4.8, famousFor: "Experience" },
+        { title: "Haldighati Enactment", description: "A live performance depicting the historic battle of Haldighati in a mini-amphitheater.", category: "History", rating: 4.6 },
+        { title: "Village Rides", description: "Experience traditional tours on a camel, elephant, bullock cart, or horse within the complex.", category: "Experience", price: 100 }
+      ],
+      food: [
+        { title: "Sangri Dining Hall", description: "Sit on the floor and enjoy a massive, unlimited Rajasthani Thali served on leaf platters.", price: 900, category: "Traditional Thali", warning: "Prepare for a very heavy meal; go on an empty stomach!" },
+        { title: "Royal Fine Dining", description: "A more formal dining experience designed like a royal court with food served in silverware.", price: 1200, category: "Royal" }
+      ],
+      shopping: [
+        { title: "Kalagram", description: "An in-house artisan bazaar for authentic pottery, paintings, and textiles directly from local craftsmen.", category: "Handicrafts" }
+      ]
+    },
+    "Bapu Bazaar": {
+      attractions: [
+        { title: "Heritage Pink Walls", description: "Walk through the bazaar to admire the uniform pink architecture and symmetrical shopfronts.", category: "Heritage", rating: 4.7, famousFor: "Photography" },
+        { title: "Achar Wali Gali", description: "A hidden lane dedicated to hundreds of varieties of authentic Rajasthani pickles.", category: "Experience", famousFor: "Foodie Spot" }
+      ],
+      food: [
+        { title: "Laxmi Chat Bhandar (LCB)", description: "Famous for its Aloo Tikki, Dahi Vada, and spicy street snacks.", price: 200, category: "Iconic", warning: "Can get extremely crowded on weekends." },
+        { title: "Gulab Ji Chai Wale", description: "Legendary spot for masala tea and Bun Samosa since 1946.", price: 50, category: "Street Food" }
+      ],
+      shopping: [
+        { title: "Mojari Footwear", description: "Bapu Bazaar is the premier destination for traditional camel skin leather shoes.", category: "Footwear", famousFor: "Authentic" },
+        { title: "Bandhani Textiles", description: "Best place for tie-dye sarees, suits, and vibrant Jaipuri fabrics.", category: "Textiles" }
+      ]
+    },
+    "Johari Bazaar": {
+      attractions: [
+        { title: "Maniharon ka Rasta", description: "Watch artisans create traditional Lac Bangles from resin in this historic lane.", category: "Experience", rating: 4.9, famousFor: "Crafts" },
+        { title: "Heritage Walk", description: "Explore the oldest part of the Pink City with its interconnected havelis and courtyards.", category: "Heritage" }
+      ],
+      food: [
+        { title: "LMB (Laxmi Misthan Bhandar)", description: "The most famous spot for Paneer Ghewar and Royal Thali in Jaipur.", price: 1200, category: "Iconic", warning: "Avoid guides outside; enter the main restaurant directly." },
+        { title: "Radhe Kachori", description: "Serving fresh and spicy Pyaaz Kachoris since decades.", price: 40, category: "Street Food" }
+      ],
+      shopping: [
+        { title: "Jewelry & Gems", description: "World-renowned for Kundan work, Meenakari, and precious gemstones.", category: "Jewelry", famousFor: "Exquisite" },
+        { title: "Traditional Bridal Wear", description: "The go-to market for heavy Rajasthani wedding attire and Gota Patti work.", category: "Textiles" }
+      ]
+    },
+    "Jhalana Leopard Safari": {
+      attractions: [
+        { title: "Leopard Spotting", description: "Thrilling Jeep safari to spot leopards in their natural rocky habitat within city limits.", category: "Wildlife", rating: 4.9, famousFor: "Safari" },
+        { title: "Bird Watching", description: "Home to many species of owls, eagles, and migratory birds.", category: "Nature", rating: 4.5 }
+      ],
+      food: [
+        { title: "Townsend Kitchen", description: "A trendy multi-cuisine spot nearby with great outdoor seating and vibes.", price: 800, category: "Modern" },
+        { title: "Hanuman Dhaba", description: "Local favorite for affordable and delicious North Indian food.", price: 300, category: "Dhaba" }
+      ],
+      shopping: [
+        { title: "World Trade Park", description: "Jaipur's most futuristic mall is a 5-minute drive away for luxury brands.", category: "Luxury Mall" }
+      ]
+    },
+    "Kanak Vrindavan Garden": {
+      attractions: [
+        { title: "Marble Fountains", description: "Beautifully carved white marble fountains inspired by Vrindavan's gardens.", category: "Highlight", rating: 4.6 },
+        { title: "Jal Mahal View", description: "Offers a serene and unique side-angle view of the Water Palace.", category: "Viewpoint", rating: 4.8 }
+      ],
+      food: [
+        { title: "Jal Mahal Restaurant", description: "Heritage-themed dining with views of the Aravalli hills.", price: 800, category: "Traditional" },
+        { title: "Street Stalls", description: "Grab roasted corn or masala chai near the garden entrance.", price: 40, category: "Snacks" }
+      ],
+      shopping: [
+        { title: "Amer Road Crafts", description: "Explore shops along the road for puppets and wooden toys.", category: "Handicrafts" }
+      ]
+    },
+    "Isarlat Sargasuli": {
+      attractions: [
+        { title: "360-Degree View", description: "Climb the tower for the most comprehensive view of the entire Pink City layout.", category: "Highlight", rating: 4.7, famousFor: "Photography" },
+        { title: "Victory Architecture", description: "Learn about the tower's history as a symbol of Maharaja Ishwari Singh's victory.", category: "History" }
+      ],
+      food: [
+        { title: "Sahu Chai", description: "Famous coal-brewed tea located just a few steps away on Chaura Rasta.", price: 20, category: "Iconic" },
+        { title: "Samrat Kachori", description: "Jaipur's best kachori spot is within walking distance.", price: 40, category: "Street Food" }
+      ],
+      shopping: [
+        { title: "Tripolia Bazaar", description: "Located right at the base for brassware and traditional carpets.", category: "Shopping" }
+      ]
+    },
+    "Jawahar Kala Kendra": {
+      attractions: [
+        { title: "Navgraha Architecture", description: "Explore the unique layout based on nine planets designed by Charles Correa.", category: "Architecture", rating: 4.8, famousFor: "Design" },
+        { title: "Shilpgram", description: "A rural arts complex within JKK showcasing traditional village life and crafts.", category: "Cultural", rating: 4.6 }
+      ],
+      food: [
+        { title: "Indian Coffee House", description: "A nostalgic hangout spot famous for its filter coffee and South Indian snacks.", price: 150, category: "Nostalgic" },
+        { title: "Tapri", description: "A short drive to JLN Marg for trendy tea and fusion snacks.", price: 500, category: "Cafe" }
+      ],
+      shopping: [
+        { title: "Art Bookshop", description: "A curated collection of books on Indian art, culture, and architecture.", category: "Books" }
+      ]
     }
   }), []);
 
