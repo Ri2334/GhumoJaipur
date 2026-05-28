@@ -24,7 +24,9 @@ Follow these steps to deploy your MERN project to **Vercel** (Frontend) and **Re
     | `CLOUDINARY_CLOUD_NAME` | *Your Cloudinary Cloud Name* |
     | `CLOUDINARY_API_KEY` | *Your Cloudinary API Key* |
     | `CLOUDINARY_API_SECRET` | *Your Cloudinary API Secret* |
-    | `MAIL_HOST` | `smtp.gmail.com` (or your provider) |
+    | `MAIL_HOST` | `smtp.gmail.com` |
+    | `MAIL_PORT` | `465` |
+    | `MAIL_SECURE` | `true` |
     | `MAIL_USER` | *Your Email Address* |
     | `MAIL_PASS` | *Your Email App Password* |
     | `ADMIN_EMAIL` | `admin@ghumojaipur.com` |

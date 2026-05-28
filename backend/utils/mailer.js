@@ -7,24 +7,23 @@ const hasSmtpConfig = () => Boolean(process.env.MAIL_HOST && process.env.MAIL_US
 export const createTransport = () => {
   if (!hasSmtpConfig()) return null;
 
-  const port = Number(process.env.MAIL_PORT || 587);
-  const isGmail = (process.env.MAIL_HOST || "").toLowerCase().includes("gmail");
-  
-  // For Gmail on 587, secure must be false. On 465, it must be true.
-  const secure = port === 465;
+  const port = Number(process.env.MAIL_PORT || 465);
+  // Default to true for 465, but respect MAIL_SECURE env var if provided
+  const secure = process.env.MAIL_SECURE !== undefined 
+    ? String(process.env.MAIL_SECURE) === "true" 
+    : port === 465;
 
   return nodemailer.createTransport({
-    host: process.env.MAIL_HOST,
+    host: process.env.MAIL_HOST || "smtp.gmail.com",
     port: port,
     secure: secure,
     auth: {
       user: process.env.MAIL_USER,
       pass: getMailPass(),
     },
-    tls: {
-      // Do not fail on invalid certificates (useful for some SMTP relays)
-      rejectUnauthorized: false
-    }
+    connectionTimeout: 30000, // 30 seconds
+    greetingTimeout: 30000,   // 30 seconds
+    socketTimeout: 30000,     // 30 seconds
   });
 };
 
