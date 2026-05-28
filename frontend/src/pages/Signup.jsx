@@ -5,6 +5,25 @@ import { validateEmail, validatePassword, validateName, validateMobile } from ".
 import OTPInput from "../components/OTPInput";
 import { FaUser, FaTaxi, FaEnvelope, FaPhone, FaLock, FaArrowRight, FaIdCard, FaCar } from "react-icons/fa";
 
+const InputField = ({ label, icon: Icon, value, onChange, type = "text", error, placeholder }) => (
+  <div className="space-y-1.5">
+    <label className="block text-xs font-black uppercase tracking-widest text-gray-400 ml-1">{label}</label>
+    <div className="relative group">
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+        <Icon size={18} />
+      </div>
+      <input
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={`w-full bg-gray-50 border-2 ${error ? 'border-red-500' : 'border-gray-100 group-focus-within:border-indigo-600'} rounded-2xl py-4 pl-12 pr-4 text-gray-900 font-medium transition-all outline-none`}
+      />
+    </div>
+    {error && <p className="text-[10px] font-bold text-red-500 ml-2 animate-pulse">{error}</p>}
+  </div>
+);
+
 export default function Signup() {
   const { signup, sendOTP, verifyOTP } = useContext(AuthContext);
   const [fullName, setFullName] = useState("");
@@ -98,25 +117,6 @@ export default function Signup() {
     e.preventDefault();
     handleSendOTP();
   };
-
-  const InputField = ({ label, icon: Icon, value, onChange, type = "text", error, placeholder }) => (
-    <div className="space-y-1.5">
-      <label className="block text-xs font-black uppercase tracking-widest text-gray-400 ml-1">{label}</label>
-      <div className="relative group">
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors">
-          <Icon size={18} />
-        </div>
-        <input
-          type={type}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          className={`w-full bg-gray-50 border-2 ${error ? 'border-red-500' : 'border-gray-100 group-focus-within:border-indigo-600'} rounded-2xl py-4 pl-12 pr-4 text-gray-900 font-medium transition-all outline-none`}
-        />
-      </div>
-      {error && <p className="text-[10px] font-bold text-red-500 ml-2 animate-pulse">{error}</p>}
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-12 px-4 flex items-center justify-center">

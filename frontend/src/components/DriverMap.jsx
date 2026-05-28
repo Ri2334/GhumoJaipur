@@ -81,8 +81,8 @@ export default function DriverMap({ driver, pickupCoord, destCoord }){
         style={{ height: '100%', width: '100%' }}
       >
         <TileLayer
-          url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png"
-          attribution='&copy; Stadia Maps'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
         {initialPickup && <Marker position={[initialPickup.lat, initialPickup.lng]} icon={pickupIcon} />}
