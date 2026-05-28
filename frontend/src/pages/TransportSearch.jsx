@@ -128,19 +128,6 @@ export default function TransportSearch() {
     const finalDest = overrideDest || destination;
     if (!finalSource || !finalDest) return;
 
-    // Validation: Check if places exist in our data
-    const allValidNames = [
-      ...jaipurPlaces.map(p => p.name.toLowerCase()),
-      ...metroStations.map(s => s.name.toLowerCase()),
-      ...jaipurBusStops.map(b => b.name.toLowerCase())
-    ];
-
-    if (!allValidNames.includes(finalSource.toLowerCase()) || !allValidNames.includes(finalDest.toLowerCase())) {
-      setError("No routes found for the provided places in Jaipur. Please select from the suggestions.");
-      setResult(null);
-      return;
-    }
-
     setLoading(true);
     setSuggestionsVisible(false);
     setError(null);

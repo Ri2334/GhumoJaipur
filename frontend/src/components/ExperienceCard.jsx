@@ -5,6 +5,7 @@ export default function ExperienceCard({ title, description, category, price, ra
   const isAttraction = type === "attraction";
   const isFood = type === "food";
   const isShopping = type === "shopping";
+  const isTransport = type === "transport";
 
   let themeClasses = "border-indigo-100 bg-white";
   let tagClasses = "text-indigo-600 bg-indigo-50";
@@ -18,6 +19,10 @@ export default function ExperienceCard({ title, description, category, price, ra
     themeClasses = "border-emerald-100 bg-white";
     tagClasses = "text-emerald-600 bg-emerald-50";
     icon = "🛍️";
+  } else if (isTransport) {
+    themeClasses = "border-blue-100 bg-white";
+    tagClasses = "text-blue-600 bg-blue-50";
+    icon = "🚇";
   }
 
   return (

@@ -1,4 +1,38 @@
 import Place from "../models/Place.js";
+import TouristLocation from "../models/TouristLocation.js";
+
+const syncToTouristLocation = async (place) => {
+  try {
+    // Basic coordinate estimation if not explicitly provided
+    // For a real production app, we would use a Geocoding API (Google/Mapbox)
+    // For this 2026 Jaipur demo, we use central defaults based on common areas
+    let lat = 26.9124;
+    let lng = 75.7873;
+    
+    const locLower = place.location.toLowerCase();
+    if (locLower.includes("amer") || locLower.includes("amber")) { lat = 26.9855; lng = 75.8513; }
+    else if (locLower.includes("badi chaupar") || locLower.includes("pink city")) { lat = 26.9262; lng = 75.8265; }
+    else if (locLower.includes("mansarovar")) { lat = 26.8756; lng = 75.7533; }
+    else if (locLower.includes("malviya nagar") || locLower.includes("jhalana")) { lat = 26.8549; lng = 75.8243; }
+    else if (locLower.includes("c-scheme") || locLower.includes("mi road")) { lat = 26.9168; lng = 75.8085; }
+    else if (locLower.includes("jawahar circle") || locLower.includes("tonk road")) { lat = 26.8488; lng = 75.8001; }
+
+    await TouristLocation.findOneAndUpdate(
+      { name: place.name },
+      {
+        name: place.name,
+        description: place.description,
+        area: place.location.split(',').pop().trim() || "Jaipur",
+        latitude: lat,
+        longitude: lng,
+        category: place.category
+      },
+      { upsert: true, new: true }
+    );
+  } catch (err) {
+    console.error("Failed to sync TouristLocation:", err.message);
+  }
+};
 
 const normalizeArray = (value) => {
   if (Array.isArray(value)) return value.filter(Boolean).map(String);
@@ -98,6 +132,8 @@ export const createPlace = async (req, res) => {
       createdBy: req.user._id,
     });
 
+    await syncToTouristLocation(place);
+
     return res.status(201).json({ success: true, data: place, message: "Place created successfully" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -119,6 +155,8 @@ export const updatePlace = async (req, res) => {
       return res.status(404).json({ success: false, message: "Place not found" });
     }
 
+    await syncToTouristLocation(place);
+
     return res.status(200).json({ success: true, data: place, message: "Place updated successfully" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -131,6 +169,11 @@ export const deletePlace = async (req, res) => {
     if (!place) {
       return res.status(404).json({ success: false, message: "Place not found" });
     }
+
+    // Also remove from transport locations
+    try {
+      await TouristLocation.findOneAndDelete({ name: place.name });
+    } catch (e) {}
 
     return res.status(200).json({ success: true, message: "Place deleted successfully" });
   } catch (error) {

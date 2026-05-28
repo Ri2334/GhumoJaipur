@@ -382,7 +382,30 @@ export default function PlaceDetails() {
 
   const currentGuide = useMemo(() => {
     if (!place) return null;
-    return localGuideCatalog[place.name] || null;
+    const hardcoded = localGuideCatalog[place.name];
+    if (hardcoded) return hardcoded;
+
+    // Fallback to database data if available
+    if ((place.nearbyFoods && place.nearbyFoods.length > 0) || (place.transportOptions && place.transportOptions.length > 0)) {
+      return {
+        attractions: [],
+        food: (place.nearbyFoods || []).map(food => ({
+          title: food,
+          description: `Highly recommended spot near ${place.name} as suggested by our local guides.`,
+          category: "Local Favorite",
+          type: "food"
+        })),
+        shopping: [],
+        transport: (place.transportOptions || []).map(opt => ({
+          title: opt,
+          description: `Convenient way to reach or explore around ${place.name}.`,
+          category: "Transport",
+          type: "transport"
+        }))
+      };
+    }
+
+    return null;
   }, [place, localGuideCatalog]);
 
   const handleReviewSubmit = async (event) => {
@@ -461,43 +484,64 @@ export default function PlaceDetails() {
               {currentGuide ? (
                 <>
                   {/* Attractions */}
-                  <section>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-white text-xl shadow-lg shadow-indigo-100">🏛️</div>
-                      <h3 className="text-2xl font-bold text-gray-900">Must-See Attractions & Experiences</h3>
-                    </div>
-                    <div className="grid gap-6 sm:grid-cols-2">
-                      {currentGuide.attractions.map((item, idx) => (
-                        <ExperienceCard key={idx} {...item} type="attraction" />
-                      ))}
-                    </div>
-                  </section>
+                  {currentGuide.attractions && currentGuide.attractions.length > 0 && (
+                    <section>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-white text-xl shadow-lg shadow-indigo-100">🏛️</div>
+                        <h3 className="text-2xl font-bold text-gray-900">Must-See Attractions & Experiences</h3>
+                      </div>
+                      <div className="grid gap-6 sm:grid-cols-2">
+                        {currentGuide.attractions.map((item, idx) => (
+                          <ExperienceCard key={idx} {...item} type="attraction" />
+                        ))}
+                      </div>
+                    </section>
+                  )}
 
                   {/* Food */}
-                  <section>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-600 text-white text-xl shadow-lg shadow-orange-100">🍛</div>
-                      <h3 className="text-2xl font-bold text-gray-900">Iconic Food to Try</h3>
-                    </div>
-                    <div className="grid gap-6 sm:grid-cols-2">
-                      {currentGuide.food.map((item, idx) => (
-                        <ExperienceCard key={idx} {...item} type="food" />
-                      ))}
-                    </div>
-                  </section>
+                  {currentGuide.food && currentGuide.food.length > 0 && (
+                    <section>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-600 text-white text-xl shadow-lg shadow-orange-100">🍛</div>
+                        <h3 className="text-2xl font-bold text-gray-900">Iconic Food to Try</h3>
+                      </div>
+                      <div className="grid gap-6 sm:grid-cols-2">
+                        {currentGuide.food.map((item, idx) => (
+                          <ExperienceCard key={idx} {...item} type="food" />
+                        ))}
+                      </div>
+                    </section>
+                  )}
 
                   {/* Shopping */}
-                  <section>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-600 text-white text-xl shadow-lg shadow-emerald-100">🛍️</div>
-                      <h3 className="text-2xl font-bold text-gray-900">Famous Local Shopping</h3>
-                    </div>
-                    <div className="grid gap-6 sm:grid-cols-2">
-                      {currentGuide.shopping.map((item, idx) => (
-                        <ExperienceCard key={idx} {...item} type="shopping" />
-                      ))}
-                    </div>
-                  </section>
+                  {currentGuide.shopping && currentGuide.shopping.length > 0 && (
+                    <section>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-600 text-white text-xl shadow-lg shadow-emerald-100">🛍️</div>
+                        <h3 className="text-2xl font-bold text-gray-900">Famous Local Shopping</h3>
+                      </div>
+                      <div className="grid gap-6 sm:grid-cols-2">
+                        {currentGuide.shopping.map((item, idx) => (
+                          <ExperienceCard key={idx} {...item} type="shopping" />
+                        ))}
+                      </div>
+                    </section>
+                  )}
+
+                  {/* Transport */}
+                  {currentGuide.transport && currentGuide.transport.length > 0 && (
+                    <section>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600 text-white text-xl shadow-lg shadow-blue-100">🚇</div>
+                        <h3 className="text-2xl font-bold text-gray-900">Recommended Transport</h3>
+                      </div>
+                      <div className="grid gap-6 sm:grid-cols-2">
+                        {currentGuide.transport.map((item, idx) => (
+                          <ExperienceCard key={idx} {...item} type="transport" />
+                        ))}
+                      </div>
+                    </section>
+                  )}
                 </>
               ) : (
                 <div className="py-20 text-center text-gray-500 border-2 border-dashed border-gray-200 rounded-[3rem] bg-white/50">
