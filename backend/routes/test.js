@@ -30,7 +30,8 @@ router.get("/mail-check", async (req, res) => {
       config: {
         host: process.env.MAIL_HOST,
         user: process.env.MAIL_USER,
-        port: process.env.MAIL_PORT || 587
+        port: process.env.MAIL_PORT || 587,
+        secure: String(process.env.MAIL_SECURE) === "true"
       }
     });
   } catch (error) {

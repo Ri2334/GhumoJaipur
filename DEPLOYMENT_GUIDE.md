@@ -24,11 +24,11 @@ Follow these steps to deploy your MERN project to **Vercel** (Frontend) and **Re
     | `CLOUDINARY_CLOUD_NAME` | *Your Cloudinary Cloud Name* |
     | `CLOUDINARY_API_KEY` | *Your Cloudinary API Key* |
     | `CLOUDINARY_API_SECRET` | *Your Cloudinary API Secret* |
-    | `MAIL_HOST` | `smtp.gmail.com` |
-    | `MAIL_PORT` | `465` |
-    | `MAIL_SECURE` | `true` |
-    | `MAIL_USER` | *Your Email Address* |
-    | `MAIL_PASS` | *Your Email App Password* |
+    | `MAIL_HOST` | `smtp-relay.brevo.com` |
+    | `MAIL_PORT` | `587` |
+    | `MAIL_SECURE` | `false` |
+    | `MAIL_USER` | *Your Brevo SMTP Login* |
+    | `MAIL_PASS` | *Your Brevo SMTP Password (Master Password)* |
     | `ADMIN_EMAIL` | `admin@ghumojaipur.com` |
 
 ---
