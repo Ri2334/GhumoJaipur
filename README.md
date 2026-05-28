@@ -120,7 +120,7 @@ Contemporary tourism in historical cities suffers from:
 **Rishi Joshi**  
 Software Engineer | MERN Specialist  
 📧 [rishi.joshi.ddu@gmail.com](mailto:rishi.joshi.ddu@gmail.com)  
-🔗 [LinkedIn](https://linkedin.com/in/rishi-joshi)  
+🔗 [LinkedIn](linkedin.com/in/rishijoshi11)
 
 ---
 *Ghumo Jaipur: Engineering a smarter way to explore the Pink City.*
