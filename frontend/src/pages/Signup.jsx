@@ -120,37 +120,20 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-12 px-4 flex items-center justify-center">
-      <div className="w-full max-w-2xl bg-white/80 backdrop-blur-xl border border-white/70 rounded-[3rem] shadow-2xl shadow-indigo-100/50 overflow-hidden flex flex-col md:flex-row">
+      <div className="w-full max-w-xl bg-white/90 backdrop-blur-xl border border-white/70 rounded-[2.5rem] shadow-2xl shadow-indigo-100/50 overflow-hidden">
         
-        {/* Left Side - Info */}
-        <div className="md:w-5/12 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-10 text-white flex flex-col justify-between relative overflow-hidden">
-          <div className="relative z-10">
-            <h3 className="text-3xl font-black leading-tight mb-4">Start your journey today.</h3>
-            <p className="text-indigo-100 font-medium">Join thousands of travelers exploring the Pink City.</p>
-          </div>
-          
-          <div className="relative z-10 mt-12 space-y-6">
-            <div className="flex items-center gap-4 bg-white/10 p-4 rounded-3xl border border-white/10 backdrop-blur-md">
-              <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center text-indigo-600 text-xl">🚕</div>
-              <p className="text-xs font-bold leading-relaxed">Book verified cabs and autos instantly.</p>
-            </div>
-            <div className="flex items-center gap-4 bg-white/10 p-4 rounded-3xl border border-white/10 backdrop-blur-md">
-              <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center text-indigo-600 text-xl">🗺️</div>
-              <p className="text-xs font-bold leading-relaxed">Save your favorite spots for later.</p>
-            </div>
-          </div>
-
-          {/* Decor */}
-          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+        {/* Compact Header Branding */}
+        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 p-8 text-center text-white relative overflow-hidden">
+           <div className="relative z-10">
+              <h2 className="text-3xl font-black tracking-tight mb-2">Create Account</h2>
+              <p className="text-indigo-100 text-sm font-medium">Join Ghumo Jaipur to start your adventure.</p>
+           </div>
+           {/* Abstract patterns */}
+           <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
+           <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-400/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-xl"></div>
         </div>
 
-        {/* Right Side - Form */}
-        <div className="md:w-7/12 p-8 md:p-12">
-          <div className="mb-8">
-            <h2 className="text-3xl font-black text-gray-900 tracking-tight">Create Account</h2>
-            <p className="text-gray-500 font-medium mt-1">Fill in your details to get started.</p>
-          </div>
-
+        <div className="p-8 md:p-10">
           {serverError && (
             <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 text-xs font-bold flex items-center gap-3">
               <span className="text-lg">⚠️</span> {serverError}
@@ -167,7 +150,7 @@ export default function Signup() {
                   <button
                     type="button"
                     onClick={() => setRole('user')}
-                    className={`flex items-center justify-center gap-3 p-4 rounded-2xl border-2 transition-all ${role === 'user' ? 'border-indigo-600 bg-indigo-50 text-indigo-700' : 'border-gray-100 bg-gray-50 text-gray-500 grayscale'}`}
+                    className={`flex items-center justify-center gap-3 p-4 rounded-2xl border-2 transition-all ${role === 'user' ? 'border-indigo-600 bg-indigo-50 text-indigo-700 shadow-md' : 'border-gray-100 bg-gray-50 text-gray-400'}`}
                   >
                     <FaUser size={16} />
                     <span className="font-bold">Passenger</span>
@@ -175,7 +158,7 @@ export default function Signup() {
                   <button
                     type="button"
                     onClick={() => setRole('driver')}
-                    className={`flex items-center justify-center gap-3 p-4 rounded-2xl border-2 transition-all ${role === 'driver' ? 'border-indigo-600 bg-indigo-50 text-indigo-700' : 'border-gray-100 bg-gray-50 text-gray-500 grayscale'}`}
+                    className={`flex items-center justify-center gap-3 p-4 rounded-2xl border-2 transition-all ${role === 'driver' ? 'border-indigo-600 bg-indigo-50 text-indigo-700 shadow-md' : 'border-gray-100 bg-gray-50 text-gray-400'}`}
                   >
                     <FaTaxi size={16} />
                     <span className="font-bold">Driver</span>
@@ -184,32 +167,35 @@ export default function Signup() {
               </div>
 
               {role === 'driver' && (
-                <div className="p-6 bg-amber-50 rounded-[2rem] border border-amber-100 space-y-4 animate-in slide-in-from-top-2">
+                <div className="p-6 bg-amber-50 rounded-3xl border border-amber-100 space-y-4 animate-in slide-in-from-top-2 duration-300">
                   <p className="text-[10px] font-black uppercase text-amber-600 tracking-widest flex items-center gap-2">
                     <FaCar /> Vehicle Information
                   </p>
-                  <div className="space-y-4">
-                    <InputField label="Vehicle Name" icon={FaCar} value={vehicle} onChange={(e) => setVehicle(e.target.value)} error={errors.vehicle} placeholder="e.g. Swift Dzire" />
-                    <InputField label="Vehicle Number" icon={FaIdCard} value={vehicleNumber} onChange={(e) => setVehicleNumber(e.target.value)} error={errors.vehicleNumber} placeholder="RJ-14-XX-XXXX" />
-                    <div className="space-y-1.5">
-                      <label className="block text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Type</label>
-                      <select 
-                        value={vehicleType} 
-                        onChange={(e) => setVehicleType(e.target.value)}
-                        className="w-full bg-white border-2 border-gray-100 rounded-2xl py-4 px-4 text-gray-900 font-bold outline-none appearance-none cursor-pointer"
-                      >
-                        <option value="cab">🚕 Cab / Taxi</option>
-                        <option value="auto">🛺 Auto Rickshaw</option>
-                      </select>
-                    </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <InputField label="Name" icon={FaCar} value={vehicle} onChange={(e) => setVehicle(e.target.value)} error={errors.vehicle} placeholder="Swift Dzire" />
+                    <InputField label="Number" icon={FaIdCard} value={vehicleNumber} onChange={(e) => setVehicleNumber(e.target.value)} error={errors.vehicleNumber} placeholder="RJ-14-XX-0000" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Type</label>
+                    <select 
+                      value={vehicleType} 
+                      onChange={(e) => setVehicleType(e.target.value)}
+                      className="w-full bg-white border-2 border-gray-100 rounded-2xl py-4 px-4 text-gray-900 font-bold outline-none appearance-none cursor-pointer"
+                    >
+                      <option value="cab">🚕 Cab / Taxi</option>
+                      <option value="auto">🛺 Auto Rickshaw</option>
+                    </select>
                   </div>
                 </div>
               )}
 
               <div className="space-y-5">
                 <InputField label="Full Name" icon={FaUser} value={fullName} onChange={(e) => setFullName(e.target.value)} error={errors.fullName} placeholder="John Doe" />
-                <InputField label="Email Address" icon={FaEnvelope} value={email} onChange={(e) => setEmail(e.target.value)} error={errors.email} type="email" placeholder="john@example.com" />
-                <InputField label="Mobile Number" icon={FaPhone} value={mobile} onChange={(e) => setMobile(e.target.value.replace(/[^0-9]/g, ''))} error={errors.mobile} placeholder="9876543210" />
+                
+                <div className="grid md:grid-cols-2 gap-4">
+                  <InputField label="Email" icon={FaEnvelope} value={email} onChange={(e) => setEmail(e.target.value)} error={errors.email} type="email" placeholder="john@example.com" />
+                  <InputField label="Mobile" icon={FaPhone} value={mobile} onChange={(e) => setMobile(e.target.value.replace(/[^0-9]/g, ''))} error={errors.mobile} placeholder="9876543210" />
+                </div>
                 
                 <div className="grid md:grid-cols-2 gap-4">
                   <InputField label="Password" icon={FaLock} value={password} onChange={(e) => setPassword(e.target.value)} error={errors.password} type="password" placeholder="••••••••" />
@@ -221,7 +207,7 @@ export default function Signup() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-pink-500 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-200 hover:shadow-indigo-300 transition-all hover:-translate-y-1 disabled:opacity-70 disabled:translate-y-0 flex items-center justify-center gap-3"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-pink-500 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-100 hover:shadow-indigo-200 transition-all hover:-translate-y-0.5 disabled:opacity-70 flex items-center justify-center gap-3"
                 >
                   {sending ? "Processing..." : "Continue to Verification"}
                   {!sending && <FaArrowRight size={14} />}

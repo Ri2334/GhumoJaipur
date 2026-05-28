@@ -26,34 +26,20 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-12 px-4 flex items-center justify-center">
-      <div className="w-full max-w-2xl bg-white/80 backdrop-blur-xl border border-white/70 rounded-[3rem] shadow-2xl shadow-indigo-100/50 overflow-hidden flex flex-col md:flex-row">
+      <div className="w-full max-w-md bg-white/90 backdrop-blur-xl border border-white/70 rounded-[2.5rem] shadow-2xl shadow-indigo-100/50 overflow-hidden">
         
-        {/* Left Side - Welcome Back */}
-        <div className="md:w-5/12 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-10 text-white flex flex-col justify-between relative overflow-hidden">
-          <div className="relative z-10">
-            <h3 className="text-3xl font-black leading-tight mb-4">Welcome Back!</h3>
-            <p className="text-indigo-100 font-medium text-sm">We're glad to see you again. Ready to explore more of Jaipur?</p>
-          </div>
-          
-          <div className="relative z-10 mt-12 space-y-6">
-            <div className="flex items-center gap-4 bg-white/10 p-4 rounded-3xl border border-white/10 backdrop-blur-md">
-              <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center text-indigo-600 text-xl">✨</div>
-              <p className="text-xs font-bold leading-relaxed text-indigo-50">Pick up right where you left off.</p>
-            </div>
-          </div>
-
-          {/* Decor */}
-          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-48 h-48 bg-pink-400/20 rounded-full blur-2xl"></div>
+        {/* Header Branding */}
+        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 p-8 text-center text-white relative overflow-hidden">
+           <div className="relative z-10">
+              <h2 className="text-3xl font-black tracking-tight mb-2">Welcome Back!</h2>
+              <p className="text-indigo-100 text-sm font-medium">Sign in to continue your journey.</p>
+           </div>
+           {/* Abstract patterns */}
+           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
+           <div className="absolute bottom-0 left-0 w-24 h-24 bg-indigo-400/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-xl"></div>
         </div>
 
-        {/* Right Side - Form */}
-        <div className="md:w-7/12 p-8 md:p-12">
-          <div className="mb-10">
-            <h2 className="text-3xl font-black text-gray-900 tracking-tight">Login</h2>
-            <p className="text-gray-500 font-medium mt-1">Sign in to your account to continue.</p>
-          </div>
-
+        <div className="p-8 md:p-10">
           {error && (
             <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 text-xs font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-1">
               <span className="text-lg">⚠️</span> {error}
@@ -113,13 +99,13 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-indigo-600 to-pink-500 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-200 hover:shadow-indigo-300 transition-all hover:-translate-y-1 disabled:opacity-70 disabled:translate-y-0 flex items-center justify-center gap-3"
+                className="w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-100 hover:shadow-indigo-200 transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:translate-y-0 flex items-center justify-center gap-3"
               >
                 {loading ? "Signing in..." : "Login"}
                 {!loading && <FaArrowRight size={14} />}
               </button>
               
-              <div className="mt-8 text-center space-y-4">
+              <div className="mt-8 text-center">
                 <p className="text-sm font-bold text-gray-400">
                   Don't have an account? <Link to="/signup" className="text-indigo-600 hover:underline">Sign up now</Link>
                 </p>

@@ -107,77 +107,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-32 relative overflow-hidden scroll-mt-20">
+      {/* Improved About Section */}
+      <section id="about" className="py-24 md:py-32 scroll-mt-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 items-center gap-16">
-            <div className="order-2 lg:order-1 relative">
-              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl aspect-[4/5] md:aspect-square">
-                 <img 
-                   src="https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/hawamahal_owadja.jpg" 
-                   alt="Hawa Mahal" 
-                   className="w-full h-full object-cover"
-                 />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                 <div className="absolute bottom-8 left-8 text-white">
-                    <p className="text-sm font-bold uppercase tracking-widest mb-2 opacity-80">Heritage Highlight</p>
-                    <h4 className="text-3xl font-black">Hawa Mahal</h4>
-                 </div>
+          <div className="bg-white/60 backdrop-blur-2xl rounded-[3.5rem] border border-white p-8 md:p-16 shadow-2xl relative overflow-hidden">
+            <div className="grid lg:grid-cols-2 items-center gap-12 lg:gap-20 relative z-10">
+              <div className="relative group">
+                <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl aspect-[4/5] md:aspect-square transform group-hover:rotate-1 transition-transform duration-500">
+                   <img 
+                     src="https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/hawamahal_owadja.jpg" 
+                     alt="Hawa Mahal" 
+                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                   />
+                   <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/80 via-transparent to-transparent"></div>
+                   <div className="absolute bottom-8 left-8 text-white">
+                      <p className="text-xs font-black uppercase tracking-[0.4em] mb-2 opacity-80">Heritage Landmark</p>
+                      <h4 className="text-3xl font-black">Hawa Mahal</h4>
+                   </div>
+                </div>
+                {/* Visual badge */}
+                <div className="absolute -bottom-6 -right-6 bg-indigo-600 p-6 rounded-[2rem] text-white shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                   <div className="text-3xl font-black mb-1">100+</div>
+                   <div className="text-[10px] font-black uppercase tracking-widest text-indigo-200">Local Spots</div>
+                </div>
               </div>
-              {/* Stats Overlay */}
-              <div className="absolute -bottom-10 -right-10 bg-indigo-600 p-8 rounded-[2rem] text-white shadow-2xl hidden md:block">
-                 <div className="text-4xl font-black mb-1">100+</div>
-                 <div className="text-sm font-bold text-indigo-100 uppercase tracking-widest">Local Spots</div>
-              </div>
-            </div>
 
-            <div className="order-1 lg:order-2">
-              <p className="text-sm font-black uppercase tracking-[0.3em] text-indigo-600 mb-4">Our Mission</p>
-              <h2 className="text-5xl font-black text-gray-900 leading-tight mb-8">
-                Preserving heritage, <br />
-                Powering travel.
-              </h2>
-              <div className="space-y-6 text-lg text-gray-600 leading-relaxed font-medium">
-                <p>
-                  Jaipur is a city of stories, colors, and timeless architecture. But navigating it shouldn't feel like a puzzle. 
-                  Ghumo Jaipur was built to bridge the gap between traditional tourism and modern convenience.
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.5em] text-indigo-600 mb-6 flex items-center gap-4">
+                  <span className="w-10 h-0.5 bg-indigo-600"></span>
+                  Our Story
                 </p>
-                <p>
-                  We provide real-time public transport logic, a curated network of verified drivers, and deep-dive guides 
-                  into the city's most iconic locations. Whether you're here for the palaces or the street food, we ensure 
-                  you spend less time searching and more time experiencing.
-                </p>
-              </div>
-              
-              <div className="mt-12 grid grid-cols-2 gap-8">
-                 <div>
-                    <div className="text-indigo-600 text-3xl font-black mb-2">2026</div>
-                    <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">Updated Prices</div>
-                 </div>
-                 <div>
-                    <div className="text-pink-500 text-3xl font-black mb-2">Smart</div>
-                    <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">Metro Integration</div>
-                 </div>
+                <h2 className="text-4xl md:text-6xl font-black text-gray-900 leading-tight mb-8">
+                  Preserving heritage, <br />
+                  <span className="text-indigo-600">Powering travel.</span>
+                </h2>
+                <div className="space-y-6 text-lg text-gray-600 leading-relaxed font-medium">
+                  <p>
+                    Jaipur is a city of stories and timeless architecture. But navigating it shouldn't feel like a puzzle. 
+                    Ghumo Jaipur was built to bridge the gap between traditional tourism and modern convenience.
+                  </p>
+                  <p>
+                    We provide real-time public transport logic, a curated network of verified drivers, and deep-dive guides 
+                    into the city's most iconic locations.
+                  </p>
+                </div>
+                
+                <div className="mt-12 flex flex-wrap gap-8">
+                   <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center text-2xl">✨</div>
+                      <div>
+                        <div className="text-gray-900 font-black">2026 Ready</div>
+                        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Updated Prices</div>
+                      </div>
+                   </div>
+                   <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-pink-50 flex items-center justify-center text-2xl">🚇</div>
+                      <div>
+                        <div className="text-gray-900 font-black">Smart Metro</div>
+                        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Real-time Paths</div>
+                      </div>
+                   </div>
+                </div>
               </div>
             </div>
+            {/* Background pattern */}
+            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-indigo-100/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
           </div>
         </div>
       </section>
 
-      {/* Logged Out Meaningful UI (Fix 4) */}
+      {/* Logged Out Meaningful UI */}
       {!user && (
         <section className="pb-32">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 rounded-[3rem] p-12 md:p-20 shadow-2xl relative overflow-hidden">
+            <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 rounded-[3.5rem] p-12 md:p-20 shadow-2xl relative overflow-hidden">
                <div className="relative z-10 text-center max-w-3xl mx-auto">
-                 <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">Ready to unlock Jaipur's full potential?</h2>
-                 <p className="text-indigo-50 text-xl font-medium mb-10 leading-relaxed">
-                   Join thousands of travelers who use Ghumo Jaipur to save trips, book rides, and get personalized recommendations. 
-                   It's free, forever.
+                 <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">Ready to unlock Jaipur's potential?</h2>
+                 <p className="text-indigo-50 text-xl font-medium mb-10 leading-relaxed opacity-90">
+                   Join thousands of travelers who use Ghumo Jaipur to save trips, book rides, and get personalized recommendations.
                  </p>
                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                    <Link to="/signup" className="w-full sm:w-auto bg-white text-indigo-600 px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-indigo-50 transition shadow-xl">Create Account</Link>
-                   <Link to="/login" className="w-full sm:w-auto bg-indigo-700/30 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-indigo-700/40 transition">Login</Link>
+                   <Link to="/login" className="w-full sm:w-auto bg-white/10 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-white/20 transition">Login</Link>
                  </div>
                </div>
                {/* Abstract pattern bg */}
@@ -188,7 +199,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* Footer / Contact Lite */}
+      {/* Footer */}
       <footer className="py-12 border-t border-gray-100 bg-white/50 text-center">
         <div className="mx-auto max-w-7xl px-4">
           <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">© 2026 Ghumo Jaipur • Built with ❤️ for the Pink City</p>
