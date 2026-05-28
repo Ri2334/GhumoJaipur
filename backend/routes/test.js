@@ -1,5 +1,5 @@
 import { getTestData, postTestData } from "../controllers/testController.js";
-import { createTransport } from "../utils/mailer.js";
+import { isEmailConfigured, sendEmailViaApi } from "../utils/mailer.js";
 
 import express from "express";
 
@@ -11,34 +11,40 @@ router.get("/", getTestData);
 // POST route - create test data
 router.post("/", postTestData);
 
-// Health check for mailer
+// Health check for mailer REST API
 router.get("/mail-check", async (req, res) => {
-  const transport = createTransport();
-  if (!transport) {
+  if (!isEmailConfigured()) {
     return res.status(500).json({ 
       success: false, 
-      message: "SMTP is NOT configured correctly. Check MAIL_HOST, MAIL_USER, and MAIL_PASS environment variables." 
+      message: "Brevo API is NOT configured. Please add BREVO_API_KEY to Render environment variables." 
     });
   }
 
   try {
-    // Verify connection configuration
-    await transport.verify();
-    return res.json({ 
-      success: true, 
-      message: "SMTP connection verified successfully. Transporter is ready to send emails.",
-      config: {
-        host: process.env.MAIL_HOST,
-        user: process.env.MAIL_USER,
-        port: process.env.MAIL_PORT || 587,
-        secure: String(process.env.MAIL_SECURE) === "true"
-      }
+    // Send a minimal test email to the configured sender address to verify API Key
+    const result = await sendEmailViaApi({
+      to: process.env.MAIL_USER || "acd8d8001@smtp-brevo.com",
+      subject: "Ghumo Jaipur - API Health Check",
+      html: "<p>API Connection Test Successful. The transactional email service is ready.</p>"
     });
+
+    if (result.sent) {
+      return res.json({ 
+        success: true, 
+        message: "Brevo API verified successfully. The system can send emails.",
+        messageId: result.messageId
+      });
+    } else {
+      return res.status(500).json({ 
+        success: false, 
+        message: `Brevo API Verification Failed: ${result.reason}` 
+      });
+    }
   } catch (error) {
-    console.error("SMTP Verification Error:", error);
+    console.error("API Verification Error:", error);
     return res.status(500).json({ 
       success: false, 
-      message: `SMTP Verification Failed: ${error.message}` 
+      message: `API Verification Failed: ${error.message}` 
     });
   }
 });

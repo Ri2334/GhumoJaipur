@@ -24,11 +24,8 @@ Follow these steps to deploy your MERN project to **Vercel** (Frontend) and **Re
     | `CLOUDINARY_CLOUD_NAME` | *Your Cloudinary Cloud Name* |
     | `CLOUDINARY_API_KEY` | *Your Cloudinary API Key* |
     | `CLOUDINARY_API_SECRET` | *Your Cloudinary API Secret* |
-    | `MAIL_HOST` | `smtp-relay.brevo.com` |
-    | `MAIL_PORT` | `587` |
-    | `MAIL_SECURE` | `false` |
-    | `MAIL_USER` | *Your Brevo SMTP Login* |
-    | `MAIL_PASS` | *Your Brevo SMTP Password (Master Password)* |
+    | `BREVO_API_KEY` | *Your Brevo Transactional API Key (v3)* |
+    | `MAIL_USER` | *Your Brevo SMTP/Sender Login Email* |
     | `ADMIN_EMAIL` | `admin@ghumojaipur.com` |
 
 ---
@@ -76,6 +73,7 @@ MONGODB_URI=your_atlas_uri npm run seed:transport
 ---
 
 ## ⚠️ Important Notes
+- **Email System**: The application uses the **Brevo REST API** for reliability on cloud platforms like Render. Ensure `BREVO_API_KEY` is set in your Render dashboard.
 - **Cold Starts**: Render's free tier spins down after inactivity. The first request might take 30-50 seconds. We've added a timeout in the frontend to handle this.
 - **HTTPS**: Both Vercel and Render provide HTTPS automatically. Always use `https://` in your environment variables.
 - **Database**: Ensure your MongoDB Atlas IP Access List allows connections from everywhere (`0.0.0.0/0`) for Render to connect.
