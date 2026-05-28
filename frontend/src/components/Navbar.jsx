@@ -52,7 +52,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/dashboard') }>
+            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate(user ? '/dashboard' : '/') }>
               <div className="w-11 h-11 bg-white rounded-2xl flex items-center justify-center text-indigo-600 font-black shadow-lg group-hover:scale-110 transition">GJ</div>
               <div className="text-white font-black text-xl tracking-tight">Ghumo Jaipur</div>
             </div>
@@ -60,6 +60,7 @@ export default function Navbar() {
 
           <nav className="hidden lg:flex items-center gap-1">
             <NavLink to="/" className={activeClass}>Home</NavLink>
+            <a href="/#about" className="text-white/90 hover:text-white px-3 py-2 transition font-medium">About</a>
             <NavLink to="/places" className={activeClass}>Places</NavLink>
             <NavLink to="/transport" className={activeClass}>Smart Transport</NavLink>
             {user && user.role !== 'driver' && activeRideId && (
@@ -185,18 +186,10 @@ export default function Navbar() {
         <div className="md:hidden bg-gradient-to-b from-indigo-600 to-pink-500">
           <div className="px-4 pt-2 pb-4 space-y-2">
             <NavLink to="/" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Home</NavLink>
+            <a href="/#about" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">About</a>
             <NavLink to="/places" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Explore Places</NavLink>
             <NavLink to="/transport" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Smart Transport</NavLink>
             <NavLink to="/saved-trips" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Saved Trips</NavLink>
-            {user?.role === "driver" && <NavLink to="/driver/dashboard" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Driver Dashboard</NavLink>}
-            {user?.role === "admin" && (
-              <>
-                <NavLink to="/admin/places" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Admin Places</NavLink>
-                <NavLink to="/admin/drivers" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Admin Drivers</NavLink>
-              </>
-            )}
-            <NavLink to="/" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">About</NavLink>
-            <NavLink to="/" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Contact</NavLink>
 
             <div className="pt-2 border-t border-white/20">
               {!user ? (

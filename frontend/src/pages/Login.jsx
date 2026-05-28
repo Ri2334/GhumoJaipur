@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { FaEnvelope, FaLock, FaArrowRight, FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Login() {
   const { login, loading } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [show, setShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -15,41 +16,117 @@ export default function Login() {
     setError(null);
     if (!email || !password) return setError("Please provide email and password");
     const res = await login({ email, password });
-    if (res.success) navigate('/dashboard');
-    else setError("Invalid credentials");
+    if (res.success) {
+      if (res.user?.role === 'driver') navigate('/driver/dashboard');
+      else navigate('/dashboard');
+    } else {
+      setError(res.message || "Invalid credentials. Please try again.");
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow">
-        <h2 className="text-2xl font-bold mb-4">Login to Ghumo Jaipur</h2>
-        {error && <div className="text-red-500 mb-3">{error}</div>}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
-            <input value={email} onChange={(e)=> setEmail(e.target.value)} className="mt-1 w-full border px-3 py-2 rounded" type="email" />
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-12 px-4 flex items-center justify-center">
+      <div className="w-full max-w-2xl bg-white/80 backdrop-blur-xl border border-white/70 rounded-[3rem] shadow-2xl shadow-indigo-100/50 overflow-hidden flex flex-col md:flex-row">
+        
+        {/* Left Side - Welcome Back */}
+        <div className="md:w-5/12 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-10 text-white flex flex-col justify-between relative overflow-hidden">
+          <div className="relative z-10">
+            <h3 className="text-3xl font-black leading-tight mb-4">Welcome Back!</h3>
+            <p className="text-indigo-100 font-medium text-sm">We're glad to see you again. Ready to explore more of Jaipur?</p>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
-            <div className="relative">
-              <input value={password} onChange={(e)=> setPassword(e.target.value)} className="mt-1 w-full border px-3 py-2 rounded" type={show? 'text' : 'password'} />
-              <button type="button" onClick={()=> setShow(s => !s)} className="absolute right-2 top-2 text-sm">{show? 'Hide' : 'Show'}</button>
+          
+          <div className="relative z-10 mt-12 space-y-6">
+            <div className="flex items-center gap-4 bg-white/10 p-4 rounded-3xl border border-white/10 backdrop-blur-md">
+              <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center text-indigo-600 text-xl">✨</div>
+              <p className="text-xs font-bold leading-relaxed text-indigo-50">Pick up right where you left off.</p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" /> Remember me</label>
-            <button type="button" className="text-sm text-blue-600" onClick={()=> navigate('/forgot-password')}>Forgot?</button>
+          {/* Decor */}
+          <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-48 h-48 bg-pink-400/20 rounded-full blur-2xl"></div>
+        </div>
+
+        {/* Right Side - Form */}
+        <div className="md:w-7/12 p-8 md:p-12">
+          <div className="mb-10">
+            <h2 className="text-3xl font-black text-gray-900 tracking-tight">Login</h2>
+            <p className="text-gray-500 font-medium mt-1">Sign in to your account to continue.</p>
           </div>
 
-          <button disabled={loading} type="submit" className="w-full bg-gradient-to-r from-indigo-600 to-pink-500 text-white py-2 rounded">
-            {loading ? 'Signing in...' : 'Login'}
-          </button>
+          {error && (
+            <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 text-xs font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-1">
+              <span className="text-lg">⚠️</span> {error}
+            </div>
+          )}
 
-          <div className="text-center text-sm text-gray-500">Or continue with</div>
-          <button type="button" className="w-full border px-3 py-2 rounded">Continue with Google</button>
-        </form>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-1.5">
+              <label className="block text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+              <div className="relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+                  <FaEnvelope size={18} />
+                </div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="john@example.com"
+                  className="w-full bg-gray-50 border-2 border-gray-100 group-focus-within:border-indigo-600 rounded-2xl py-4 pl-12 pr-4 text-gray-900 font-medium transition-all outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between px-1">
+                <label className="block text-xs font-black uppercase tracking-widest text-gray-400">Password</label>
+                <button 
+                  type="button" 
+                  onClick={() => navigate('/forgot-password')}
+                  className="text-[10px] font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-700 transition"
+                >
+                  Forgot?
+                </button>
+              </div>
+              <div className="relative group">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+                  <FaLock size={18} />
+                </div>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full bg-gray-50 border-2 border-gray-100 group-focus-within:border-indigo-600 rounded-2xl py-4 pl-12 pr-12 text-gray-900 font-medium transition-all outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition-colors"
+                >
+                  {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-indigo-600 to-pink-500 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-200 hover:shadow-indigo-300 transition-all hover:-translate-y-1 disabled:opacity-70 disabled:translate-y-0 flex items-center justify-center gap-3"
+              >
+                {loading ? "Signing in..." : "Login"}
+                {!loading && <FaArrowRight size={14} />}
+              </button>
+              
+              <div className="mt-8 text-center space-y-4">
+                <p className="text-sm font-bold text-gray-400">
+                  Don't have an account? <Link to="/signup" className="text-indigo-600 hover:underline">Sign up now</Link>
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -1,20 +1,200 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Home() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
-      <div className="max-w-5xl mx-auto px-4 py-20">
-        <div className="bg-white/60 backdrop-blur-sm rounded-xl p-8 shadow-lg">
-          <h1 className="text-4xl font-bold text-gray-800">Welcome to Ghumo Jaipur</h1>
-          <p className="mt-3 text-gray-600">Discover Jaipur's best tourist spots, local food, and smart transport options.</p>
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-          <div className="mt-6 flex gap-3">
-            <Link to="/places" className="bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-4 py-2 rounded shadow">Explore Places</Link>
-            <Link to="/saved-trips" className="bg-white border border-indigo-200 px-4 py-2 rounded">Saved Trips</Link>
+  const features = [
+    {
+      title: "Smart Transport",
+      desc: "Get real-time metro paths, bus routes, and book verified cabs or autos instantly.",
+      icon: "🚌",
+      link: "/transport"
+    },
+    {
+      title: "Heritage Guides",
+      desc: "Explore Jaipur's iconic forts, palaces, and markets with deep local insights and 2026 pricing.",
+      icon: "🏰",
+      link: "/places"
+    },
+    {
+      title: "Planned Trips",
+      desc: "Shortlist your favorite spots and sync them across devices for a seamless travel experience.",
+      icon: "🗺️",
+      link: "/saved-trips"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)]">
+      
+      {/* Hero Section */}
+      <section className="relative pt-20 pb-32 overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center">
+            <div className="inline-flex items-center gap-2 bg-white/50 backdrop-blur-md border border-white/70 px-4 py-2 rounded-2xl mb-8 animate-in fade-in slide-in-from-bottom-2">
+              <span className="flex h-2 w-2 rounded-full bg-indigo-600"></span>
+              <span className="text-xs font-bold uppercase tracking-widest text-indigo-700">Official Jaipur Tourism Assistant</span>
+            </div>
+            
+            <h1 className="text-6xl md:text-8xl font-black text-gray-900 tracking-tight leading-tight">
+              Explore Jaipur <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500">
+                Like a Local
+              </span>
+            </h1>
+            
+            <p className="mt-8 max-w-2xl mx-auto text-xl text-gray-600 leading-relaxed font-medium">
+              Ghumo Jaipur is your all-in-one companion for navigating the Pink City. 
+              Discover hidden gems, smart transport options, and authentic local experiences.
+            </p>
+
+            <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link 
+                to="/places" 
+                className="w-full sm:w-auto bg-gray-900 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-gray-800 transition shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-3"
+              >
+                <span>Explore Places</span>
+                <span className="text-xl">✨</span>
+              </Link>
+              <Link 
+                to={user ? "/dashboard" : "/signup"} 
+                className="w-full sm:w-auto bg-white text-indigo-600 border-2 border-indigo-50 px-10 py-5 rounded-2xl font-bold text-lg hover:bg-indigo-50 transition shadow-xl hover:-translate-y-1 flex items-center justify-center gap-3"
+              >
+                <span>{user ? "Go to Dashboard" : "Get Started Now"}</span>
+                <span className="text-xl">🚀</span>
+              </Link>
+            </div>
+
+            {!user && (
+              <p className="mt-8 text-sm font-bold text-gray-400 uppercase tracking-widest">
+                Already have an account? <Link to="/login" className="text-indigo-600 hover:underline">Login here</Link>
+              </p>
+            )}
           </div>
         </div>
-      </div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/4 w-96 h-96 bg-indigo-200/30 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute top-1/3 right-0 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] bg-pink-200/30 rounded-full blur-[120px] pointer-events-none"></div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="py-24 bg-white/40 backdrop-blur-xl relative z-10 border-y border-white/50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((f, i) => (
+              <div 
+                key={i} 
+                onClick={() => navigate(f.link)}
+                className="group cursor-pointer p-8 rounded-[2.5rem] bg-white border border-gray-100 shadow-xl hover:shadow-2xl transition transform hover:-translate-y-2"
+              >
+                <div className="w-16 h-16 bg-indigo-50 rounded-3xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition duration-500">
+                  {f.icon}
+                </div>
+                <h3 className="text-2xl font-black text-gray-900 mb-4">{f.title}</h3>
+                <p className="text-gray-600 leading-relaxed font-medium">
+                  {f.desc}
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-indigo-600 font-bold uppercase text-xs tracking-widest opacity-0 group-hover:opacity-100 transition">
+                  Learn More <span>→</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-32 relative overflow-hidden scroll-mt-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 items-center gap-16">
+            <div className="order-2 lg:order-1 relative">
+              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl aspect-[4/5] md:aspect-square">
+                 <img 
+                   src="https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/hawamahal_owadja.jpg" 
+                   alt="Hawa Mahal" 
+                   className="w-full h-full object-cover"
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                 <div className="absolute bottom-8 left-8 text-white">
+                    <p className="text-sm font-bold uppercase tracking-widest mb-2 opacity-80">Heritage Highlight</p>
+                    <h4 className="text-3xl font-black">Hawa Mahal</h4>
+                 </div>
+              </div>
+              {/* Stats Overlay */}
+              <div className="absolute -bottom-10 -right-10 bg-indigo-600 p-8 rounded-[2rem] text-white shadow-2xl hidden md:block">
+                 <div className="text-4xl font-black mb-1">100+</div>
+                 <div className="text-sm font-bold text-indigo-100 uppercase tracking-widest">Local Spots</div>
+              </div>
+            </div>
+
+            <div className="order-1 lg:order-2">
+              <p className="text-sm font-black uppercase tracking-[0.3em] text-indigo-600 mb-4">Our Mission</p>
+              <h2 className="text-5xl font-black text-gray-900 leading-tight mb-8">
+                Preserving heritage, <br />
+                Powering travel.
+              </h2>
+              <div className="space-y-6 text-lg text-gray-600 leading-relaxed font-medium">
+                <p>
+                  Jaipur is a city of stories, colors, and timeless architecture. But navigating it shouldn't feel like a puzzle. 
+                  Ghumo Jaipur was built to bridge the gap between traditional tourism and modern convenience.
+                </p>
+                <p>
+                  We provide real-time public transport logic, a curated network of verified drivers, and deep-dive guides 
+                  into the city's most iconic locations. Whether you're here for the palaces or the street food, we ensure 
+                  you spend less time searching and more time experiencing.
+                </p>
+              </div>
+              
+              <div className="mt-12 grid grid-cols-2 gap-8">
+                 <div>
+                    <div className="text-indigo-600 text-3xl font-black mb-2">2026</div>
+                    <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">Updated Prices</div>
+                 </div>
+                 <div>
+                    <div className="text-pink-500 text-3xl font-black mb-2">Smart</div>
+                    <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">Metro Integration</div>
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Logged Out Meaningful UI (Fix 4) */}
+      {!user && (
+        <section className="pb-32">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 rounded-[3rem] p-12 md:p-20 shadow-2xl relative overflow-hidden">
+               <div className="relative z-10 text-center max-w-3xl mx-auto">
+                 <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">Ready to unlock Jaipur's full potential?</h2>
+                 <p className="text-indigo-50 text-xl font-medium mb-10 leading-relaxed">
+                   Join thousands of travelers who use Ghumo Jaipur to save trips, book rides, and get personalized recommendations. 
+                   It's free, forever.
+                 </p>
+                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                   <Link to="/signup" className="w-full sm:w-auto bg-white text-indigo-600 px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-indigo-50 transition shadow-xl">Create Account</Link>
+                   <Link to="/login" className="w-full sm:w-auto bg-indigo-700/30 backdrop-blur-md text-white border border-white/20 px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-indigo-700/40 transition">Login</Link>
+                 </div>
+               </div>
+               {/* Abstract pattern bg */}
+               <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[600px] h-[600px] bg-white/10 rounded-full blur-[100px]"></div>
+               <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[400px] h-[400px] bg-indigo-400/20 rounded-full blur-[80px]"></div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Footer / Contact Lite */}
+      <footer className="py-12 border-t border-gray-100 bg-white/50 text-center">
+        <div className="mx-auto max-w-7xl px-4">
+          <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">© 2026 Ghumo Jaipur • Built with ❤️ for the Pink City</p>
+        </div>
+      </footer>
+
     </div>
   );
 }

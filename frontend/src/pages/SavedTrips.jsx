@@ -56,7 +56,7 @@ export default function SavedTrips() {
         <div className="mb-8 rounded-3xl border border-white/70 bg-white/75 p-6 shadow-xl backdrop-blur">
           <p className="text-sm font-semibold uppercase tracking-[0.3em] text-indigo-600">Saved Trips</p>
           <h1 className="mt-2 text-4xl font-black text-gray-900">Your travel shortlist</h1>
-          <p className="mt-3 text-gray-600">Saved places stay in MongoDB so they remain available after refresh and login.</p>
+          <p className="mt-3 text-gray-600">Your favorite spots are synced across all your devices, ready for your next adventure.</p>
         </div>
 
         {error && <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">{error}</div>}
