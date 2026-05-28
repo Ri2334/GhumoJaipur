@@ -26,13 +26,28 @@ export const sendEmailViaApi = async ({ to, subject, html }) => {
     return { sent: false, reason: "API Key missing" };
   }
 
+  // Ensure sender exactly matches the verified email in Brevo
+  const senderEmail = process.env.MAIL_USER;
+  if (!senderEmail) {
+    console.error("Mailer Error: MAIL_USER is missing. Must be a verified Brevo sender.");
+    return { sent: false, reason: "Sender email missing" };
+  }
+
   try {
     const payload = {
-      sender: { name: getSenderName(), email: getSenderEmail() },
+      sender: {
+        name: "Ghumo Jaipur",
+        email: senderEmail
+      },
       to: [{ email: to }],
       subject: subject,
-      htmlContent: html,
+      htmlContent: html
     };
+
+    console.log(`\n--- Brevo API Request ---`);
+    console.log(`To: ${to}`);
+    console.log(`Payload:`, JSON.stringify({ ...payload, htmlContent: "[HTML CONTENT OMITTED]" }, null, 2));
+    console.log(`Waiting for response...\n`);
 
     const response = await axios.post(BREVO_API_URL, payload, {
       headers: {
@@ -40,14 +55,26 @@ export const sendEmailViaApi = async ({ to, subject, html }) => {
         "Content-Type": "application/json",
         "Accept": "application/json",
       },
-      timeout: 10000, // 10 seconds timeout
+      timeout: 15000, // 15 seconds timeout
     });
 
-    console.log("Mailer Success: Email sent via Brevo API", response.data.messageId);
+    console.log(`\n--- Brevo API Response ---`);
+    console.log(`Status: ${response.status} ${response.statusText}`);
+    console.log(`Data:`, JSON.stringify(response.data, null, 2));
+    console.log(`--------------------------\n`);
+
     return { sent: true, messageId: response.data.messageId };
   } catch (error) {
+    console.log(`\n--- Brevo API Error ---`);
+    if (error.response) {
+      console.error(`Status: ${error.response.status}`);
+      console.error(`Data:`, JSON.stringify(error.response.data, null, 2));
+    } else {
+      console.error(`Error:`, error.message);
+    }
+    console.log(`-----------------------\n`);
+    
     const errorDetail = error.response?.data?.message || error.message;
-    console.error("Mailer Error: Brevo API request failed", errorDetail);
     return { sent: false, reason: errorDetail };
   }
 };
