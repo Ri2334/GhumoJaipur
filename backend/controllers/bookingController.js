@@ -1,7 +1,7 @@
 import Driver from "../models/Driver.js";
 import Booking from "../models/Booking.js";
 import User from "../models/User.js";
-import { createTransport } from "../utils/mailer.js";
+import { sendEmailViaApi } from "../utils/mailer.js";
 import { haversineKm } from "../utils/distance.js";
 
 export const createBooking = async (req, res) => {
@@ -67,10 +67,8 @@ export const createBooking = async (req, res) => {
 
     // Send ride OTP email immediately
     try {
-      const transport = createTransport();
-      if (transport && user.email) {
-        await transport.sendMail({ 
-          from: process.env.MAIL_FROM, 
+      if (user.email) {
+        await sendEmailViaApi({ 
           to: user.email, 
           subject: 'Ghumo Jaipur: Your Ride OTP', 
           html: `<p>Your ride with Ghumo Jaipur is confirmed! Share this OTP with your driver to start the ride: <strong>${rideOtp}</strong></p>` 

@@ -1,15 +1,11 @@
 import Booking from "../models/Booking.js";
 import Driver from "../models/Driver.js";
 import User from "../models/User.js";
-import { createTransport } from "nodemailer";
-import { createTransport as createMailerTransport } from "../utils/mailer.js";
+import { sendEmailViaApi } from "../utils/mailer.js";
 
 export const sendBookingEmail = async (bookingId) => {
   const booking = await Booking.findById(bookingId).populate('driver user');
   if (!booking) throw new Error('Booking not found');
-
-  const transport = createMailerTransport();
-  if (!transport) return;
 
   const to = booking.user?.email || booking.user;
   const subject = `Ghumo Jaipur - Booking Confirmed (${booking._id})`;
@@ -25,5 +21,5 @@ export const sendBookingEmail = async (bookingId) => {
     </div>
   `;
 
-  await transport.sendMail({ from: process.env.MAIL_FROM, to, subject, html });
+  await sendEmailViaApi({ to, subject, html });
 };
