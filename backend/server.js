@@ -26,14 +26,24 @@ connectDB();
 app.use(express.json());
 
 // Enable CORS - allows frontend to communicate with backend
-const rawOrigins = (process.env.CORS_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
+const allowedOrigins = (process.env.CORS_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
+
 app.use(cors({
-  origin: function(origin, callback){
-    // allow requests with no origin like mobile apps or curl
-    if(!origin) return callback(null, true);
-    if(rawOrigins.length === 0) return callback(null, true);
-    if(rawOrigins.indexOf(origin) !== -1) return callback(null, true);
-    return callback(new Error('CORS blocked by server'), false);
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    
+    // In development, allow all origins if CORS_ORIGIN is not set
+    if (process.env.NODE_ENV === 'development' && allowedOrigins.length === 0) {
+      return callback(null, true);
+    }
+
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
+      return callback(null, true);
+    } else {
+      console.warn(`CORS blocked for origin: ${origin}`);
+      return callback(new Error('CORS blocked by server'), false);
+    }
   },
   credentials: true,
 }));
@@ -69,5 +79,5 @@ app.use((err, req, res, next) => {
 // Start server
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
-  console.log(`🌍 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Ghumo Jaipur Backend is running on port ${PORT}`);
 });
