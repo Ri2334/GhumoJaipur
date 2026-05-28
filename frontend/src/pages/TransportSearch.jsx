@@ -422,7 +422,7 @@ export default function TransportSearch() {
             )}
 
             <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-xl backdrop-blur h-[400px] flex flex-col">
-            ...                <div className="border-b border-gray-100 px-6 py-4 bg-white/90">
+                <div className="border-b border-gray-100 px-6 py-4 bg-white/90">
                   <h2 className="text-xl font-bold text-gray-900">Route map</h2>
                 </div>
                 <div className="flex-1 w-full z-0 relative min-h-0">

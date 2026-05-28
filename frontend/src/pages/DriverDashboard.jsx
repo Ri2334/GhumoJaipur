@@ -1,10 +1,17 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { jaipurPlaces } from "../data/jaipurPlaces";
 import { default as apiClient } from "../services/api";
+import { 
+  FiMapPin, FiStar, FiTruck, FiActivity, 
+  FiUser, FiPhone, FiDollarSign, FiClock,
+  FiZap, FiCheckCircle, FiXCircle, FiCompass,
+  FiLayers, FiRefreshCw, FiAlertCircle, FiShield, FiTrendingUp, FiCalendar, FiUsers
+} from "react-icons/fi";
 
 export default function DriverDashboard() {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [driverInfo, setDriverInfo] = useState(null);
   const [rideRequests, setRideRequests] = useState([]);
   const [availableShared, setAvailableShared] = useState([]);
@@ -13,35 +20,56 @@ export default function DriverDashboard() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [otpInputs, setOtpInputs] = useState({});
+  const [error, setError] = useState(null); // Local error catch
+  
+  const [stats, setStats] = useState({
+    totals: { earnings: 0, trips: 0, distance: 0 },
+    history: [],
+    chartData: []
+  });
+  const [analysisTab, setAnalysisTab] = useState("earnings"); 
+  const [period, setPeriod] = useState("daily"); 
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
 
-  const fetchDriverData = async () => {
+  const fetchDriverData = useCallback(async () => {
     try {
       const res = await apiClient.get("/driver/me");
-      setDriverInfo(res.data.data);
+      if (res.data?.data) setDriverInfo(res.data.data);
     } catch (err) {
-      console.error("Failed to fetch driver data", err);
+      console.error("Fetch Driver Error", err);
     }
-  };
+  }, []);
 
-  const fetchRideRequests = async () => {
+  const fetchStats = useCallback(async () => {
+    try {
+      const res = await apiClient.get(`/driver/stats?period=${period}&date=${selectedDate}`);
+      if (res.data?.success && res.data.data) {
+        setStats(res.data.data);
+      }
+    } catch (err) {
+      console.error("Fetch Stats Error", err);
+    }
+  }, [period, selectedDate]);
+
+  const fetchRideRequests = useCallback(async () => {
     try {
       const res = await apiClient.get("/driver/requests");
-      setRideRequests(res.data.data);
+      setRideRequests(res.data?.data || []);
     } catch (err) {
-      console.error("Failed to fetch ride requests", err);
+      console.error("Fetch Requests Error", err);
     }
-  };
+  }, []);
 
-  const fetchAvailableShared = async () => {
+  const fetchAvailableShared = useCallback(async () => {
     try {
       const res = await apiClient.get("/shared-rides/available");
-      setAvailableShared(res.data.data);
+      setAvailableShared(res.data?.data || []);
     } catch (err) {
-      console.error("Failed to fetch available shared rides", err);
+      console.error("Fetch Shared Error", err);
     }
-  };
+  }, []);
 
-  const fetchAllLocations = async () => {
+  const fetchAllLocations = useCallback(async () => {
     try {
       const [locRes, staRes] = await Promise.all([
         apiClient.get("/transport/locations"),
@@ -49,37 +77,46 @@ export default function DriverDashboard() {
       ]);
       
       const combined = [
-        ...locRes.data.data.map(l => ({ name: l.name, lat: l.latitude, lng: l.longitude, category: l.category })),
-        ...staRes.data.data.map(s => ({ name: s.name, lat: s.latitude, lng: s.longitude, category: "Metro Station" }))
-      ].sort((a, b) => a.name.localeCompare(b.name));
+        ...(locRes.data?.data || []).map(l => ({ name: l.name, lat: l.latitude, lng: l.longitude, category: l.category })),
+        ...(staRes.data?.data || []).map(s => ({ name: s.name, lat: s.latitude, lng: s.longitude, category: "Metro Station" }))
+      ].filter(l => l.name).sort((a, b) => a.name.localeCompare(b.name));
 
       setAllLocations(combined);
     } catch (err) {
-      console.error("Failed to fetch locations", err);
+      console.error("Fetch Locations Error", err);
     }
-  };
+  }, []);
 
+  // Initial Load
   useEffect(() => {
     const init = async () => {
-      setLoading(true);
-      await Promise.all([fetchDriverData(), fetchRideRequests(), fetchAvailableShared(), fetchAllLocations()]);
-      setLoading(false);
+      try {
+        setLoading(true);
+        await Promise.all([fetchDriverData(), fetchRideRequests(), fetchAvailableShared(), fetchAllLocations(), fetchStats()]);
+      } catch (err) {
+        setError("Failed to load dashboard data");
+      } finally {
+        setLoading(false);
+      }
     };
     init();
+  }, [fetchDriverData, fetchRideRequests, fetchAvailableShared, fetchAllLocations, fetchStats]);
 
-    // Poll for new requests every 10 seconds
+  // Polling
+  useEffect(() => {
     const interval = setInterval(() => {
       fetchRideRequests();
       fetchAvailableShared();
+      fetchStats();
     }, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchRideRequests, fetchAvailableShared, fetchStats]);
 
   const handleUpdateStatus = async (status) => {
     setSaving(true);
     try {
       const res = await apiClient.put("/driver/update", { availability: status });
-      setDriverInfo(res.data.data);
+      setDriverInfo(res.data?.data);
     } catch (err) {
       alert(err.response?.data?.message || "Failed to update status");
     } finally {
@@ -87,45 +124,13 @@ export default function DriverDashboard() {
     }
   };
 
-  const handleAcceptShared = async (rideId) => {
-    try {
-      await apiClient.post("/shared-rides/accept", { rideId });
-      fetchRideRequests();
-      fetchAvailableShared();
-    } catch (err) {
-      alert("Failed to accept shared ride");
-    }
-  };
-
-  const handleRequestSharedStart = async (rideId) => {
-    try {
-      await apiClient.post("/shared-rides/request-start", { rideId });
-      fetchRideRequests();
-    } catch (err) {
-      alert(err.response?.data?.message || "Failed to request start");
-    }
-  };
-
-  const handleConfirmSharedStart = async (rideId) => {
-    try {
-      await apiClient.post("/shared-rides/confirm-start", { rideId });
-      fetchRideRequests();
-    } catch (err) {
-      alert(err.response?.data?.message || "Failed to start ride. Make sure all passengers have approved.");
-    }
-  };
-
   const handleUpdateLocation = async (loc) => {
     setSaving(true);
     try {
       const res = await apiClient.put("/driver/update", { 
-        currentLocation: { 
-          areaName: loc.name, 
-          latitude: loc.lat, 
-          longitude: loc.lng 
-        } 
+        currentLocation: { areaName: loc.name, latitude: loc.lat, longitude: loc.lng } 
       });
-      setDriverInfo(res.data.data);
+      setDriverInfo(res.data?.data);
     } catch (err) {
       alert("Failed to update location");
     } finally {
@@ -148,11 +153,11 @@ export default function DriverDashboard() {
       alert("Please enter a valid 4-digit OTP");
       return;
     }
-
     try {
       await apiClient.post("/driver/start", { bookingId, otp });
       fetchRideRequests();
-      fetchDriverData(); // Update status to Busy
+      fetchDriverData();
+      fetchStats();
     } catch (err) {
       alert(err.response?.data?.message || "Invalid OTP");
     }
@@ -162,9 +167,20 @@ export default function DriverDashboard() {
     try {
       await apiClient.post("/driver/complete", { bookingId });
       fetchRideRequests();
-      fetchDriverData(); // Update status to Available and new location
+      fetchDriverData();
+      fetchStats();
     } catch (err) {
       alert("Failed to complete ride");
+    }
+  };
+
+  const handleAcceptShared = async (rideId) => {
+    try {
+      await apiClient.post("/shared-rides/accept", { rideId });
+      fetchRideRequests();
+      fetchAvailableShared();
+    } catch (err) {
+      alert("Failed to accept shared ride");
     }
   };
 
@@ -172,268 +188,197 @@ export default function DriverDashboard() {
     setOtpInputs(prev => ({ ...prev, [bookingId]: value }));
   };
 
-  const hasActiveRide = rideRequests.some(r => r.status === 'accepted' || r.status === 'started');
+  // Safe chart data calculation
+  const chartMemo = useMemo(() => {
+    const data = stats?.chartData || [];
+    const max = Math.max(...data.map(d => Number(d[analysisTab]) || 0), 1);
+    return { data, max };
+  }, [stats, analysisTab]);
 
-  if (loading) return <div className="p-10 text-center">Loading Driver Dashboard...</div>;
-  if (!driverInfo) return <div className="p-10 text-center text-red-500">Only drivers can access this page.</div>;
+  if (loading) return (
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center space-y-4">
+      <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+      <p className="text-gray-400 text-xs font-medium">Loading Command Center...</p>
+    </div>
+  );
+
+  if (error) return (
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center space-y-4 p-6">
+      <FiAlertCircle size={40} className="text-red-500" />
+      <p className="text-gray-900 font-bold">{error}</p>
+      <button onClick={() => window.location.reload()} className="px-6 py-2 bg-indigo-600 text-white rounded-xl font-bold">Retry</button>
+    </div>
+  );
+
+  if (!driverInfo) return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6 text-center">
+      <div className="bg-white p-8 rounded-3xl shadow-xl max-w-sm">
+        <FiUser size={32} className="mx-auto text-gray-400 mb-4" />
+        <h2 className="text-xl font-bold mb-2">Access Denied</h2>
+        <p className="text-gray-500 text-xs">Driver profile not detected. Ensure you are signed in as a driver.</p>
+      </div>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10">
-      <div className="mx-auto max-w-6xl px-4">
+    <div className="min-h-screen bg-gray-50 pb-16">
+      <div className="bg-white border-b border-gray-100 px-6 py-6 mb-6 shadow-sm">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+             <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 border border-indigo-100"><FiTruck size={24} /></div>
+             <div>
+                <h1 className="text-xl font-black text-gray-900">Driver Dashboard</h1>
+                <p className="text-[10px] text-gray-400 font-bold">{driverInfo.vehicle} • {driverInfo.vehicleNumber}</p>
+             </div>
+          </div>
+          <div className="flex items-center gap-6">
+             <div className="flex items-center gap-8">
+                <div className="text-right">
+                   <p className="text-[9px] font-black text-gray-400 uppercase">Rating</p>
+                   <p className="text-sm font-black text-indigo-600">{driverInfo.rating || '5.0'} <FiStar className="inline" size={10} /></p>
+                </div>
+                <div className="text-right">
+                   <p className="text-[9px] font-black text-gray-400 uppercase">Revenue</p>
+                   <p className="text-sm font-black text-green-600">₹{stats?.totals?.earnings || 0}</p>
+                </div>
+                <div className="text-right">
+                   <p className="text-[9px] font-black text-gray-400 uppercase">Trips</p>
+                   <p className="text-sm font-black text-gray-900">{stats?.totals?.trips || 0}</p>
+                </div>
+             </div>
+             <div className={`px-4 py-2 rounded-xl font-black uppercase text-[9px] border-2 ${
+               driverInfo.availability === 'Available' ? 'bg-green-50 text-green-700 border-green-100' : 'bg-amber-50 text-amber-700 border-amber-100'
+             }`}>
+               {driverInfo.availability}
+             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6">
         {!driverInfo.isVerified && (
-          <div className="mb-8 rounded-3xl bg-red-50 border-2 border-red-100 p-8 shadow-xl text-center">
-            <div className="text-4xl mb-4">🛡️</div>
-            <h2 className="text-2xl font-black text-red-900">Verification Required</h2>
-            <p className="text-red-700 font-medium mt-2">
-              Your account is not yet verified. You must complete your profile and wait for admin approval before you can go online or accept rides.
-            </p>
-            <button 
-              onClick={() => window.location.href = '/profile'}
-              className="mt-6 bg-red-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-red-700 transition shadow-lg shadow-red-100"
-            >
-              Complete Profile
-            </button>
+          <div className="mb-6 bg-red-50 border border-red-100 rounded-3xl p-6 flex items-center justify-between">
+            <div className="flex items-center gap-4"><FiShield className="text-red-500" size={24} />
+              <div><p className="text-sm font-black text-red-900">Verification Pending</p><p className="text-xs text-red-600">Complete your profile to start accepting rides.</p></div>
+            </div>
+            <button onClick={() => navigate('/profile')} className="bg-red-600 text-white px-6 py-2 rounded-xl text-[10px] font-black">Complete Profile</button>
           </div>
         )}
 
-        <div className={`mb-8 rounded-3xl bg-white p-8 shadow-xl ${!driverInfo.isVerified ? 'opacity-50 pointer-events-none' : ''}`}>
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-black text-gray-900">Welcome, {user?.name}</h1>
-              <p className="text-gray-500">{driverInfo.vehicle} • {driverInfo.vehicleNumber}</p>
-            </div>
-            <div className={`rounded-full px-4 py-2 text-sm font-bold ${driverInfo.availability === 'Available' ? 'bg-green-100 text-green-700' : driverInfo.availability === 'Busy' ? 'bg-amber-100 text-amber-700' : 'bg-gray-100 text-gray-500'}`}>
-              {driverInfo.availability}
-            </div>
-          </div>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-4">
-            <button 
-              disabled={saving || hasActiveRide}
-              onClick={() => handleUpdateStatus('Available')}
-              className={`rounded-2xl p-4 text-center border-2 transition ${driverInfo.availability === 'Available' ? 'border-green-500 bg-green-50' : 'border-transparent bg-gray-100 hover:bg-gray-200'} disabled:opacity-50`}
-            >
-              <div className="text-2xl mb-1">🚗</div>
-              <div className="font-bold">Go Online</div>
-              <div className="text-xs text-gray-500">Ready for rides</div>
-            </button>
-            <button 
-              disabled={saving || hasActiveRide}
-              onClick={() => handleUpdateStatus('Offline')}
-              className={`rounded-2xl p-4 text-center border-2 transition ${driverInfo.availability === 'Offline' ? 'border-gray-500 bg-gray-50' : 'border-transparent bg-gray-100 hover:bg-gray-200'} disabled:opacity-50`}
-            >
-              <div className="text-2xl mb-1">💤</div>
-              <div className="font-bold">Go Offline</div>
-              <div className="text-xs text-gray-500">Take a break</div>
-            </button>
-            <div className="rounded-2xl p-4 text-center bg-indigo-50 border-2 border-indigo-100">
-              <div className="text-2xl mb-1">📍</div>
-              <div className="font-bold truncate px-2">{driverInfo.currentLocation.areaName}</div>
-              <div className="text-xs text-gray-500">Current Position</div>
-            </div>
-            <div className="rounded-2xl p-4 text-center bg-indigo-50 border-2 border-indigo-100">
-              <div className="text-2xl mb-1">⭐</div>
-              <div className="font-bold">{driverInfo.rating} Rating</div>
-              <div className="text-xs text-gray-500">Keep it up!</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid gap-8 lg:grid-cols-3">
-          <div className="lg:col-span-1">
-            <div className="rounded-3xl bg-white p-6 shadow-xl sticky top-24 space-y-8">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Set Current Location</h2>
-                <div className="mb-4 relative">
-                  <input 
-                    type="text" 
-                    placeholder="Search area or stop..."
-                    value={locationSearch}
-                    onChange={(e) => setLocationSearch(e.target.value)}
-                    className="w-full bg-gray-50 border border-gray-100 rounded-xl px-4 py-2 text-sm focus:border-indigo-400 outline-none transition"
-                  />
-                  <span className="absolute right-3 top-2.5 text-gray-400">🔍</span>
-                </div>
-                <div className="grid grid-cols-1 gap-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                  {allLocations.filter(l => l.name.toLowerCase().includes(locationSearch.toLowerCase())).map(loc => (
-                    <button
-                      key={loc.name}
-                      onClick={() => handleUpdateLocation(loc)}
-                      className={`flex justify-between items-center text-left px-3 py-2.5 rounded-xl text-xs transition ${driverInfo.currentLocation.areaName === loc.name ? 'bg-indigo-600 text-white font-bold' : 'bg-gray-50 hover:bg-gray-100 text-gray-700'}`}
-                    >
-                      <span className="truncate">{loc.name}</span>
-                      <span className={`text-[9px] px-2 py-0.5 rounded-full uppercase tracking-tighter ${driverInfo.currentLocation.areaName === loc.name ? 'bg-indigo-500 text-indigo-100' : loc.category === 'Bus Stop' ? 'bg-sky-100 text-sky-600' : loc.category === 'Metro Station' ? 'bg-pink-100 text-pink-600' : 'bg-blue-100 text-blue-600'}`}>
-                        {loc.category === 'Bus Stop' ? 'Bus' : loc.category === 'Metro Station' ? 'Metro' : 'Place'}
-                      </span>
-                    </button>
-                  ))}
-                </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="lg:col-span-4 space-y-6">
+            <section className="bg-white p-6 rounded-[2rem] shadow-xl border border-gray-100">
+              <h2 className="text-[10px] font-black text-gray-400 uppercase mb-4">Availability Control</h2>
+              <div className="grid grid-cols-2 gap-3">
+                <button disabled={saving || !driverInfo.isVerified} onClick={() => handleUpdateStatus('Available')} className={`p-4 rounded-2xl border-2 transition-all ${driverInfo.availability === 'Available' ? 'bg-indigo-600 border-indigo-600 text-white shadow-lg' : 'bg-gray-50 border-transparent text-gray-400'}`}><FiActivity className="mx-auto" size={20} /><span className="block font-bold text-[9px] mt-2">GO ONLINE</span></button>
+                <button disabled={saving || !driverInfo.isVerified} onClick={() => handleUpdateStatus('Offline')} className={`p-4 rounded-2xl border-2 transition-all ${driverInfo.availability === 'Offline' ? 'bg-gray-800 border-gray-800 text-white shadow-lg' : 'bg-gray-50 border-transparent text-gray-400'}`}><FiClock className="mx-auto" size={20} /><span className="block font-bold text-[9px] mt-2">GO OFFLINE</span></button>
               </div>
+            </section>
 
-              {driverInfo.isVerified && (
-                <div>
-                  <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <span>👥</span> Shared Pools
-                  </h2>
-                  <p className="text-xs text-gray-500 mb-4 uppercase font-black tracking-widest">Available Near You</p>
-                  <div className="space-y-3">
-                    {availableShared.length === 0 ? (
-                      <div className="p-4 bg-gray-50 rounded-2xl text-xs text-center text-gray-400">No open pools currently</div>
-                    ) : (
-                      availableShared.map(ride => (
-                        <div key={ride._id} className="p-4 bg-indigo-50 border border-indigo-100 rounded-2xl">
-                          <div className="flex justify-between items-start mb-2">
-                            <span className="text-[10px] font-black bg-indigo-600 text-white px-2 py-0.5 rounded-full uppercase">₹{ride.totalFare} Total</span>
-                            <span className="text-[10px] font-bold text-indigo-400">{ride.riderCount} Riders</span>
-                          </div>
-                          <p className="text-xs font-bold text-indigo-900 truncate">To {ride.destinationName}</p>
-                          <button 
-                            onClick={() => handleAcceptShared(ride._id)}
-                            className="mt-3 w-full py-2 bg-indigo-600 text-white text-xs font-bold rounded-xl hover:bg-indigo-700 transition"
-                          >
-                            Accept Pool
-                          </button>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="lg:col-span-2">
-            <div className={`rounded-3xl bg-white p-6 shadow-xl min-h-[500px] ${!driverInfo.isVerified ? 'opacity-50 pointer-events-none' : ''}`}>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-black text-gray-900">Active Requests</h2>
-                <button onClick={fetchRideRequests} className="text-sm text-indigo-600 font-bold hover:underline">Refresh</button>
+            <section className="bg-white p-6 rounded-[2rem] shadow-xl border border-gray-100">
+              <h2 className="text-[10px] font-black text-gray-400 uppercase mb-4">Set Position</h2>
+              <div className="relative mb-4">
+                <FiCompass className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input type="text" placeholder="Search areas..." value={locationSearch} onChange={(e) => setLocationSearch(e.target.value)} className="w-full bg-gray-50 border-transparent focus:border-indigo-100 rounded-xl pl-10 pr-4 py-3 text-xs outline-none font-bold" />
               </div>
+              <div className="space-y-1.5 max-h-[300px] overflow-y-auto custom-scrollbar">
+                {allLocations.filter(l => l.name?.toLowerCase().includes(locationSearch.toLowerCase())).map(loc => (
+                  <button key={loc.name} onClick={() => handleUpdateLocation(loc)} className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${driverInfo.currentLocation?.areaName === loc.name ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-50 text-gray-700 hover:bg-gray-100'}`}>
+                    <div className="flex items-center gap-2.5"><FiLayers size={12} /><div><p className="text-[11px] font-bold">{loc.name}</p><p className="text-[8px] opacity-70">{loc.category}</p></div></div>
+                  </button>
+                ))}
+              </div>
+            </section>
 
-              {rideRequests.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-20 text-center">
-                  <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center text-3xl mb-4">🔔</div>
-                  <p className="text-gray-500 max-w-xs">No active ride requests right now. Make sure you are "Online" to see new ones.</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {rideRequests.map(request => (
-                    <div key={request._id} className="border-2 border-gray-50 rounded-2xl p-6 bg-white hover:border-indigo-100 transition">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase ${
-                              request.status === 'requested' || request.status === 'waiting_approval' ? 'bg-amber-100 text-amber-700' :
-                              request.status === 'accepted' || request.status === 'approved' ? 'bg-blue-100 text-blue-700' :
-                              'bg-green-100 text-green-700'
-                            }`}>
-                              {request.status.replace('_', ' ')}
-                            </span>
-                            {request.type === 'shared' && (
-                              <span className="text-[10px] font-black bg-purple-100 text-purple-600 px-3 py-1 rounded-full uppercase">Shared Pool</span>
-                            )}
-                          </div>
-                          <h3 className="font-bold text-lg text-gray-900">{request.user?.fullName}</h3>
-                          <p className="text-gray-500 text-sm">📞 {request.user?.mobile}</p>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-2xl font-black text-indigo-600">₹{request.fare}</div>
-                          <div className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Fare</div>
-                        </div>
-                      </div>
-
-                      {request.type === 'shared' && request.sharedRide && (
-                        <div className="mb-4 p-4 bg-purple-50 rounded-2xl border border-purple-100">
-                          <div className="flex justify-between items-center text-xs font-bold text-purple-900 mb-2">
-                            <span>POOL PROGRESS</span>
-                            <span>{request.sharedRide.riderCount} / 4 Riders</span>
-                          </div>
-                          <div className="w-full bg-purple-200 rounded-full h-1.5 overflow-hidden">
-                            <div className="bg-purple-600 h-full" style={{ width: `${(request.sharedRide.riderCount / 4) * 100}%` }}></div>
-                          </div>
-                          <p className="mt-3 text-[10px] text-purple-600 font-medium">
-                            {request.sharedRide.status === 'open' ? 'Waiting for more passengers to join...' : 'Approval phase initiated.'}
-                          </p>
-                        </div>
-                      )}
-
-                      <div className="grid gap-4 mb-6 border-y border-gray-50 py-4">
-                        <div className="flex gap-3">
-                          <div className="w-2 h-2 rounded-full bg-green-500 mt-1.5 flex-shrink-0"></div>
-                          <div>
-                            <p className="text-[10px] font-bold text-gray-400 uppercase leading-none mb-1">Pickup</p>
-                            <p className="text-sm font-semibold text-gray-800">{request.pickup}</p>
-                          </div>
-                        </div>
-                        <div className="flex gap-3">
-                          <div className="w-2 h-2 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></div>
-                          <div>
-                            <p className="text-[10px] font-bold text-gray-400 uppercase leading-none mb-1">Destination</p>
-                            <p className="text-sm font-semibold text-gray-800">{request.destination}</p>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-wrap gap-3">
-                        {request.status === 'requested' && (
-                          <button 
-                            onClick={() => handleAcceptRide(request._id)}
-                            className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-indigo-100"
-                          >
-                            Accept Request
-                          </button>
-                        )}
-
-                        {request.type === 'shared' && request.sharedRide?.status === 'open' && (
-                          <button 
-                            onClick={() => handleRequestSharedStart(request.sharedRide._id)}
-                            className="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-amber-100"
-                          >
-                            Request Approval to Start
-                          </button>
-                        )}
-
-                        {request.type === 'shared' && request.sharedRide?.status === 'waiting_approval' && (
-                          <button 
-                            onClick={() => handleConfirmSharedStart(request.sharedRide._id)}
-                            className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-green-100"
-                          >
-                            Start Ride (Confirm Approvals)
-                          </button>
-                        )}
-
-                        {(request.status === 'accepted' || request.status === 'approved') && request.type !== 'shared' && (
-                          <div className="flex-1 flex gap-2">
-                            <input 
-                              type="text" 
-                              placeholder="Ride OTP"
-                              maxLength="4"
-                              value={otpInputs[request._id] || ''}
-                              onChange={(e) => handleOtpChange(request._id, e.target.value)}
-                              className="flex-1 border-2 border-gray-100 rounded-xl px-4 font-bold text-center tracking-widest focus:border-indigo-600 outline-none"
-                            />
-                            <button 
-                              onClick={() => handleStartRide(request._id)}
-                              className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-green-100"
-                            >
-                              Start
-                            </button>
-                          </div>
-                        )}
-
-                        {request.status === 'started' && (
-                          <button 
-                            onClick={() => handleCompleteRide(request._id)}
-                            className="flex-1 bg-gray-900 hover:bg-black text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-gray-200"
-                          >
-                            Mark as Completed
-                          </button>
-                        )}
-                      </div>
+            <section className="bg-white p-6 rounded-[2rem] shadow-xl border border-gray-100">
+              <h2 className="text-[10px] font-black text-gray-400 uppercase mb-4">Shared Feed</h2>
+              <div className="space-y-3">
+                {availableShared.length === 0 ? <div className="p-8 text-center text-[10px] text-gray-400 font-bold border-2 border-dashed border-gray-50 rounded-2xl">NO POOLS NEARBY</div> : availableShared.map(ride => (
+                    <div key={ride._id} className="p-4 bg-indigo-50/50 rounded-2xl">
+                      <p className="text-[10px] font-bold text-gray-800 mb-3 truncate">To {ride.destinationName}</p>
+                      <button onClick={() => handleAcceptShared(ride._id)} className="w-full py-2 bg-indigo-600 text-white text-[9px] font-black rounded-lg uppercase">Accept Pool</button>
                     </div>
                   ))}
-                </div>
-              )}
+              </div>
+            </section>
+          </div>
+
+          <div className="lg:col-span-8 space-y-6">
+            <div className="flex items-center justify-between px-4">
+               <div><h2 className="text-lg font-black text-gray-900">Active Requests</h2><p className="text-[10px] text-gray-400 font-bold">Pending bookings</p></div>
+               <button onClick={fetchRideRequests} className="p-2.5 bg-white rounded-xl shadow-sm border border-gray-100"><FiRefreshCw size={16} className="text-indigo-600" /></button>
             </div>
+
+            <div className={`space-y-4 min-h-[250px] ${!driverInfo.isVerified ? 'opacity-40' : ''}`}>
+              {rideRequests.length === 0 ? <div className="flex flex-col items-center justify-center py-16 bg-white rounded-[2.5rem] shadow-xl"><FiTruck size={32} className="text-indigo-100 mb-3" /><h3 className="text-sm font-black text-gray-400 uppercase tracking-widest">All Caught Up</h3></div> : rideRequests.map(request => (
+                  <div key={request._id} className="bg-white rounded-[2rem] p-6 shadow-lg border-l-[8px] border-l-indigo-600">
+                    <div className="flex flex-col md:flex-row gap-6">
+                      <div className="flex-1 space-y-4">
+                         <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3"><div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600"><FiUser size={18} /></div><div><h3 className="text-sm font-black text-gray-900">{request.user?.fullName}</h3><p className="text-[10px] text-gray-500">{request.user?.mobile}</p></div></div>
+                            <p className="text-xl font-black text-indigo-600">₹{request.fare}</p>
+                         </div>
+                         <div className="grid grid-cols-2 gap-4 text-xs font-bold py-4 border-y border-gray-50"><div><p className="text-[8px] text-green-500 uppercase">Pickup</p><p className="truncate">{request.pickup}</p></div><div><p className="text-[8px] text-rose-500 uppercase">Dropoff</p><p className="truncate">{request.destination}</p></div></div>
+                      </div>
+                      <div className="md:w-48 flex flex-col justify-center space-y-2">
+                         {request.status === 'requested' && <button onClick={() => handleAcceptRide(request._id)} className="w-full bg-indigo-600 text-white font-black py-3 rounded-xl text-[10px] uppercase tracking-widest">Accept Trip</button>}
+                         {(request.status === 'accepted' || request.status === 'approved') && <div className="space-y-2"><input type="text" placeholder="OTP" value={otpInputs[request._id] || ''} onChange={(e) => handleOtpChange(request._id, e.target.value)} className="w-full bg-gray-50 border-2 border-gray-100 rounded-xl py-2.5 text-center font-black" /><button onClick={() => handleStartRide(request._id)} className="w-full bg-green-600 text-white font-black py-3 rounded-xl text-[10px]">Start Ride</button></div>}
+                         {request.status === 'started' && <button onClick={() => handleCompleteRide(request._id)} className="w-full bg-gray-900 text-white font-black py-3 rounded-xl text-[10px]">Complete</button>}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            <section className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100">
+               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                  <div><h2 className="text-lg font-black text-gray-900 tracking-tight flex items-center gap-2"><FiTrendingUp className="text-indigo-600" /> Analysis</h2><p className="text-[10px] text-gray-400 font-bold uppercase">Performance tracking</p></div>
+                  <div className="flex flex-wrap gap-2">
+                     <div className="flex bg-gray-50 p-1 rounded-xl border border-gray-100">{["daily", "monthly", "lifetime"].map(p => (<button key={p} onClick={() => setPeriod(p)} className={`px-3 py-1.5 rounded-lg text-[8px] font-black uppercase transition-all ${period === p ? "bg-indigo-600 text-white shadow-md" : "text-gray-400"}`}>{p}</button>))}</div>
+                     <div className="flex bg-gray-50 p-1 rounded-xl border border-gray-100">{["earnings", "trips", "distance"].map(tab => (<button key={tab} onClick={() => setAnalysisTab(tab)} className={`px-3 py-1.5 rounded-lg text-[8px] font-black uppercase transition-all ${analysisTab === tab ? "bg-indigo-600 text-white shadow-md" : "text-gray-400"}`}>{tab}</button>))}</div>
+                  </div>
+               </div>
+
+               {period !== 'lifetime' && (
+                  <div className="flex items-center gap-3 mb-8 bg-indigo-50/50 w-fit px-4 py-2.5 rounded-2xl border border-indigo-100/50"><FiCalendar className="text-indigo-600" size={14} /><input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="bg-transparent outline-none text-xs font-black text-indigo-900" /></div>
+               )}
+
+               <div className="h-64 flex items-end gap-2 px-2 border-b border-gray-100 pb-2 overflow-x-auto custom-scrollbar">
+                  {chartMemo.data.length === 0 ? <div className="w-full h-full flex items-center justify-center border-2 border-dashed border-gray-100 rounded-3xl text-[10px] font-bold text-gray-300">NO RECORDS</div> : chartMemo.data.map((day, idx) => {
+                      const value = Number(day[analysisTab]) || 0;
+                      const h = (value / chartMemo.max) * 100;
+                      return (
+                         <div key={idx} className="flex-1 group relative flex flex-col justify-end items-center h-full min-w-[32px]">
+                            <div style={{ height: `${h}%` }} className={`w-full max-w-[28px] rounded-t-lg transition-all duration-700 ease-out min-h-[4px] relative ${analysisTab === 'earnings' ? 'bg-green-400' : analysisTab === 'trips' ? 'bg-indigo-400' : 'bg-rose-400'}`}>
+                               <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-[9px] font-black px-2.5 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100 whitespace-nowrap z-20 shadow-xl border border-white/10 pointer-events-none">
+                                  {analysisTab === 'earnings' ? '₹' : ''}{value}{analysisTab === 'distance' ? ' km' : ''}
+                                  <div className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                               </div>
+                               {h > 15 && <span className="absolute inset-x-0 bottom-2 text-center text-[7px] font-black text-white pointer-events-none">{value}</span>}
+                            </div>
+                            <div className="mt-3 text-[8px] font-black text-gray-400 uppercase tracking-tighter text-center">{day._id?.split('-').pop() || day._id}</div>
+                         </div>
+                      );
+                    })}
+               </div>
+               <div className="mt-8 grid grid-cols-3 gap-4">
+                  <div className="p-4 bg-gray-50 rounded-2xl"><p className="text-[8px] font-black text-gray-400 uppercase mb-1">Revenue</p><p className="text-lg font-black text-indigo-600">₹{stats?.totals?.earnings || 0}</p></div>
+                  <div className="p-4 bg-gray-50 rounded-2xl"><p className="text-[8px] font-black text-gray-400 uppercase mb-1">Trips</p><p className="text-lg font-black text-gray-900">{stats?.totals?.trips || 0}</p></div>
+                  <div className="p-4 bg-gray-50 rounded-2xl"><p className="text-[8px] font-black text-gray-400 uppercase mb-1">Distance</p><p className="text-lg font-black text-indigo-600">{stats?.totals?.distance || 0} km</p></div>
+               </div>
+            </section>
+
+            <section className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100">
+               <div className="flex items-center justify-between mb-6"><h2 className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Recent Activity</h2><button onClick={() => navigate("/my-rides")} className="text-[9px] font-black text-indigo-600 uppercase hover:underline">View All</button></div>
+               <div className="space-y-3">
+                  {(stats?.history || []).slice(0, 3).map(trip => (
+                     <div key={trip.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl transition-all">
+                        <div className="flex items-center gap-4"><div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center border border-gray-100"><FiCheckCircle className="text-green-500" /></div><div><p className="text-[11px] font-black text-gray-800 leading-none mb-1.5">To {trip.to}</p><p className="text-[9px] font-bold text-gray-400 uppercase">{new Date(trip.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p></div></div>
+                        <div className="text-right"><p className="text-sm font-black text-indigo-600">₹{trip.fare}</p><p className="text-[8px] font-bold text-gray-400 uppercase">{trip.distance} km</p></div>
+                     </div>
+                  ))}
+               </div>
+            </section>
           </div>
         </div>
       </div>

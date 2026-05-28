@@ -163,4 +163,24 @@ export const verifyDriverApi = async (driverId, status) => {
   return response.data;
 };
 
+export const deleteDriverApi = async (driverId) => {
+  const response = await apiClient.delete(`/admin/drivers/${driverId}`);
+  return response.data;
+};
+
+export const getAllDriversApi = async (params = {}) => {
+  const response = await apiClient.get("/admin/drivers", { params });
+  return response.data;
+};
+
+export const getAllUsersApi = async () => {
+  const response = await apiClient.get("/admin/users");
+  return response.data;
+};
+
+export const deleteUserApi = async (userId) => {
+  const response = await apiClient.delete(`/admin/users/${userId}`);
+  return response.data;
+};
+
 export default apiClient;

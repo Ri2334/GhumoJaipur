@@ -14,6 +14,7 @@ const bookingSchema = new mongoose.Schema(
     },
     driver: { type: mongoose.Schema.Types.ObjectId, ref: "Driver" },
     sharedRide: { type: mongoose.Schema.Types.ObjectId, ref: "SharedRide" },
+    distance: { type: Number, default: 0 },
     rideOtp: { type: String },
     destinationCoords: {
       latitude: { type: Number },

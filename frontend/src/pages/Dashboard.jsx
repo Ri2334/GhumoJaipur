@@ -4,13 +4,18 @@ import TransportResults from "../components/TransportResults";
 import { AuthContext } from "../context/AuthContext";
 import apiClient from "../services/api";
 import { useNavigate } from "react-router-dom";
+import AdminDashboard from "./AdminDashboard";
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [result, setResult] = useState(null);
   const [activeRide, setActiveRide] = useState(null);
-  const [loadingActive, setLoadingActive] = useState(false);
+
+  // Redirect admin or render admin dashboard
+  if (user?.role === 'admin') {
+    return <AdminDashboard />;
+  }
 
   useEffect(() => {
     if (!user || user.role === 'driver') return;

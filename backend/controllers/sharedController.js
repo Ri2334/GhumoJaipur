@@ -3,19 +3,7 @@ import SharedRide from '../models/SharedRide.js';
 import Booking from '../models/Booking.js';
 import Driver from '../models/Driver.js';
 import { sendBookingEmail } from '../services/bookingEmailService.js';
-
-const haversineKm = (a, b) => {
-  const toRad = v => (v * Math.PI) / 180;
-  const R = 6371; // km
-  const dLat = toRad(b.lat - a.lat);
-  const dLon = toRad(b.lng - a.lng);
-  const lat1 = toRad(a.lat);
-  const lat2 = toRad(b.lat);
-  const sinDLat = Math.sin(dLat / 2) * Math.sin(dLat / 2);
-  const sinDLon = Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(sinDLat + Math.cos(lat1) * Math.cos(lat2) * sinDLon), Math.sqrt(1 - (sinDLat + Math.cos(lat1) * Math.cos(lat2) * sinDLon)));
-  return R * c;
-};
+import { haversineKm } from '../utils/distance.js';
 
 export const findMatches = async (req, res) => {
   try {
@@ -65,12 +53,16 @@ export const joinSharedRide = async (req, res) => {
 
     // Create booking for the new joiner
     const rideOtp = Math.floor(1000 + Math.random() * 9000).toString();
+    const distance = (ride.sourceCoord && ride.destCoord) ? 
+      Math.round(haversineKm(ride.sourceCoord, ride.destCoord) * 10) / 10 : 0;
+
     const booking = await Booking.create({ 
       user: user._id, 
       type: 'shared', 
       pickup: ride.sourceName, 
       destination: ride.destinationName, 
       fare: ride.splitFare, 
+      distance,
       status: ride.driver ? 'accepted' : 'requested', 
       sharedRide: ride._id,
       driver: ride.driver, // Link existing driver if assigned
@@ -137,12 +129,16 @@ export const createSharedRide = async (req, res) => {
     let booking = null;
     if (req.user.role === 'user') {
       const rideOtp = Math.floor(1000 + Math.random() * 9000).toString();
+      const distance = (ride.sourceCoord && ride.destCoord) ? 
+        Math.round(haversineKm(ride.sourceCoord, ride.destCoord) * 10) / 10 : 0;
+        
       booking = await Booking.create({
         user: req.user._id,
         type: 'shared',
         pickup: sourceName,
         destination: destinationName,
         fare: ride.totalFare,
+        distance,
         status: 'requested',
         sharedRide: ride._id,
         rideOtp,

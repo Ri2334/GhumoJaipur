@@ -59,11 +59,18 @@ export default function Navbar() {
           </div>
 
           <nav className="hidden lg:flex items-center gap-1">
-            <NavLink to="/" className={activeClass}>Home</NavLink>
-            <a href="/#about" className="text-white/90 hover:text-white px-3 py-2 transition font-medium">About</a>
-            <NavLink to="/places" className={activeClass}>Places</NavLink>
-            <NavLink to="/transport" className={activeClass}>Smart Transport</NavLink>
-            {user && user.role !== 'driver' && activeRideId && (
+            {/* Passenger Links */}
+            {user?.role === 'user' && (
+              <>
+                <NavLink to="/" className={activeClass}>Home</NavLink>
+                <a href="/#about" className="text-white/90 hover:text-white px-3 py-2 transition font-medium">About</a>
+                <NavLink to="/places" className={activeClass}>Explore Places</NavLink>
+                <NavLink to="/transport" className={activeClass}>Smart Transport</NavLink>
+              </>
+            )}
+
+            {/* Active Ride Indicator for Passengers */}
+            {user?.role === 'user' && activeRideId && (
               <NavLink to={`/book/success/${activeRideId}`} className="flex items-center gap-2 bg-amber-400 text-amber-950 px-4 py-2 rounded-xl font-bold animate-pulse shadow-lg hover:scale-105 transition">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-900 opacity-75"></span>
@@ -72,14 +79,32 @@ export default function Navbar() {
                 Active Ride
               </NavLink>
             )}
-            {user?.role === "driver" && <NavLink to="/driver/dashboard" className={activeClass}>Driver Dashboard</NavLink>}
-            {user?.role === "admin" && (
+
+            {/* Driver Links */}
+            {user?.role === "driver" && (
               <>
-                <NavLink to="/admin/places" className={activeClass}>Places</NavLink>
-                <NavLink to="/admin/drivers" className={activeClass}>Drivers</NavLink>
+                <NavLink to="/driver/dashboard" className={activeClass}>Dashboard</NavLink>
+                <NavLink to="/my-rides" className={activeClass}>History</NavLink>
               </>
             )}
-            <NavLink to="/saved-trips" className={activeClass}>Saved</NavLink>
+
+            {/* Admin Links */}
+            {user?.role === "admin" && (
+              <>
+                <NavLink to="/dashboard" className={activeClass}>Dashboard</NavLink>
+                <NavLink to="/admin/places" className={activeClass}>Manage Places</NavLink>
+                <NavLink to="/admin/drivers" className={activeClass}>Manage Drivers</NavLink>
+                <NavLink to="/admin/users" className={activeClass}>Manage Users</NavLink>
+              </>
+            )}
+
+            {/* Shared Links for all Logged-in Users */}
+            {user && (
+              <>
+                <NavLink to="/profile" className={activeClass}>Profile</NavLink>
+                {user.role === 'user' && <NavLink to="/my-rides" className={activeClass}>My Rides</NavLink>}
+              </>
+            )}
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
@@ -118,40 +143,14 @@ export default function Navbar() {
                     <div className="px-4 py-3 border-b border-gray-50 mb-1">
                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Signed in as</p>
                        <p className="font-bold text-gray-900 truncate">{user.email}</p>
-                       <p className="text-[10px] font-bold text-amber-500 mt-1 uppercase tracking-tighter">Rating: ⭐ {user.rating?.toFixed(1) || '5.0'}</p>
+                       <p className="text-[10px] font-bold text-amber-500 mt-1 uppercase tracking-tighter">Rating: {user.rating?.toFixed(1) || '5.0'}</p>
                     </div>
-                    <button
-                      onClick={() => { navigate('/profile'); setOpen(false); }}
-                      className="flex items-center gap-3 w-full text-left px-4 py-2.5 hover:bg-indigo-50 rounded-2xl transition font-semibold text-gray-700 hover:text-indigo-700"
-                    >
-                      <span className="text-lg">👤</span> Profile
-                    </button>
-                    {user?.role === 'driver' && (
-                      <button
-                        onClick={() => { navigate('/driver/dashboard'); setOpen(false); }}
-                        className="flex items-center gap-3 w-full text-left px-4 py-2.5 hover:bg-indigo-50 rounded-2xl transition font-semibold text-gray-700 hover:text-indigo-700"
-                      >
-                        <span className="text-lg">🚖</span> Driver Dashboard
-                      </button>
-                    )}
-                    <button
-                      onClick={() => { navigate('/my-rides'); setOpen(false); }}
-                      className="flex items-center gap-3 w-full text-left px-4 py-2.5 hover:bg-indigo-50 rounded-2xl transition font-semibold text-gray-700 hover:text-indigo-700"
-                    >
-                      <span className="text-lg">🗺️</span> My Rides
-                    </button>
-                    <button
-                      onClick={() => { navigate('/saved-trips'); setOpen(false); }}
-                      className="flex items-center gap-3 w-full text-left px-4 py-2.5 hover:bg-indigo-50 rounded-2xl transition font-semibold text-gray-700 hover:text-indigo-700"
-                    >
-                      <span className="text-lg">⭐</span> Saved Trips
-                    </button>
-                    <div className="border-t border-gray-50 mt-1 pt-1">
+                    <div className="pt-1">
                       <button 
                         onClick={handleLogout} 
                         className="flex items-center gap-3 w-full text-left px-4 py-2.5 hover:bg-red-50 rounded-2xl transition font-bold text-red-500 hover:text-red-600"
                       >
-                        <span className="text-lg">🚪</span> Logout
+                        Logout
                       </button>
                     </div>
                   </div>
@@ -183,13 +182,30 @@ export default function Navbar() {
 
       {/* Mobile menu panel */}
       {open && (
-        <div className="md:hidden bg-gradient-to-b from-indigo-600 to-pink-500">
+        <div className="lg:hidden bg-gradient-to-b from-indigo-600 to-pink-500">
           <div className="px-4 pt-2 pb-4 space-y-2">
-            <NavLink to="/" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Home</NavLink>
-            <a href="/#about" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">About</a>
-            <NavLink to="/places" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Explore Places</NavLink>
-            <NavLink to="/transport" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Smart Transport</NavLink>
-            <NavLink to="/saved-trips" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Saved Trips</NavLink>
+            {user?.role === 'user' && (
+              <>
+                <NavLink to="/" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Home</NavLink>
+                <NavLink to="/places" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Explore Places</NavLink>
+                <NavLink to="/transport" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Smart Transport</NavLink>
+                <NavLink to="/saved-trips" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded">Saved Trips</NavLink>
+              </>
+            )}
+            {user?.role === 'driver' && (
+              <>
+                <NavLink to="/driver/dashboard" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded font-bold">Driver Dashboard</NavLink>
+                <NavLink to="/my-rides" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded font-bold">Ride History</NavLink>
+              </>
+            )}
+            {user?.role === 'admin' && (
+              <>
+                <NavLink to="/dashboard" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded font-bold">Admin Dashboard</NavLink>
+                <NavLink to="/admin/places" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded font-bold">Manage Places</NavLink>
+                <NavLink to="/admin/drivers" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded font-bold">Manage Drivers</NavLink>
+                <NavLink to="/admin/users" onClick={() => setOpen(false)} className="block text-white px-2 py-2 rounded font-bold">Manage Users</NavLink>
+              </>
+            )}
 
             <div className="pt-2 border-t border-white/20">
               {!user ? (
@@ -200,7 +216,8 @@ export default function Navbar() {
               ) : (
                 <>
                   <button onClick={() => { setOpen(false); navigate('/profile'); }} className="w-full text-left text-white px-2 py-2 rounded">Profile</button>
-                  <button onClick={() => { setOpen(false); handleLogout(); }} className="w-full text-left text-white px-2 py-2 rounded">Logout</button>
+                  {user.role === 'user' && <button onClick={() => { setOpen(false); navigate('/my-rides'); }} className="w-full text-left text-white px-2 py-2 rounded">My Rides</button>}
+                  <button onClick={() => { setOpen(false); handleLogout(); }} className="w-full text-left text-white px-2 py-2 rounded font-bold text-red-100">Logout</button>
                 </>
               )}
             </div>

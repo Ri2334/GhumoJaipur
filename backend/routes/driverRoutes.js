@@ -9,12 +9,14 @@ import {
   getRideRequests, 
   acceptRide, 
   startRide, 
-  completeRide 
+  completeRide,
+  getDriverStats
 } from "../controllers/driverController.js";
 
 const router = express.Router();
 
 router.get("/me", protect, getMyDriverProfile);
+router.get("/stats", protect, getDriverStats);
 router.put("/update", protect, updateDriverProfile);
 router.post("/upload-docs", protect, upload.fields([
   { name: 'profilePicture', maxCount: 1 },

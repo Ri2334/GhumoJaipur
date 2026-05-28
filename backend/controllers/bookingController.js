@@ -2,6 +2,7 @@ import Driver from "../models/Driver.js";
 import Booking from "../models/Booking.js";
 import User from "../models/User.js";
 import { createTransport } from "../utils/mailer.js";
+import { haversineKm } from "../utils/distance.js";
 
 export const createBooking = async (req, res) => {
   try {
@@ -23,6 +24,7 @@ export const createBooking = async (req, res) => {
     // try to find coordinates for pickup/destination from TouristLocation
     let map = {};
     let destinationCoords = null;
+    let distance = 0;
     try {
       const TouristLocation = (await import('../models/TouristLocation.js')).default;
       const src = await TouristLocation.findOne({ name: pickup });
@@ -32,8 +34,20 @@ export const createBooking = async (req, res) => {
         map.destination = { latitude: dst.latitude, longitude: dst.longitude, name: dst.name };
         destinationCoords = { latitude: dst.latitude, longitude: dst.longitude };
       }
+      
+      if (src && dst) {
+        distance = Math.round(haversineKm(
+          { lat: src.latitude, lng: src.longitude },
+          { lat: dst.latitude, lng: dst.longitude }
+        ) * 10) / 10;
+      }
     } catch (e) {
       // ignore
+    }
+
+    // Fallback: If distance is still 0 but we have a fare, use the fare proxy
+    if (distance === 0 && fare > 0) {
+      distance = Math.round((fare / 25) * 10) / 10;
     }
 
     const booking = await Booking.create({ 
@@ -42,6 +56,7 @@ export const createBooking = async (req, res) => {
       pickup, 
       destination, 
       fare, 
+      distance,
       etaMinutes, 
       map,
       rideOtp,
