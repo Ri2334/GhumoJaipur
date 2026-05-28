@@ -53,19 +53,23 @@ export const sendOtp = async (req, res) => {
     const otp = setOtpRecord(normalizedEmail, purpose);
 
     const mailResult = await sendOtpEmail({ to: normalizedEmail, otp, purpose });
-    if (!mailResult.sent && process.env.NODE_ENV !== "development") {
-      return res.status(500).json({
-        success: false,
-        message: "Email delivery is not configured. Please set SMTP credentials in backend/.env.",
-      });
+    if (!mailResult.sent) {
+      console.error(`OTP send failed for ${normalizedEmail}: ${mailResult.reason}`);
+      if (process.env.NODE_ENV !== "development") {
+        return res.status(500).json({
+          success: false,
+          message: `Email delivery failed: ${mailResult.reason || "Unknown error"}. Please contact support.`,
+        });
+      }
     }
 
     return res.status(200).json({
       success: true,
-      message: mailResult.sent ? "OTP sent to email" : "OTP generated successfully (SMTP not configured)",
-      otp: process.env.NODE_ENV === "development" ? otp : undefined,
+      message: mailResult.sent ? "OTP sent to email" : `OTP generated successfully (Mock Mode: ${otp})`,
+      otp: process.env.NODE_ENV === "development" || !mailResult.sent ? otp : undefined,
     });
   } catch (error) {
+    console.error("sendOtp Controller Error:", error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };
@@ -220,19 +224,23 @@ export const forgotPassword = async (req, res) => {
     const otp = setOtpRecord(normalizedEmail, "reset-password");
 
     const mailResult = await sendOtpEmail({ to: normalizedEmail, otp, purpose: "reset-password" });
-    if (!mailResult.sent && process.env.NODE_ENV !== "development") {
-      return res.status(500).json({
-        success: false,
-        message: "Email delivery is not configured. Please set SMTP credentials in backend/.env.",
-      });
+    if (!mailResult.sent) {
+      console.error(`Password reset OTP send failed for ${normalizedEmail}: ${mailResult.reason}`);
+      if (process.env.NODE_ENV !== "development") {
+        return res.status(500).json({
+          success: false,
+          message: `Email delivery failed: ${mailResult.reason || "Unknown error"}. Please contact support.`,
+        });
+      }
     }
 
     return res.status(200).json({
       success: true,
-      message: mailResult.sent ? "Password reset OTP sent to email" : "Password reset OTP generated successfully (SMTP not configured)",
-      otp: process.env.NODE_ENV === "development" ? otp : undefined,
+      message: mailResult.sent ? "Password reset OTP sent to email" : `OTP generated successfully (Mock Mode: ${otp})`,
+      otp: process.env.NODE_ENV === "development" || !mailResult.sent ? otp : undefined,
     });
   } catch (error) {
+    console.error("forgotPassword Controller Error:", error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };

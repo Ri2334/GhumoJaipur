@@ -97,7 +97,9 @@ export const AuthProvider = ({ children }) => {
       const res = await sendOtpApi(email, purpose);
       return { success: true, message: res.message, otp: res.otp };
     } catch (error) {
-      return { success: false, message: error?.response?.data?.message || "OTP send failed" };
+      console.error("sendOTP error:", error);
+      const message = error?.response?.data?.message || error.message || "OTP send failed due to a network error";
+      return { success: false, message: message };
     } finally {
       setLoading(false);
     }
@@ -121,7 +123,9 @@ export const AuthProvider = ({ children }) => {
       const res = await forgotPasswordApi(email);
       return { success: true, message: res.message, otp: res.otp };
     } catch (error) {
-      return { success: false, message: error?.response?.data?.message || "Forgot password failed" };
+      console.error("forgotPassword error:", error);
+      const message = error?.response?.data?.message || error.message || "Forgot password request failed";
+      return { success: false, message: message };
     } finally {
       setLoading(false);
     }

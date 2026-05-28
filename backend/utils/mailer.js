@@ -7,20 +7,32 @@ const hasSmtpConfig = () => Boolean(process.env.MAIL_HOST && process.env.MAIL_US
 export const createTransport = () => {
   if (!hasSmtpConfig()) return null;
 
+  const port = Number(process.env.MAIL_PORT || 587);
+  const isGmail = (process.env.MAIL_HOST || "").toLowerCase().includes("gmail");
+  
+  // For Gmail on 587, secure must be false. On 465, it must be true.
+  const secure = port === 465;
+
   return nodemailer.createTransport({
     host: process.env.MAIL_HOST,
-    port: Number(process.env.MAIL_PORT || 587),
-    secure: String(process.env.MAIL_SECURE || "false") === "true",
+    port: port,
+    secure: secure,
     auth: {
       user: process.env.MAIL_USER,
       pass: getMailPass(),
     },
+    tls: {
+      // Do not fail on invalid certificates (useful for some SMTP relays)
+      rejectUnauthorized: false
+    }
   });
 };
 
 export const sendOtpEmail = async ({ to, otp, purpose }) => {
+  console.log(`Attempting to send OTP to ${to} for purpose: ${purpose}`);
   const transport = createTransport();
   if (!transport) {
+    console.error("Mailer Error: SMTP Transport could not be created. Check environment variables.");
     return { sent: false, reason: "SMTP not configured" };
   }
 
@@ -34,12 +46,17 @@ export const sendOtpEmail = async ({ to, otp, purpose }) => {
     </div>
   `;
 
-  await transport.sendMail({
-    from: process.env.MAIL_FROM || `Ghumo Jaipur <${process.env.MAIL_USER}>`,
-    to,
-    subject,
-    html,
-  });
-
-  return { sent: true };
+  try {
+    const info = await transport.sendMail({
+      from: process.env.MAIL_FROM || `Ghumo Jaipur <${process.env.MAIL_USER}>`,
+      to,
+      subject,
+      html,
+    });
+    console.log("Mailer Success: Email sent successfully", info.messageId);
+    return { sent: true };
+  } catch (error) {
+    console.error("Mailer Error: Failed to send email", error);
+    return { sent: false, reason: error.message };
+  }
 };
