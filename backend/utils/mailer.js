@@ -7,21 +7,30 @@ const hasSmtpConfig = () => Boolean(process.env.MAIL_HOST && process.env.MAIL_US
 export const createTransport = () => {
   if (!hasSmtpConfig()) return null;
 
-  const host = process.env.MAIL_HOST;
+  const host = process.env.MAIL_HOST || "smtp-relay.brevo.com";
   const port = Number(process.env.MAIL_PORT || 587);
-  const secure = String(process.env.MAIL_SECURE) === "true";
+  
+  // Explicitly parse the boolean for MAIL_SECURE
+  const secure = process.env.MAIL_SECURE === "true";
 
   return nodemailer.createTransport({
     host: host,
     port: port,
-    secure: secure,
+    secure: secure, // false for 587 (STARTTLS), true for 465 (SSL)
     auth: {
       user: process.env.MAIL_USER,
       pass: getMailPass(),
     },
-    connectionTimeout: 30000,
-    greetingTimeout: 30000,
-    socketTimeout: 30000,
+    // Force IPv4 because Render/Docker often has issues with IPv6 SMTP routing
+    family: 4,
+    // Ensure TLS is used on port 587
+    requireTLS: port === 587,
+    // Aggressive timeouts for cloud environment handshakes
+    connectionTimeout: 60000, // 60 seconds
+    greetingTimeout: 60000,   // 60 seconds
+    socketTimeout: 60000,     // 60 seconds
+    debug: true,              // Show detailed logs in server output
+    logger: true,             // Log to console
   });
 };
 
