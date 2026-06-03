@@ -97,8 +97,15 @@ export const uploadDocuments = async (req, res) => {
       data: driver 
     });
   } catch (error) {
-    console.error("uploadDocuments error:", error);
-    return res.status(500).json({ success: false, message: error.message });
+    console.error("CRITICAL: uploadDocuments error:", error);
+    return res.status(500).json({ 
+      success: false, 
+      message: error.message || "An internal server error occurred during upload",
+      debug: {
+        error: error.toString(),
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      }
+    });
   }
 };
 
