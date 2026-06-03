@@ -15,9 +15,11 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'ghumo_jaipur/drivers',
-    allowed_formats: ['jpg', 'png', 'jpeg', 'pdf'],
+    allowed_formats: ['jpg', 'png', 'jpeg', 'pdf', 'webp', 'avif'],
   },
 });
+
+console.log("Cloudinary Storage Initialized with formats: jpg, png, jpeg, pdf, webp, avif");
 
 const upload = multer({ storage: storage });
 

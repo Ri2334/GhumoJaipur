@@ -53,7 +53,7 @@ export default function Profile() {
     }
 
     const formData = new FormData();
-    formData.append(field, file);
+    formData.append(field, file, file.name);
 
     setUploading(true);
     try {

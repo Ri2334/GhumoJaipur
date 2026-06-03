@@ -44,30 +44,47 @@ export const uploadDocuments = async (req, res) => {
     const driver = await Driver.findOne({ userId: req.user._id });
     if (!driver) return res.status(404).json({ success: false, message: "Driver profile not found" });
 
-    console.log(`Uploading documents for driver ${driver._id}. Files received:`, Object.keys(req.files || {}));
+    const filesReceived = req.files ? Object.keys(req.files) : [];
+    console.log(`Uploading documents for driver ${driver._id}. Fields received:`, filesReceived);
 
-    if (req.files) {
-      if (req.files.profilePicture) {
-        driver.profilePicture = req.files.profilePicture[0].path;
-        console.log(`Updated profilePicture: ${driver.profilePicture}`);
-      }
-      if (req.files.idProof) {
-        driver.idProof = req.files.idProof[0].path;
-        console.log(`Updated idProof: ${driver.idProof}`);
-      }
-      if (req.files.licenseProof) {
-        driver.licenseProof = req.files.licenseProof[0].path;
-        console.log(`Updated licenseProof: ${driver.licenseProof}`);
-      }
-      if (req.files.vehicleProof) {
-        driver.vehicleProof = req.files.vehicleProof[0].path;
-        console.log(`Updated vehicleProof: ${driver.vehicleProof}`);
-      }
-      
+    if (filesReceived.length === 0) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "No files were received by the server. Please ensure you are selecting a valid image file." 
+      });
+    }
+
+    let updated = false;
+    if (req.files.profilePicture) {
+      driver.profilePicture = req.files.profilePicture[0].path;
+      console.log(`Updated profilePicture: ${driver.profilePicture}`);
+      updated = true;
+    }
+    if (req.files.idProof) {
+      driver.idProof = req.files.idProof[0].path;
+      console.log(`Updated idProof: ${driver.idProof}`);
+      updated = true;
+    }
+    if (req.files.licenseProof) {
+      driver.licenseProof = req.files.licenseProof[0].path;
+      console.log(`Updated licenseProof: ${driver.licenseProof}`);
+      updated = true;
+    }
+    if (req.files.vehicleProof) {
+      driver.vehicleProof = req.files.vehicleProof[0].path;
+      console.log(`Updated vehicleProof: ${driver.vehicleProof}`);
+      updated = true;
+    }
+    
+    if (updated) {
       await driver.save();
     }
 
-    return res.status(200).json({ success: true, message: "Documents uploaded successfully", data: driver });
+    return res.status(200).json({ 
+      success: true, 
+      message: "Documents uploaded successfully", 
+      data: driver 
+    });
   } catch (error) {
     console.error("uploadDocuments error:", error);
     return res.status(500).json({ success: false, message: error.message });
