@@ -18,12 +18,7 @@ const router = express.Router();
 router.get("/me", protect, getMyDriverProfile);
 router.get("/stats", protect, getDriverStats);
 router.put("/update", protect, updateDriverProfile);
-router.post("/upload-docs", protect, upload.fields([
-  { name: 'profilePicture', maxCount: 1 },
-  { name: 'idProof', maxCount: 1 },
-  { name: 'licenseProof', maxCount: 1 },
-  { name: 'vehicleProof', maxCount: 1 }
-]), uploadDocuments);
+router.post("/upload-docs", protect, upload.any(), uploadDocuments);
 router.post("/request-verification", protect, requestVerification);
 router.get("/requests", protect, getRideRequests);
 router.post("/accept", protect, acceptRide);

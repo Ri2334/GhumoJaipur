@@ -24,6 +24,7 @@ connectDB();
 // Middleware
 // Parse incoming JSON requests
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS - allows frontend to communicate with backend
 const allowedOrigins = (process.env.CORS_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
