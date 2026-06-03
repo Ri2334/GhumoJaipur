@@ -101,6 +101,13 @@ export const verifyOtp = async (req, res) => {
         let driverProfile = null;
         if (user.role === 'driver') {
           driverProfile = await Driver.findOne({ userId: user._id });
+          
+          // Patch existing drivers who have the old default rating of 4.7
+          if (driverProfile && driverProfile.rating === 4.7 && (driverProfile.totalRatings === 1 || driverProfile.totalRatings === 0)) {
+            driverProfile.rating = 5.0;
+            driverProfile.totalRatings = 0; // Reset to 0 as it's a new driver
+            await driverProfile.save();
+          }
         }
 
         return res.status(200).json({ success: true, user, driverProfile });
@@ -126,6 +133,13 @@ export const updateProfile = async (req, res) => {
       if (driverProfile) {
         if (vehicle) driverProfile.vehicle = vehicle;
         if (vehicleNumber) driverProfile.vehicleNumber = vehicleNumber;
+        
+        // Also fix rating here if needed
+        if (driverProfile.rating === 4.7 && (driverProfile.totalRatings === 1 || driverProfile.totalRatings === 0)) {
+          driverProfile.rating = 5.0;
+          driverProfile.totalRatings = 0;
+        }
+
         await driverProfile.save();
       }
     }

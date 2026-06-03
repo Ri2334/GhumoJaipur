@@ -146,11 +146,7 @@ export const updateDriverProfileApi = async (payload) => {
 };
 
 export const uploadDriverDocsApi = async (formData) => {
-  const response = await apiClient.post("/driver/upload-docs", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const response = await apiClient.post("/driver/upload-docs", formData);
   return response.data;
 };
 

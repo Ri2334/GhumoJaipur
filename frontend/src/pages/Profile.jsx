@@ -44,6 +44,8 @@ export default function Profile() {
     const file = e.target.files[0];
     if (!file) return;
 
+    console.log(`Starting upload for ${field}:`, file.name, file.type, file.size);
+
     // Optional: client-side validation
     if (file.size > 5 * 1024 * 1024) {
       showToast("File too large. Max 5MB.");
@@ -55,7 +57,10 @@ export default function Profile() {
 
     setUploading(true);
     try {
+      console.log(`Sending upload request to backend for ${field}...`);
       const res = await uploadDriverDocsApi(formData);
+      console.log("Upload response received:", res);
+      
       if (res.success) {
         showToast(`${field.replace(/([A-Z])/g, ' $1')} uploaded!`);
         await refreshUser();
@@ -63,8 +68,9 @@ export default function Profile() {
         showToast(res.message || "Upload failed");
       }
     } catch (error) {
-      console.error("Upload error:", error);
-      showToast(error.response?.data?.message || "Upload failed. Please check your connection.");
+      console.error("Upload error details:", error);
+      const errorMessage = error.response?.data?.message || error.message || "Upload failed. Please check your connection.";
+      showToast(errorMessage);
     } finally {
       setUploading(false);
     }
