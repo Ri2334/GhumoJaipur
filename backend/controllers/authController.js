@@ -108,6 +108,38 @@ export const verifyOtp = async (req, res) => {
         return res.status(500).json({ success: false, message: error.message });
       }
     };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { fullName, mobile, vehicle, vehicleNumber } = req.body;
+    
+    const user = await User.findById(req.user._id);
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
+    if (fullName) user.fullName = fullName;
+    if (mobile) user.mobile = mobile;
+    await user.save();
+
+    let driverProfile = null;
+    if (user.role === 'driver') {
+      driverProfile = await Driver.findOne({ userId: user._id });
+      if (driverProfile) {
+        if (vehicle) driverProfile.vehicle = vehicle;
+        if (vehicleNumber) driverProfile.vehicleNumber = vehicleNumber;
+        await driverProfile.save();
+      }
+    }
+
+    return res.status(200).json({ 
+      success: true, 
+      message: "Profile updated successfully", 
+      user, 
+      driverProfile 
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
 export const signup = async (req, res) => {
   try {
     const { fullName, email, mobile, password, otp, role = "user", vehicle, vehicleNumber, type = "cab" } = req.body;

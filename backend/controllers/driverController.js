@@ -44,17 +44,32 @@ export const uploadDocuments = async (req, res) => {
     const driver = await Driver.findOne({ userId: req.user._id });
     if (!driver) return res.status(404).json({ success: false, message: "Driver profile not found" });
 
+    console.log(`Uploading documents for driver ${driver._id}. Files received:`, Object.keys(req.files || {}));
+
     if (req.files) {
-      if (req.files.profilePicture) driver.profilePicture = req.files.profilePicture[0].path;
-      if (req.files.idProof) driver.idProof = req.files.idProof[0].path;
-      if (req.files.licenseProof) driver.licenseProof = req.files.licenseProof[0].path;
-      if (req.files.vehicleProof) driver.vehicleProof = req.files.vehicleProof[0].path;
+      if (req.files.profilePicture) {
+        driver.profilePicture = req.files.profilePicture[0].path;
+        console.log(`Updated profilePicture: ${driver.profilePicture}`);
+      }
+      if (req.files.idProof) {
+        driver.idProof = req.files.idProof[0].path;
+        console.log(`Updated idProof: ${driver.idProof}`);
+      }
+      if (req.files.licenseProof) {
+        driver.licenseProof = req.files.licenseProof[0].path;
+        console.log(`Updated licenseProof: ${driver.licenseProof}`);
+      }
+      if (req.files.vehicleProof) {
+        driver.vehicleProof = req.files.vehicleProof[0].path;
+        console.log(`Updated vehicleProof: ${driver.vehicleProof}`);
+      }
       
       await driver.save();
     }
 
     return res.status(200).json({ success: true, message: "Documents uploaded successfully", data: driver });
   } catch (error) {
+    console.error("uploadDocuments error:", error);
     return res.status(500).json({ success: false, message: error.message });
   }
 };

@@ -1,16 +1,34 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
-import { uploadDriverDocsApi, requestDriverVerificationApi } from "../services/api";
+import { uploadDriverDocsApi, requestDriverVerificationApi, updateProfileApi } from "../services/api";
 
 export default function Profile() {
   const { user, refreshUser } = useContext(AuthContext);
   const { show: showToast } = useToast();
   const [uploading, setUploading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    fullName: "",
+    mobile: "",
+    vehicle: "",
+    vehicleNumber: ""
+  });
 
   useEffect(() => {
     refreshUser();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      setEditForm({
+        fullName: user.name || "",
+        mobile: user.mobile || "",
+        vehicle: user.vehicle || "",
+        vehicleNumber: user.vehicleNumber || ""
+      });
+    }
+  }, [user]);
 
   if (!user) return <div className="min-h-screen flex items-center justify-center">Please login to view profile.</div>;
 
@@ -26,6 +44,12 @@ export default function Profile() {
     const file = e.target.files[0];
     if (!file) return;
 
+    // Optional: client-side validation
+    if (file.size > 5 * 1024 * 1024) {
+      showToast("File too large. Max 5MB.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append(field, file);
 
@@ -34,12 +58,29 @@ export default function Profile() {
       const res = await uploadDriverDocsApi(formData);
       if (res.success) {
         showToast(`${field.replace(/([A-Z])/g, ' $1')} uploaded!`);
-        refreshUser();
+        await refreshUser();
+      } else {
+        showToast(res.message || "Upload failed");
       }
     } catch (error) {
-      showToast(error.response?.data?.message || "Upload failed");
+      console.error("Upload error:", error);
+      showToast(error.response?.data?.message || "Upload failed. Please check your connection.");
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await updateProfileApi(editForm);
+      if (res.success) {
+        showToast("Profile updated successfully!");
+        await refreshUser();
+        setIsEditing(false);
+      }
+    } catch (error) {
+      showToast(error.response?.data?.message || "Update failed");
     }
   };
 
@@ -72,7 +113,7 @@ export default function Profile() {
                 )}
               </div>
             </div>
-            
+
             <div className="mt-20 text-center">
               <div className="flex items-center justify-center gap-2">
                 <h2 className="text-3xl font-black text-gray-900">{user.name}</h2>
@@ -95,7 +136,7 @@ export default function Profile() {
               {user.role === 'driver' ? (
                 <div className="bg-green-50 rounded-2xl p-6 text-center border border-green-100 shadow-sm transition hover:shadow-md">
                   <div className="text-3xl mb-1">🚕</div>
-                  <div className="text-2xl font-black text-green-900">{user.driverRating?.toFixed(1) || '4.7'}</div>
+                  <div className="text-2xl font-black text-green-900">{user.driverRating?.toFixed(1) || '5.0'}</div>
                   <div className="text-[10px] font-bold text-green-600 uppercase tracking-widest">Driver Rating</div>
                 </div>
               ) : (
@@ -140,7 +181,7 @@ export default function Profile() {
                       {completion < 100 && (
                         <p className="text-xs text-indigo-700 font-medium">Complete your profile to 100% and get verified to receive rides.</p>
                       )}
-                      
+
                       <div className="grid grid-cols-2 gap-3">
                         <DocUpload 
                           label="Photo" 
@@ -171,7 +212,7 @@ export default function Profile() {
                           disabled={uploading || user.status === 'verified'}
                         />
                       </div>
-                      
+
                       {completion === 100 && user.status !== 'pending' && (
                          <button 
                           onClick={handleVerifyNow}
@@ -193,7 +234,10 @@ export default function Profile() {
             )}
 
             <div className="mt-8 space-y-3">
-              <button className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-black transition shadow-lg shadow-gray-200">
+              <button 
+                onClick={() => setIsEditing(true)}
+                className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-black transition shadow-lg shadow-gray-200"
+              >
                 Edit Basic Info
               </button>
               <p className="text-center text-[10px] text-gray-400 font-medium uppercase tracking-tighter">
@@ -203,6 +247,76 @@ export default function Profile() {
           </div>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {isEditing && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm">
+          <div className="bg-white rounded-[2rem] w-full max-w-md p-8 shadow-2xl">
+            <h3 className="text-xl font-black text-gray-900 mb-6 uppercase tracking-tight">Edit Basic Info</h3>
+            <form onSubmit={handleUpdateProfile} className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Full Name</label>
+                <input 
+                  type="text" 
+                  className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none font-medium"
+                  value={editForm.fullName}
+                  onChange={(e) => setEditForm({...editForm, fullName: e.target.value})}
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Mobile Number</label>
+                <input 
+                  type="text" 
+                  className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none font-medium"
+                  value={editForm.mobile}
+                  onChange={(e) => setEditForm({...editForm, mobile: e.target.value})}
+                  required
+                />
+              </div>
+              {user.role === 'driver' && (
+                <>
+                  <div>
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Vehicle Name</label>
+                    <input 
+                      type="text" 
+                      className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none font-medium"
+                      value={editForm.vehicle}
+                      onChange={(e) => setEditForm({...editForm, vehicle: e.target.value})}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Vehicle Number</label>
+                    <input 
+                      type="text" 
+                      className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none font-medium"
+                      value={editForm.vehicleNumber}
+                      onChange={(e) => setEditForm({...editForm, vehicleNumber: e.target.value})}
+                      required
+                    />
+                  </div>
+                </>
+              )}
+              <div className="flex gap-3 pt-4">
+                <button 
+                  type="button"
+                  onClick={() => setIsEditing(false)}
+                  className="flex-1 py-4 bg-gray-100 text-gray-600 rounded-2xl font-bold hover:bg-gray-200 transition"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit"
+                  className="flex-1 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -221,10 +335,10 @@ function DocUpload({ label, field, current, onUpload, disabled }) {
         ) : (
           <span className="text-indigo-600 font-bold text-xs">Click to Upload</span>
         )}
-        <input 
-          type="file" 
-          className="hidden" 
-          onChange={(e) => onUpload(e, field)} 
+        <input
+          type="file"
+          className="hidden"
+          onChange={(e) => onUpload(e, field)}
           disabled={disabled}
           accept={field === 'profilePicture' ? "image/*" : "image/*,application/pdf"}
         />

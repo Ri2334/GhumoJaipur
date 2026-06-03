@@ -70,6 +70,11 @@ export const resetPasswordApi = async (payload) => {
   return response.data;
 };
 
+export const updateProfileApi = async (payload) => {
+  const response = await apiClient.put("/auth/update-profile", payload);
+  return response.data;
+};
+
 export const getPlacesApi = async (params = {}) => {
   const response = await apiClient.get("/places", { params });
   return response.data;
