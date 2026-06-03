@@ -44,7 +44,11 @@ export const uploadDocuments = async (req, res) => {
     const driver = await Driver.findOne({ userId: req.user._id });
     if (!driver) return res.status(404).json({ success: false, message: "Driver profile not found" });
 
-    // Debugging: Check Cloudinary config status (don't log secrets)
+    // Debugging: Check Content-Type and Cloudinary config
+    console.log("Upload Request Headers:", {
+      contentType: req.headers['content-type']
+    });
+    
     console.log("Cloudinary Config Check:", {
       hasCloudName: !!process.env.CLOUDINARY_CLOUD_NAME,
       hasApiKey: !!process.env.CLOUDINARY_API_KEY,
