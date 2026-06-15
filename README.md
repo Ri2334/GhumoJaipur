@@ -1,126 +1,203 @@
-# Ghumo Jaipur 🏰 — The Smart Tourism & Unified Transit Ecosystem
+# 🏛️ Ghumo Jaipur: Smart Tourism & Local Transport Assistant
 
-[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/Ri2334/GhumoJaipur)
-[![MERN Stack](https://img.shields.io/badge/Stack-MERN-green.svg)](https://mongodb.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Vite](https://img.shields.io/badge/Frontend-Vite%20%2B%20React-purple.svg)](https://vitejs.dev)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![React](https://img.shields.io/badge/Frontend-React%20%7C%20Vite%20%7C%20Tailwind-blue)](https://reactjs.org/)
+[![Node](https://img.shields.io/badge/Backend-Node.js%20%7C%20Express-green)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/Database-MongoDB%20%7C%20Mongoose-darkgreen)](https://www.mongodb.com/)
+[![JWT](https://img.shields.io/badge/Auth-JWT%20%7C%20OTP-orange)](https://jwt.io/)
+[![Vercel](https://img.shields.io/badge/Deployment-Vercel-black)](https://ghumo-jaipur.vercel.app)
 
-**Ghumo Jaipur** is an enterprise-grade, full-stack smart city solution tailored for the Jaipur tourism sector. It serves as a unified digital layer that consolidates fragmented transport modes, heritage data, and booking services into a single, high-performance ecosystem.
+**Ghumo Jaipur** is a comprehensive smart tourism platform designed to enhance the travel experience in Jaipur, India. It combines a sophisticated recommendation engine for local transport with a rich tourism discovery module, helping users navigate the "Pink City" intelligently based on cost, time, and convenience.
 
----
-
-## 🏛️ Vision & Mission
-Jaipur welcomes millions of tourists annually, yet navigating the city remains a challenge due to fragmented transit data and inconsistent pricing. **Ghumo Jaipur**'s mission is to democratize transit information and heritage accessibility through data-driven recommendations and seamless digital booking.
-
----
-
-## 🎯 The Problem Landscape
-Contemporary tourism in historical cities suffers from:
-*   **The "Context Switch" Tax**: Users jump between mapping, ride-hailing, and cultural blogs.
-*   **Last-Mile Blindness**: Public transit (Metro) is often overlooked because users can't visualize the walking or auto-rickshaw connection.
-*   **Stale Content**: Static tourist guides don't reflect newly added landmarks or local food trends.
-*   **Trust Deficit**: Inconsistent fare estimations for unorganized sectors like auto-rickshaws.
+🔗 **Live Demo:** [ghumo-jaipur.vercel.app](https://ghumo-jaipur.vercel.app)  
+🔗 **Repository:** [github.com/Ri2334/GhumoJaipur](https://github.com/Ri2334/GhumoJaipur)
 
 ---
 
-## 🚀 The Feature Ecosystem
-
-### 1. Unified Smart Transport Engine (The Brain)
-*   **The Problem**: No single app compares the Pink Line Metro with a private cab and a shared auto simultaneously.
-*   **The Solution**: A multi-modal decision engine that processes 6 distinct transit types in parallel.
-*   **The Logic**: Uses the **Haversine Spherical Geometry Formula** to calculate precise distances between GPS coordinates. It then applies a **Road Factor Heuristic (1.2x–1.4x)** to convert straight-line distance into realistic street-level mileage.
-*   **Impact**: Users receive real-time badges (**Cheapest, Fastest, Recommended**) that dynamically update based on the calculated distance and mode-specific fare tables.
-
-### 2. Proximity-Aware Metro Routing
-*   **The Problem**: Tourists often take expensive cabs because they don't realize a Metro station is just 800m from their favorite fort.
-*   **The Solution**: An intelligent routing algorithm that maps every `TouristLocation` to its **Nearest Metro Station**. 
-*   **The Logic**: If the sum of (Source-to-Metro) + (Metro-to-Dest) distance is significantly lower than a direct road route, or if the road distance exceeds 6km, the system flags the Metro as **"Recommended"**.
-*   **Impact**: Provides a full station sequence timeline, reducing city congestion and saving user costs.
-
-### 3. End-to-End Booking & Payment Simulation
-*   **The Problem**: High friction between finding a route and booking a ride.
-*   **The Solution**: A complete mock-transactional flow.
-*   **Key Components**:
-    *   **Driver Allocation**: Realistic driver matching from a pool of available RJ-registered vehicles.
-    *   **Interactive Payment UI**: A state-driven modal simulating the Razorpay/Stripe experience with loading, processing, and success states.
-    *   **Dynamic OTP**: Generates and validates 4-digit ride codes for security.
-*   **Impact**: Demonstrates a production-ready UX for transit service providers.
-
-### 4. Adaptive "Living" Heritage Database
-*   **The Problem**: New landmarks (like "Amar Javan Jyoti") aren't immediately supported by transit apps.
-*   **The Solution**: A **Dual-Collection Sync System**. When an Admin adds a `Place`, the backend automatically geocodes it into the `TouristLocation` geospatial index using area-based keyword mapping.
-*   **Impact**: Instantly enables transit routing and "Nearby Famous Things" guide generation for newly added landmarks without code changes.
-
-### 5. Geospatial Visualization (Leaflet.js)
-*   **The Problem**: "3.4 km" is a number; users need to *see* the turn.
-*   **The Solution**: Integration with **Leaflet.js** and **OpenStreetMap**.
-*   **Impact**: Renders dynamic markers, polylines for Metro paths, and interactive route summaries that increase user navigational confidence.
+## 🚀 Problem Statement
+Navigating a historic city like Jaipur can be overwhelming for tourists due to fragmented transport options (Metro, E-rickshaws, Buses, Cabs) and fluctuating prices. Ghumo Jaipur solves this by:
+- Consolidating all transport modes into a single **Smart Transport Assistant**.
+- Providing **real-time heuristic-based** fare and time estimations.
+- Bridging the gap between **tourist attractions** and the **most efficient way to reach them**.
 
 ---
 
-## 💻 Engineering Excellence
+## ✨ Key Features
 
-### Backend Architecture (Node.js/Express)
-- **Controller-Service Pattern**: Decoupled business logic for transport heuristics and authentication.
-- **Geospatial Heuristics**: Custom algorithms for estimating travel time based on peak/off-peak hour traffic patterns.
-- **Security**: Argon2/Bcrypt password hashing and stateless JWT session management.
+### 🛠️ Smart Transport Engine
+- **Multi-modal Comparison:** Compare Metro, Public Buses, Cabs, Autos, and Walking in a single view.
+- **Intelligent Recommendations:** Automatic tagging of options as **"Cheapest"**, **"Fastest"**, or **"Recommended"**.
+- **Metro Simulation:** Realistic station-to-station routing for the Jaipur Pink Line, including next-train countdowns and headway simulation.
+- **Shared Ride Marketplace:** Simulation of ride-pooling to reduce travel costs.
+- **Heuristic-driven Estimations:** Fares and times calculated based on peak-hour traffic, vehicle speed, and distance.
 
-### Frontend Architecture (React/Vite)
-- **Atomic Components**: Highly modularised UI (Cards, Timelines, Modals) for maximum reusability.
-- **Context API State**: Global state management for User Auth and Notification Toasts, ensuring a smooth SPA (Single Page Application) experience.
-- **Tailwind CSS Implementation**: A utility-first approach to ensure a high-performance, responsive design that works on every screen size.
+### 🗺️ Tourism & Discovery
+- **Explore Jaipur:** Filterable catalog of tourist spots with high-quality images and descriptions.
+- **Interactive Details:** View entry fees, visiting hours, and nearby food recommendations.
+- **User Reviews:** Rate and review locations with aggregated rating systems.
+- **Saved Trips:** Bookmark places and plan itineraries with persisted user accounts.
+
+### 👤 User & Role Management
+- **Secure Authentication:** OTP-based signup/login via email verification.
+- **Dashboards:** Dedicated interfaces for **Users**, **Drivers**, and **Administrators**.
+- **Profile Management:** Manage ride history, saved trips, and personal details.
+
+---
+
+## 💻 Tech Stack
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | React 18 (Vite), Tailwind CSS, React-Router-DOM, Axios |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB (Mongoose ODM) |
+| **Authentication** | JSON Web Tokens (JWT), Bcrypt.js, OTP via Nodemailer |
+| **Maps & UI** | Leaflet (React-Leaflet), Lucide Icons, React Icons |
+| **Storage** | Cloudinary (for image uploads) |
+
+---
+
+
+## 📁 Project Structure
+
+```text
+GhumoJaipur/
+├── backend/                # Express Server
+│   ├── config/             # DB & Cloudinary config
+│   ├── controllers/        # Business logic (Transport, Auth, Places)
+│   ├── middleware/         # JWT Auth & Admin protection
+│   ├── models/             # Mongoose Schemas (User, Place, Transport)
+│   ├── routes/             # API Endpoint definitions
+│   ├── scripts/            # Seed data (Realistic Jaipur stations/routes)
+│   └── utils/              # Mailer & Distance calculators
+├── frontend/               # React Application
+│   ├── src/
+│   │   ├── components/     # Reusable UI (Cards, Modals, Navbar)
+│   │   ├── context/        # Auth & Toast State
+│   │   ├── data/           # Static Jaipur transport data
+│   │   ├── pages/          # Full-page views
+│   │   ├── services/       # API calling modules
+│   │   └── utils/          # Client-side validators
+│   └── public/             # Static assets
+```
 
 ---
 
 ## 🛠️ Installation & Setup
 
 ### Prerequisites
-- Node.js (v18.0.0+)
-- MongoDB (Atlas Cloud or Local Instance)
-- SMTP Credentials (for OTP functionality)
+- Node.js (v18+)
+- MongoDB (Atlas or Local)
+- Cloudinary Account (for image uploads)
+- Gmail App Password (for OTP service)
 
-### Step-by-Step Guide
-1.  **Clone Repository**:
-    ```bash
-    git clone https://github.com/Ri2334/GhumoJaipur.git
-    cd GhumoJaipur
-    ```
-2.  **Environment Setup**:
-    Create `/backend/.env`:
-    ```env
-    PORT=5001
-    MONGODB_URI=your_mongodb_connection_string
-    JWT_SECRET=your_jwt_private_key
-    MAIL_USER=your_email@gmail.com
-    MAIL_PASS=your_gmail_app_password
-    ```
-3.  **Install & Seed**:
-    ```bash
-    # Install all dependencies
-    cd backend && npm install
-    cd ../frontend && npm install
-    
-    # Initialize Database with Jaipur Data
-    cd ../backend
-    npm run seed:all
-    ```
-4.  **Launch**:
-    ```bash
-    # Backend (Terminal 1)
-    npm run dev
-    
-    # Frontend (Terminal 2)
-    cd ../frontend && npm run dev
-    ```
+### 1. Clone the repository
+```bash
+git clone https://github.com/Ri2334/GhumoJaipur.git
+cd GhumoJaipur
+```
+
+### 2. Backend Setup
+```bash
+cd backend
+npm install
+```
+Create a `.env` file in the `backend` directory:
+```env
+PORT=5001
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+CORS_ORIGIN=http://localhost:5173
+MAIL_USER=your_email@gmail.com
+MAIL_PASS=your_app_password
+CLOUDINARY_CLOUD_NAME=name
+CLOUDINARY_API_KEY=key
+CLOUDINARY_API_SECRET=secret
+```
+Seed the database:
+```bash
+npm run seed:places
+npm run seed:transport
+npm start
+```
+
+### 3. Frontend Setup
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
 
 ---
 
-## 👨‍💻 Author
+## 🔑 Environment Variables
+
+| Variable | Description |
+| :--- | :--- |
+| `MONGODB_URI` | MongoDB connection string |
+| `JWT_SECRET` | Secret key for token signing |
+| `MAIL_USER` | Gmail address for sending OTPs |
+| `MAIL_PASS` | Gmail App Password |
+| `CORS_ORIGIN` | Allowed frontend URL (e.g., localhost:5173) |
+
+---
+
+## 📑 API Documentation
+
+### Authentication
+- `POST /api/auth/send-otp` - Send OTP for signup/password reset.
+- `POST /api/auth/verify-otp` - Verify OTP and issue JWT.
+- `POST /api/auth/signup` - Register a new user.
+
+### Transport
+- `POST /api/transport/search` - Main search engine for transport comparison.
+- `GET /api/transport/stations` - Get all metro stations.
+- `GET /api/transport/locations` - Get tourist location suggestions.
+
+### Tourism
+- `GET /api/places` - List all places with filters (category, search).
+- `GET /api/places/:id` - Get detailed information about a place.
+- `POST /api/places/:id/reviews` - Add a review (Authenticated).
+
+---
+
+## 🔒 Security & Optimization
+- **Security:**
+  - Password hashing using `Bcrypt.js`.
+  - JWT for stateless authentication.
+  - Role-based Access Control (RBAC) for Admin/User/Driver.
+  - Input validation and normalization.
+- **Performance:**
+  - **Pagination:** Implemented for place listings to ensure fast load times.
+  - **Heuristic Caching:** Pre-computed known distances for common Jaipur routes.
+  - **Lazy Loading:** Frontend components split for optimal bundle size.
+
+---
+
+
+## 🧠 Challenges & Engineering Decisions
+- **Fuzzy Search for Localities:** Implemented a name normalization and keyword-intersection algorithm to match user inputs (e.g., "Hawa Mahal") with nearest Metro stations even with spelling variations.
+- **Transport Ranking Algorithm:** Developed a composite scoring system considering `fare`, `time`, and `convenience` to provide "Recommended" tags dynamically.
+- **Realistic Metro Scheduling:** Simulated metro headways based on time of day (peak vs. off-peak) to provide realistic "Next Train" estimates without a real-time GTFS feed.
+
+---
+
+## 🔮 Future Improvements
+- [ ] **Interactive Maps:** Full integration of Leaflet for real-time route polyline visualization.
+- [ ] **Live Traffic API:** Replace heuristics with Google Maps/TomTom Traffic APIs.
+- [ ] **Payment Integration:** Razorpay/Stripe for booking cabs/autos directly.
+- [ ] **Multilingual Support:** Hindi and other local languages for better tourist accessibility.
+
+---
+
+## ✍️ Author
 
 **Rishi Joshi**  
-Software Engineer | MERN Specialist  
-📧 [rishi.joshi.ddu@gmail.com](mailto:rishi.joshi.ddu@gmail.com)  
-🔗 [LinkedIn](linkedin.com/in/rishijoshi11)
+🚀 Full Stack Developer | Surat , India
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://in.linkedin.com/in/rishijoshi11)
+[![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:rishi.joshi.ddu@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat&logo=github&logoColor=white)](https://github.com/Ri2334)
 
 ---
-*Ghumo Jaipur: Engineering a smarter way to explore the Pink City.*
+*Developed with ❤️ for the Pink City.*
