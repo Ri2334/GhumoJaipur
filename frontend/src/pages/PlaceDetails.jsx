@@ -34,13 +34,28 @@ export default function PlaceDetails() {
         const res = await getPlaceByIdApi(id);
         if (res?.data) {
           setPlace(res.data);
+          setError(null);
         } else {
-          const found = fallbackPlaces.find(p => p._id === id || p.name.toLowerCase().includes(id.toLowerCase().replace(/_/g, ' ')));
-          setPlace(found || fallbackPlaces[0]);
+          const searchStr = String(id || '').toLowerCase().replace(/_/g, ' ');
+          const found = fallbackPlaces.find(p => 
+            p._id === id || 
+            p._id?.toLowerCase() === id?.toLowerCase() || 
+            p.name?.toLowerCase().includes(searchStr) || 
+            searchStr.includes(p.name?.toLowerCase())
+          );
+          setPlace(found || fallbackPlaces[1]); // Default Hawa Mahal
+          setError(null);
         }
       } catch (err) {
-        const found = fallbackPlaces.find(p => p._id === id || p.name.toLowerCase().includes(id.toLowerCase().replace(/_/g, ' ')));
-        setPlace(found || fallbackPlaces[0]);
+        const searchStr = String(id || '').toLowerCase().replace(/_/g, ' ');
+        const found = fallbackPlaces.find(p => 
+          p._id === id || 
+          p._id?.toLowerCase() === id?.toLowerCase() || 
+          p.name?.toLowerCase().includes(searchStr) || 
+          searchStr.includes(p.name?.toLowerCase())
+        );
+        setPlace(found || fallbackPlaces[1]);
+        setError(null);
       } finally {
         setLoading(false);
       }
@@ -440,7 +455,7 @@ export default function PlaceDetails() {
     return <div className="min-h-screen bg-gray-50 px-4 py-12"><div className="mx-auto h-[60vh] max-w-6xl animate-pulse rounded-3xl bg-white shadow-xl" /></div>;
   }
 
-  if (error || !place) {
+  if (!place) {
     return (
       <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] px-4 py-12">
         <div className="mx-auto max-w-3xl rounded-3xl border border-dashed border-[#E6D6C3] bg-white p-10 text-center shadow-xl">
