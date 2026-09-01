@@ -11,10 +11,7 @@ export const fallbackPlaces = [
     category: "Fort",
     bestVisitTime: "October to March",
     nearbyFoods: ["Dal Baati Churma", "Ghewar", "Lassi"],
-    transportOptions: ["Auto", "Cab", "RSRTC bus"],
-    reviews: [
-      { _id: "r1", user: { fullName: "Aarav Sharma" }, rating: 5, comment: "Breathtaking views and amazing Sheesh Mahal!" }
-    ]
+    transportOptions: ["Auto", "Cab", "RSRTC bus"]
   },
   {
     _id: "hawa_mahal",
@@ -28,10 +25,7 @@ export const fallbackPlaces = [
     category: "Palace",
     bestVisitTime: "Early morning",
     nearbyFoods: ["LMB Ghewar", "Pandit Kulfi", "Radhe Kachori"],
-    transportOptions: ["Walk", "Auto", "Metro"],
-    reviews: [
-      { _id: "r2", user: { fullName: "Priya Patel" }, rating: 5, comment: "Best view from Tattoo Cafe across the street!" }
-    ]
+    transportOptions: ["Walk", "Auto", "Metro"]
   },
   {
     _id: "city_palace",
@@ -45,8 +39,7 @@ export const fallbackPlaces = [
     category: "Palace",
     bestVisitTime: "Morning",
     nearbyFoods: ["Baradari Restaurant", "Govindam Retreat"],
-    transportOptions: ["Auto", "Cab", "Walk"],
-    reviews: []
+    transportOptions: ["Auto", "Cab", "Walk"]
   },
   {
     _id: "jantar_mantar",
@@ -60,82 +53,174 @@ export const fallbackPlaces = [
     category: "Museum",
     bestVisitTime: "Noon (for shadows)",
     nearbyFoods: ["Samrat Samosa", "LMB"],
-    transportOptions: ["Walk", "Auto"],
-    reviews: []
+    transportOptions: ["Walk", "Auto"]
   },
   {
     _id: "nahargarh_fort",
     name: "Nahargarh Fort",
-    description: "Perched on the Aravalli hills, offering breathtaking sunset views over the entire Pink City.",
+    description: "A scenic fort on the Aravalli hills with some of the best sunset and city views in Jaipur.",
     location: "Krishna Nagar, Jaipur",
-    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/Nahargarh_Fort_x4omq0.jpg"],
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953023/Nahargarh_Fort_ieetqc.jpg"],
     rating: 4.8,
     timings: "10:00 AM - 10:00 PM",
     ticketPrice: 100,
     category: "Fort",
     bestVisitTime: "Sunset",
     nearbyFoods: ["Padao Restaurant", "Fort View Cafe"],
-    transportOptions: ["Cab", "Auto"],
-    reviews: []
+    transportOptions: ["Cab", "Auto"]
   },
   {
     _id: "albert_hall",
     name: "Albert Hall Museum",
-    description: "Rajasthan's oldest museum displaying royal artifacts, armor, and night light illumination.",
+    description: "A beautiful museum with artifacts, paintings and one of the most photographed facades in Jaipur.",
     location: "Ram Niwas Garden, Jaipur",
-    images: ["https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1200&q=80"],
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953023/Albert_Hall_Museum_g25y8x.jpg"],
     rating: 4.7,
-    timings: "9:00 AM - 5:00 PM, 7:00 PM - 10:00 PM",
-    ticketPrice: 150,
+    timings: "9:00 AM - 5:00 PM",
+    ticketPrice: 100,
     category: "Museum",
     bestVisitTime: "Night illumination",
     nearbyFoods: ["Masala Chowk", "Indian Coffee House"],
-    transportOptions: ["Auto", "Bus", "Cab"],
-    reviews: []
+    transportOptions: ["Auto", "Bus", "Cab"]
+  },
+  {
+    _id: "jal_mahal",
+    name: "Jal Mahal",
+    description: "The picturesque palace floating in the middle of Man Sagar Lake, a Jaipur postcard classic.",
+    location: "Amer Road, Jaipur",
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953029/Jal_Mahal_nytgp8.jpg"],
+    rating: 4.7,
+    timings: "Open 24 hours (viewpoint)",
+    ticketPrice: 0,
+    category: "Palace",
+    bestVisitTime: "Sunrise and sunset",
+    nearbyFoods: ["Chai", "Pakora"],
+    transportOptions: ["Cab", "Auto", "Bus"]
   },
   {
     _id: "patrika_gate",
     name: "Patrika Gate",
-    description: "A colorful gateway known for its vibrant Rajasthani motifs, murals and photo-friendly arches.",
+    description: "A colorful gateway known for its vibrant Rajasthani motifs and photo-friendly arches.",
     location: "Jawahar Circle, Jaipur",
-    images: ["https://images.unsplash.com/photo-1603201667141-5a2d4c673378?auto=format&fit=crop&w=1200&q=80"],
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953025/Patrika_Gate_wjuypt.jpg"],
     rating: 4.8,
     timings: "Open 24 hours",
     ticketPrice: 0,
     category: "Other",
     bestVisitTime: "Evening",
-    nearbyFoods: ["Chaat Bazaar", "Jawahar Circle Food Stalls"],
-    transportOptions: ["Auto", "Cab"],
-    reviews: []
+    nearbyFoods: ["World Trade Park", "Street food"],
+    transportOptions: ["Cab", "Auto", "Bus"]
+  },
+  {
+    _id: "birla_mandir",
+    name: "Birla Mandir",
+    description: "A serene white marble temple dedicated to Lord Vishnu and Goddess Lakshmi.",
+    location: "Tilak Nagar, Jaipur",
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953020/Birla_Mandir_bn5dfb.jpg"],
+    rating: 4.6,
+    timings: "6:00 AM - 12:00 PM, 3:00 PM - 8:00 PM",
+    ticketPrice: 0,
+    category: "Temple",
+    bestVisitTime: "Evening",
+    nearbyFoods: ["Moti Dungri Temple", "Sweets"],
+    transportOptions: ["Auto", "Cab"]
+  },
+  {
+    _id: "jaigarh_fort",
+    name: "Jaigarh Fort",
+    description: "A historic hill fort famous for the Jaivana cannon and sweeping city views.",
+    location: "Amer, Jaipur",
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953028/Jaigarh_Fort_nkzlwp.jpg"],
+    rating: 4.6,
+    timings: "9:00 AM - 4:30 PM",
+    ticketPrice: 150,
+    category: "Fort",
+    bestVisitTime: "Morning",
+    nearbyFoods: ["Tea", "Snacks"],
+    transportOptions: ["Cab", "Jeep"]
+  },
+  {
+    _id: "galtaji_temple",
+    name: "Galtaji Temple",
+    description: "A sacred temple complex with natural springs and the famous monkey valley.",
+    location: "Galta Ji, Jaipur",
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953019/Galtaji_Temple_u3rntw.jpg"],
+    rating: 4.5,
+    timings: "5:00 AM - 9:00 PM",
+    ticketPrice: 0,
+    category: "Temple",
+    bestVisitTime: "Morning",
+    nearbyFoods: ["Sun Temple", "Tea"],
+    transportOptions: ["Cab", "Auto"]
   },
   {
     _id: "rambagh_palace",
     name: "Rambagh Palace",
-    description: "A luxury heritage palace once home to Jaipur's royalty, now a famous landmark.",
+    description: "A luxury heritage palace once home to Jaipur's royalty, now a famous hotel and landmark.",
     location: "Bhawani Singh Road, Jaipur",
-    images: ["https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80"],
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953027/Rambagh_Palace_lcfwlv.jpg"],
     rating: 4.8,
-    timings: "View from outside / Dining",
+    timings: "View from outside any time",
     ticketPrice: 700,
     category: "Palace",
     bestVisitTime: "Evening",
-    nearbyFoods: ["Suvarna Mahal", "Polo Bar"],
-    transportOptions: ["Cab"],
-    reviews: []
+    nearbyFoods: ["Central Park", "Coffee"],
+    transportOptions: ["Cab", "Auto"]
   },
   {
     _id: "jhalana_safari",
     name: "Jhalana Leopard Safari",
     description: "India's first leopard reserve located within city limits, offering thrilling Jeep safaris.",
     location: "Malviya Nagar, Jaipur",
-    images: ["https://images.unsplash.com/photo-1534177616072-ef7dc120449d?auto=format&fit=crop&w=1200&q=80"],
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/Jhalana_Leopard_Safari_sjzlza.jpg"],
     rating: 4.8,
     timings: "6:00 AM - 9:00 AM, 4:30 PM - 7:00 PM",
     ticketPrice: 1200,
     category: "Other",
     bestVisitTime: "Early morning or evening",
-    nearbyFoods: ["Malviya Nagar Cafes"],
-    transportOptions: ["Cab", "Auto"],
-    reviews: []
+    nearbyFoods: ["Kebabs & Curries"],
+    transportOptions: ["Cab", "Auto"]
+  },
+  {
+    _id: "chokhi_dhani",
+    name: "Chokhi Dhani",
+    description: "An ethnic village resort offering a deep dive into Rajasthani culture with folk dances and traditional food.",
+    location: "Tonk Road, Jaipur",
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953020/Chokhi_Dhani_e13lfx.jpg"],
+    rating: 4.6,
+    timings: "5:00 PM - 11:00 PM",
+    ticketPrice: 900,
+    category: "Other",
+    bestVisitTime: "Evening",
+    nearbyFoods: ["Rajasthani Thali", "Dal Baati Churma"],
+    transportOptions: ["Cab", "Auto"]
+  },
+  {
+    _id: "bapu_bazaar",
+    name: "Bapu Bazaar",
+    description: "A vibrant market in the Pink City famous for Mojari shoes and Bandhani textiles.",
+    location: "Bapu Bazaar, Jaipur",
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953021/Bapu_Bazaar_juabna.jpg"],
+    rating: 4.5,
+    timings: "10:30 AM - 9:00 PM",
+    ticketPrice: 0,
+    category: "Market",
+    bestVisitTime: "Evening",
+    nearbyFoods: ["Laxmi Chat Bhandar", "Samrat Kachori"],
+    transportOptions: ["Walk", "Auto", "Metro"]
+  },
+  {
+    _id: "johari_bazaar",
+    name: "Johari Bazaar",
+    description: "Jaipur's premier destination for exquisite gemstone jewelry and Kundan work.",
+    location: "Johari Bazaar, Jaipur",
+    images: ["https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953025/Johari_Bazaar_tpco2i.jpg"],
+    rating: 4.7,
+    timings: "10:30 AM - 9:00 PM",
+    ticketPrice: 0,
+    category: "Market",
+    bestVisitTime: "Evening",
+    nearbyFoods: ["LMB", "Pandit Kulfi"],
+    transportOptions: ["Walk", "Auto", "Metro"]
   }
 ];
