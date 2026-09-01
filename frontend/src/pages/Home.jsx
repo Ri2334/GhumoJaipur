@@ -47,7 +47,7 @@ export default function Home() {
             </h1>
             
             <p className="mt-8 max-w-2xl mx-auto text-xl text-gray-600 leading-relaxed font-medium">
-              Ghumo Jaipur is your all-in-one companion for navigating the Pink City. 
+              Sheher Saathi is your all-in-one companion for navigating the Pink City. 
               Discover hidden gems, smart transport options, and authentic local experiences.
             </p>
 
@@ -144,7 +144,7 @@ export default function Home() {
                 <div className="space-y-6 text-lg text-gray-600 leading-relaxed font-medium">
                   <p>
                     Jaipur is a city of stories and timeless architecture. But navigating it shouldn't feel like a puzzle. 
-                    Ghumo Jaipur was built to bridge the gap between traditional tourism and modern convenience.
+                    Sheher Saathi was built to bridge the gap between traditional tourism and modern convenience.
                   </p>
                   <p>
                     We provide real-time public transport logic, a curated network of verified drivers, and deep-dive guides 
@@ -184,7 +184,7 @@ export default function Home() {
                <div className="relative z-10 text-center max-w-3xl mx-auto">
                  <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">Ready to unlock Jaipur's potential?</h2>
                  <p className="text-indigo-50 text-xl font-medium mb-10 leading-relaxed opacity-90">
-                   Join thousands of travelers who use Ghumo Jaipur to save trips, book rides, and get personalized recommendations.
+                   Join thousands of travelers who use Sheher Saathi to save trips, book rides, and get personalized recommendations.
                  </p>
                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                    <Link to="/signup" className="w-full sm:w-auto bg-white text-indigo-600 px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-indigo-50 transition shadow-xl">Create Account</Link>
@@ -202,7 +202,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-12 border-t border-gray-100 bg-white/50 text-center">
         <div className="mx-auto max-w-7xl px-4">
-          <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">© 2026 Ghumo Jaipur • Built with ❤️ for the Pink City</p>
+          <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">© 2026 Sheher Saathi (shehersaathi.com) • Built with ❤️ for the Pink City</p>
         </div>
       </footer>
 

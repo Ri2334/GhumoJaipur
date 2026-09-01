@@ -63,7 +63,7 @@ app.use("/api/admin", adminRoutes);
 // Basic health check route
 app.get("/", (req, res) => {
   res.json({ 
-    message: "🚀 Ghumo Jaipur Backend Server is Running",
+    message: "🚀 Sheher Saathi Backend Server is Running",
     version: "1.0.0"
   });
 });
@@ -80,5 +80,5 @@ app.use((err, req, res, next) => {
 // Start server
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
-  console.log(`🚀 Ghumo Jaipur Backend is running on port ${PORT}`);
+  console.log(`🚀 Sheher Saathi Backend is running on port ${PORT}`);
 });

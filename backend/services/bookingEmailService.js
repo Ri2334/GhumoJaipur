@@ -8,7 +8,7 @@ export const sendBookingEmail = async (bookingId) => {
   if (!booking) throw new Error('Booking not found');
 
   const to = booking.user?.email || booking.user;
-  const subject = `Ghumo Jaipur - Booking Confirmed (${booking._id})`;
+  const subject = `Sheher Saathi - Booking Confirmed (${booking._id})`;
   const html = `
     <div style="font-family: Arial, sans-serif; color: #111827;">
       <h2>Booking Confirmed</h2>

@@ -70,8 +70,8 @@ export const createBooking = async (req, res) => {
       if (user.email) {
         await sendEmailViaApi({ 
           to: user.email, 
-          subject: 'Ghumo Jaipur: Your Ride OTP', 
-          html: `<p>Your ride with Ghumo Jaipur is confirmed! Share this OTP with your driver to start the ride: <strong>${rideOtp}</strong></p>` 
+          subject: 'Sheher Saathi: Your Ride OTP', 
+          html: `<p>Your ride with Sheher Saathi is confirmed! Share this OTP with your driver to start the ride: <strong>${rideOtp}</strong></p>` 
         });
       }
     } catch (mailErr) {

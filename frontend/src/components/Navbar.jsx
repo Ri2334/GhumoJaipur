@@ -53,8 +53,11 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate(user ? '/dashboard' : '/') }>
-              <div className="w-11 h-11 bg-white rounded-2xl flex items-center justify-center text-indigo-600 font-black shadow-lg group-hover:scale-110 transition">GJ</div>
-              <div className="text-white font-black text-xl tracking-tight">Ghumo Jaipur</div>
+              <img src="/logo.png" alt="Sheher Saathi Logo" className="w-11 h-11 rounded-2xl object-cover shadow-lg group-hover:scale-110 transition bg-white" />
+              <div>
+                <div className="text-white font-black text-xl tracking-tight leading-none">Sheher Saathi</div>
+                <div className="text-[10px] text-pink-200 font-bold uppercase tracking-widest mt-0.5">Smart Urban Explorer</div>
+              </div>
             </div>
           </div>
 

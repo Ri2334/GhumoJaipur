@@ -8,7 +8,7 @@ const BREVO_API_URL = "https://api.brevo.com/v3/smtp/email";
 
 const getApiKey = () => process.env.BREVO_API_KEY;
 const getSenderEmail = () => process.env.MAIL_USER || "acd8d8001@smtp-brevo.com";
-const getSenderName = () => "Ghumo Jaipur";
+const getSenderName = () => "Sheher Saathi";
 
 /**
  * Validates if the Brevo API is configured
@@ -36,7 +36,7 @@ export const sendEmailViaApi = async ({ to, subject, html }) => {
   try {
     const payload = {
       sender: {
-        name: "Ghumo Jaipur",
+        name: "Sheher Saathi",
         email: senderEmail
       },
       to: [{ email: to }],
@@ -85,10 +85,10 @@ export const sendEmailViaApi = async ({ to, subject, html }) => {
 export const sendOtpEmail = async ({ to, otp, purpose }) => {
   console.log(`Attempting to send OTP to ${to} via Brevo API for purpose: ${purpose}`);
   
-  const subject = purpose === "reset-password" ? "Ghumo Jaipur password reset OTP" : "Ghumo Jaipur signup OTP";
+  const subject = purpose === "reset-password" ? "Sheher Saathi password reset OTP" : "Sheher Saathi signup OTP";
   const html = `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px;">
-      <h2 style="color: #4f46e5; margin-bottom: 16px;">Ghumo Jaipur</h2>
+      <h2 style="color: #4f46e5; margin-bottom: 16px;">Sheher Saathi</h2>
       <p style="font-size: 16px;">Hello,</p>
       <p style="font-size: 16px;">Your one-time password (OTP) for <strong>${purpose.replace("-", " ")}</strong> is:</p>
       <div style="font-size: 32px; font-weight: 800; letter-spacing: 6px; padding: 16px 24px; background: #f3f4f6; display: inline-block; border-radius: 12px; margin: 16px 0; color: #111827; border: 2px solid #e5e7eb;">

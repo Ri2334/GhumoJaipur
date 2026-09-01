@@ -1,7 +1,7 @@
 {
-  "name": "ghumo-jaipur-backend",
+  "name": "sheher-saathi-backend",
   "version": "1.0.0",
-  "description": "Backend for Ghumo Jaipur tourism app",
+  "description": "Backend for Sheher Saathi tourism & smart urban transport app",
   "main": "server.js",
   "type": "module",
   "scripts": {

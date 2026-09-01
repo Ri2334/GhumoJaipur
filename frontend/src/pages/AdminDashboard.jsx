@@ -160,7 +160,7 @@ export default function AdminDashboard() {
                 <div>
                   <h2 className="text-3xl font-black mb-4">System Health</h2>
                   <p className="text-indigo-100 font-medium opacity-80 leading-relaxed">
-                    The Ghumo Jaipur platform is currently operational. All systems are running within normal parameters for the 2026 season.
+                    The Sheher Saathi (shehersaathi.com) platform is currently operational. All systems are running within normal parameters for the 2026 season.
                   </p>
                 </div>
                 <div className="mt-12 flex items-center gap-4">

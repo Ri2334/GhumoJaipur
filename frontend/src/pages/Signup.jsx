@@ -126,7 +126,7 @@ export default function Signup() {
         <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 p-8 text-center text-white relative overflow-hidden">
            <div className="relative z-10">
               <h2 className="text-3xl font-black tracking-tight mb-2">Create Account</h2>
-              <p className="text-indigo-100 text-sm font-medium">Join Ghumo Jaipur to start your adventure.</p>
+              <p className="text-indigo-100 text-sm font-medium">Join Sheher Saathi to start your adventure.</p>
            </div>
            {/* Abstract patterns */}
            <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>

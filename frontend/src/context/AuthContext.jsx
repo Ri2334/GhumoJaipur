@@ -16,26 +16,36 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     try {
-      const raw = localStorage.getItem("ghumo_user");
+      const raw = localStorage.getItem("sheher_user") || localStorage.getItem("ghumo_user");
       return raw ? JSON.parse(raw) : null;
     } catch {
       return null;
     }
   });
 
-  const [token, setToken] = useState(() => localStorage.getItem("ghumo_token") || "");
+  const [token, setToken] = useState(() => localStorage.getItem("sheher_token") || localStorage.getItem("ghumo_token") || "");
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Persist user to localStorage
-    if (user) localStorage.setItem("ghumo_user", JSON.stringify(user));
-    else localStorage.removeItem("ghumo_user");
+    if (user) {
+      localStorage.setItem("sheher_user", JSON.stringify(user));
+      localStorage.setItem("ghumo_user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("sheher_user");
+      localStorage.removeItem("ghumo_user");
+    }
   }, [user]);
 
   useEffect(() => {
-    if (token) localStorage.setItem("ghumo_token", token);
-    else localStorage.removeItem("ghumo_token");
+    if (token) {
+      localStorage.setItem("sheher_token", token);
+      localStorage.setItem("ghumo_token", token);
+    } else {
+      localStorage.removeItem("sheher_token");
+      localStorage.removeItem("ghumo_token");
+    }
   }, [token]);
 
   const normalizeUser = (payloadUser, driverProfile = null) => ({
