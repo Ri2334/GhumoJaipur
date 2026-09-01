@@ -40,23 +40,23 @@ export default function SavedTrips() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] px-4">
-        <div className="rounded-3xl border border-white/70 bg-white/80 p-8 text-center shadow-xl backdrop-blur">
-          <h2 className="text-2xl font-bold text-gray-900">Please log in</h2>
-          <p className="mt-3 text-gray-600">You need an account to save and view trips.</p>
-          <Link to="/login" className="mt-6 inline-flex rounded-full bg-indigo-600 px-5 py-3 text-white">Login</Link>
+      <div className="min-h-screen flex items-center justify-center bg-[#FAF5EF] text-[#2C1E18] px-4">
+        <div className="rounded-3xl border border-[#E6D6C3] bg-white p-10 text-center shadow-xl max-w-md w-full">
+          <h2 className="text-3xl font-marcellus text-[#2C1E18]">Please Log In</h2>
+          <p className="mt-3 text-[#543C32] font-medium">You need an account to save and view your travel shortlist.</p>
+          <Link to="/login" className="mt-6 inline-flex rounded-xl bg-[#B35D38] hover:bg-[#964B2A] px-8 py-3.5 text-white font-bold shadow-md">Login Now →</Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-10">
+    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 rounded-3xl border border-white/70 bg-white/75 p-6 shadow-xl backdrop-blur">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-indigo-600">Saved Trips</p>
-          <h1 className="mt-2 text-4xl font-black text-gray-900">Your travel shortlist</h1>
-          <p className="mt-3 text-gray-600">Your favorite spots are synced across all your devices, ready for your next adventure.</p>
+        <div className="mb-10 rounded-3xl border border-[#E6D6C3] bg-white p-8 shadow-xl">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#B35D38]">Shortlist</p>
+          <h1 className="mt-2 text-4xl sm:text-5xl font-marcellus text-[#2C1E18]">Your Saved Trips</h1>
+          <p className="mt-3 text-[#543C32] font-medium">Your favorite spots are synced across all your devices, ready for your next adventure.</p>
         </div>
 
         {error && <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">{error}</div>}

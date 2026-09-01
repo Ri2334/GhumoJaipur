@@ -104,9 +104,9 @@ export default function TransportCard({ mode, fare, time, badge, note, source, d
           {noSharedAvailable && (
             <button 
               onClick={(e) => { e.stopPropagation(); handleClick(); }}
-              className="mt-3 w-full py-3 bg-indigo-600 text-white rounded-xl text-xs font-black uppercase tracking-widest shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition"
+              className="mt-3 w-full py-3 bg-[#B35D38] text-white rounded-xl text-xs font-bold uppercase tracking-widest shadow-md hover:bg-[#964B2A] transition"
             >
-              Create One
+              Create Shared Ride →
             </button>
           )}
         </div>

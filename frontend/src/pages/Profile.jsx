@@ -105,10 +105,12 @@ export default function Profile() {
   const completion = calculateCompletion();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-12 px-4">
       <div className="max-w-xl mx-auto">
-        <div className="bg-white rounded-[2rem] overflow-hidden shadow-2xl shadow-indigo-100/50 border border-gray-100">
-          <div className="h-32 bg-gradient-to-r from-indigo-600 to-purple-600"></div>
+        <div className="bg-white rounded-[2.5rem] overflow-hidden shadow-2xl border border-[#E6D6C3]">
+          <div className="h-36 bg-[#2C1E18] flex items-center justify-center border-b border-[#3D2B23] relative">
+            <div className="text-xs text-[#D98A5B] font-bold uppercase tracking-[0.2em] absolute top-4">Sheher Saathi Profile</div>
+          </div>
           <div className="px-8 pb-10">
             <div className="relative flex justify-center">
               <div className="absolute -top-16 w-32 h-32 bg-white rounded-3xl shadow-xl flex items-center justify-center text-5xl border-4 border-white overflow-hidden">

@@ -435,50 +435,50 @@ export default function PlaceDetails() {
 
   if (error || !place) {
     return (
-      <div className="min-h-screen bg-gray-50 px-4 py-12">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-dashed border-gray-300 bg-white p-10 text-center shadow-xl">
-          <h1 className="text-2xl font-bold text-gray-900">Place not found</h1>
-          <p className="mt-3 text-gray-600">{error || "The place you opened is unavailable."}</p>
-          <Link to="/places" className="mt-6 inline-flex rounded-full bg-indigo-600 px-5 py-3 text-white">Back to Explore</Link>
+      <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] px-4 py-12">
+        <div className="mx-auto max-w-3xl rounded-3xl border border-dashed border-[#E6D6C3] bg-white p-10 text-center shadow-xl">
+          <h1 className="text-2xl font-marcellus text-[#2C1E18]">Place not found</h1>
+          <p className="mt-3 text-[#543C32]">{error || "The place you opened is unavailable."}</p>
+          <Link to="/places" className="mt-6 inline-flex rounded-xl bg-[#B35D38] px-6 py-3.5 text-white font-bold">Back to Explore</Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-10">
+    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] items-start">
           {/* Main Content Column */}
           <div className="space-y-8">
-            <div className="overflow-hidden rounded-3xl border border-white/70 bg-white/70 p-4 shadow-2xl backdrop-blur">
+            <div className="overflow-hidden rounded-3xl border border-[#E6D6C3] bg-white p-4 shadow-xl">
               <ImageCarousel images={place.images} />
             </div>
 
-            <div className="rounded-3xl border border-white/70 bg-white/80 p-8 shadow-xl backdrop-blur">
+            <div className="rounded-3xl border border-[#E6D6C3] bg-white p-8 shadow-xl">
               <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div>
-                  <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-700">{place.category}</span>
-                  <h1 className="mt-3 text-5xl font-black text-gray-900 tracking-tight">{place.name}</h1>
-                  <p className="mt-2 text-lg text-gray-500 font-medium">{place.location}</p>
+                  <span className="rounded-full bg-[#FAF1EC] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#B35D38] border border-[#EBC5B2]">{place.category}</span>
+                  <h1 className="mt-4 text-4xl sm:text-5xl font-marcellus text-[#2C1E18] tracking-tight">{place.name}</h1>
+                  <p className="mt-2 text-base text-[#543C32] font-semibold">{place.location}</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-5xl font-black text-indigo-600">{place.rating?.toFixed(1) || "0.0"}</div>
-                  <div className="text-sm font-bold text-gray-400 uppercase tracking-widest mt-1">Rating</div>
+                  <div className="text-5xl font-marcellus text-[#B35D38]">{place.rating?.toFixed(1) || "0.0"}</div>
+                  <div className="text-xs font-bold text-[#A37B66] uppercase tracking-widest mt-1">Rating</div>
                 </div>
               </div>
 
-              <div className="mt-8 prose prose-indigo max-w-none text-gray-700">
-                <p className="text-lg leading-relaxed whitespace-pre-line">{place.description}</p>
+              <div className="mt-8 text-[#543C32] leading-relaxed">
+                <p className="text-lg whitespace-pre-line font-medium">{place.description}</p>
               </div>
             </div>
 
             {/* Famous Things To Try Section (Deep Local Guide) */}
             <div className="space-y-8">
               <div className="flex items-center gap-4">
-                <div className="h-px flex-1 bg-gray-200" />
-                <h2 className="text-3xl font-black text-gray-900">Famous things to try nearby</h2>
-                <div className="h-px flex-1 bg-gray-200" />
+                <div className="h-px flex-1 bg-[#E6D6C3]" />
+                <h2 className="text-3xl font-marcellus text-[#2C1E18]">Famous Things to Try Nearby</h2>
+                <div className="h-px flex-1 bg-[#E6D6C3]" />
               </div>
 
               {currentGuide ? (
@@ -487,8 +487,8 @@ export default function PlaceDetails() {
                   {currentGuide.attractions && currentGuide.attractions.length > 0 && (
                     <section>
                       <div className="flex items-center gap-3 mb-6">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 text-white text-xl shadow-lg shadow-indigo-100">🏛️</div>
-                        <h3 className="text-2xl font-bold text-gray-900">Must-See Attractions & Experiences</h3>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#B35D38] text-white text-xl shadow-md">🏛️</div>
+                        <h3 className="text-2xl font-marcellus text-[#2C1E18]">Must-See Attractions & Experiences</h3>
                       </div>
                       <div className="grid gap-6 sm:grid-cols-2">
                         {currentGuide.attractions.map((item, idx) => (
@@ -502,8 +502,8 @@ export default function PlaceDetails() {
                   {currentGuide.food && currentGuide.food.length > 0 && (
                     <section>
                       <div className="flex items-center gap-3 mb-6">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-600 text-white text-xl shadow-lg shadow-orange-100">🍛</div>
-                        <h3 className="text-2xl font-bold text-gray-900">Iconic Food to Try</h3>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#D98A5B] text-white text-xl shadow-md">🍛</div>
+                        <h3 className="text-2xl font-marcellus text-[#2C1E18]">Iconic Food to Try</h3>
                       </div>
                       <div className="grid gap-6 sm:grid-cols-2">
                         {currentGuide.food.map((item, idx) => (
@@ -517,8 +517,8 @@ export default function PlaceDetails() {
                   {currentGuide.shopping && currentGuide.shopping.length > 0 && (
                     <section>
                       <div className="flex items-center gap-3 mb-6">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-600 text-white text-xl shadow-lg shadow-emerald-100">🛍️</div>
-                        <h3 className="text-2xl font-bold text-gray-900">Famous Local Shopping</h3>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#793A1F] text-white text-xl shadow-md">🛍️</div>
+                        <h3 className="text-2xl font-marcellus text-[#2C1E18]">Famous Local Shopping</h3>
                       </div>
                       <div className="grid gap-6 sm:grid-cols-2">
                         {currentGuide.shopping.map((item, idx) => (
@@ -532,8 +532,8 @@ export default function PlaceDetails() {
                   {currentGuide.transport && currentGuide.transport.length > 0 && (
                     <section>
                       <div className="flex items-center gap-3 mb-6">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600 text-white text-xl shadow-lg shadow-blue-100">🚇</div>
-                        <h3 className="text-2xl font-bold text-gray-900">Recommended Transport</h3>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#2C1E18] text-white text-xl shadow-md">🚇</div>
+                        <h3 className="text-2xl font-marcellus text-[#2C1E18]">Recommended Transport</h3>
                       </div>
                       <div className="grid gap-6 sm:grid-cols-2">
                         {currentGuide.transport.map((item, idx) => (
@@ -544,33 +544,33 @@ export default function PlaceDetails() {
                   )}
                 </>
               ) : (
-                <div className="py-20 text-center text-gray-500 border-2 border-dashed border-gray-200 rounded-[3rem] bg-white/50">
-                  <div className="text-4xl mb-4">🗺️</div>
-                  <p className="text-lg font-bold">Discovering the best of {place.name}...</p>
-                  <p className="mt-2">We're curating deep local guides for this spot. Check back soon!</p>
+                <div className="py-16 text-center text-[#543C32] border-2 border-dashed border-[#E6D6C3] rounded-3xl bg-white">
+                  <div className="text-4xl mb-3">🗺️</div>
+                  <p className="text-lg font-bold text-[#2C1E18]">Discovering the best of {place.name}...</p>
+                  <p className="mt-1 text-sm text-[#793A1F]">We're curating deep local guides for this spot. Check back soon!</p>
                 </div>
               )}
             </div>
 
             {/* Reviews Section */}
-            <section className="rounded-3xl border border-white/70 bg-white/80 p-8 shadow-xl backdrop-blur">
+            <section className="rounded-3xl border border-[#E6D6C3] bg-white p-8 shadow-xl">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <h2 className="text-3xl font-black text-gray-900">Visitor Reviews</h2>
-                  <p className="text-gray-500 mt-1 font-medium">Real experiences from travelers like you.</p>
+                  <h2 className="text-3xl font-marcellus text-[#2C1E18]">Visitor Reviews</h2>
+                  <p className="text-[#543C32] mt-1 font-medium text-sm">Real experiences from travelers like you.</p>
                 </div>
                 <div className="hidden sm:block text-right">
-                  <div className="text-3xl font-black text-indigo-600">{reviews.length}</div>
-                  <div className="text-xs font-bold text-gray-400 uppercase tracking-widest">Total Reviews</div>
+                  <div className="text-3xl font-marcellus text-[#B35D38]">{reviews.length}</div>
+                  <div className="text-xs font-bold text-[#A37B66] uppercase tracking-widest">Total Reviews</div>
                 </div>
               </div>
 
-              <form onSubmit={handleReviewSubmit} className="mb-12 space-y-4 bg-gray-50/50 p-6 rounded-3xl border border-gray-100">
+              <form onSubmit={handleReviewSubmit} className="mb-10 space-y-4 bg-[#FAF5EF] p-6 rounded-3xl border border-[#E6D6C3]">
                 <div className="flex flex-col sm:flex-row gap-4">
                   <select
                     value={reviewRating}
                     onChange={(e) => setReviewRating(Number(e.target.value))}
-                    className="w-full sm:w-48 rounded-2xl border border-gray-200 bg-white px-4 py-4 font-bold text-gray-700 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition shadow-sm"
+                    className="w-full sm:w-52 rounded-2xl border border-[#E6D6C3] bg-white px-4 py-3.5 font-bold text-[#2C1E18] focus:border-[#B35D38] transition shadow-sm"
                   >
                     {[5, 4, 3, 2, 1].map((value) => (
                       <option key={value} value={value}>{value} Stars Rating</option>
@@ -582,43 +582,43 @@ export default function PlaceDetails() {
                   onChange={(e) => setReviewComment(e.target.value)}
                   rows="4"
                   placeholder={user ? "Share details about the crowd, food, or best time to visit..." : "Please login to share your travel tips."}
-                  className="w-full rounded-2xl border border-gray-200 bg-white px-6 py-4 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 transition shadow-sm text-lg"
+                  className="w-full rounded-2xl border border-[#E6D6C3] bg-white px-5 py-4 text-[#2C1E18] font-medium focus:border-[#B35D38] transition shadow-sm text-base"
                   disabled={!user || reviewLoading}
                 />
                 <button
                   type="submit"
                   disabled={!user || reviewLoading}
-                  className="w-full sm:w-auto rounded-full bg-indigo-600 px-10 py-4 text-sm font-black uppercase tracking-widest text-white shadow-xl shadow-indigo-100 hover:bg-indigo-700 hover:-translate-y-1 transition-all disabled:cursor-not-allowed disabled:opacity-60"
+                  className="w-full sm:w-auto rounded-xl bg-[#B35D38] hover:bg-[#964B2A] px-8 py-3.5 text-xs font-bold uppercase tracking-widest text-white shadow-md transition-all disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {reviewLoading ? "Posting Tip..." : "Post Review"}
                 </button>
               </form>
 
-              {reviewMessage && <p className="mt-4 text-sm font-bold text-indigo-600 animate-pulse">{reviewMessage}</p>}
+              {reviewMessage && <p className="mt-4 text-sm font-bold text-[#B35D38] animate-pulse">{reviewMessage}</p>}
 
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {reviews.length ? (
                   reviews.map((review) => (
-                    <div key={review._id || `${review.user?._id}-${review.rating}`} className="rounded-[2rem] bg-white p-6 border border-gray-100 shadow-sm transition-hover hover:shadow-md">
-                      <div className="flex items-center justify-between mb-4">
+                    <div key={review._id || `${review.user?._id}-${review.rating}`} className="rounded-2xl bg-[#FAF5EF] p-6 border border-[#E6D6C3] shadow-sm">
+                      <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-4">
-                          <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-lg font-black shadow-lg shadow-indigo-100 uppercase">
+                          <div className="h-11 w-11 rounded-xl bg-[#B35D38] flex items-center justify-center text-white text-base font-bold shadow-sm uppercase">
                             {(review.user?.fullName || "T")[0]}
                           </div>
                           <div>
-                            <div className="font-black text-gray-900 text-lg">{review.user?.fullName || "Traveler"}</div>
-                            <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">Verified Visit</div>
+                            <div className="font-bold text-[#2C1E18] text-base">{review.user?.fullName || "Traveler"}</div>
+                            <div className="text-[10px] text-[#A37B66] font-bold uppercase tracking-wider">Verified Visit</div>
                           </div>
                         </div>
-                        <div className="rounded-2xl bg-indigo-50 px-4 py-2 text-sm font-black text-indigo-600 border border-indigo-100">
+                        <div className="rounded-xl bg-[#FAF1EC] px-3.5 py-1.5 text-xs font-bold text-[#B35D38] border border-[#EBC5B2]">
                           {review.rating} ★
                         </div>
                       </div>
-                      {review.comment && <p className="text-gray-600 leading-relaxed text-lg">{review.comment}</p>}
+                      {review.comment && <p className="text-[#543C32] leading-relaxed text-sm font-medium">{review.comment}</p>}
                     </div>
                   ))
                 ) : (
-                  <div className="py-12 text-center text-gray-400 italic font-medium">
+                  <div className="py-10 text-center text-[#A37B66] italic font-medium">
                     Be the first to share your experience!
                   </div>
                 )}
@@ -627,19 +627,19 @@ export default function PlaceDetails() {
           </div>
 
           {/* Sticky Sidebar */}
-          <div className="lg:sticky lg:top-8 space-y-6">
-            <div className="rounded-[2.5rem] border border-white/70 bg-white/80 p-8 shadow-2xl backdrop-blur-xl">
+          <div className="lg:sticky lg:top-28 space-y-6">
+            <div className="rounded-3xl border border-[#E6D6C3] bg-white p-8 shadow-xl">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] font-black text-gray-400">Avg. Entry Fee</p>
-                  <p className="text-5xl font-black text-gray-900 mt-1">₹{place.ticketPrice || 0}</p>
+                  <p className="text-xs uppercase tracking-widest font-bold text-[#A37B66]">Avg. Entry Fee</p>
+                  <p className="text-4xl font-marcellus text-[#2C1E18] mt-1">₹{place.ticketPrice || 0}</p>
                 </div>
                 <button 
                   onClick={handleSaveTrip} 
-                  className={`rounded-2xl px-8 py-4 text-sm font-black uppercase tracking-widest shadow-2xl transition-all hover:-translate-y-1 ${
+                  className={`rounded-xl px-6 py-3.5 text-xs font-bold uppercase tracking-widest transition-all ${
                     saved 
-                      ? "bg-green-600 text-white shadow-green-100" 
-                      : "bg-gray-900 text-white shadow-gray-200"
+                      ? "bg-emerald-700 text-white shadow-md" 
+                      : "bg-[#2C1E18] hover:bg-[#3D2B23] text-white shadow-md"
                   }`}
                 >
                   {saved ? "In My Trips" : "Save Spot"}
@@ -649,24 +649,24 @@ export default function PlaceDetails() {
               <div className="mt-6">
                 <button
                   onClick={() => navigate('/transport', { state: { destination: place.name } })}
-                  className="w-full rounded-2xl bg-indigo-600 px-8 py-5 text-sm font-black uppercase tracking-[0.2em] text-white shadow-2xl shadow-indigo-100 transition-all hover:bg-indigo-700 hover:-translate-y-1 flex items-center justify-center gap-3 group"
+                  className="w-full rounded-2xl bg-[#B35D38] hover:bg-[#964B2A] px-8 py-4.5 text-sm font-bold uppercase tracking-[0.2em] text-white shadow-xl transition-all hover:-translate-y-0.5 flex items-center justify-center gap-3 group"
                 >
-                  <span className="text-xl group-hover:animate-bounce">🚀</span>
+                  <span className="text-lg">🚀</span>
                   Travel Now
                 </button>
               </div>
               
-              {saveMessage && <p className="mt-4 text-sm font-bold text-indigo-600">{saveMessage}</p>}
+              {saveMessage && <p className="mt-4 text-xs font-bold text-[#B35D38] text-center">{saveMessage}</p>}
               
-              <div className="mt-10 space-y-4">
+              <div className="mt-8 space-y-3.5">
                 {infoCard("Visiting Hours", place.timings)}
                 {infoCard("Best Time to Visit", place.bestVisitTime)}
                 {infoCard("Location", place.location)}
                 
-                <div className="pt-6 border-t border-gray-100">
-                  <div className="flex items-center gap-3">
-                    <div className={`h-3 w-3 rounded-full animate-pulse ${user ? 'bg-green-500' : 'bg-gray-300'}`} />
-                    <span className="text-sm font-bold text-gray-500 uppercase tracking-widest">
+                <div className="pt-4 border-t border-[#F3E8DB]">
+                  <div className="flex items-center gap-2.5">
+                    <div className={`h-2.5 w-2.5 rounded-full ${user ? 'bg-emerald-600' : 'bg-gray-400'}`} />
+                    <span className="text-xs font-bold text-[#A37B66] uppercase tracking-widest">
                       {user ? `Trip for ${(user.name || 'Traveler').split(' ')[0]}` : 'Guest Access'}
                     </span>
                   </div>
@@ -674,25 +674,28 @@ export default function PlaceDetails() {
               </div>
             </div>
 
-            {/* AI Helper / CTA */}
-            <div className="group rounded-[2.5rem] bg-indigo-600 p-8 text-white shadow-2xl shadow-indigo-200 overflow-hidden relative">
+            {/* Helper CTA */}
+            <div className="rounded-3xl bg-[#2C1E18] p-8 text-[#FAF5EF] shadow-xl border border-[#3D2B23] relative overflow-hidden">
               <div className="relative z-10">
-                <h3 className="text-2xl font-black tracking-tight">Need a custom plan?</h3>
-                <p className="mt-3 text-indigo-100 text-lg leading-relaxed opacity-90">
+                <h3 className="text-2xl font-marcellus text-white">Need a custom plan?</h3>
+                <p className="mt-3 text-[#E6D6C3] text-sm leading-relaxed font-medium">
                   Save this place to your profile and we'll help you build an optimized route with real-time crowd alerts.
                 </p>
                 {!user ? (
-                  <Link to="/login" className="mt-6 inline-block rounded-2xl bg-white px-8 py-4 text-sm font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-50 transition-all shadow-xl">
+                  <Link to="/login" className="mt-6 inline-block rounded-xl bg-[#B35D38] hover:bg-[#964B2A] px-6 py-3 text-xs font-bold uppercase tracking-widest text-white transition-all shadow-md">
                     Get Started
                   </Link>
                 ) : (
-                  <div className="mt-6 flex items-center gap-2 text-sm font-bold text-indigo-200 bg-indigo-700/50 w-fit px-4 py-2 rounded-xl">
+                  <div className="mt-6 flex items-center gap-2 text-xs font-bold text-[#D98A5B] bg-[#3D2B23] w-fit px-4 py-2 rounded-xl border border-[#543C32]">
                     ✨ Smart Trip Enabled
                   </div>
                 )}
               </div>
-              <div className="absolute -right-10 -bottom-10 h-48 w-48 rounded-full bg-white/10 blur-2xl transition-all group-hover:scale-110" />
-              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-white/5 blur-xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
             </div>
           </div>
         </div>

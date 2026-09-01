@@ -184,21 +184,22 @@ export default function TransportSearch() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.14),_transparent_36%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-10">
+  return (
+    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative z-[50] mb-8 rounded-3xl border border-white/70 bg-white/75 p-6 shadow-xl backdrop-blur">
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-600">Smart Transport Assistant</p>
-          <h1 className="mt-2 text-4xl font-black text-gray-900">Jaipur metro, auto, cab, bus and shared ride comparison</h1>
-          <p className="mt-3 max-w-2xl text-gray-600">Search a source and destination to see realistic fares, travel times, metro routing and recommendation badges.</p>
+        <div className="relative z-[50] mb-10 rounded-3xl border border-[#E6D6C3] bg-white p-8 shadow-xl">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#B35D38]">Smart Urban Assistant</p>
+          <h1 className="mt-2 text-4xl sm:text-5xl font-marcellus text-[#2C1E18]">Jaipur Transit Comparison</h1>
+          <p className="mt-3 max-w-2xl text-[#543C32] font-medium">Search any source and destination to compare realistic fares, live metro connections, bus routes, and book verified cabs & autos.</p>
 
-          <form onSubmit={handleSearch} className="mt-6 grid gap-3 lg:grid-cols-[1.1fr_1.1fr_0.7fr]">
-            <input value={source} onChange={(e) => setSource(e.target.value)} onFocus={() => { setSuggestionsVisible(true); setActiveField("source"); }} placeholder="Source e.g. Jaipur Railway Station" className="rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm outline-none focus:border-blue-500" />
-            <input value={destination} onChange={(e) => setDestination(e.target.value)} onFocus={() => { setSuggestionsVisible(true); setActiveField("destination"); }} placeholder="Destination e.g. Badi Chaupar" className="rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-sm outline-none focus:border-blue-500" />
-            <button type="submit" className="rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 font-semibold text-white">{loading ? 'Searching...' : 'Find route'}</button>
+          <form onSubmit={handleSearch} className="mt-8 grid gap-4 lg:grid-cols-[1.2fr_1.2fr_0.8fr]">
+            <input value={source} onChange={(e) => setSource(e.target.value)} onFocus={() => { setSuggestionsVisible(true); setActiveField("source"); }} placeholder="Source e.g. Jaipur Railway Station" className="rounded-2xl border border-[#E6D6C3] bg-[#FAF5EF] px-5 py-4 text-[#2C1E18] font-medium shadow-sm outline-none focus:border-[#B35D38]" />
+            <input value={destination} onChange={(e) => setDestination(e.target.value)} onFocus={() => { setSuggestionsVisible(true); setActiveField("destination"); }} placeholder="Destination e.g. Badi Chaupar" className="rounded-2xl border border-[#E6D6C3] bg-[#FAF5EF] px-5 py-4 text-[#2C1E18] font-medium shadow-sm outline-none focus:border-[#B35D38]" />
+            <button type="submit" className="rounded-2xl bg-[#B35D38] hover:bg-[#964B2A] px-6 py-4 font-bold text-white shadow-md transition flex items-center justify-center">{loading ? 'Searching...' : 'Find Route →'}</button>
           </form>
 
           {suggestionsVisible && suggestions.length > 0 && (
-            <div className="absolute z-[100] mt-2 max-w-xl w-full bg-white shadow-2xl rounded-2xl border border-gray-100 p-2 flex flex-col gap-1 max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200">
+            <div className="absolute z-[100] mt-2 max-w-xl w-full bg-white shadow-2xl rounded-2xl border border-[#E6D6C3] p-2 flex flex-col gap-1 max-h-[320px] overflow-y-auto">
               {suggestions.map((location) => (
                 <button
                   key={location.id}
@@ -211,25 +212,25 @@ export default function TransportSearch() {
                     }
                     setSuggestionsVisible(false);
                   }}
-                  className="flex justify-between items-center text-left hover:bg-indigo-50 px-4 py-3 rounded-xl transition group"
+                  className="flex justify-between items-center text-left hover:bg-[#FAF1EC] px-4 py-3 rounded-xl transition group"
                 >
                   <div>
-                    <div className="font-semibold text-gray-800 group-hover:text-indigo-700">{location.name}</div>
-                    <div className="text-xs text-gray-500">{location.subtitle}</div>
+                    <div className="font-bold text-[#2C1E18] group-hover:text-[#B35D38]">{location.name}</div>
+                    <div className="text-xs text-[#A37B66] font-medium">{location.subtitle}</div>
                   </div>
                   <div className="flex flex-col items-end gap-1">
                     {location.kind === 'place' && (
-                       <span className="text-[9px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                       <span className="text-[9px] bg-[#FAF1EC] text-[#B35D38] border border-[#EBC5B2] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
                          {location.subtitle === 'Area' ? 'Neighborhood' : 'Tourist Spot'}
                        </span>
                     )}
                     {location.kind === 'bus' && (
-                       <span className="text-[9px] bg-sky-100 text-sky-700 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                       <span className="text-[9px] bg-[#FAF5EF] text-[#793A1F] border border-[#E6D6C3] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
                          Bus Stop
                        </span>
                     )}
                     {location.nearest && (
-                      <span className="text-[10px] bg-pink-100 text-pink-700 px-2 py-1 rounded-full whitespace-nowrap font-bold">
+                      <span className="text-[10px] bg-[#FAF1EC] text-[#B35D38] px-2 py-1 rounded-full whitespace-nowrap font-bold">
                         🚇 Near {location.nearest}
                       </span>
                     )}
@@ -239,13 +240,13 @@ export default function TransportSearch() {
             </div>
           )}
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Popular Areas:</span>
+          <div className="mt-6 flex flex-wrap items-center gap-2.5">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#A37B66]">Popular Areas:</span>
             {jaipurPlaces.filter(p => p.category === 'Area' || p.category === 'Market').slice(0, 8).map(area => (
               <button 
                 key={area.id}
                 onClick={() => setSource(area.name)}
-                className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-400 hover:text-blue-600 shadow-sm"
+                className="rounded-xl border border-[#E6D6C3] bg-[#FAF5EF] px-3.5 py-1.5 text-xs font-bold text-[#793A1F] transition hover:bg-[#F3E8DB] shadow-sm"
               >
                 📍 {area.name}
               </button>
@@ -254,7 +255,7 @@ export default function TransportSearch() {
               <button 
                 key={bus.id}
                 onClick={() => setSource(bus.name)}
-                className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:border-blue-400 hover:text-blue-600 shadow-sm"
+                className="rounded-xl border border-[#E6D6C3] bg-[#FAF5EF] px-3.5 py-1.5 text-xs font-bold text-[#793A1F] transition hover:bg-[#F3E8DB] shadow-sm"
               >
                 🚌 {bus.name}
               </button>
@@ -262,7 +263,7 @@ export default function TransportSearch() {
           </div>
         </div>
 
-        {error && <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">{error}</div>}
+        {error && <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-red-700 font-bold">{error}</div>}
 
         {loading ? (
           <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
