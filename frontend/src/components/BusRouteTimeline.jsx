@@ -3,35 +3,37 @@ import React from "react";
 export default function BusRouteTimeline({ busRoute }) {
   if (!busRoute) return null;
 
-  const renderRoute = (route, title, sourceStop, destStop) => {
-    if (!route || !route.stops) return null;
-    
-    // Find relevant stops in the sequence
-    const stops = route.stops;
-    const startIndex = stops.indexOf(sourceStop);
-    const endIndex = stops.indexOf(destStop);
-    
-    let relevantStops = [];
-    if (startIndex !== -1 && endIndex !== -1) {
-        relevantStops = startIndex <= endIndex 
-            ? stops.slice(startIndex, endIndex + 1)
-            : stops.slice(endIndex, startIndex + 1).reverse();
-    } else {
-        relevantStops = stops;
-    }
+  const renderLeg = (legInfo, stepTitle, fromStop, toStop) => {
+    if (!legInfo) return null;
+    const rNo = legInfo.routeNumber || legInfo.routeNo || legInfo.route?.routeNumber || 'Bus';
+    const rName = legInfo.routeName || legInfo.name || legInfo.route?.routeName || '';
+    const stopsPassed = legInfo.stopsPassed || legInfo.stops || [fromStop || legInfo.boardStop, toStop || legInfo.alightStop];
 
     return (
-      <div className="mt-4">
-        <h4 className="text-sm font-bold text-gray-700 mb-3">{title}</h4>
-        <div className="space-y-3">
-          {relevantStops.map((stop, index) => (
+      <div className="mt-4 bg-[#FAF5EF] p-5 rounded-2xl border border-[#E6D6C3]">
+        <div className="flex items-center justify-between border-b border-[#E6D6C3] pb-3 mb-4">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#B35D38] bg-[#FAF1EC] px-2.5 py-1 rounded-full border border-[#EBC5B2]">
+              {stepTitle}
+            </span>
+            <h4 className="text-base font-bold text-[#2C1E18] mt-1">Bus Route {rNo} ({rName})</h4>
+          </div>
+          <div className="text-xs font-bold text-[#793A1F]">
+            {legInfo.stopsCount || stopsPassed.length} Stops
+          </div>
+        </div>
+
+        <div className="space-y-3 pl-2">
+          {stopsPassed.map((stop, index) => (
             <div key={`${stop}-${index}`} className="flex items-start gap-3 group">
               <div className="mt-1 flex flex-col items-center">
-                <div className={`h-3 w-3 rounded-full transition-all duration-300 group-hover:scale-125 ${index === 0 ? "bg-sky-600 ring-4 ring-sky-100" : index === relevantStops.length - 1 ? "bg-sky-500 ring-4 ring-pink-100" : "bg-gray-300"}`} />
-                {index < relevantStops.length - 1 && <div className="h-10 w-0.5 bg-gradient-to-b from-sky-200 via-gray-200 to-sky-100" />}
+                <div className={`h-3 w-3 rounded-full transition-all duration-300 group-hover:scale-125 ${index === 0 ? "bg-[#B35D38] ring-4 ring-[#FAF1EC]" : index === stopsPassed.length - 1 ? "bg-[#2C1E18] ring-4 ring-[#E6D6C3]" : "bg-[#D98A5B]"}`} />
+                {index < stopsPassed.length - 1 && <div className="h-8 w-0.5 bg-[#E6D6C3]" />}
               </div>
-              <div className="pb-2">
-                <div className="font-bold text-gray-900 text-sm">{stop}</div>
+              <div className="pb-1">
+                <div className="font-bold text-[#2C1E18] text-xs sm:text-sm">{stop}</div>
+                {index === 0 && <span className="text-[10px] font-bold text-[#B35D38]">BOARD HERE</span>}
+                {index === stopsPassed.length - 1 && <span className="text-[10px] font-bold text-[#2C1E18]">ALIGHT HERE</span>}
               </div>
             </div>
           ))}
@@ -41,17 +43,57 @@ export default function BusRouteTimeline({ busRoute }) {
   };
 
   return (
-    <div className="rounded-3xl border border-white/70 bg-white/80 p-5 shadow-xl backdrop-blur">
-      <h3 className="text-lg font-bold text-gray-900">Bus route timeline</h3>
-      {busRoute.type === 'direct' ? (
-        renderRoute(busRoute.route, `Route ${busRoute.route.routeNumber}`, busRoute.sourceStop, busRoute.destStop)
-      ) : (
+    <div className="rounded-3xl border border-[#E6D6C3] bg-white p-6 shadow-xl">
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <h3 className="text-xl font-marcellus text-[#2C1E18]">City Bus Route Journey</h3>
+          <p className="text-xs text-[#543C32] font-medium mt-0.5">
+            {busRoute.transfers === 0 
+              ? 'Direct Route — No Bus Change Required' 
+              : `${busRoute.transfers} Bus Transfer${busRoute.transfers > 1 ? 's' : ''} Required`}
+          </p>
+        </div>
+        <div className="text-right">
+          <span className="rounded-xl bg-[#FAF1EC] border border-[#EBC5B2] px-3.5 py-1.5 text-xs font-bold text-[#B35D38]">
+            Est. ₹{busRoute.fare || 15} Total
+          </span>
+        </div>
+      </div>
+
+      {/* Direct Route */}
+      {(!busRoute.transfers || busRoute.transfers === 0 || busRoute.type === 'direct') && (
+        renderLeg(busRoute.route || busRoute, "Direct Bus", busRoute.sourceStop, busRoute.destStop)
+      )}
+
+      {/* 1 Transfer (2 Buses) */}
+      {busRoute.transfers === 1 && (
         <>
-          {renderRoute(busRoute.route1, `Step 1: Route ${busRoute.route1.routeNumber}`, busRoute.sourceStop, busRoute.transferStop)}
-          <div className="my-4 border-t border-dashed border-gray-300 pt-4">
-            <div className="text-xs font-black text-amber-600 uppercase tracking-widest">Transfer at {busRoute.transferStop}</div>
+          {renderLeg(busRoute.route1, "Step 1: First Bus", busRoute.sourceStop, busRoute.transferStop)}
+          <div className="my-4 border-t-2 border-dashed border-[#B35D38]/40 pt-4 text-center">
+            <span className="inline-block bg-[#2C1E18] text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-xl shadow-sm">
+              🔄 Change Bus at {busRoute.transferStop}
+            </span>
           </div>
-          {renderRoute(busRoute.route2, `Step 2: Route ${busRoute.route2.routeNumber}`, busRoute.transferStop, busRoute.destStop)}
+          {renderLeg(busRoute.route2, "Step 2: Second Bus", busRoute.transferStop, busRoute.destStop)}
+        </>
+      )}
+
+      {/* 2 Transfers (3 Buses) */}
+      {busRoute.transfers === 2 && (
+        <>
+          {renderLeg(busRoute.route1, "Step 1: First Bus", busRoute.sourceStop, busRoute.transferStop1)}
+          <div className="my-4 border-t-2 border-dashed border-[#B35D38]/40 pt-4 text-center">
+            <span className="inline-block bg-[#2C1E18] text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-xl shadow-sm">
+              🔄 1st Transfer at {busRoute.transferStop1}
+            </span>
+          </div>
+          {renderLeg(busRoute.route2, "Step 2: Second Bus", busRoute.transferStop1, busRoute.transferStop2)}
+          <div className="my-4 border-t-2 border-dashed border-[#B35D38]/40 pt-4 text-center">
+            <span className="inline-block bg-[#2C1E18] text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-xl shadow-sm">
+              🔄 2nd Transfer at {busRoute.transferStop2}
+            </span>
+          </div>
+          {renderLeg(busRoute.route3, "Step 3: Third Bus", busRoute.transferStop2, busRoute.destStop)}
         </>
       )}
     </div>

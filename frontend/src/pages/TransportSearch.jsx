@@ -8,6 +8,7 @@ import TransportCard from "../components/TransportCard";
 import RouteTimeline from "../components/RouteTimeline";
 import BusRouteTimeline from "../components/BusRouteTimeline";
 import TransportRouteMap from "../components/TransportRouteMap";
+import { findMultiHopBusRoute } from "../data/jaipurBusData";
 
 class MapErrorBoundary extends React.Component {
   constructor(props) {
@@ -141,7 +142,9 @@ export default function TransportSearch() {
         throw new Error("Invalid response from server");
       }
     } catch (err) {
-      console.warn("API unavailable, using local transit calculator:", err);
+      console.warn("API unavailable, using local multi-hop transit calculator:", err);
+      const multiHopBus = findMultiHopBusRoute(finalSource, finalDest);
+
       const localResult = {
         route: { distanceKm: 7.4 },
         currentTime: new Date().toISOString(),
@@ -154,17 +157,24 @@ export default function TransportSearch() {
           waitingTimeMinutes: 4,
           nextTrainMinutes: 4
         },
-        busRoute: {
-          busNumber: "Direct Route 12",
-          boardStopName: finalSource,
-          alightStopName: finalDest,
-          fare: 10,
-          travelTimeMinutes: 25,
-          nextBusTimeMinutes: 6
+        busRoute: multiHopBus || {
+          type: 'direct',
+          transfers: 0,
+          busNumber: "AC 1",
+          sourceStop: finalSource,
+          destStop: finalDest,
+          fare: 15,
+          time: 20
         },
         recommendations: [
           { mode: "Metro", fare: 20, time: "18 mins", badge: "best", note: "Fastest & direct connection" },
-          { mode: "Bus", fare: 10, time: "25 mins", badge: "cheapest", note: "AC Low Floor Bus route" },
+          { 
+            mode: "Bus", 
+            fare: multiHopBus?.fare || 15, 
+            time: `${multiHopBus?.time || 22} mins`, 
+            badge: "cheapest", 
+            note: multiHopBus?.transfers === 0 ? "Direct JCTSL City Bus" : `${multiHopBus?.transfers || 1} Bus Transfer Required` 
+          },
           { mode: "Auto", fare: 80, time: "20 mins", badge: "default", note: "Direct doorstep pickup" },
           { mode: "Cab", fare: 150, time: "16 mins", badge: "fastest", note: "Verified local driver" }
         ],
