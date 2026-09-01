@@ -4,6 +4,7 @@ import { addPlaceReviewApi, deleteSavedTripApi, getPlaceByIdApi, getSavedTripsAp
 import ImageCarousel from "../components/ImageCarousel";
 import { AuthContext } from "../context/AuthContext";
 import ExperienceCard from "../components/ExperienceCard";
+import { fallbackPlaces } from "../data/fallbackPlaces";
 
 const infoCard = (title, value) => (
   <div className="rounded-2xl border border-white/60 bg-white/80 p-4 shadow-lg backdrop-blur">
