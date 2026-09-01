@@ -395,10 +395,13 @@ export default function TransportSearch() {
                   <div><span className="font-semibold text-gray-900">Est. Time:</span> {result.busRoute.time || 0} mins</div>
                   <div><span className="font-semibold text-gray-900">Wait time:</span> {result.busRoute?.waitingTimeMinutes || 0} mins</div>
                   <div><span className="font-semibold text-gray-900 text-sky-600">Next bus at:</span> {result.busRoute?.nextDepartureTime ? new Date(result.busRoute.nextDepartureTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "--"}</div>
-                  <div className="col-span-2">                    <span className="font-semibold text-gray-900">Route info:</span> {
-                      result.busRoute.type === 'direct' 
+                  <div className="col-span-2">
+                    <span className="font-semibold text-gray-900">Route info:</span> {
+                      result.busRoute?.route
                       ? `Direct Route ${result.busRoute.route.routeNumber} (${result.busRoute.route.routeName})`
-                      : `Take ${result.busRoute.route1.routeNumber} and transfer to ${result.busRoute.route2.routeNumber} at ${result.busRoute.transferStop}`
+                      : result.busRoute?.route1
+                      ? `Take ${result.busRoute.route1.routeNumber} and transfer to ${result.busRoute.route2?.routeNumber || ''} at ${result.busRoute.transferStop}`
+                      : `${result.busRoute?.busNumber || 'Direct Route 12'} (${result.busRoute?.boardStopName || source} to ${result.busRoute?.alightStopName || destination})`
                     }
                   </div>
                 </div>
