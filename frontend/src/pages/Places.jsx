@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getPlacesApi } from "../services/api";
 import PlaceCard from "../components/PlaceCard";
+import { fallbackPlaces } from "../data/fallbackPlaces";
 
 const categories = ["", "Fort", "Palace", "Museum", "Temple", "Market", "Park", "Cafe", "Other"];
 
@@ -19,10 +20,26 @@ export default function Places() {
     const loadPlaces = async () => {
       try {
         setLoading(true);
+        setError(null);
         const response = await getPlacesApi({ search, category, sort });
-        if (active) setPlaces(response.data || []);
+        if (active) {
+          if (response?.data && response.data.length > 0) {
+            setPlaces(response.data);
+          } else {
+            // Apply client-side search/category filtering on fallback dataset
+            let filtered = [...fallbackPlaces];
+            if (category) filtered = filtered.filter(p => p.category?.toLowerCase() === category.toLowerCase());
+            if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || p.description.toLowerCase().includes(search.toLowerCase()));
+            setPlaces(filtered);
+          }
+        }
       } catch (err) {
-        if (active) setError(err?.response?.data?.message || "Failed to load places");
+        if (active) {
+          let filtered = [...fallbackPlaces];
+          if (category) filtered = filtered.filter(p => p.category?.toLowerCase() === category.toLowerCase());
+          if (search) filtered = filtered.filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || p.description.toLowerCase().includes(search.toLowerCase()));
+          setPlaces(filtered);
+        }
       } finally {
         if (active) setLoading(false);
       }

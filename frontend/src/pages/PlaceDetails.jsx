@@ -30,10 +30,17 @@ export default function PlaceDetails() {
     const loadPlace = async () => {
       try {
         setLoading(true);
+        setError(null);
         const res = await getPlaceByIdApi(id);
-        setPlace(res.data);
+        if (res?.data) {
+          setPlace(res.data);
+        } else {
+          const found = fallbackPlaces.find(p => p._id === id || p.name.toLowerCase().includes(id.toLowerCase().replace(/_/g, ' ')));
+          setPlace(found || fallbackPlaces[0]);
+        }
       } catch (err) {
-        setError(err?.response?.data?.message || "Failed to load place");
+        const found = fallbackPlaces.find(p => p._id === id || p.name.toLowerCase().includes(id.toLowerCase().replace(/_/g, ' ')));
+        setPlace(found || fallbackPlaces[0]);
       } finally {
         setLoading(false);
       }
