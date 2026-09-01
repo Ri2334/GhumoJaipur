@@ -119,18 +119,20 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-12 px-4 flex items-center justify-center">
-      <div className="w-full max-w-xl bg-white/90 backdrop-blur-xl border border-white/70 rounded-[2.5rem] shadow-2xl shadow-indigo-100/50 overflow-hidden">
+    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-12 px-4 flex items-center justify-center">
+      <div className="w-full max-w-xl bg-white border border-[#E6D6C3] rounded-[2.5rem] shadow-2xl overflow-hidden">
         
         {/* Compact Header Branding */}
-        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 p-8 text-center text-white relative overflow-hidden">
-           <div className="relative z-10">
-              <h2 className="text-3xl font-black tracking-tight mb-2">Create Account</h2>
-              <p className="text-indigo-100 text-sm font-medium">Join Sheher Saathi to start your adventure.</p>
+        <div className="bg-[#2C1E18] p-8 text-center text-[#FAF5EF] relative overflow-hidden border-b border-[#3D2B23]">
+           <div className="relative z-10 flex flex-col items-center">
+              <div className="w-16 h-16 rounded-2xl bg-[#FAF5EF] p-1 shadow-md border border-[#E6D6C3] mb-4 flex items-center justify-center overflow-hidden">
+                <img src="/logo.png" alt="Sheher Saathi Logo" className="w-full h-full object-contain" />
+              </div>
+              <h2 className="text-3xl font-marcellus mb-1">Create Account</h2>
+              <p className="text-[#D98A5B] text-xs font-bold uppercase tracking-[0.2em]">Har Sheher, Apna Sa.</p>
            </div>
            {/* Abstract patterns */}
-           <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
-           <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-400/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-xl"></div>
+           <div className="absolute top-0 right-0 w-48 h-48 bg-[#B35D38]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
         </div>
 
         <div className="p-8 md:p-10">
@@ -150,7 +152,7 @@ export default function Signup() {
                   <button
                     type="button"
                     onClick={() => setRole('user')}
-                    className={`flex items-center justify-center gap-3 p-4 rounded-2xl border-2 transition-all ${role === 'user' ? 'border-indigo-600 bg-indigo-50 text-indigo-700 shadow-md' : 'border-gray-100 bg-gray-50 text-gray-400'}`}
+                    className={`flex items-center justify-center gap-3 p-4 rounded-2xl border-2 transition-all ${role === 'user' ? 'border-[#B35D38] bg-[#FAF1EC] text-[#B35D38] shadow-md font-bold' : 'border-[#E6D6C3] bg-[#FAF5EF] text-[#793A1F]'}`}
                   >
                     <FaUser size={16} />
                     <span className="font-bold">Passenger</span>
@@ -158,7 +160,7 @@ export default function Signup() {
                   <button
                     type="button"
                     onClick={() => setRole('driver')}
-                    className={`flex items-center justify-center gap-3 p-4 rounded-2xl border-2 transition-all ${role === 'driver' ? 'border-indigo-600 bg-indigo-50 text-indigo-700 shadow-md' : 'border-gray-100 bg-gray-50 text-gray-400'}`}
+                    className={`flex items-center justify-center gap-3 p-4 rounded-2xl border-2 transition-all ${role === 'driver' ? 'border-[#B35D38] bg-[#FAF1EC] text-[#B35D38] shadow-md font-bold' : 'border-[#E6D6C3] bg-[#FAF5EF] text-[#793A1F]'}`}
                   >
                     <FaTaxi size={16} />
                     <span className="font-bold">Driver</span>
@@ -207,13 +209,13 @@ export default function Signup() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-pink-500 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-100 hover:shadow-indigo-200 transition-all hover:-translate-y-0.5 disabled:opacity-70 flex items-center justify-center gap-3"
+                  className="w-full bg-[#B35D38] hover:bg-[#964B2A] text-white py-4.5 rounded-2xl font-bold uppercase tracking-[0.2em] shadow-lg transition-all hover:-translate-y-0.5 disabled:opacity-70 flex items-center justify-center gap-3"
                 >
                   {sending ? "Processing..." : "Continue to Verification"}
                   {!sending && <FaArrowRight size={14} />}
                 </button>
-                <p className="text-center mt-6 text-sm font-bold text-gray-400">
-                  Already have an account? <Link to="/login" className="text-indigo-600 hover:underline">Login</Link>
+                <p className="text-center mt-6 text-sm font-semibold text-[#543C32]">
+                  Already have an account? <Link to="/login" className="text-[#B35D38] font-bold hover:underline">Login</Link>
                 </p>
               </div>
             </form>
@@ -236,7 +238,7 @@ export default function Signup() {
                 <button
                   onClick={handleVerifyAndSignup}
                   disabled={sending || otp.length < 6}
-                  className="w-full bg-indigo-600 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-200 hover:bg-indigo-700 transition-all disabled:opacity-50"
+                  className="w-full bg-[#B35D38] text-white py-4.5 rounded-2xl font-bold uppercase tracking-[0.2em] shadow-lg hover:bg-[#964B2A] transition-all disabled:opacity-50"
                 >
                   {sending ? "Verifying..." : "Verify & Create Account"}
                 </button>
@@ -244,14 +246,14 @@ export default function Signup() {
                 <button
                   onClick={handleSendOTP}
                   disabled={sending || cooldown > 0}
-                  className="w-full bg-gray-50 text-gray-500 py-5 rounded-2xl font-bold transition hover:bg-gray-100 disabled:opacity-50"
+                  className="w-full bg-[#FAF5EF] text-[#793A1F] py-4 rounded-2xl font-bold transition hover:bg-[#F3E8DB] disabled:opacity-50"
                 >
                   {cooldown > 0 ? `Resend code in ${cooldown}s` : "Didn't receive code? Resend"}
                 </button>
 
                 <button
                   onClick={() => setStage('form')}
-                  className="w-full text-center text-sm font-bold text-indigo-600 hover:underline"
+                  className="w-full text-center text-sm font-bold text-[#B35D38] hover:underline"
                 >
                   Go back and edit details
                 </button>

@@ -9,32 +9,58 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #FAF5EF;
+  color: #2C1E18;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.font-marcellus {
+  font-family: 'Marcellus', Georgia, serif;
 }
 
-/* Dashboard polish: subtle glass shine and timeline animation */
-@keyframes pulse-glow {
-  0% { box-shadow: 0 0 0px rgba(99,102,241,0.06); }
-  50% { box-shadow: 0 6px 30px rgba(99,102,241,0.10); }
-  100% { box-shadow: 0 0 0px rgba(99,102,241,0.06); }
+/* Custom scrollbars in warm terracotta theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.glass-hero { animation: pulse-glow 4s ease-in-out infinite; }
+::-webkit-scrollbar-track {
+  background: #F3E8DB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D37B55;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B35D38;
+}
+
+/* Glassmorphism & glow in warm terracotta */
+@keyframes pulse-terracotta {
+  0% { box-shadow: 0 0 0px rgba(179,93,56,0.06); }
+  50% { box-shadow: 0 8px 30px rgba(179,93,56,0.15); }
+  100% { box-shadow: 0 0 0px rgba(179,93,56,0.06); }
+}
+
+.glass-terracotta {
+  background: rgba(255, 253, 249, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(243, 232, 219, 0.8);
+}
+
+.glow-card {
+  animation: pulse-terracotta 4s ease-in-out infinite;
+}
 
 .metro-dot { transition: transform 220ms ease, background-color 220ms ease; }
-.metro-dot.active { transform: scale(1.15); background-color: #7c3aed; }
+.metro-dot.active { transform: scale(1.15); background-color: #B35D38; }
 
 .skeleton {
-  background: linear-gradient(90deg, #f3f4f6 25%, #e6eefc 37%, #f3f4f6 63%);
+  background: linear-gradient(90deg, #F3E8DB 25%, #FAF1EC 37%, #F3E8DB 63%);
   background-size: 400% 100%;
   animation: shimmer 1.4s ease infinite;
 }

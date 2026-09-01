@@ -25,18 +25,20 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.12),_transparent_35%),linear-gradient(180deg,_#f8fbff_0%,_#eef2ff_100%)] py-12 px-4 flex items-center justify-center">
-      <div className="w-full max-w-md bg-white/90 backdrop-blur-xl border border-white/70 rounded-[2.5rem] shadow-2xl shadow-indigo-100/50 overflow-hidden">
+    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-12 px-4 flex items-center justify-center">
+      <div className="w-full max-w-md bg-white border border-[#E6D6C3] rounded-[2.5rem] shadow-2xl overflow-hidden">
         
         {/* Header Branding */}
-        <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 p-8 text-center text-white relative overflow-hidden">
-           <div className="relative z-10">
-              <h2 className="text-3xl font-black tracking-tight mb-2">Welcome Back!</h2>
-              <p className="text-indigo-100 text-sm font-medium">Sign in to continue your journey.</p>
+        <div className="bg-[#2C1E18] p-8 text-center text-[#FAF5EF] relative overflow-hidden border-b border-[#3D2B23]">
+           <div className="relative z-10 flex flex-col items-center">
+              <div className="w-16 h-16 rounded-2xl bg-[#FAF5EF] p-1 shadow-md border border-[#E6D6C3] mb-4 flex items-center justify-center overflow-hidden">
+                <img src="/logo.png" alt="Sheher Saathi Logo" className="w-full h-full object-contain" />
+              </div>
+              <h2 className="text-3xl font-marcellus mb-1">Welcome Back</h2>
+              <p className="text-[#D98A5B] text-xs font-bold uppercase tracking-[0.2em]">Har Sheher, Apna Sa.</p>
            </div>
            {/* Abstract patterns */}
-           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
-           <div className="absolute bottom-0 left-0 w-24 h-24 bg-indigo-400/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-xl"></div>
+           <div className="absolute top-0 right-0 w-32 h-32 bg-[#B35D38]/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
         </div>
 
         <div className="p-8 md:p-10">
@@ -48,9 +50,9 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-1.5">
-              <label className="block text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+              <label className="block text-xs font-bold uppercase tracking-widest text-[#793A1F] ml-1">Email Address</label>
               <div className="relative group">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A37B66] group-focus-within:text-[#B35D38] transition-colors">
                   <FaEnvelope size={18} />
                 </div>
                 <input
@@ -58,24 +60,24 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="john@example.com"
-                  className="w-full bg-gray-50 border-2 border-gray-100 group-focus-within:border-indigo-600 rounded-2xl py-4 pl-12 pr-4 text-gray-900 font-medium transition-all outline-none"
+                  className="w-full bg-[#FAF5EF] border-2 border-[#E6D6C3] group-focus-within:border-[#B35D38] rounded-2xl py-4 pl-12 pr-4 text-[#2C1E18] font-medium transition-all outline-none"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
               <div className="flex items-center justify-between px-1">
-                <label className="block text-xs font-black uppercase tracking-widest text-gray-400">Password</label>
+                <label className="block text-xs font-bold uppercase tracking-widest text-[#793A1F]">Password</label>
                 <button 
                   type="button" 
                   onClick={() => navigate('/forgot-password')}
-                  className="text-[10px] font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-700 transition"
+                  className="text-[10px] font-bold uppercase tracking-widest text-[#B35D38] hover:text-[#964B2A] transition"
                 >
                   Forgot?
                 </button>
               </div>
               <div className="relative group">
-                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-indigo-600 transition-colors">
+                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A37B66] group-focus-within:text-[#B35D38] transition-colors">
                   <FaLock size={18} />
                 </div>
                 <input
@@ -83,12 +85,12 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full bg-gray-50 border-2 border-gray-100 group-focus-within:border-indigo-600 rounded-2xl py-4 pl-12 pr-12 text-gray-900 font-medium transition-all outline-none"
+                  className="w-full bg-[#FAF5EF] border-2 border-[#E6D6C3] group-focus-within:border-[#B35D38] rounded-2xl py-4 pl-12 pr-12 text-[#2C1E18] font-medium transition-all outline-none"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-indigo-600 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A37B66] hover:text-[#B35D38] transition-colors"
                 >
                   {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
                 </button>
@@ -99,15 +101,15 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] shadow-xl shadow-indigo-100 hover:shadow-indigo-200 transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:translate-y-0 flex items-center justify-center gap-3"
+                className="w-full bg-[#B35D38] hover:bg-[#964B2A] text-white py-4.5 rounded-2xl font-bold uppercase tracking-[0.2em] shadow-lg transition-all hover:-translate-y-0.5 disabled:opacity-70 flex items-center justify-center gap-3"
               >
                 {loading ? "Signing in..." : "Login"}
                 {!loading && <FaArrowRight size={14} />}
               </button>
               
               <div className="mt-8 text-center">
-                <p className="text-sm font-bold text-gray-400">
-                  Don't have an account? <Link to="/signup" className="text-indigo-600 hover:underline">Sign up now</Link>
+                <p className="text-sm font-semibold text-[#543C32]">
+                  Don't have an account? <Link to="/signup" className="text-[#B35D38] font-bold hover:underline">Sign up now</Link>
                 </p>
               </div>
             </div>
