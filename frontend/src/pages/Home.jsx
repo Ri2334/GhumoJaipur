@@ -17,7 +17,7 @@ export default function Home() {
       status: "active",
       badge: "LIVE NOW 🟢",
       desc: "Full smart transport, metro integration, verified drivers & heritage guides active.",
-      image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80",
+      image: "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/hawamahal_owadja.jpg",
       placesCount: "25+ Places",
       transportTypes: "Bus • Metro • Auto • Cab"
     },
@@ -39,7 +39,7 @@ export default function Home() {
       status: "coming_soon",
       badge: "COMING SOON ⏳",
       desc: "Lakeside rides & palace trails. Launching late 2026.",
-      image: "https://images.unsplash.com/photo-1615836245337-f5b9b2303f1c?auto=format&fit=crop&w=800&q=80",
+      image: "https://images.unsplash.com/photo-1595658658421-a974c0f5efbd?auto=format&fit=crop&w=800&q=80",
       placesCount: "18+ Planned",
       transportTypes: "Boat • Auto • Cab"
     },
@@ -61,7 +61,7 @@ export default function Home() {
       status: "coming_soon",
       badge: "COMING SOON ⏳",
       desc: "Ghat navigation & heritage walking paths.",
-      image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=800&q=80",
+      image: "https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=800&q=80",
       placesCount: "20+ Planned",
       transportTypes: "E-Rickshaw • Boats"
     },
@@ -317,7 +317,7 @@ export default function Home() {
             <div className="relative">
               <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-[#543C32] bg-[#3D2B23]">
                 <img 
-                  src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=80" 
+                  src="https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/hawamahal_owadja.jpg" 
                   alt="Jaipur Heritage Hawa Mahal" 
                   className="w-full h-[450px] object-cover" 
                 />
