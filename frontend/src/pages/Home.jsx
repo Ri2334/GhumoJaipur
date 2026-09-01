@@ -39,7 +39,7 @@ export default function Home() {
       status: "coming_soon",
       badge: "COMING SOON ⏳",
       desc: "Lakeside rides & palace trails. Launching late 2026.",
-      image: "https://images.unsplash.com/photo-1595658658421-a974c0f5efbd?auto=format&fit=crop&w=800&q=80",
+      image: "/udaipur.jpg",
       placesCount: "18+ Planned",
       transportTypes: "Boat • Auto • Cab"
     },
