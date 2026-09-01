@@ -696,10 +696,5 @@ export default function PlaceDetails() {
         </div>
       </div>
     </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
