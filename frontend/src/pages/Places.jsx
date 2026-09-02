@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { getPlacesApi } from "../services/api";
 import PlaceCard from "../components/PlaceCard";
 import { fallbackPlaces } from "../data/fallbackPlaces";
+import SEOHead from "../components/SEOHead";
 
 export default function Places() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -112,7 +113,19 @@ export default function Places() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-8 selection:bg-[#B35D38] selection:text-white">
+      <SEOHead
+        title="140+ Jaipur Tourist Places Guide & Map | Sheher Saathi (Shehar App)"
+        description="Browse all 140+ verified tourist places, forts, palaces, bazaars, and temples in Jaipur. Complete with entry fees, timings, real-time bus metro routes, and food guides."
+        keywords="Jaipur tourist places, 140 places in Jaipur, Hawa Mahal, Amer Fort, City Palace, Jaipur fort guide, Sheher Saathi, Shehar App"
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "140+ Jaipur Tourist Places Directory",
+          "description": "Complete catalog of 140+ heritage tourist destinations in Jaipur.",
+          "url": "https://shehersaathi.com/places"
+        }}
+      />
       <div className="max-w-7xl mx-auto space-y-8">
 
         {/* Hero Header */}

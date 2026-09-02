@@ -146,19 +146,57 @@ export default function PlaceDetails() {
         title={`${place.name} Jaipur — Ticket Price, Bus Metro Routes & Guide | Sheher Saathi (Shehar App)`}
         description={`Complete traveler guide for ${place.name} in Jaipur. Timings, entry ticket fees, real-time JCTSL bus routes, Pink Line Metro station, famous nearby food, and hotels.`}
         keywords={`${place.name}, ${place.name} Jaipur, ${place.name} timing, ${place.name} ticket price, ${place.name} nearest metro station, Sheher Saathi, Shehar App, Jaipur tourist spots`}
-        schemaData={{
-          "@context": "https://schema.org",
-          "@type": "TouristAttraction",
-          "name": place.name,
-          "description": place.description,
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Jaipur",
-            "addressRegion": "Rajasthan",
-            "addressCountry": "IN"
+        schemaData={[
+          {
+            "@context": "https://schema.org",
+            "@type": "TouristAttraction",
+            "name": place.name,
+            "description": place.description,
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Jaipur",
+              "addressRegion": "Rajasthan",
+              "addressCountry": "IN"
+            },
+            "image": place.imageUrl || place.image
           },
-          "image": place.imageUrl || place.image
-        }}
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://shehersaathi.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Places",
+                "item": "https://shehersaathi.com/places"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": place.name,
+                "item": `https://shehersaathi.com/places/${place._id || place.id || ''}`
+              }
+            ]
+          },
+          ...(placeFaqs && placeFaqs.length > 0 ? [{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": placeFaqs.map(faq => ({
+              "@type": "Question",
+              "name": faq.q,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.a
+              }
+            }))
+          }] : [])
+        ]}
       />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] items-start">

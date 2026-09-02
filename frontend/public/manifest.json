@@ -1,0 +1,22 @@
+{
+  "short_name": "Shehar App",
+  "name": "Sheher Saathi — Har Sheher. Apna Sa.",
+  "description": "Smart urban travel companion, 140+ Jaipur place guides, JCTSL city bus schedule, Pink Line metro directory & hotel bookings.",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#FAF5EF",
+  "theme_color": "#2C1E18",
+  "display": "standalone",
+  "orientation": "portrait"
+}
