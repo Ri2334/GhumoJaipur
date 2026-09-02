@@ -156,26 +156,39 @@ export default function TransportSearch() {
 
     if (isUdaipur) {
       const routeRes = getCityRouteResult(finalSource, finalDest, "udaipur");
+      const distKm = routeRes?.distanceKm || 6;
       const recommendations = [];
 
-      if (routeRes?.steps) {
-        routeRes.steps.forEach(step => {
-          recommendations.push({
-            mode: step.type === "boat" ? "Boat Ferry" : step.type === "ropeway" ? "Ropeway" : step.type === "bus" ? "Electric Bus" : "Auto / Cab",
-            fare: step.cost,
-            time: step.duration,
-            badge: step.type === "boat" ? "lake ferry" : step.type === "ropeway" ? "aerial cable" : "best",
-            note: step.title
-          });
-        });
-      } else {
-        recommendations.push({ mode: "Bus", fare: "₹15", time: "20 min", badge: "best", note: "UCTSL Municipal Bus" });
-        recommendations.push({ mode: "Auto", fare: "₹60", time: "15 min", badge: "default", note: "Doorstep Auto Ride" });
-        recommendations.push({ mode: "Cab", fare: "₹120", time: "12 min", badge: "fastest", note: "AC Sedan Cab" });
-      }
+      // Option 1: Multi-Modal Transit (Bus / Shuttle / Ferry)
+      recommendations.push({
+        mode: routeRes?.mode?.includes("Shuttle") ? "Forest Shuttle + Bus" : routeRes?.mode?.includes("Ferry") ? "Boat Ferry" : "UCTSL Electric Bus",
+        fare: routeRes?.totalCost || "₹15 - ₹135",
+        time: routeRes?.totalDuration || "30 min",
+        badge: "best",
+        note: routeRes?.summary || `UCTSL City Bus connecting ${finalSource} to ${finalDest}`
+      });
+
+      // Option 2: Doorstep Auto / Taxi
+      const autoFare = Math.min(380, Math.max(70, Math.round(distKm * 20 + 30)));
+      recommendations.push({
+        mode: "Auto / Taxi",
+        fare: `₹${autoFare}`,
+        time: `${Math.max(12, Math.round(distKm * 2.2))} min`,
+        badge: "fastest",
+        note: `Direct Doorstep Auto / Taxi via Aravalli corridor`
+      });
+
+      // Option 3: Self-Drive Activa 6G / Scooter
+      recommendations.push({
+        mode: "Self-Drive Activa",
+        fare: "₹400 / day",
+        time: "Full Day",
+        badge: "flexible",
+        note: `Self-Drive Activa 6G Rental (Pickup at UDZ Railway Station / Lal Ghat)`
+      });
 
       setResult({
-        route: { distanceKm: routeRes?.distanceKm || 5 },
+        route: { distanceKm: distKm },
         currentTime: new Date().toISOString(),
         univRoute: routeRes,
         recommendations: recommendations
