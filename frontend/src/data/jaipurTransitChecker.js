@@ -98,7 +98,8 @@ export function getNearestMetroStation(locationName) {
 
   // Check landmark map
   if (LANDMARK_METRO_MAP[nameLower]) {
-    return LANDMARK_METRO_MAP[nameLower];
+    const item = LANDMARK_METRO_MAP[nameLower];
+    return { name: item.name || item.station, walkTime: item.walkTime };
   }
 
   // Check if outstation
@@ -108,5 +109,6 @@ export function getNearestMetroStation(locationName) {
     }
   }
 
-  return null;
+  // Generic fallback if location is within Jaipur city
+  return { name: "Railway Station", walkTime: "10 min auto" };
 }

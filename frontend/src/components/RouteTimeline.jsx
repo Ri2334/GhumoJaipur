@@ -9,8 +9,8 @@ export default function RouteTimeline({ stations = [] }) {
       <div className="mt-4 space-y-3">
         {stations.map((station, index) => {
           if (!station) return null;
-          const name = station.name || "Station";
-          const subtitle = station.area || "Metro Station";
+          const name = typeof station === "string" ? station : (station.name || station.station || "Metro Station");
+          const subtitle = typeof station === "object" && station.area ? station.area : (index === 0 ? "Boarding Station" : index === stations.length - 1 ? "Destination Station" : "Intermediate Station");
           
           return (
             <div key={`${name}-${index}`} className="flex items-start gap-3 group">
