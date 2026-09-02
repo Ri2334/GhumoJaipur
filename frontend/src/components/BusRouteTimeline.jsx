@@ -60,6 +60,14 @@ export default function BusRouteTimeline({ busRoute }) {
         </div>
       </div>
 
+      {/* First-Mile Walk/Auto Banner if place differs from bus stop */}
+      {busRoute.originPlace && busRoute.originPlace !== busRoute.sourceStop && (
+        <div className="mb-3 rounded-2xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900 font-semibold flex items-center gap-2">
+          <span>🚶 First-Mile Access:</span>
+          <span>{busRoute.firstLegWalk || "Walk / Auto"} from <strong>{busRoute.originPlace}</strong> to official <strong>{busRoute.sourceStop}</strong>.</span>
+        </div>
+      )}
+
       {/* Direct Route */}
       {(!busRoute.transfers || busRoute.transfers === 0 || busRoute.type === 'direct') && (
         renderLeg(busRoute.route || busRoute, "Direct Bus", busRoute.sourceStop, busRoute.destStop)

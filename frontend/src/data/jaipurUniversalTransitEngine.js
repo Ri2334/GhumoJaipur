@@ -1,3 +1,5 @@
+import { findOfficialJCTSBusRoute } from "./jaipurOfficialTransitEngine";
+
 // UNIVERSAL JAIPUR MULTI-MODAL TRANSIT ENGINE
 // Computes 100% accurate real-world routes for ANY Origin -> Destination pair across all 140+ places.
 
@@ -2747,28 +2749,32 @@ export function calculateUniversalRoute(originName, destName) {
   const nextBusDate = new Date(now.getTime() + (nextMultiple - currentMins) * 60000);
   const waitMins = Math.max(3, nextMultiple - currentMins);
 
-  const busNo = isOutstationRoute ? `RSRTC ${dest.city} Express` : (origin.busRoutes?.[0] || "AC 1");
-  const busRouteName = isOutstationRoute ? `${origin.city} to ${dest.city} Highway Corridor` : `${origin.name} - ${dest.name} City Route`;
+  // Retrieve Official JCTSL City Bus Route
+  const officialJCTSL = findOfficialJCTSBusRoute(origin.name, dest.name);
+
+  const busNo = isOutstationRoute ? `RSRTC ${dest.city} Express` : (officialJCTSL?.busNumber || "JCTSL AC 1");
+  const busRouteName = isOutstationRoute ? `${origin.city} to ${dest.city} Highway Corridor` : (officialJCTSL?.routeName || `${origin.name} - ${dest.name} City Route`);
 
   const calculatedBusRoute = {
-    type: 'direct',
-    transfers: 0,
+    ...officialJCTSL,
+    type: officialJCTSL?.type || 'direct',
+    transfers: officialJCTSL?.transfers || 0,
     busNumber: busNo,
-    routeNumber: busNo,
+    routeNumber: officialJCTSL?.routeNumber || busNo,
     routeName: busRouteName,
-    sourceStop: origin.name,
-    destStop: dest.name,
-    boardStopName: origin.name,
-    alightStopName: dest.name,
-    fare: estimatedFareRs,
-    time: totalTimeMins,
-    estimatedTimeMinutes: totalTimeMins,
+    sourceStop: officialJCTSL?.sourceStop || origin.name,
+    destStop: officialJCTSL?.destStop || dest.name,
+    boardStopName: officialJCTSL?.sourceStop || origin.name,
+    alightStopName: officialJCTSL?.destStop || dest.name,
+    fare: officialJCTSL?.fare || estimatedFareRs,
+    time: officialJCTSL?.estimatedTimeMinutes || totalTimeMins,
+    estimatedTimeMinutes: officialJCTSL?.estimatedTimeMinutes || totalTimeMins,
     waitingTimeMinutes: waitMins,
     nextDepartureTime: nextBusDate.toISOString(),
-    route: {
+    route: officialJCTSL?.route || {
       routeNumber: busNo,
       routeName: busRouteName,
-      stopsPassed: [origin.name, `${dest.city} Intermediate Stop`, dest.name]
+      stopsPassed: [origin.name, dest.name]
     }
   };
 
