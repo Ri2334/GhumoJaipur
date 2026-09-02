@@ -39,11 +39,44 @@ body {
   background: #B35D38;
 }
 
-/* Glassmorphism & glow in warm terracotta */
+/* Hyper-attractive Keyframes & Glowing Utilities */
 @keyframes pulse-terracotta {
   0% { box-shadow: 0 0 0px rgba(179,93,56,0.06); }
-  50% { box-shadow: 0 8px 30px rgba(179,93,56,0.15); }
+  50% { box-shadow: 0 8px 30px rgba(179,93,56,0.25); }
   100% { box-shadow: 0 0 0px rgba(179,93,56,0.06); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes ambient-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.08); }
+}
+
+@keyframes text-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float {
+  animation: float-gentle 5s ease-in-out infinite;
+}
+
+.animate-ambient {
+  animation: ambient-glow 8s ease-in-out infinite;
+}
+
+.gradient-text-shimmer {
+  background: linear-gradient(135deg, #F3C4A5 0%, #E6A373 25%, #FFF 50%, #D98A5B 75%, #F3C4A5 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: text-shimmer 6s linear infinite;
 }
 
 .glass-terracotta {
@@ -52,8 +85,18 @@ body {
   border: 1px solid rgba(243, 232, 219, 0.8);
 }
 
+.glass-dark-gold {
+  background: rgba(44, 30, 24, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(217, 138, 91, 0.25);
+}
+
 .glow-card {
   animation: pulse-terracotta 4s ease-in-out infinite;
+}
+
+.gold-glow-border {
+  box-shadow: 0 0 25px rgba(217, 138, 91, 0.2);
 }
 
 .metro-dot { transition: transform 220ms ease, background-color 220ms ease; }
@@ -69,4 +112,3 @@ body {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
-
