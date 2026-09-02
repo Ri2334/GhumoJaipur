@@ -60,9 +60,9 @@ export default function TransportSearch() {
   useEffect(() => {
     if (passedDest) {
       setDestination(passedDest);
-      setSource("");
-      setActiveField("source");
-      setSuggestionsVisible(true);
+      const defaultOrigin = "Jaipur Railway Station";
+      setSource(defaultOrigin);
+      handleSearch(null, defaultOrigin, passedDest);
     }
   }, [passedDest]);
 
@@ -262,9 +262,9 @@ export default function TransportSearch() {
 
           <div className="mt-6 flex flex-wrap items-center gap-2.5">
             <span className="text-xs font-bold uppercase tracking-wider text-[#A37B66]">Popular Areas:</span>
-            {jaipurPlaces.filter(p => p.category === 'Area' || p.category === 'Market').slice(0, 8).map(area => (
+            {jaipur140Places.filter(p => p.category === 'Shopping' || p.category === 'Tourist').slice(0, 8).map(area => (
               <button 
-                key={area.id}
+                key={area._id}
                 onClick={() => setSource(area.name)}
                 className="rounded-xl border border-[#E6D6C3] bg-[#FAF5EF] px-3.5 py-1.5 text-xs font-bold text-[#793A1F] transition hover:bg-[#F3E8DB] shadow-sm"
               >
