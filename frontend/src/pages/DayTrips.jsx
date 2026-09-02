@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CityContext } from "../context/CityContext";
+import SEOHead from "../components/SEOHead";
 
 export default function DayTrips() {
   const navigate = useNavigate();
+  const { currentCity, cityDetails } = useContext(CityContext);
   const [activeCategory, setActiveCategory] = useState("all");
   const [openFaq, setOpenFaq] = useState(null);
 
-  const dayTripsData = [
+  const jaipurTrips = [
     {
       id: "pushkar",
       title: "Ajmer & Pushkar",
@@ -62,189 +65,242 @@ export default function DayTrips() {
       distanceKm: 80,
       driveTime: "1.5 Hours",
       image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-      description: "India's largest inland salt lake, famous for flamingo bird watching, salt train tracks, and starry night skies.",
-      highlights: ["Salt Pan Train Tracks", "Flamingo Bird Watching", "Shakambhari Devi Temple", "Salt Mining"],
-      transitOptions: { bus: "₹80 - ₹150", train: "₹40 - ₹120", cab: "₹2,000" },
+      description: "India's largest inland salt lake, famous for flamingo birdwatching, salt pan trains, and starlit camping.",
+      highlights: ["Flamingo Birdwatching", "Salt Pan Railway Circuit", "Shakambhari Devi Temple"],
+      transitOptions: { bus: "₹80 - ₹150", train: "₹40 - ₹100", cab: "₹2,200" },
       bestSeason: "November to February"
-    },
-    {
-      id: "sariska",
-      title: "Sariska Tiger Reserve & Alwar",
-      category: "Wildlife",
-      distanceKm: 120,
-      driveTime: "2.5 Hours",
-      image: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=800&q=80",
-      description: "Explore Sariska tiger forest, Siliserh Lake Palace, and the historic Bala Quila Fort in Alwar.",
-      highlights: ["Bengal Tigers & Leopards", "Siliserh Lake Palace", "Kankwari Fort", "Bala Quila Alwar"],
-      transitOptions: { bus: "₹150 - ₹250", train: "₹80 - ₹300", cab: "₹3,200" },
-      bestSeason: "October to May"
     }
   ];
 
-  const filteredTrips = dayTripsData.filter(
-    (t) => activeCategory === "all" || t.category.toLowerCase() === activeCategory.toLowerCase()
-  );
+  const udaipurTrips = [
+    {
+      id: "nathdwara",
+      title: "Nathdwara & Statue of Belief",
+      category: "Spiritual",
+      distanceKm: 48,
+      driveTime: "1.0 Hour",
+      image: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800&q=80",
+      description: "Sacred Shrinathji Krishna Temple pilgrimage and the 369 ft Viswas Swaroopam (World's Tallest Lord Shiva Statue).",
+      highlights: ["Shrinathji Temple Darshan", "369ft Statue of Belief", "Pichwai Art Studios", "Chappan Bhog Prasad"],
+      transitOptions: { bus: "₹60 - ₹100", train: "N/A", cab: "₹1,400" },
+      bestSeason: "All Year Round"
+    },
+    {
+      id: "kumbhalgarh",
+      title: "Kumbhalgarh Fort & Great Wall",
+      category: "Heritage",
+      distanceKm: 84,
+      driveTime: "2.0 Hours",
+      image: "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&q=80",
+      description: "Imposing UNESCO World Heritage fort featuring a 36 km continuous perimeter wall—the 2nd longest wall on Earth.",
+      highlights: ["36km Great Wall of India", "Badal Mahal (Cloud Palace)", "Maharana Pratap Birthplace", "Light & Sound Show"],
+      transitOptions: { bus: "₹120 - ₹200", train: "N/A", cab: "₹2,500" },
+      bestSeason: "October to March"
+    },
+    {
+      id: "ranakpur",
+      title: "Ranakpur Marble Jain Temple",
+      category: "Spiritual",
+      distanceKm: 93,
+      driveTime: "2.0 Hours",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+      description: "Aravalli valley marble marvel featuring 1,444 uniquely carved pillars, no two pillars being identical.",
+      highlights: ["1,444 Carved Marble Pillars", "Chaumukha Adinath Temple", "Tree-shaded Aravalli Valley", "Sun Temple Ranakpur"],
+      transitOptions: { bus: "₹130 - ₹220", train: "N/A", cab: "₹2,800" },
+      bestSeason: "October to March"
+    },
+    {
+      id: "chittorgarh",
+      title: "Chittorgarh Fort Complex",
+      category: "Heritage",
+      distanceKm: 115,
+      driveTime: "2.5 Hours",
+      image: "https://images.unsplash.com/photo-1575550959106-5a7defe28b56?w=800&q=80",
+      description: "Asia's largest fort complex, legendary site of Rajput valor, Vijay Stambha, Kirti Stambha, and Padmini Palace.",
+      highlights: ["Vijay Stambha (Tower of Victory)", "Rani Padmini Palace & Jauhar Kund", "Kirti Stambha", "Gaumukh Reservoir"],
+      transitOptions: { bus: "₹150 - ₹250", train: "₹60 - ₹200", cab: "₹3,200" },
+      bestSeason: "October to March"
+    },
+    {
+      id: "jaisamand",
+      title: "Jaisamand Lake & Sanctuary",
+      category: "Nature",
+      distanceKm: 58,
+      driveTime: "1.5 Hours",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+      description: "Second-largest artificial lake in Asia with 7 marble islands, cenotaphs, and Dhebar Wildlife Sanctuary.",
+      highlights: ["Island Boat Cruises", "Marble Elephant Cenotaphs", "Dhebar Wildlife Sanctuary", "Hawa Mahal Palace View"],
+      transitOptions: { bus: "₹80 - ₹150", train: "N/A", cab: "₹1,800" },
+      bestSeason: "October to March"
+    },
+    {
+      id: "mountabu",
+      title: "Mount Abu & Dilwara Temples",
+      category: "Nature",
+      distanceKm: 163,
+      driveTime: "3.0 Hours",
+      image: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=800&q=80",
+      description: "Rajasthan's only hill station featuring Nakki Lake boating, 11th-century Dilwara marble temples, and Sunset Point.",
+      highlights: ["Dilwara Marble Temples", "Nakki Lake Boating", "Guru Shikhar Peak", "Sunset Point & Toad Rock"],
+      transitOptions: { bus: "₹220 - ₹380", train: "₹120 - ₹300", cab: "₹4,200" },
+      bestSeason: "All Year Round"
+    }
+  ];
 
-  const dayTripFaqs = [
-    { q: "What are the most popular day trips from Jaipur?", a: "Pushkar & Ajmer (145km), Ranthambore Tiger Reserve (160km), Bhangarh Fort (85km), and Abhaneri Stepwell (95km) are the top day trips." },
-    { q: "How to reach Pushkar and Ajmer from Jaipur?", a: "RSRTC Volvo buses run every 30 minutes from Sindhi Camp Bus Stand (2.5 hrs). Superfast trains run from Jaipur Junction to Ajmer in 2 hours." },
-    { q: "Can Ranthambore tiger safari be done in a single day from Jaipur?", a: "Yes! Take the early morning Jan Shatabdi Express train from Jaipur to Sawai Madhopur (2 hrs), do the afternoon 2:00 PM Gypsy safari, and return by evening train." },
-    { q: "Is Bhangarh Fort really haunted and what are the entry timing rules?", a: "Bhangarh Fort is ASI-protected. By law, entry before sunrise and after sunset is strictly prohibited." },
-    { q: "What is the best way to travel to Abhaneri Chand Baori?", a: "Hiring a round-trip private cab from Jaipur (95 km via Jaipur-Agra Expressway) takes 2 hours and allows combining Abhaneri with Bhangarh Fort." },
-    { q: "What is the best time of year for day trips around Jaipur?", a: "October to March offers pleasant winter weather (15°C - 25°C) ideal for sightseeing, safaris, and outdoor forts." },
-    { q: "What is special about Sambhar Salt Lake?", a: "It is India's largest inland saline lake covering 190 sq km, famous for thousands of winter flamingos and salt rail trolley rides." },
-    { q: "Are guided tour cabs available for day trips?", a: "Yes, certified outstation cabs (Sedans/SUVs) can be booked with driver for ₹2,000 to ₹3,800 full day." },
-    { q: "What clothing is recommended for day trips?", a: "Comfortable cotton clothes, sun glasses, hat, and sturdy walking shoes for stepwells and forts." },
-    { q: "Can I combine Bhangarh Fort and Abhaneri in one single day trip?", a: "Yes! Both are located on the Jaipur-Agra highway corridor and can easily be covered together in a 7-hour excursion." }
+  const activeTripsList = currentCity === "udaipur" ? udaipurTrips : jaipurTrips;
+
+  const filteredTrips = activeTripsList.filter((trip) => {
+    if (activeCategory === "all") return true;
+    return trip.category.toLowerCase() === activeCategory.toLowerCase();
+  });
+
+  const faqs = [
+    {
+      q: `What is the best mode of transport for day trips from ${cityDetails.name}?`,
+      a: `For flexible schedules and doorstep pickups, private cabs or self-drive rentals are best. Regular RSRTC buses and express trains also run frequently to nearby hubs.`
+    },
+    {
+      q: `Can I cover multiple day trip spots in a single day from ${cityDetails.name}?`,
+      a: currentCity === "udaipur" 
+        ? `Yes! Nathdwara + Kumbhalgarh or Nathdwara + Ranakpur can be combined easily in a 1-day loop.`
+        : `Yes! Ajmer + Pushkar or Abhaneri + Bhangarh can be combined comfortably in a single 8-hour trip.`
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-10 selection:bg-[#B35D38] selection:text-white">
+      <SEOHead
+        title={`Best Day Trips & Excursions from ${cityDetails.name} | Sheher Saathi`}
+        description={`Explore top day trip destinations near ${cityDetails.name} with verified distance, drive time, transport options, and itineraries.`}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
-        {/* Hero Header */}
-        <div className="text-center space-y-3">
-          <span className="inline-block rounded-full bg-[#FAF1EC] border border-[#EBC5B2] px-4 py-1.5 text-xs font-bold text-[#B35D38] tracking-widest uppercase">
-            Outstation Excursions
+        {/* Header Hero */}
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <span className="px-4 py-1.5 rounded-full bg-[#FAF1EC] text-[#B35D38] text-xs font-black uppercase tracking-widest border border-[#EBC5B2]">
+            Outstation Excursions ⛰️
           </span>
-          <h1 className="text-3xl sm:text-5xl font-marcellus text-[#2C1E18]">
-            Day Trips from Jaipur
+          <h1 className="text-4xl sm:text-6xl font-marcellus text-[#2C1E18]">
+            Day Trips from <span className="text-[#B35D38]">{cityDetails.name}</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#543C32] max-w-2xl mx-auto font-medium leading-relaxed">
-            Explore tiger safaris at Ranthambore, ancient stepwells at Abhaneri, spiritual Pushkar, and the haunted Bhangarh fort—all within a few hours of the Pink City.
+          <p className="text-sm sm:text-base text-[#543C32] font-medium leading-relaxed">
+            Explore heritage forts, sacred pilgrimages, wildlife reserves, and natural lakes—all within a short drive from {cityDetails.name}.
           </p>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 rounded-3xl border border-[#E6D6C3] bg-white p-6 shadow-xl text-center">
+        {/* Stats Row */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white p-6 rounded-3xl border border-[#E6D6C3] shadow-lg text-center">
           <div>
-            <div className="text-2xl sm:text-3xl font-black text-[#B35D38]">6</div>
-            <div className="text-xs font-bold text-[#793A1F] uppercase tracking-wider mt-1">Destinations</div>
+            <div className="text-3xl font-marcellus text-[#B35D38]">{activeTripsList.length}</div>
+            <div className="text-xs text-[#A37B66] font-bold uppercase tracking-wider mt-1">Destinations</div>
           </div>
           <div>
-            <div className="text-2xl sm:text-3xl font-black text-[#2C1E18]">40 - 185 km</div>
-            <div className="text-xs font-bold text-[#793A1F] uppercase tracking-wider mt-1">Distance Range</div>
+            <div className="text-3xl font-marcellus text-[#2C1E18]">45 – 165 km</div>
+            <div className="text-xs text-[#A37B66] font-bold uppercase tracking-wider mt-1">Distance Range</div>
           </div>
           <div>
-            <div className="text-2xl sm:text-3xl font-black text-[#B35D38]">1 - 3.5 hrs</div>
-            <div className="text-xs font-bold text-[#793A1F] uppercase tracking-wider mt-1">Drive Time</div>
+            <div className="text-3xl font-marcellus text-[#2C1E18]">1 – 3.5 hrs</div>
+            <div className="text-xs text-[#A37B66] font-bold uppercase tracking-wider mt-1">Drive Time</div>
           </div>
           <div>
-            <div className="text-2xl sm:text-3xl font-black text-emerald-700">Oct - Mar</div>
-            <div className="text-xs font-bold text-[#793A1F] uppercase tracking-wider mt-1">Best Season</div>
+            <div className="text-3xl font-marcellus text-emerald-600">Popular</div>
+            <div className="text-xs text-[#A37B66] font-bold uppercase tracking-wider mt-1">Weekend Excursions</div>
           </div>
         </div>
 
         {/* Category Filters */}
         <div className="flex flex-wrap justify-center gap-2">
-          {[
-            { id: "all", label: "All Destinations" },
-            { id: "heritage", label: "🏰 Heritage & Forts" },
-            { id: "wildlife", label: "🐅 Wildlife & Safaris" },
-            { id: "spiritual", label: "🛕 Spiritual Places" },
-            { id: "nature", label: "🌿 Nature & Lakes" }
-          ].map((cat) => (
+          {["all", "heritage", "spiritual", "nature", "wildlife"].map((cat) => (
             <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`rounded-xl px-5 py-2.5 text-xs font-bold transition-all ${
-                activeCategory === cat.id
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-5 py-2.5 rounded-2xl text-xs font-bold capitalize transition ${
+                activeCategory === cat
                   ? "bg-[#B35D38] text-white shadow-md"
-                  : "bg-white border border-[#E6D6C3] text-[#543C32] hover:bg-[#FAF1EC]"
+                  : "bg-white text-[#2C1E18] border border-[#E6D6C3] hover:bg-[#FAF1EC]"
               }`}
             >
-              {cat.label}
+              {cat === "all" ? "All Destinations" : cat}
             </button>
           ))}
         </div>
 
         {/* Day Trips Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredTrips.map((trip) => (
-            <div
-              key={trip.id}
-              className="rounded-3xl border border-[#E6D6C3] bg-white overflow-hidden shadow-xl flex flex-col justify-between hover:-translate-y-1 transition duration-300"
-            >
+            <div key={trip.id} className="bg-white rounded-3xl border border-[#E6D6C3] overflow-hidden shadow-xl flex flex-col justify-between group hover:shadow-2xl transition duration-300">
               <div>
-                <div className="relative h-48 w-full overflow-hidden">
-                  <img src={trip.image} alt={trip.title} className="h-full w-full object-cover" />
-                  <span className="absolute top-3 left-3 rounded-xl bg-[#2C1E18]/80 text-white px-3 py-1 text-[10px] font-bold uppercase backdrop-blur">
-                    {trip.category}
-                  </span>
-                  <span className="absolute bottom-3 right-3 rounded-xl bg-white/90 text-[#2C1E18] px-3 py-1 text-xs font-black shadow">
-                    📍 {trip.distanceKm} km ({trip.driveTime})
-                  </span>
+                <div className="relative h-56 overflow-hidden bg-[#2C1E18]">
+                  <img src={trip.image} alt={trip.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-[#B35D38] text-white text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-md">
+                      {trip.category}
+                    </span>
+                  </div>
+
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <span className="text-xs font-bold bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-lg">
+                      📍 {trip.distanceKm} km ({trip.driveTime})
+                    </span>
+                  </div>
                 </div>
 
                 <div className="p-6 space-y-4">
-                  <h3 className="text-xl font-marcellus text-[#2C1E18]">{trip.title}</h3>
-                  <p className="text-xs text-[#543C32] font-medium leading-relaxed">{trip.description}</p>
+                  <h3 className="font-marcellus text-2xl text-[#2C1E18]">{trip.title}</h3>
+                  <p className="text-xs text-[#543C32] leading-relaxed font-medium">{trip.description}</p>
 
-                  <div className="space-y-1.5">
-                    <div className="text-[10px] font-bold uppercase tracking-wider text-[#A37B66]">Key Attractions</div>
-                    <div className="flex flex-wrap gap-1">
-                      {trip.highlights.map((hl, idx) => (
-                        <span key={idx} className="rounded-md bg-[#FAF5EF] border border-[#E6D6C3] px-2 py-0.5 text-[11px] font-semibold text-[#2C1E18]">
-                          • {hl}
+                  <div className="space-y-2 pt-2 border-t border-[#E6D6C3]">
+                    <div className="text-[11px] font-bold text-[#A37B66] uppercase tracking-wider">Key Attractions:</div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {trip.highlights.map((h, idx) => (
+                        <span key={idx} className="bg-[#FAF5EF] text-[#2C1E18] text-[11px] font-semibold px-2.5 py-1 rounded-md border border-[#E6D6C3]">
+                          • {h}
                         </span>
                       ))}
                     </div>
                   </div>
 
-                  <div className="rounded-2xl bg-[#FAF5EF] p-3 text-xs border border-[#E6D6C3] space-y-1">
-                    <div className="font-bold text-[#B35D38] uppercase text-[10px]">How to Reach:</div>
-                    <div className="flex justify-between text-gray-700">
+                  <div className="bg-[#FAF1EC] p-3 rounded-2xl border border-[#EBC5B2] space-y-1 text-xs">
+                    <div className="font-bold text-[#B35D38]">Transport Fares:</div>
+                    <div className="text-[11px] text-[#543C32] flex justify-between">
                       <span>🚌 Bus: {trip.transitOptions.bus}</span>
-                      <span>🚆 Train: {trip.transitOptions.train}</span>
+                      <span>🚖 Cab: {trip.transitOptions.cab}</span>
                     </div>
-                    <div className="text-gray-700">🚖 Private Cab: {trip.transitOptions.cab}</div>
                   </div>
                 </div>
               </div>
 
               <div className="p-6 pt-0">
                 <button
-                  onClick={() => navigate('/transport', { state: { destination: trip.title } })}
-                  className="w-full rounded-xl bg-[#B35D38] hover:bg-[#964B2A] text-white py-3 text-xs font-bold uppercase tracking-wider transition shadow"
+                  onClick={() => navigate(`/transport?destination=${encodeURIComponent(trip.title)}`)}
+                  className="w-full bg-[#3D2B23] hover:bg-[#4A362B] text-white py-3.5 rounded-2xl font-bold text-xs shadow-md transition flex items-center justify-center gap-2"
                 >
-                  Plan Transit to {trip.title} →
+                  <span>Plan Route to {trip.title}</span>
+                  <span>→</span>
                 </button>
               </div>
             </div>
           ))}
         </div>
 
-        {/* 10 FAQs Section */}
-        <div className="rounded-3xl border border-[#E6D6C3] bg-white p-6 sm:p-8 shadow-xl space-y-6">
-          <div className="flex items-center justify-between border-b border-[#F3E8DB] pb-4">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#B35D38]">Online Verified Travel Guide</span>
-              <h2 className="text-2xl font-marcellus text-[#2C1E18] mt-1">Day Trips Frequently Asked Questions</h2>
-            </div>
-            <span className="rounded-xl bg-[#FAF1EC] border border-[#EBC5B2] px-3.5 py-1.5 text-xs font-bold text-[#B35D38]">
-              10 Key Answers
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            {dayTripFaqs.map((faq, idx) => (
-              <div key={idx} className="rounded-2xl border border-[#E6D6C3] bg-[#FAF5EF] overflow-hidden transition">
+        {/* FAQs */}
+        <div className="bg-white rounded-3xl border border-[#E6D6C3] p-8 shadow-xl space-y-6 max-w-4xl mx-auto">
+          <h2 className="text-3xl font-marcellus text-[#2C1E18]">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, idx) => (
+              <div key={idx} className="border-b border-[#E6D6C3] pb-4">
                 <button
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full flex items-center justify-between p-4 text-left text-xs sm:text-sm font-bold text-[#2C1E18] hover:bg-[#FAF1EC]"
+                  className="w-full text-left font-bold text-base text-[#2C1E18] flex justify-between items-center py-2"
                 >
-                  <span className="flex items-center gap-2">
-                    <span className="text-[#B35D38] font-black">Q{idx + 1}.</span>
-                    {faq.q}
-                  </span>
-                  <span className="text-[#B35D38] font-bold text-base ml-2">
-                    {openFaq === idx ? "−" : "+"}
-                  </span>
+                  <span>{faq.q}</span>
+                  <span>{openFaq === idx ? "−" : "+"}</span>
                 </button>
                 {openFaq === idx && (
-                  <div className="px-5 pb-5 text-xs sm:text-sm font-medium text-[#543C32] bg-white border-t border-[#F3E8DB] pt-3 leading-relaxed">
-                    {faq.a}
-                  </div>
+                  <p className="text-xs text-[#543C32] font-medium leading-relaxed mt-2">{faq.a}</p>
                 )}
               </div>
             ))}

@@ -80,56 +80,50 @@ export default function Navbar() {
 
             {/* Plan Trip Dropdown */}
             <div 
-              className="relative"
+              className="relative py-1"
               onMouseEnter={() => setPlanDropdown(true)}
               onMouseLeave={() => setPlanDropdown(false)}
             >
-              <button className="text-[#E6D6C3] hover:text-white hover:bg-white/10 px-3.5 py-2 rounded-xl transition font-medium flex items-center gap-1">
+              <button className="text-[#E6D6C3] hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition text-xs font-semibold flex items-center gap-1">
                 <span>Plan Trip</span>
                 <span className="text-[10px]">▼</span>
               </button>
 
               {planDropdown && (
-                <div className="absolute left-0 mt-1 w-56 rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 z-50 space-y-1">
-                  <NavLink
-                    to="/transport"
-                    onClick={() => setPlanDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">🚀 Plan Your Route</span>
-                    <span className="text-[10px] text-gray-500">Multi-modal fare & traffic search</span>
-                  </NavLink>
-                  <NavLink
-                    to="/bus-routes"
-                    onClick={() => setPlanDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">🚌 City Bus Directory</span>
-                    <span className="text-[10px] text-gray-500">27 JCTSL bus routes & fares</span>
-                  </NavLink>
-                  <NavLink
-                    to="/metro-directory"
-                    onClick={() => setPlanDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">🚇 Metro Directory</span>
-                    <span className="text-[10px] text-gray-500">11 Pink Line stations & FAQs</span>
-                  </NavLink>
-                  <NavLink
-                    to="/day-trips"
-                    onClick={() => setPlanDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">⛰️ Day Trips</span>
-                    <span className="text-[10px] text-gray-500">Pushkar, Ranthambore, Bhangarh</span>
-                  </NavLink>
+                <div className="absolute left-0 top-full pt-1 w-64 z-50">
+                  <div className="rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 space-y-1">
+                    <NavLink
+                      to="/transport"
+                      onClick={() => setPlanDropdown(false)}
+                      className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                    >
+                      <span className="font-bold text-xs text-[#2C1E18]">🚀 Smart Route Planner</span>
+                      <span className="text-[10px] text-gray-500">Real-time fare &amp; transit calculation</span>
+                    </NavLink>
+                    <NavLink
+                      to="/metro-directory"
+                      onClick={() => setPlanDropdown(false)}
+                      className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                    >
+                      <span className="font-bold text-xs text-[#2C1E18]">🚇 Metro Directory</span>
+                      <span className="text-[10px] text-gray-500">11 Pink Line stations &amp; FAQs</span>
+                    </NavLink>
+                    <NavLink
+                      to="/day-trips"
+                      onClick={() => setPlanDropdown(false)}
+                      className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                    >
+                      <span className="font-bold text-xs text-[#2C1E18]">⛰️ Day Trips</span>
+                      <span className="text-[10px] text-gray-500">Excursions &amp; Outstation Guides</span>
+                    </NavLink>
+                  </div>
                 </div>
               )}
             </div>
 
             {/* Metro Dropdown */}
             <div 
-              className="relative"
+              className="relative py-1"
               onMouseEnter={() => setMetroDropdown(true)}
               onMouseLeave={() => setMetroDropdown(false)}
             >
@@ -139,23 +133,25 @@ export default function Navbar() {
               </button>
 
               {metroDropdown && (
-                <div className="absolute left-0 mt-1 w-52 rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 z-50 space-y-1">
-                  <NavLink
-                    to="/metro-directory"
-                    onClick={() => setMetroDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-pink-50 transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">🚉 Stations</span>
-                    <span className="text-[10px] text-gray-500">11 Pink Line stations & timings</span>
-                  </NavLink>
-                  <NavLink
-                    to="/metro-lines"
-                    onClick={() => setMetroDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-pink-50 transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">🚇 Metro Lines</span>
-                    <span className="text-[10px] text-gray-500">Pink & upcoming Orange Line</span>
-                  </NavLink>
+                <div className="absolute left-0 top-full pt-1 w-52 z-50">
+                  <div className="rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 space-y-1">
+                    <NavLink
+                      to="/metro-directory"
+                      onClick={() => setMetroDropdown(false)}
+                      className="flex flex-col p-2.5 rounded-xl hover:bg-pink-50 transition"
+                    >
+                      <span className="font-bold text-xs text-[#2C1E18]">🚉 Stations</span>
+                      <span className="text-[10px] text-gray-500">11 Pink Line stations &amp; timings</span>
+                    </NavLink>
+                    <NavLink
+                      to="/metro-lines"
+                      onClick={() => setMetroDropdown(false)}
+                      className="flex flex-col p-2.5 rounded-xl hover:bg-pink-50 transition"
+                    >
+                      <span className="font-bold text-xs text-[#2C1E18]">🚇 Metro Lines</span>
+                      <span className="text-[10px] text-gray-500">Pink &amp; upcoming Orange Line</span>
+                    </NavLink>
+                  </div>
                 </div>
               )}
             </div>
@@ -168,7 +164,7 @@ export default function Navbar() {
 
             {/* Explore Dropdown */}
             <div 
-              className="relative"
+              className="relative py-1"
               onMouseEnter={() => setExploreDropdown(true)}
               onMouseLeave={() => setExploreDropdown(false)}
             >
@@ -178,55 +174,33 @@ export default function Navbar() {
               </button>
 
               {exploreDropdown && (
-                <div className="absolute left-0 mt-1 w-64 rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 z-50 space-y-1">
-                  <NavLink
-                    to="/rentals"
-                    onClick={() => setExploreDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition bg-[#FAF1EC] border border-[#EBC5B2]"
-                  >
-                    <span className="font-bold text-xs text-[#B35D38]">🛵 Activa, Bike &amp; Car Rentals</span>
-                    <span className="text-[10px] text-gray-500">Rent Activa 6G, Royal Enfield &amp; cars</span>
-                  </NavLink>
-                  <NavLink
-                    to="/places"
-                    onClick={() => setExploreDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">📍 All Tourist Places</span>
-                    <span className="text-[10px] text-gray-500">Verified destinations with FAQs &amp; guides</span>
-                  </NavLink>
-                  <NavLink
-                    to="/day-trips"
-                    onClick={() => setExploreDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">⛰️ Day Trips</span>
-                    <span className="text-[10px] text-gray-500">Pushkar, Ranthambore, Bhangarh</span>
-                  </NavLink>
-                  <NavLink
-                    to="/places?category=Forts+%26+Palaces"
-                    onClick={() => setExploreDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">🏰 Forts & Palaces</span>
-                    <span className="text-[10px] text-gray-500">Amber, Nahargarh, City Palace</span>
-                  </NavLink>
-                  <NavLink
-                    to="/places?category=Markets+%26+Bazaars"
-                    onClick={() => setExploreDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">🛍️ Markets & Bazaars</span>
-                    <span className="text-[10px] text-gray-500">Bapu Bazaar, Johari Bazaar</span>
-                  </NavLink>
-                  <NavLink
-                    to="/hotels"
-                    onClick={() => setExploreDropdown(false)}
-                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
-                  >
-                    <span className="font-bold text-xs text-[#2C1E18]">🏨 Hotels & Heritage Stays</span>
-                    <span className="text-[10px] text-gray-500">Royal havelis & stay directory</span>
-                  </NavLink>
+                <div className="absolute left-0 top-full pt-1 w-64 z-50">
+                  <div className="rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 space-y-1">
+                    <NavLink
+                      to="/rentals"
+                      onClick={() => setExploreDropdown(false)}
+                      className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition bg-[#FAF1EC] border border-[#EBC5B2]"
+                    >
+                      <span className="font-bold text-xs text-[#B35D38]">🛵 Activa, Bike &amp; Car Rentals</span>
+                      <span className="text-[10px] text-gray-500">Rent Activa 6G, Royal Enfield &amp; cars</span>
+                    </NavLink>
+                    <NavLink
+                      to="/places"
+                      onClick={() => setExploreDropdown(false)}
+                      className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                    >
+                      <span className="font-bold text-xs text-[#2C1E18]">📍 All Tourist Places</span>
+                      <span className="text-[10px] text-gray-500">Verified destinations with FAQs &amp; guides</span>
+                    </NavLink>
+                    <NavLink
+                      to="/day-trips"
+                      onClick={() => setExploreDropdown(false)}
+                      className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                    >
+                      <span className="font-bold text-xs text-[#2C1E18]">⛰️ Day Trips</span>
+                      <span className="text-[10px] text-gray-500">Excursions &amp; Outstation Guides</span>
+                    </NavLink>
+                  </div>
                 </div>
               )}
             </div>
