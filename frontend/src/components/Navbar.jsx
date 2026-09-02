@@ -3,10 +3,16 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import apiClient from "../services/api";
 
-// Sticky responsive navbar with warm terracotta branding
+// Sticky responsive navbar with warm terracotta branding & connected dropdowns
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [activeRideId, setActiveRideId] = useState(null);
+
+  // Dropdown states
+  const [planDropdown, setPlanDropdown] = useState(false);
+  const [metroDropdown, setMetroDropdown] = useState(false);
+  const [exploreDropdown, setExploreDropdown] = useState(false);
+
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -44,8 +50,8 @@ export default function Navbar() {
 
   const activeClass = ({ isActive }) =>
     isActive 
-      ? "text-[#FAF5EF] bg-[#B35D38] px-3.5 py-2 rounded-xl font-bold shadow-md transition-all" 
-      : "text-[#E6D6C3] hover:text-white hover:bg-white/10 px-3.5 py-2 transition font-medium";
+      ? "text-[#FAF5EF] bg-[#B35D38] px-3.5 py-2 rounded-xl font-bold shadow-md transition-all flex items-center gap-1.5" 
+      : "text-[#E6D6C3] hover:text-white hover:bg-white/10 px-3.5 py-2 transition font-medium flex items-center gap-1.5";
 
   return (
     <header className="sticky top-0 z-[100] bg-[#2C1E18] border-b border-[#3D2B23] shadow-xl">
@@ -65,29 +71,143 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-1.5">
-            {user?.role === 'user' && (
-              <>
-                <NavLink to="/" className={activeClass}>Home</NavLink>
-                <a href="/#cities" className="text-[#E6D6C3] hover:text-white px-3.5 py-2 transition font-medium">Cities</a>
-                <NavLink to="/places" className={activeClass}>Explore Places</NavLink>
-                <NavLink to="/transport" className={activeClass}>Smart Transport</NavLink>
-                <NavLink to="/bus-routes" className={activeClass}>Bus Directory</NavLink>
-                <NavLink to="/metro-directory" className={activeClass}>Metro Directory</NavLink>
-              </>
-            )}
+          {/* Desktop Nav Links with Dropdowns */}
+          <nav className="hidden lg:flex items-center gap-1">
+            <NavLink to="/" className={activeClass}>Home</NavLink>
 
-            {!user && (
-              <>
-                <NavLink to="/" className={activeClass}>Home</NavLink>
-                <a href="/#cities" className="text-[#E6D6C3] hover:text-white px-3.5 py-2 transition font-medium">Cities</a>
-                <NavLink to="/places" className={activeClass}>Explore Places</NavLink>
-                <NavLink to="/transport" className={activeClass}>Smart Transport</NavLink>
-                <NavLink to="/bus-routes" className={activeClass}>Bus Directory</NavLink>
-                <NavLink to="/metro-directory" className={activeClass}>Metro Directory</NavLink>
-              </>
-            )}
+            {/* Plan Trip Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setPlanDropdown(true)}
+              onMouseLeave={() => setPlanDropdown(false)}
+            >
+              <button className="text-[#E6D6C3] hover:text-white hover:bg-white/10 px-3.5 py-2 rounded-xl transition font-medium flex items-center gap-1">
+                <span>Plan Trip</span>
+                <span className="text-[10px]">▼</span>
+              </button>
+
+              {planDropdown && (
+                <div className="absolute left-0 mt-1 w-56 rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 z-50 space-y-1">
+                  <NavLink
+                    to="/transport"
+                    onClick={() => setPlanDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">🚀 Plan Your Route</span>
+                    <span className="text-[10px] text-gray-500">Multi-modal fare & traffic search</span>
+                  </NavLink>
+                  <NavLink
+                    to="/bus-routes"
+                    onClick={() => setPlanDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">🚌 City Bus Directory</span>
+                    <span className="text-[10px] text-gray-500">27 JCTSL bus routes & fares</span>
+                  </NavLink>
+                  <NavLink
+                    to="/metro-directory"
+                    onClick={() => setPlanDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">🚇 Metro Directory</span>
+                    <span className="text-[10px] text-gray-500">11 Pink Line stations & FAQs</span>
+                  </NavLink>
+                  <NavLink
+                    to="/day-trips"
+                    onClick={() => setPlanDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">⛰️ Day Trips</span>
+                    <span className="text-[10px] text-gray-500">Pushkar, Ranthambore, Bhangarh</span>
+                  </NavLink>
+                </div>
+              )}
+            </div>
+
+            {/* Metro Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setMetroDropdown(true)}
+              onMouseLeave={() => setMetroDropdown(false)}
+            >
+              <button className="text-[#E6D6C3] hover:text-white hover:bg-white/10 px-3.5 py-2 rounded-xl transition font-medium flex items-center gap-1">
+                <span>Metro</span>
+                <span className="text-[10px]">▼</span>
+              </button>
+
+              {metroDropdown && (
+                <div className="absolute left-0 mt-1 w-52 rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 z-50 space-y-1">
+                  <NavLink
+                    to="/metro-directory"
+                    onClick={() => setMetroDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-pink-50 transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">🚉 Stations</span>
+                    <span className="text-[10px] text-gray-500">11 Pink Line stations & timings</span>
+                  </NavLink>
+                  <NavLink
+                    to="/metro-lines"
+                    onClick={() => setMetroDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-pink-50 transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">🚇 Metro Lines</span>
+                    <span className="text-[10px] text-gray-500">Pink & upcoming Orange Line</span>
+                  </NavLink>
+                </div>
+              )}
+            </div>
+
+            {/* City Bus Direct Link */}
+            <NavLink to="/bus-routes" className={activeClass}>City Bus</NavLink>
+
+            {/* Explore Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setExploreDropdown(true)}
+              onMouseLeave={() => setExploreDropdown(false)}
+            >
+              <button className="text-[#E6D6C3] hover:text-white hover:bg-white/10 px-3.5 py-2 rounded-xl transition font-medium flex items-center gap-1">
+                <span>Explore</span>
+                <span className="text-[10px]">▼</span>
+              </button>
+
+              {exploreDropdown && (
+                <div className="absolute left-0 mt-1 w-60 rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 z-50 space-y-1">
+                  <NavLink
+                    to="/places"
+                    onClick={() => setExploreDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">📍 All Tourist Places</span>
+                    <span className="text-[10px] text-gray-500">20+ destinations with 10 FAQs each</span>
+                  </NavLink>
+                  <NavLink
+                    to="/day-trips"
+                    onClick={() => setExploreDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">⛰️ Day Trips</span>
+                    <span className="text-[10px] text-gray-500">Pushkar, Ranthambore, Bhangarh</span>
+                  </NavLink>
+                  <NavLink
+                    to="/places?category=Forts+%26+Palaces"
+                    onClick={() => setExploreDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">🏰 Forts & Palaces</span>
+                    <span className="text-[10px] text-gray-500">Amber, Nahargarh, City Palace</span>
+                  </NavLink>
+                  <NavLink
+                    to="/places?category=Markets+%26+Bazaars"
+                    onClick={() => setExploreDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">🛍️ Markets & Bazaars</span>
+                    <span className="text-[10px] text-gray-500">Bapu Bazaar, Johari Bazaar</span>
+                  </NavLink>
+                </div>
+              )}
+            </div>
 
             {/* Active Ride Indicator */}
             {user?.role === 'user' && activeRideId && (
@@ -99,46 +219,25 @@ export default function Navbar() {
                 Active Ride
               </NavLink>
             )}
-
-            {user?.role === "driver" && (
-              <>
-                <NavLink to="/driver/dashboard" className={activeClass}>Dashboard</NavLink>
-                <NavLink to="/my-rides" className={activeClass}>History</NavLink>
-              </>
-            )}
-
-            {user?.role === "admin" && (
-              <>
-                <NavLink to="/dashboard" className={activeClass}>Dashboard</NavLink>
-                <NavLink to="/admin/places" className={activeClass}>Places</NavLink>
-                <NavLink to="/admin/drivers" className={activeClass}>Drivers</NavLink>
-                <NavLink to="/admin/users" className={activeClass}>Users</NavLink>
-              </>
-            )}
-
-            {user && (
-              <>
-                <NavLink to="/profile" className={activeClass}>Profile</NavLink>
-                {user.role === 'user' && <NavLink to="/my-rides" className={activeClass}>My Rides</NavLink>}
-              </>
-            )}
           </nav>
 
-          {/* Desktop Right Auth Actions */}
+          {/* Right Action: Plan Journey Button + Auth */}
           <div className="hidden lg:flex items-center gap-3">
+            <button
+              onClick={() => navigate('/transport')}
+              className="text-xs font-black uppercase tracking-wider bg-[#B35D38] text-white px-5 py-2.5 rounded-xl hover:bg-[#964B2A] transition shadow-lg flex items-center gap-2 hover:-translate-y-0.5"
+            >
+              <span>🚀</span>
+              <span>Plan Journey</span>
+            </button>
+
             {!user ? (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <button
                   onClick={() => navigate('/login')}
-                  className="text-sm font-bold text-[#FAF5EF] px-5 py-2.5 rounded-xl hover:bg-white/10 transition border border-white/10"
+                  className="text-xs font-bold text-[#FAF5EF] px-4 py-2 rounded-xl hover:bg-white/10 transition border border-white/10"
                 >
                   Login
-                </button>
-                <button
-                  onClick={() => navigate('/signup')}
-                  className="text-sm font-bold bg-[#B35D38] text-white px-6 py-2.5 rounded-xl hover:bg-[#964B2A] transition shadow-lg hover:shadow-terracotta-500/20 transform hover:-translate-y-0.5"
-                >
-                  Join Now
                 </button>
               </div>
             ) : (
@@ -147,26 +246,24 @@ export default function Navbar() {
                   className="flex items-center gap-3 bg-[#3D2B23] hover:bg-[#4A362B] p-1.5 pr-4 rounded-2xl transition border border-[#543C32]" 
                   onClick={() => setOpen((v) => !v)}
                 >
-                  <div className="w-9 h-9 rounded-xl bg-[#B35D38] flex items-center justify-center text-white font-black shadow-sm">
+                  <div className="w-8 h-8 rounded-xl bg-[#B35D38] flex items-center justify-center text-white font-black text-xs shadow-sm">
                     {user.name?.[0]?.toUpperCase() || 'U'}
                   </div>
-                  <span className="text-[#FAF5EF] font-bold text-sm truncate max-w-[110px]">{user.name}</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 text-[#D98A5B] transition ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <span className="text-[#FAF5EF] font-bold text-xs truncate max-w-[90px]">{user.name}</span>
                 </button>
 
                 {open && (
                   <div className="absolute right-0 mt-3 w-56 bg-[#FAF5EF] rounded-3xl shadow-2xl p-2 border border-[#E6D6C3] ring-1 ring-black/5 animate-in fade-in slide-in-from-top-2 z-50">
                     <div className="px-4 py-3 border-b border-[#F3E8DB] mb-1">
                        <p className="text-[10px] font-bold text-[#A37B66] uppercase tracking-widest">Signed in as</p>
-                       <p className="font-bold text-[#2C1E18] truncate">{user.email}</p>
-                       <p className="text-[10px] font-bold text-[#B35D38] mt-1 uppercase tracking-tighter">Rating: {user.rating?.toFixed(1) || '5.0'}</p>
+                       <p className="font-bold text-[#2C1E18] text-xs truncate">{user.email}</p>
                     </div>
-                    <div className="pt-1">
+                    <div className="pt-1 space-y-1">
+                      <NavLink to="/profile" onClick={() => setOpen(false)} className="block px-4 py-2 hover:bg-white rounded-xl text-xs font-bold text-[#2C1E18]">Profile</NavLink>
+                      <NavLink to="/saved-trips" onClick={() => setOpen(false)} className="block px-4 py-2 hover:bg-white rounded-xl text-xs font-bold text-[#2C1E18]">Saved Trips</NavLink>
                       <button 
                         onClick={handleLogout} 
-                        className="flex items-center gap-3 w-full text-left px-4 py-2.5 hover:bg-red-50 rounded-2xl transition font-bold text-red-600"
+                        className="flex items-center gap-2 w-full text-left px-4 py-2 hover:bg-red-50 rounded-xl font-bold text-xs text-red-600"
                       >
                         Logout
                       </button>
@@ -178,77 +275,42 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden flex items-center">
+          <div className="lg:hidden flex items-center gap-2">
+            <button
+              onClick={() => navigate('/transport')}
+              className="text-[11px] font-bold bg-[#B35D38] text-white px-3 py-1.5 rounded-lg"
+            >
+              Plan Journey
+            </button>
             <button
               onClick={() => setOpen((v) => !v)}
-              className="text-[#FAF5EF] focus:outline-none p-2 rounded-xl bg-[#3D2B23] border border-[#543C32]"
-              aria-label="Toggle menu"
+              className="text-[#FAF5EF] p-2 rounded-xl bg-[#3D2B23] border border-[#543C32]"
             >
-              {open ? (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
+              {open ? "✕" : "☰"}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu panel */}
+      {/* Mobile Menu Panel */}
       {open && (
-        <div className="lg:hidden bg-[#2C1E18] border-b border-[#3D2B23] px-4 pt-2 pb-6 space-y-2">
-          {user?.role === 'user' && (
-            <>
-              <NavLink to="/" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Home</NavLink>
-              <NavLink to="/places" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Explore Places</NavLink>
-              <NavLink to="/transport" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Smart Transport</NavLink>
-              <NavLink to="/bus-routes" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Bus Directory</NavLink>
-              <NavLink to="/metro-directory" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Metro Directory</NavLink>
-              <NavLink to="/saved-trips" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Saved Trips</NavLink>
-            </>
-          )}
-
-          {!user && (
-            <>
-              <NavLink to="/" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Home</NavLink>
-              <NavLink to="/places" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Explore Places</NavLink>
-              <NavLink to="/transport" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Smart Transport</NavLink>
-              <NavLink to="/bus-routes" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Bus Directory</NavLink>
-              <NavLink to="/metro-directory" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Metro Directory</NavLink>
-            </>
-          )}
-
-          {user?.role === 'driver' && (
-            <>
-              <NavLink to="/driver/dashboard" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-bold">Driver Dashboard</NavLink>
-              <NavLink to="/my-rides" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-bold">Ride History</NavLink>
-            </>
-          )}
-          {user?.role === 'admin' && (
-            <>
-              <NavLink to="/dashboard" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-bold">Admin Dashboard</NavLink>
-              <NavLink to="/admin/places" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-bold">Manage Places</NavLink>
-              <NavLink to="/admin/drivers" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-bold">Manage Drivers</NavLink>
-              <NavLink to="/admin/users" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-bold">Manage Users</NavLink>
-            </>
-          )}
-
+        <div className="lg:hidden bg-[#2C1E18] border-b border-[#3D2B23] px-4 pt-2 pb-6 space-y-2 text-xs">
+          <NavLink to="/" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-bold">Home</NavLink>
+          <NavLink to="/transport" onClick={() => setOpen(false)} className="block text-[#D98A5B] px-3 py-2 rounded-xl font-bold">🚀 Plan Your Route</NavLink>
+          <NavLink to="/places" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Explore All Places (20+)</NavLink>
+          <NavLink to="/bus-routes" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">City Bus Directory (27 Routes)</NavLink>
+          <NavLink to="/metro-directory" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Metro Directory (11 Stations)</NavLink>
+          <NavLink to="/metro-lines" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Metro Lines Overview</NavLink>
+          <NavLink to="/day-trips" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Day Trips (Pushkar, Ranthambore...)</NavLink>
+          
           <div className="pt-3 border-t border-[#3D2B23] space-y-2">
             {!user ? (
-              <>
-                <button onClick={() => { setOpen(false); navigate('/login'); }} className="w-full text-left text-[#FAF5EF] px-3 py-2 rounded-xl font-bold">Login</button>
-                <button onClick={() => { setOpen(false); navigate('/signup'); }} className="w-full bg-[#B35D38] text-white px-3 py-2.5 rounded-xl font-bold text-center">Join Now</button>
-              </>
+              <div className="flex gap-2">
+                <button onClick={() => { setOpen(false); navigate('/login'); }} className="flex-1 text-[#FAF5EF] py-2.5 rounded-xl border border-white/20 font-bold">Login</button>
+                <button onClick={() => { setOpen(false); navigate('/signup'); }} className="flex-1 bg-[#B35D38] text-white py-2.5 rounded-xl font-bold">Join Now</button>
+              </div>
             ) : (
-              <>
-                <button onClick={() => { setOpen(false); navigate('/profile'); }} className="w-full text-left text-[#FAF5EF] px-3 py-2 rounded-xl">Profile</button>
-                {user.role === 'user' && <button onClick={() => { setOpen(false); navigate('/my-rides'); }} className="w-full text-left text-[#FAF5EF] px-3 py-2 rounded-xl">My Rides</button>}
-                <button onClick={() => { setOpen(false); handleLogout(); }} className="w-full text-left text-red-400 px-3 py-2 rounded-xl font-bold">Logout</button>
-              </>
+              <button onClick={handleLogout} className="w-full text-left text-red-400 px-3 py-2 font-bold">Logout</button>
             )}
           </div>
         </div>

@@ -228,16 +228,23 @@ export default function MetroDirectory() {
 
         {/* Selected Station Details & FAQ Inspector Modal */}
         {selectedStation && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
-            <div className="relative w-full max-w-4xl rounded-3xl border border-[#E6D6C3] bg-white p-6 sm:p-8 shadow-2xl space-y-8 my-8 animate-in fade-in zoom-in-95 duration-200">
+          <div className="fixed inset-0 z-[300] bg-black/70 backdrop-blur-md overflow-y-auto p-4 sm:p-6 flex justify-center items-start pt-16 sm:pt-24">
+            <div className="relative w-full max-w-4xl rounded-3xl border border-[#E6D6C3] bg-white p-6 sm:p-8 shadow-2xl space-y-6 my-4 animate-in fade-in zoom-in-95 duration-200">
               
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedStation(null)}
-                className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full bg-[#FAF5EF] text-[#2C1E18] hover:bg-pink-600 hover:text-white transition shadow"
-              >
-                ✕
-              </button>
+              {/* Sticky Top Close Header */}
+              <div className="sticky -top-6 -mx-6 -mt-6 sm:-top-8 sm:-mx-8 sm:-mt-8 z-30 flex items-center justify-between border-b border-[#F3E8DB] bg-white/95 backdrop-blur px-6 py-4 rounded-t-3xl shadow-sm">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-pink-500 animate-pulse" />
+                  <span className="text-xs font-extrabold uppercase tracking-widest text-[#B35D38]">Station Inspector & FAQs</span>
+                </div>
+                <button
+                  onClick={() => setSelectedStation(null)}
+                  className="flex items-center gap-2 rounded-xl bg-pink-600 px-4 py-2 text-xs font-bold text-white hover:bg-pink-700 transition shadow"
+                >
+                  <span className="text-base font-black">✕</span>
+                  <span>Close</span>
+                </button>
+              </div>
 
               {/* Station Header */}
               <div className="space-y-2 border-b border-[#F3E8DB] pb-4">
