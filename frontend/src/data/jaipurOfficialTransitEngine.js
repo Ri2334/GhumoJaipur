@@ -7,17 +7,9 @@ export const OFFICIAL_JCTSL_ROUTES = [
     "type": "Urban AC Low Floor",
     "name": "Sanganer to Kukas",
     "stops": [
-      "Sanganer Police Station",
-      "Tonk Phatak",
-      "Rambagh",
-      "Ajmeri Gate",
-      "Sanganeri Gate",
-      "Badi Chopad",
-      "Ramgarh Mode",
-      "Jal Mahal",
-      "Amber Fort",
-      "Kunda",
-      "Kukas"
+      "Sanganer Police Station", "Tonk Phatak", "Rambagh", "Ajmeri Gate",
+      "Sanganeri Gate", "Badi Chopad", "Ramgarh Mode", "Jal Mahal",
+      "Amber Fort", "Kunda", "Kukas"
     ]
   },
   {
@@ -25,20 +17,9 @@ export const OFFICIAL_JCTSL_ROUTES = [
     "type": "Urban AC Low Floor",
     "name": "Joshi Marg to Mahatma Gandhi Hospital",
     "stops": [
-      "Joshi Marg",
-      "Jhotwara",
-      "Choumu Pulia",
-      "Panipech",
-      "Railway Station",
-      "Chandpole",
-      "Badi Chopad",
-      "Ajmeri Gate",
-      "Rambagh",
-      "Tonk Phatak",
-      "Durgapura",
-      "Sanganer Police Station",
-      "Pratap Nagar",
-      "Sitapura"
+      "Joshi Marg", "Jhotwara", "Choumu Pulia", "Panipech", "Railway Station",
+      "Chandpole", "Badi Chopad", "Ajmeri Gate", "Rambagh", "Tonk Phatak",
+      "Durgapura", "Sanganer Police Station", "Pratap Nagar", "Sitapura"
     ]
   },
   {
@@ -46,17 +27,8 @@ export const OFFICIAL_JCTSL_ROUTES = [
     "type": "Urban Non-AC MIDI",
     "name": "Bheru Khejda to Galtagate",
     "stops": [
-      "Bheru Khejda",
-      "Todi Depot",
-      "Harmada",
-      "VKI Road 14",
-      "Chomu Pulia",
-      "Railway Station",
-      "Sindhi Camp",
-      "Chandpole",
-      "Choti Chopad",
-      "Ramganj",
-      "Galtagate"
+      "Bheru Khejda", "Todi Depot", "Harmada", "VKI Road 14", "Chomu Pulia",
+      "Railway Station", "Sindhi Camp", "Chandpole", "Choti Chopad", "Ramganj", "Galtagate"
     ]
   },
   {
@@ -64,18 +36,9 @@ export const OFFICIAL_JCTSL_ROUTES = [
     "type": "Urban Non-AC Low Floor",
     "name": "Khirni Phatak to Transport Nagar",
     "stops": [
-      "Khirni Phatak",
-      "Heerapura",
-      "Mansarovar Metro",
-      "Gurjar Ki Thadi",
-      "Triveni Nagar",
-      "Gopalpura",
-      "Rambagh",
-      "Narayan Singh Circle",
-      "Moti Dungri Circle",
-      "Govind Marg",
-      "Mental Hospital",
-      "Transport Nagar"
+      "Khirni Phatak", "Heerapura", "Mansarovar Metro", "Gurjar Ki Thadi",
+      "Triveni Nagar", "Gopalpura", "Rambagh", "Narayan Singh Circle",
+      "Moti Dungri Circle", "Govind Marg", "Mental Hospital", "Transport Nagar"
     ]
   },
   {
@@ -83,352 +46,272 @@ export const OFFICIAL_JCTSL_ROUTES = [
     "type": "Urban Non-AC Low Floor",
     "name": "Dadi Ka Phatak to Agarwal Farm",
     "stops": [
-      "Dadi Ka Phatak",
-      "Murlipura",
-      "Road No 1",
-      "Alka Cinema",
-      "Vidyadhar Nagar",
-      "Shastri Nagar",
-      "Pital Factory",
-      "Chandpole",
-      "GPO",
-      "Ajmeri Gate",
-      "Rambagh",
-      "Tonk Phatak",
-      "Durgapura",
-      "Maharani Farm",
-      "Shipra Path",
-      "Agarwal Farm"
+      "Dadi Ka Phatak", "Murlipura", "Road No 1", "Alka Cinema", "Vidyadhar Nagar",
+      "Shastri Nagar", "Pital Factory", "Chandpole", "GPO", "Ajmeri Gate",
+      "Rambagh", "Tonk Phatak", "Durgapura", "Maharani Farm", "Shipra Path", "Agarwal Farm"
     ]
   },
   {
     "routeNo": "15",
     "type": "Sub Urban Non-AC MIDI",
     "name": "Chandpole to Chomu",
-    "stops": [
-      "Chandpole",
-      "Panipech",
-      "Chomu Pulia",
-      "Khaitan",
-      "VKI Road 1",
-      "Todi",
-      "Rampura",
-      "Chomu"
-    ]
+    "stops": ["Chandpole", "Panipech", "Chomu Pulia", "Khaitan", "VKI Road 1", "Todi", "Rampura", "Chomu"]
   },
   {
     "routeNo": "32",
     "type": "Sub Urban Non-AC Low Floor",
     "name": "Heerapura RSBTDA to Nayla",
     "stops": [
-      "Heerapura RSBTDA",
-      "Badarwas",
-      "Gurjar Ki Thadi",
-      "Gopalpura",
-      "Rambagh",
-      "SMS Hospital",
-      "Ajmeri Gate",
-      "Ghatgate",
-      "Transport Nagar",
-      "Khaniya",
-      "Meena Paldi",
-      "Kanota",
-      "Nayla"
+      "Heerapura RSBTDA", "Badarwas", "Gurjar Ki Thadi", "Gopalpura", "Rambagh",
+      "SMS Hospital", "Ajmeri Gate", "Ghatgate", "Transport Nagar", "Khaniya",
+      "Meena Paldi", "Kanota", "Nayla"
     ]
   },
   {
     "routeNo": "28",
     "type": "Sub Urban Non-AC MIDI",
     "name": "Ajmeri Gate to Renwal",
-    "stops": [
-      "Ajmeri Gate",
-      "Rambagh",
-      "Durgapura",
-      "Sanganer",
-      "Muhana Mode",
-      "Balawala",
-      "Renwal"
-    ]
+    "stops": ["Ajmeri Gate", "Rambagh", "Durgapura", "Sanganer", "Muhana Mode", "Balawala", "Renwal"]
   },
   {
     "routeNo": "14",
     "type": "Sub Urban Non-AC Low Floor",
     "name": "Chomu Pulia to Bassi",
-    "stops": [
-      "Chomu Pulia",
-      "Khatipura",
-      "Vaishali Nagar",
-      "Sodala",
-      "Rambagh",
-      "Ajmeri Gate",
-      "Transport Nagar",
-      "Kanota",
-      "Bassi"
-    ]
+    "stops": ["Chomu Pulia", "Khatipura", "Vaishali Nagar", "Sodala", "Rambagh", "Ajmeri Gate", "Transport Nagar", "Kanota", "Bassi"]
   },
   {
     "routeNo": "26",
     "type": "Sub Urban Non-AC Low Floor",
     "name": "Chandpole to Bagru",
     "stops": [
-      "Chandpole",
-      "Hathroi",
-      "Ajmer Puliya",
-      "Civil Lines Metro",
-      "Sodala",
-      "DCM 200 Feet",
-      "RSBTDA Bus Terminal",
-      "Bhankrota",
-      "Mahapura",
-      "Bagru"
+      "Chandpole", "Hathroi", "Ajmer Puliya", "Civil Lines Metro", "Sodala",
+      "DCM 200 Feet", "RSBTDA Bus Terminal", "Bhankrota", "Mahapura", "Bagru"
     ]
   },
   {
     "routeNo": "24",
     "type": "Sub Urban Non-AC MIDI",
     "name": "Chandpole to Kalwad",
-    "stops": [
-      "Chandpole",
-      "Panipech",
-      "Chomu Pulia",
-      "Jhotwada",
-      "Hathoj",
-      "Kalwad"
-    ]
+    "stops": ["Chandpole", "Panipech", "Chomu Pulia", "Jhotwada", "Hathoj", "Kalwad"]
   },
   {
     "routeNo": "10B",
     "type": "Urban Non-AC MIDI",
     "name": "Niwaru to Khole Ke Hanumanji",
     "stops": [
-      "Niwaru",
-      "Jhotwara",
-      "Panipech",
-      "Railway Station",
-      "Sindhi Camp",
-      "Chandpole",
-      "Choti Chopad",
-      "Galtagate",
-      "Idgah",
-      "Khole Ke Hanumanji"
+      "Niwaru", "Jhotwara", "Panipech", "Railway Station", "Sindhi Camp",
+      "Chandpole", "Choti Chopad", "Galtagate", "Idgah", "Khole Ke Hanumanji"
     ]
   },
   {
     "routeNo": "23A",
     "type": "Urban Non-AC MIDI",
     "name": "Ajmeri Gate to Patrakar Colony",
-    "stops": [
-      "Ajmeri Gate",
-      "Gopalpura",
-      "Gurjar Ki Thadi",
-      "Mansarovar",
-      "VT Road",
-      "Patrakar Colony"
-    ]
+    "stops": ["Ajmeri Gate", "Gopalpura", "Gurjar Ki Thadi", "Mansarovar", "VT Road", "Patrakar Colony"]
   },
   {
     "routeNo": "1A",
     "type": "Urban Non-AC MIDI",
     "name": "TP Nagar to VKI Road 17",
-    "stops": [
-      "TP Nagar",
-      "Ajmeri Gate",
-      "GPO",
-      "Chandpole",
-      "Pital Factory",
-      "Chomu Pulia",
-      "VKI Road 17"
-    ]
+    "stops": ["TP Nagar", "Ajmeri Gate", "GPO", "Chandpole", "Pital Factory", "Chomu Pulia", "VKI Road 17"]
   },
   {
     "routeNo": "3A",
     "type": "Urban Non-AC MIDI",
     "name": "Sanganer to Choti Chopad",
-    "stops": [
-      "Sanganer Police Station",
-      "Durgapura",
-      "Tonk Phatak",
-      "Rambagh",
-      "Ajmeri Gate",
-      "Choti Chopad"
-    ]
+    "stops": ["Sanganer Police Station", "Durgapura", "Tonk Phatak", "Rambagh", "Ajmeri Gate", "Choti Chopad"]
   },
   {
     "routeNo": "11",
     "type": "Urban Non-AC MIDI",
     "name": "Ajmeri Gate to Goner",
-    "stops": [
-      "Ajmeri Gate",
-      "Durgapura",
-      "Sanganer",
-      "Goner Mode",
-      "Goner"
-    ]
+    "stops": ["Ajmeri Gate", "Durgapura", "Sanganer", "Goner Mode", "Goner"]
   },
   {
     "routeNo": "6A",
     "type": "Urban Non-AC MIDI",
     "name": "Khirni Phatak to Airport",
-    "stops": [
-      "Khirni Phatak",
-      "Jhotwada",
-      "Chomu Pulia",
-      "Collectorate",
-      "Ajmeri Gate",
-      "Tonk Phatak",
-      "Malviya Nagar",
-      "Airport"
-    ]
+    "stops": ["Khirni Phatak", "Jhotwada", "Chomu Pulia", "Collectorate", "Ajmeri Gate", "Tonk Phatak", "Malviya Nagar", "Airport"]
   },
   {
     "routeNo": "3",
     "type": "Urban Non-AC MIDI",
     "name": "Dwarkapuri to Transport Nagar",
-    "stops": [
-      "Dwarkapuri",
-      "Sanganer Police Station",
-      "Durgapura",
-      "Tonk Phatak",
-      "Rambagh",
-      "Ajmeri Gate",
-      "Sanganeri Gate",
-      "Ghat Gate",
-      "Transport Nagar"
-    ]
+    "stops": ["Dwarkapuri", "Sanganer Police Station", "Durgapura", "Tonk Phatak", "Rambagh", "Ajmeri Gate", "Sanganeri Gate", "Ghat Gate", "Transport Nagar"]
   },
   {
     "routeNo": "34",
     "type": "Urban Non-AC MIDI",
     "name": "JDA Colony to Aananda Manglam City",
-    "stops": [
-      "JDA Colony",
-      "Ramgarh Mode",
-      "Badi Chopad",
-      "Sanganeri Gate",
-      "Ajmeri Gate",
-      "Rambagh",
-      "Tonk Phatak",
-      "Gopalpura",
-      "Triveni Pulia",
-      "Aananda Manglam City"
-    ]
+    "stops": ["JDA Colony", "Ramgarh Mode", "Badi Chopad", "Sanganeri Gate", "Ajmeri Gate", "Rambagh", "Tonk Phatak", "Gopalpura", "Triveni Pulia", "Aananda Manglam City"]
   },
   {
     "routeNo": "AC 8",
     "type": "Urban AC MIDI",
     "name": "Choti Chopad to Mundiya Ramsar",
-    "stops": [
-      "Choti Chopad",
-      "Chandpole",
-      "Railway Station",
-      "Hasanpura",
-      "Khatipura",
-      "Bindayaka",
-      "Mundiya Ramsar"
-    ]
+    "stops": ["Choti Chopad", "Chandpole", "Railway Station", "Hasanpura", "Khatipura", "Bindayaka", "Mundiya Ramsar"]
   },
   {
     "routeNo": "AC 7",
     "type": "Urban AC MIDI",
     "name": "Chomu Pulia to Dantli Phatak",
-    "stops": [
-      "Chomu Pulia",
-      "Sanganeri Gate",
-      "Ajmeri Gate",
-      "Gandhi Nagar",
-      "Rambagh",
-      "Jhalana",
-      "Jagatpura",
-      "Dantli Phatak"
-    ]
+    "stops": ["Chomu Pulia", "Sanganeri Gate", "Ajmeri Gate", "Gandhi Nagar", "Rambagh", "Jhalana", "Jagatpura", "Dantli Phatak"]
   },
   {
     "routeNo": "30",
     "type": "Sub Urban Non-AC MIDI",
     "name": "Badi Chopad to Ramgarh",
-    "stops": [
-      "Badi Chopad",
-      "Subhash Chowk",
-      "Ramgarh Mode",
-      "Nai Ki Thadi",
-      "Saipura",
-      "Ramgarh"
-    ]
+    "stops": ["Badi Chopad", "Subhash Chowk", "Ramgarh Mode", "Nai Ki Thadi", "Saipura", "Ramgarh"]
   },
   {
     "routeNo": "16",
     "type": "Sub Urban Non-AC MIDI",
     "name": "Ajmeri Gate to Chaksu",
-    "stops": [
-      "Ajmeri Gate",
-      "Sanganer Police Station",
-      "12 Meel",
-      "Bilwa",
-      "Shivdas Pura",
-      "Chaksu"
-    ]
+    "stops": ["Ajmeri Gate", "Sanganer Police Station", "12 Meel", "Bilwa", "Shivdas Pura", "Chaksu"]
   },
   {
     "routeNo": "27",
     "type": "Sub Urban Non-AC MIDI",
     "name": "Goner to Vatika",
-    "stops": [
-      "Goner",
-      "Luniyawas",
-      "TP Nagar",
-      "Ghatgate",
-      "Ajmeri Gate",
-      "Tonk Phatak",
-      "Durgapura",
-      "Sanganer",
-      "Pratap Nagar",
-      "Vatika"
-    ]
+    "stops": ["Goner", "Luniyawas", "TP Nagar", "Ghatgate", "Ajmeri Gate", "Tonk Phatak", "Durgapura", "Sanganer", "Pratap Nagar", "Vatika"]
   },
   {
     "routeNo": "25A",
     "type": "Sub Urban Non-AC MIDI",
     "name": "Ajmeri Gate to Padampura",
-    "stops": [
-      "Ajmeri Gate",
-      "SMS Hospital",
-      "Tonk Phatak",
-      "Sanganer",
-      "Bilwa",
-      "Shivdaspura",
-      "Padampura"
-    ]
+    "stops": ["Ajmeri Gate", "SMS Hospital", "Tonk Phatak", "Sanganer", "Bilwa", "Shivdaspura", "Padampura"]
   },
   {
     "routeNo": "25B",
     "type": "Sub Urban Non-AC MIDI",
     "name": "Ajmeri Gate to Titraya",
-    "stops": [
-      "Ajmeri Gate",
-      "SMS Hospital",
-      "Tonk Phatak",
-      "Sanganer",
-      "Bilwa",
-      "Shivdaspura",
-      "Titraya",
-      "Bhojyara"
-    ]
+    "stops": ["Ajmeri Gate", "SMS Hospital", "Tonk Phatak", "Sanganer", "Bilwa", "Shivdaspura", "Titraya", "Bhojyara"]
   },
   {
     "routeNo": "RBP-2",
     "type": "Urban Non-AC MIDI",
     "name": "Ramniwas Bag Parking Loop",
-    "stops": [
-      "Ramniwas Bag Parking",
-      "New Gate",
-      "Choda Rasta",
-      "Tripoliya",
-      "Badi Chopad",
-      "Johari Bazar",
-      "Sanganeri Gate"
-    ]
+    "stops": ["Ramniwas Bag Parking", "New Gate", "Choda Rasta", "Tripoliya", "Badi Chopad", "Johari Bazar", "Sanganeri Gate"]
   }
 ];
+
+/**
+ * Universal Place-to-Bus Stop Resolver for all 140 places
+ */
+export function getUniversalNearestBusStop(name) {
+  if (!name) return { busStop: "Ajmeri Gate", walkTime: "2 min walk" };
+  const p = name.toLowerCase().trim();
+
+  // Badi Chopad Cluster
+  if (p.includes("hawa mahal") || p.includes("wind view") || p.includes("tattoo") || p.includes("city palace") || p.includes("johari") || p.includes("govind dev") || p.includes("isarlat") || p.includes("badi chopad") || p.includes("badi chaupar") || p.includes("sireh deori") || p.includes("rajasthan school of art") || p.includes("laxmi mishthan") || p.includes("lmb") || p.includes("gaitore") || p.includes("royal gaitor")) {
+    return { busStop: "Badi Chopad", walkTime: "2 min walk (150m)" };
+  }
+
+  // Choti Chopad Cluster
+  if (p.includes("jantar mantar") || p.includes("choti chopad") || p.includes("choti chaupar") || p.includes("tripolia") || p.includes("tarkeshwar") || p.includes("chandpole bazaar")) {
+    return { busStop: "Choti Chopad", walkTime: "3 min walk (200m)" };
+  }
+
+  // Sanganeri Gate & Bapu Bazaar Cluster
+  if (p.includes("bapu bazaar") || p.includes("sanganeri gate") || p.includes("neelgaron")) {
+    return { busStop: "Sanganeri Gate", walkTime: "3 min walk (200m)" };
+  }
+
+  // Ajmeri Gate & MI Road Cluster
+  if (p.includes("ajmeri gate") || p.includes("mi road") || p.includes("lassiwala") || p.includes("raj mandir") || p.includes("kishanpole")) {
+    return { busStop: "Ajmeri Gate", walkTime: "3 min walk (200m)" };
+  }
+
+  // Ramniwas Bagh & Albert Hall Cluster
+  if (p.includes("albert hall") || p.includes("masala chowk") || p.includes("ram niwas") || p.includes("jaipur zoo")) {
+    return { busStop: "Ramniwas Bag Parking", walkTime: "2 min walk (100m)" };
+  }
+
+  // Amer & Kunda Fort Cluster
+  if (p.includes("amer fort") || p.includes("amber fort") || p.includes("maota lake") || p.includes("shila devi")) {
+    return { busStop: "Amber Fort", walkTime: "3 min walk (200m)" };
+  }
+  if (p.includes("panna meena") || p.includes("anokhi") || p.includes("nahargarh biological")) {
+    return { busStop: "Kunda", walkTime: "5 min walk/auto (400m)" };
+  }
+  if (p.includes("jal mahal") || p.includes("man sagar")) {
+    return { busStop: "Jal Mahal", walkTime: "1 min walk (50m)" };
+  }
+  if (p.includes("kanak vrindavan")) {
+    return { busStop: "Ramgarh Mode", walkTime: "4 min auto (1 km)" };
+  }
+
+  // Hilltop Forts & Chandpole Access
+  if (p.includes("nahargarh") || p.includes("madhavendra") || p.includes("sculpture park") || p.includes("wax museum") || p.includes("padao") || p.includes("jaigarh")) {
+    return { busStop: "Chandpole", walkTime: "15 min cab/auto up hill road (6 km)" };
+  }
+
+  // Rambagh & SMS Hospital Cluster
+  if (p.includes("rambagh") || p.includes("central park") || p.includes("tapri")) {
+    return { busStop: "Rambagh", walkTime: "3 min walk (250m)" };
+  }
+  if (p.includes("sms hospital") || p.includes("birla mandir") || p.includes("amar jawan") || p.includes("crystal palm")) {
+    return { busStop: "SMS Hospital", walkTime: "4 min walk (300m)" };
+  }
+  if (p.includes("moti dungri")) {
+    return { busStop: "Moti Dungri Circle", walkTime: "3 min walk (200m)" };
+  }
+
+  // Airport & Malviya Nagar Cluster
+  if (p.includes("patrika gate") || p.includes("jawahar circle") || p.includes("airport")) {
+    return { busStop: "Airport", walkTime: "2 min walk (100m)" };
+  }
+  if (p.includes("world trade park") || p.includes("wtp") || p.includes("gt central") || p.includes("gaurav tower")) {
+    return { busStop: "Malviya Nagar", walkTime: "3 min walk (200m)" };
+  }
+  if (p.includes("jhalana") || p.includes("smriti van") || p.includes("jawahar kala")) {
+    return { busStop: "Gandhi Nagar", walkTime: "5 min walk (350m)" };
+  }
+  if (p.includes("chokhi dhani") || p.includes("chandlai")) {
+    return { busStop: "12 Meel", walkTime: "5 min walk (300m)" };
+  }
+
+  // Sanganer, Railway Station & Vaishali Nagar
+  if (p.includes("sanganer") || p.includes("sanghiji") || p.includes("neota")) {
+    return { busStop: "Sanganer Police Station", walkTime: "3 min walk (200m)" };
+  }
+  if (p.includes("railway station") || p.includes("rawat")) {
+    return { busStop: "Railway Station", walkTime: "2 min walk (100m)" };
+  }
+  if (p.includes("sindhi camp")) {
+    return { busStop: "Sindhi Camp", walkTime: "1 min walk" };
+  }
+  if (p.includes("akshardham") || p.includes("elements mall") || p.includes("vaishali")) {
+    return { busStop: "Vaishali Nagar", walkTime: "4 min walk" };
+  }
+  if (p.includes("dravyavati") || p.includes("patrakar")) {
+    return { busStop: "Mansarovar Metro", walkTime: "5 min walk" };
+  }
+  if (p.includes("galta") || p.includes("amonagarh")) {
+    return { busStop: "Galtagate", walkTime: "10 min walk/auto" };
+  }
+  if (p.includes("khole ke hanuman")) {
+    return { busStop: "Khole Ke Hanumanji", walkTime: "2 min walk" };
+  }
+  if (p.includes("transport nagar") || p.includes("sisodia") || p.includes("vidyadhar garden") || p.includes("garisagar")) {
+    return { busStop: "Transport Nagar", walkTime: "4 min walk" };
+  }
+
+  // Sub-Urban Towns
+  if (p.includes("samode")) return { busStop: "Chomu Pulia", walkTime: "15 min auto/cab (25 km)" };
+  if (p.includes("chomu")) return { busStop: "Chomu", walkTime: "5 min auto" };
+  if (p.includes("bagru")) return { busStop: "Bagru", walkTime: "3 min walk" };
+  if (p.includes("bassi")) return { busStop: "Bassi", walkTime: "2 min walk" };
+  if (p.includes("chaksu")) return { busStop: "Chaksu", walkTime: "2 min walk" };
+  if (p.includes("padampura")) return { busStop: "Padampura", walkTime: "3 min walk" };
+
+  // Outstation Destinations
+  if (p.includes("pushkar") || p.includes("ajmer") || p.includes("sariska") || p.includes("sambhar") || p.includes("bhangarh") || p.includes("neemrana") || p.includes("tonk") || p.includes("dausa") || p.includes("abhaneri") || p.includes("viratnagar") || p.includes("bairat") || p.includes("salasar") || p.includes("khatu shyam") || p.includes("mehandipur") || p.includes("ranthambore") || p.includes("bisalpur") || p.includes("shrinathji") || p.includes("kesroli")) {
+    return { busStop: "Sindhi Camp ISBT Terminal", walkTime: "RSRTC Express Bus Terminal" };
+  }
+
+  return { busStop: "Ajmeri Gate", walkTime: "3 min walk" };
+}
 
 /**
  * Finds exact official JCTSL city bus route, compares ALL matching buses, and returns the FASTEST route with least stops.
@@ -436,51 +319,8 @@ export const OFFICIAL_JCTSL_ROUTES = [
 export function findOfficialJCTSBusRoute(originPlaceName, destPlaceName) {
   if (!originPlaceName || !destPlaceName) return null;
 
-  const origKey = originPlaceName.toLowerCase().trim();
-  const destKey = destPlaceName.toLowerCase().trim();
-
-  // Helper resolver for bus stop
-  const getStop = (name) => {
-    const p = name.toLowerCase().strip ? name.toLowerCase().strip() : name.toLowerCase().trim();
-    if (p.includes("hawa mahal") || p.includes("wind view") || p.includes("tattoo") || p.includes("city palace") || p.includes("johari") || p.includes("govind dev") || p.includes("isarlat") || p.includes("badi chopad") || p.includes("badi chaupar")) {
-      return { busStop: "Badi Chopad", walkTime: "2 min walk (150m)" };
-    }
-    if (p.includes("samode")) return { busStop: "Chomu Pulia", walkTime: "15 min auto/cab (25 km)" };
-    if (p.includes("jantar mantar") || p.includes("choti chopad") || p.includes("choti chaupar") || p.includes("tripolia")) {
-      return { busStop: "Choti Chopad", walkTime: "3 min walk (200m)" };
-    }
-    if (p.includes("bapu bazaar") || p.includes("sanganeri gate")) return { busStop: "Sanganeri Gate", walkTime: "3 min walk (200m)" };
-    if (p.includes("ajmeri gate") || p.includes("mi road") || p.includes("lassiwala") || p.includes("raj mandir")) return { busStop: "Ajmeri Gate", walkTime: "3 min walk (200m)" };
-    if (p.includes("albert hall") || p.includes("masala chowk") || p.includes("ram niwas")) return { busStop: "Ramniwas Bag Parking", walkTime: "2 min walk (100m)" };
-    if (p.includes("amer fort") || p.includes("amber fort") || p.includes("maota lake") || p.includes("shila devi")) return { busStop: "Amber Fort", walkTime: "3 min walk (200m)" };
-    if (p.includes("panna meena") || p.includes("anokhi")) return { busStop: "Kunda", walkTime: "5 min walk/auto (400m)" };
-    if (p.includes("jal mahal") || p.includes("man sagar")) return { busStop: "Jal Mahal", walkTime: "1 min walk (50m)" };
-    if (p.includes("kanak vrindavan")) return { busStop: "Ramgarh Mode", walkTime: "4 min auto (1 km)" };
-    if (p.includes("nahargarh") || p.includes("madhavendra") || p.includes("sculpture park") || p.includes("wax museum") || p.includes("padao") || p.includes("jaigarh")) {
-      return { busStop: "Chandpole", walkTime: "15 min cab/auto up hill road (6 km)" };
-    }
-    if (p.includes("rambagh") || p.includes("central park") || p.includes("tapri")) return { busStop: "Rambagh", walkTime: "3 min walk (250m)" };
-    if (p.includes("sms hospital") || p.includes("birla mandir")) return { busStop: "SMS Hospital", walkTime: "4 min walk (300m)" };
-    if (p.includes("moti dungri")) return { busStop: "Moti Dungri Circle", walkTime: "3 min walk (200m)" };
-    if (p.includes("patrika gate") || p.includes("jawahar circle") || p.includes("airport")) return { busStop: "Airport", walkTime: "2 min walk (100m)" };
-    if (p.includes("world trade park") || p.includes("wtp") || p.includes("gt central") || p.includes("gaurav tower")) return { busStop: "Malviya Nagar", walkTime: "3 min walk (200m)" };
-    if (p.includes("chokhi dhani")) return { busStop: "12 Meel", walkTime: "5 min walk (300m)" };
-    if (p.includes("jhalana")) return { busStop: "Jhalana", walkTime: "8 min auto (1.5 km)" };
-    if (p.includes("sanganer") || p.includes("sanghiji")) return { busStop: "Sanganer Police Station", walkTime: "3 min walk (200m)" };
-    if (p.includes("railway station") || p.includes("rawat")) return { busStop: "Railway Station", walkTime: "2 min walk (100m)" };
-    if (p.includes("sindhi camp")) return { busStop: "Sindhi Camp", walkTime: "1 min walk" };
-    if (p.includes("chomu")) return { busStop: "Chomu", walkTime: "5 min auto" };
-    if (p.includes("bagru")) return { busStop: "Bagru", walkTime: "3 min walk" };
-    if (p.includes("bassi")) return { busStop: "Bassi", walkTime: "2 min walk" };
-    if (p.includes("chaksu")) return { busStop: "Chaksu", walkTime: "2 min walk" };
-    if (p.includes("pushkar") || p.includes("ajmer") || p.includes("sariska") || p.includes("sambhar") || p.includes("bhangarh") || p.includes("neemrana") || p.includes("tonk") || p.includes("dausa")) {
-      return { busStop: "Sindhi Camp ISBT Terminal", walkTime: "RSRTC Express Bus Terminal" };
-    }
-    return { busStop: name, walkTime: "2 min walk" };
-  };
-
-  const origInfo = getStop(originPlaceName);
-  const destInfo = getStop(destPlaceName);
+  const origInfo = getUniversalNearestBusStop(originPlaceName);
+  const destInfo = getUniversalNearestBusStop(destPlaceName);
 
   const origStopName = origInfo.busStop;
   const destStopName = destInfo.busStop;
