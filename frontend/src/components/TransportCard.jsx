@@ -111,6 +111,20 @@ export default function TransportCard({ mode, fare, time, badge, note, source, d
           )}
         </div>
       )}
+
+      {source && destination && (
+        <div className="mt-3 border-t border-black/5 pt-2">
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(source)}&destination=${encodeURIComponent(destination)}&travelmode=${mode.toLowerCase().includes('cab') || mode.toLowerCase().includes('auto') ? 'driving' : 'transit'}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="flex items-center justify-center gap-1.5 w-full py-2 bg-white/90 border border-black/10 hover:bg-white text-[#B35D38] rounded-xl text-[11px] font-bold transition shadow-xs"
+          >
+            🗺️ Live Google Maps Directions ↗
+          </a>
+        </div>
+      )}
     </div>
   );
 }

@@ -12,6 +12,7 @@ import TransportRouteMap from "../components/TransportRouteMap";
 import { getNearestMetroStation } from "../data/jaipurTransitChecker";
 import { calculateUniversalRoute } from "../data/jaipurUniversalTransitEngine";
 import { getCityRouteResult } from "../data/cityResolver";
+import { getGoogleMapsTransitUrl } from "../data/googleMapsLiveTransitEngine";
 import { CityContext } from "../context/CityContext";
 import SEOHead from "../components/SEOHead";
 
@@ -420,6 +421,42 @@ export default function TransportSearch() {
                 </div>
               </div>
             )}
+
+            {/* Google Maps Real-Time Live Verified Banner */}
+            <div className="rounded-3xl border border-[#E6D6C3] bg-gradient-to-r from-white via-[#FAF5EF] to-white p-6 shadow-md flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-[#B35D38] text-white text-[10px] font-black uppercase tracking-wider">
+                    Google Maps Real-Time Verified 🟢
+                  </span>
+                  <span className="text-xs font-bold text-[#543C32]">GPS Navigation &amp; Live Traffic</span>
+                </div>
+                <h4 className="mt-2 text-xl font-marcellus text-[#2C1E18]">
+                  Live Google Maps Navigation: {source} → {destination}
+                </h4>
+                <p className="mt-1 text-xs text-[#A37B66]">
+                  Open direct Google Maps directions in 1 click for live GPS satellite traffic, exact bus arrival times, and turn-by-turn navigation.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <a
+                  href={getGoogleMapsTransitUrl(source, destination, cityDetails.name, "transit")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-2xl bg-[#B35D38] hover:bg-[#964B2A] text-white px-5 py-3 text-xs font-bold transition shadow-md flex items-center gap-1.5"
+                >
+                  🚌 Open Google Maps Transit ↗
+                </a>
+                <a
+                  href={getGoogleMapsTransitUrl(source, destination, cityDetails.name, "driving")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-2xl bg-[#FAF5EF] border border-[#E6D6C3] hover:border-[#B35D38] text-[#2C1E18] px-5 py-3 text-xs font-bold transition shadow-xs flex items-center gap-1.5"
+                >
+                  🚗 Open Driving / Cab Route ↗
+                </a>
+              </div>
+            </div>
 
             {/* Smart Transit Mode Comparison Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
