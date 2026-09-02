@@ -22,6 +22,7 @@ import BookAuto from "../pages/BookAuto";
 import BookingSuccess from "../pages/BookingSuccess";
 import DriverDashboard from "../pages/DriverDashboard";
 import BusRoutes from "../pages/BusRoutes";
+import MetroDirectory from "../pages/MetroDirectory";
 
 export default function AppRoutes() {
   return (
@@ -32,6 +33,7 @@ export default function AppRoutes() {
       <Route path="/places/:id" element={<PlaceDetails />} />
       <Route path="/transport" element={<TransportSearch />} />
       <Route path="/bus-routes" element={<BusRoutes />} />
+      <Route path="/metro-directory" element={<MetroDirectory />} />
       <Route path="/book/cab" element={<BookCab />} />
       <Route path="/book/auto" element={<BookAuto />} />
       <Route path="/book/success/:id" element={<BookingSuccess />} />

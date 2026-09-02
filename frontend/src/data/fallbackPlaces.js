@@ -11,7 +11,19 @@ export const fallbackPlaces = [
     category: "Fort",
     bestVisitTime: "October to March",
     nearbyFoods: ["Dal Baati Churma", "Ghewar", "Lassi"],
-    transportOptions: ["Auto", "Cab", "RSRTC bus"]
+    transportOptions: ["Auto", "Cab", "RSRTC bus"],
+    faqs: [
+      { q: "What are the opening and closing timings of Amber Fort?", a: "Amber Fort is open daily from 8:00 AM to 5:30 PM for daytime entry. The evening Light and Sound Show takes place from 6:30 PM to 9:15 PM." },
+      { q: "What is the entry ticket price for Amber Fort?", a: "The entry ticket is ₹100 for Indian adults, ₹20 for Indian students, ₹550 for foreign tourists, and ₹100 for foreign students." },
+      { q: "What is the best time of day to visit Amber Fort?", a: "Early morning around 8:00 AM to 10:00 AM is best to avoid daytime heat and long ticket queues, or late afternoon for sunset views." },
+      { q: "Is elephant ride available at Amber Fort and what is the cost?", a: "Yes, elephant rides up the fort ramparts operate from 8:00 AM to 11:00 AM. The official rate is ₹1,100 per pair of passengers." },
+      { q: "How much time is required to explore Amber Fort completely?", a: "A complete tour of Sheesh Mahal, Diwan-e-Aam, Sukh Niwas, and Maota Lake views takes approximately 2 to 3 hours." },
+      { q: "Are audio guides and official tourist guides available?", a: "Yes, licensed ASI tourist guides and multi-lingual audio guide devices are available at the main Suraj Pol entrance." },
+      { q: "How to reach Amber Fort from Jaipur City Centre or Railway Station?", a: "Take JCTSL AC Bus Route AC 1 from Badi Chaupar / Ajmeri Gate directly to Amer Fort (₹25), or book an auto/cab (11 km, approx 25 mins)." },
+      { q: "Is Amber Fort wheelchair accessible?", a: "Wheelchair ramps exist in main courtyards, but upper palaces have traditional stone staircases. Golf carts are available for elderly visitors." },
+      { q: "What is the famous Sheesh Mahal in Amber Fort?", a: "Sheesh Mahal (Hall of Mirrors) is constructed with convex glass mirrors imported from Belgium that reflect a single matchstick flame into thousands of stars." },
+      { q: "What are the nearby famous street foods and dining options?", a: "1135 AD inside the fort offers royal fine dining, while local stalls outside serve Dal Baati Churma, Pyaaz Kachori, and kulhad lassi." }
+    ]
   },
   {
     _id: "hawa_mahal",
@@ -25,7 +37,19 @@ export const fallbackPlaces = [
     category: "Palace",
     bestVisitTime: "Early morning",
     nearbyFoods: ["LMB Ghewar", "Pandit Kulfi", "Radhe Kachori"],
-    transportOptions: ["Walk", "Auto", "Metro"]
+    transportOptions: ["Walk", "Auto", "Metro"],
+    faqs: [
+      { q: "Why was Hawa Mahal built and by whom?", a: "Hawa Mahal was built in 1799 by Maharaja Sawai Pratap Singh so royal women could observe street festivals through 953 jharokhas without being seen." },
+      { q: "What is the ticket price for Hawa Mahal?", a: "Entry fee is ₹50 for Indian citizens, ₹20 for Indian students, ₹200 for foreign nationals, and ₹25 for foreign students." },
+      { q: "Which metro station is closest to Hawa Mahal?", a: "Badi Chaupar Metro Station (Pink Line) is just 150 meters away (Gate No. 3 exits directly opposite Hawa Mahal)." },
+      { q: "What are the opening timings of Hawa Mahal?", a: "Hawa Mahal is open for visitors from 9:00 AM to 4:30 PM daily." },
+      { q: "What is the best spot to capture photos of Hawa Mahal?", a: "Tattoo Cafe and Wind View Cafe across the main street provide the famous full-facade rooftop photography view." },
+      { q: "Is there any staircase or elevator inside Hawa Mahal?", a: "There are no staircases inside; all 5 floors are connected by inclined ramps designed for palanquins." },
+      { q: "How much time does it take to tour Hawa Mahal?", a: "Exploring the inner courtyards, fountain museum, and top panoramic balcony takes about 45 minutes to 1 hour." },
+      { q: "Is photography and videography allowed inside?", a: "Yes, mobile photography and DSLRs are permitted. Professional filming requires prior archaeological department permission." },
+      { q: "What heritage monuments are within walking distance?", a: "City Palace (400m), Jantar Mantar (450m), and Johari Bazaar (100m) are all reachable on foot in under 5 minutes." },
+      { q: "What famous sweets and snacks are near Hawa Mahal?", a: "Laxmi Misthan Bhandar (LMB) for Paneer Ghewar, Pandit Kulfi, and Samrat's Pyaaz Kachori." }
+    ]
   },
   {
     _id: "city_palace",
@@ -39,7 +63,19 @@ export const fallbackPlaces = [
     category: "Palace",
     bestVisitTime: "Morning",
     nearbyFoods: ["Baradari Restaurant", "Govindam Retreat"],
-    transportOptions: ["Auto", "Cab", "Walk"]
+    transportOptions: ["Auto", "Cab", "Walk"],
+    faqs: [
+      { q: "What is the ticket cost for visiting City Palace Jaipur?", a: "Museum ticket is ₹300 for Indian adults and ₹700 for foreigners. Royal Splendour Chandra Mahal tour is ₹1,500 - ₹3,000." },
+      { q: "Does the royal family of Jaipur still live in City Palace?", a: "Yes, the descendants of Jaipur royalty reside in Chandra Mahal within the private quarters of City Palace." },
+      { q: "What are the visiting hours of City Palace?", a: "Daytime tour is open from 9:30 AM to 5:00 PM. Night view tour operates from 7:00 PM to 9:30 PM." },
+      { q: "What are the four famous gates in Pritam Niwas Chowk?", a: "Peacock Gate (Autumn), Lotus Gate (Summer), Green Gate (Spring), and Rose Gate (Winter)." },
+      { q: "What are the giant silver urns displayed in Mubarak Mahal?", a: "They are Gangajalis—the world's largest sterling silver vessels, created to carry sacred Ganga water to England for Maharaja Madho Singh II." },
+      { q: "Which metro station serves City Palace?", a: "Chhoti Chaupar or Badi Chaupar metro stations (Pink Line) are both within 600 meters." },
+      { q: "How long does a full tour of City Palace take?", a: "Exploring the Maharaja Sawai Man Singh II Museum, Armoury, and courtyards takes 2 to 2.5 hours." },
+      { q: "Are guide services available inside City Palace?", a: "Yes, official royal museum guides and multi-lingual audio guides can be hired at the ticket counter." },
+      { q: "Is wheelchair access available in City Palace courtyards?", a: "Yes, City Palace offers ramps, wide corridors, and wheelchair facilities at main courtyards." },
+      { q: "Where to dine near City Palace?", a: "Baradari Restaurant located inside the palace courtyard, or Govindam Retreat nearby." }
+    ]
   },
   {
     _id: "jantar_mantar",
@@ -53,7 +89,19 @@ export const fallbackPlaces = [
     category: "Museum",
     bestVisitTime: "Noon (for shadows)",
     nearbyFoods: ["Samrat Samosa", "LMB"],
-    transportOptions: ["Walk", "Auto"]
+    transportOptions: ["Walk", "Auto"],
+    faqs: [
+      { q: "Why is Jantar Mantar a UNESCO World Heritage Site?", a: "It contains 19 architectural astronomical instruments built in 1734, including the world's largest stone sundial." },
+      { q: "What is the ticket price for Jantar Mantar?", a: "Entry ticket is ₹50 for Indians, ₹15 for Indian students, ₹200 for foreigners, and ₹100 for foreign students." },
+      { q: "What is the best time of day to visit Jantar Mantar?", a: "Solar noon (around 12:00 PM to 1:30 PM) is best because sun shadows cast precise time readings on Vrihat Samrat Yantra." },
+      { q: "How accurate is the Samrat Yantra sundial?", a: "The 27-meter tall Samrat Yantra measures local time accurate to within 2 seconds!" },
+      { q: "Do I need a guide to understand Jantar Mantar?", a: "Hiring an accredited guide or audio guide is strongly recommended to understand how shadow geometry calculates star positions." },
+      { q: "What are the opening hours of Jantar Mantar?", a: "It is open daily from 9:00 AM to 4:30 PM." },
+      { q: "Which metro station is closest to Jantar Mantar?", a: "Chhoti Chaupar Metro Station is a 5-minute walk (500m)." },
+      { q: "How much time is needed to visit Jantar Mantar?", a: "A detailed walkthrough takes about 1 hour to 1.5 hours." },
+      { q: "Is Jantar Mantar suitable for children and students?", a: "Yes, it is an inspiring educational destination for astronomy, physics, and mathematics enthusiasts." },
+      { q: "Can I combine Jantar Mantar with City Palace?", a: "Yes, both entrances are situated directly opposite each other on Gangori Bazaar." }
+    ]
   },
   {
     _id: "nahargarh_fort",
@@ -67,7 +115,19 @@ export const fallbackPlaces = [
     category: "Fort",
     bestVisitTime: "Sunset",
     nearbyFoods: ["Padao Restaurant", "Fort View Cafe"],
-    transportOptions: ["Cab", "Auto"]
+    transportOptions: ["Cab", "Auto"],
+    faqs: [
+      { q: "What is Nahargarh Fort famous for?", a: "Panoramic sunset views over the entire Jaipur Pink City, Madhavendra Bhawan, and Jaipur Wax Museum." },
+      { q: "What are the opening timings of Nahargarh Fort?", a: "The fort palace complex is open from 10:00 AM to 5:30 PM; Padao open-air restaurant stays open until 10:00 PM." },
+      { q: "What is the ticket fee for Nahargarh Fort?", a: "Entry fee is ₹50 for Indians, ₹20 for Indian students, ₹200 for foreigners, and ₹25 for foreign students." },
+      { q: "How to reach Nahargarh Fort from Jaipur city?", a: "Hire a private cab or auto up the winding Aravalli hill road (15 km from city centre, approx 35 mins)." },
+      { q: "What is Padao Restaurant at Nahargarh Fort?", a: "Padao is an RTDC-operated rooftop restaurant at the highest rampart point, famous for sunset views and snacks." },
+      { q: "What is Madhavendra Bhawan inside Nahargarh?", a: "It is a two-story palace featuring 9 identical suites for Maharaja Ram Singh's nine queens, linked by maze-like corridors." },
+      { q: "Is Jaipur Wax Museum located inside Nahargarh Fort?", a: "Yes, Jaipur Wax Museum and Sheesh Mahal art gallery are located inside the fort entrance." },
+      { q: "Can I trek or hike up to Nahargarh Fort?", a: "Yes, a popular 2 km uphill walking trail starts near Chandpole / Purani Basti foot." },
+      { q: "Is night entry permitted at Nahargarh Fort?", a: "The fort rampart restaurant area is open until 10:00 PM with illuminated views of Jaipur night lights." },
+      { q: "What safety precautions are recommended at Nahargarh?", a: "Avoid standing on outer boundary walls and stay on designated tourist walkways." }
+    ]
   },
   {
     _id: "albert_hall",
@@ -81,7 +141,19 @@ export const fallbackPlaces = [
     category: "Museum",
     bestVisitTime: "Night illumination",
     nearbyFoods: ["Masala Chowk", "Indian Coffee House"],
-    transportOptions: ["Auto", "Bus", "Cab"]
+    transportOptions: ["Auto", "Bus", "Cab"],
+    faqs: [
+      { q: "Why is Albert Hall Museum famous?", a: "It is Rajasthan's oldest museum showcasing Indo-Saracenic architecture, Egyptian mummy, carpets, weaponry, and pottery." },
+      { q: "What are the daytime and night viewing timings?", a: "Daytime entry is 9:00 AM to 5:00 PM. Night view entry operates from 7:00 PM to 10:00 PM under vibrant neon lights." },
+      { q: "What is the entry ticket price for Albert Hall?", a: "Day ticket is ₹40 for Indians and ₹300 for foreigners. Night viewing ticket is ₹100 for all visitors." },
+      { q: "Is an Egyptian Mummy kept inside Albert Hall Museum?", a: "Yes! A 2,300-year-old Egyptian mummy of Tutu (Ptolemaic era) is displayed in the basement gallery." },
+      { q: "Where is Masala Chowk located relative to Albert Hall?", a: "Masala Chowk open-air street food court is right next to Ram Niwas Garden (2 min walk)." },
+      { q: "Which metro station is nearest to Albert Hall Museum?", a: "Chandpole or Railway Station metro stations are 2.5 km away (10 min auto ride)." },
+      { q: "Is feeding pigeons allowed outside Albert Hall?", a: "Flocks of hundreds of pigeons gather outside the facade every morning, making it a famous photography spot." },
+      { q: "How much time is required to tour Albert Hall?", a: "Exploring all 16 art and artifact galleries takes about 1.5 to 2 hours." },
+      { q: "Is camera and video photography allowed inside?", a: "Yes, camera tickets can be purchased at the gate. Tripods are restricted inside galleries." },
+      { q: "Is Albert Hall illuminated every evening?", a: "Yes, the entire facade glows with color-changing LED lights every evening from 6:30 PM onwards." }
+    ]
   },
   {
     _id: "jal_mahal",
@@ -95,7 +167,19 @@ export const fallbackPlaces = [
     category: "Palace",
     bestVisitTime: "Sunrise and sunset",
     nearbyFoods: ["Chai", "Pakora"],
-    transportOptions: ["Cab", "Auto", "Bus"]
+    transportOptions: ["Cab", "Auto", "Bus"],
+    faqs: [
+      { q: "Can visitors go inside Jal Mahal Palace?", a: "No, entry inside the palace is restricted to preserve the structure. Visitors enjoy panoramic views from the Man Sagar lake promenade." },
+      { q: "How many floors does Jal Mahal have underwater?", a: "Jal Mahal is a 5-story palace, out of which 4 floors remain submerged underwater when Man Sagar Lake is full!" },
+      { q: "What is the entry ticket price for Jal Mahal viewpoint?", a: "Viewing Jal Mahal from the promenade walkway is 100% FREE." },
+      { q: "What is the best time of day to photograph Jal Mahal?", a: "Sunrise and golden hour sunset cast magnificent pink reflections over the Aravalli hills and lake." },
+      { q: "How to reach Jal Mahal from Pink City center?", a: "Take JCTSL Bus Route AC 1 or local auto along Amer Road (approx. 4 km from Badi Chaupar)." },
+      { q: "Are camel rides and traditional costume photography available at Jal Mahal?", a: "Yes, colorful Rajasthani dress dress-up stalls and camel rides operate along the lakeside promenade." },
+      { q: "Are boat rides available on Man Sagar Lake?", a: "Boating is currently paused for environmental conservation of migratory bird habitats." },
+      { q: "What migratory birds can be spotted near Jal Mahal?", a: "Flamingos, grey herons, pintails, and pochards visit during winter months (Nov to Feb)." },
+      { q: "Is Jal Mahal illuminated at night?", a: "Yes, golden floodlights illuminate the floating palace facade every evening until 10:00 PM." },
+      { q: "What street snacks are famous at Jal Mahal viewpoint?", a: "Kulhad chai, roasted corn (bhutta), pyaaz kachori, and ice creams from promenade stalls." }
+    ]
   },
   {
     _id: "patrika_gate",
@@ -109,7 +193,19 @@ export const fallbackPlaces = [
     category: "Other",
     bestVisitTime: "Evening",
     nearbyFoods: ["World Trade Park", "Street food"],
-    transportOptions: ["Cab", "Auto", "Bus"]
+    transportOptions: ["Cab", "Auto", "Bus"],
+    faqs: [
+      { q: "Why is Patrika Gate popular on Instagram and social media?", a: "Its 9 grand hand-painted archways portray vibrant murals depicting Rajasthan's palaces, wars, and cultural history." },
+      { q: "What is the entry ticket fee for Patrika Gate?", a: "Entry to Patrika Gate and Jawahar Circle Garden is 100% FREE." },
+      { q: "Where is Patrika Gate located in Jaipur?", a: "It is located at Jawahar Circle along JLN Marg, close to Jaipur International Airport." },
+      { q: "Is pre-wedding photography allowed at Patrika Gate?", a: "Yes, Patrika Gate is one of India's most popular pre-wedding and fashion photoshoot locations." },
+      { q: "What are the opening hours of Patrika Gate?", a: "Patrika Gate is open 24 hours a day, 7 days a week." },
+      { q: "What is Jawahar Circle Musical Fountain timing?", a: "The musical light fountain show inside Jawahar Circle park runs daily from 7:00 PM to 7:30 PM." },
+      { q: "How far is Patrika Gate from Jaipur Airport?", a: "It is just 2 km away (approx 5 minutes drive from Airport Terminal 2)." },
+      { q: "What shopping centers are near Patrika Gate?", a: "World Trade Park (WTP Mall) and Gaurav Tower (GT) are within 1.5 km." },
+      { q: "How much time is needed to visit Patrika Gate?", a: "30 minutes to 1 hour is ideal for taking photos and walking through Jawahar Circle park." },
+      { q: "What food stalls are near Patrika Gate?", a: "Jawahar Circle street food stalls serve pav bhaji, faluda, South Indian dosas, and cold coffee." }
+    ]
   },
   {
     _id: "birla_mandir",
@@ -123,7 +219,19 @@ export const fallbackPlaces = [
     category: "Temple",
     bestVisitTime: "Evening",
     nearbyFoods: ["Moti Dungri Temple", "Sweets"],
-    transportOptions: ["Auto", "Cab"]
+    transportOptions: ["Auto", "Cab"],
+    faqs: [
+      { q: "What is Laxmi Narayan (Birla) Mandir constructed of?", a: "It is built entirely of pure white Rajasthani marble at the base of Moti Dungri hill." },
+      { q: "What is the entry fee for Birla Mandir?", a: "Entry to Birla Mandir is 100% FREE for all visitors." },
+      { q: "What are the temple visiting hours?", a: "Morning: 6:00 AM to 12:00 PM; Evening: 3:00 PM to 8:30 PM daily." },
+      { q: "Why does the temple glow so brightly in the evening?", a: "Spotlights illuminate the pure white marble against the night sky, creating a breathtaking spiritual glow." },
+      { q: "What famous temple is adjacent to Birla Mandir?", a: "Moti Dungri Lord Ganesha Temple is situated right behind Birla Mandir." },
+      { q: "Is photography allowed inside the main sanctum?", a: "Photography is allowed in the outer gardens; mobile cameras inside the inner sanctum are restricted." },
+      { q: "Is a shoe stand available?", a: "Yes, a free footwear deposit counter is operated near the main stairs." },
+      { q: "What secular carvings are featured on temple walls?", a: "Marble reliefs feature historical philosophers like Socrates, Buddha, Jesus, and Confucius alongside Hindu deities." },
+      { q: "How to reach Birla Mandir from Railway Station?", a: "Auto-rickshaws or cabs take about 15 minutes (5 km via JLN Marg)." },
+      { q: "What festival is celebrated grandly at Birla Mandir?", a: "Janmashtami (Lord Krishna's birthday) is celebrated with elaborate flower decorations and lighting." }
+    ]
   },
   {
     _id: "jaigarh_fort",
@@ -137,7 +245,19 @@ export const fallbackPlaces = [
     category: "Fort",
     bestVisitTime: "Morning",
     nearbyFoods: ["Tea", "Snacks"],
-    transportOptions: ["Cab", "Jeep"]
+    transportOptions: ["Cab", "Jeep"],
+    faqs: [
+      { q: "What is Jaigarh Fort famous for?", a: "It houses Jaivana—the world's largest cannon on wheels ever forged in medieval times." },
+      { q: "What is the entry ticket price for Jaigarh Fort?", a: "Ticket price is ₹100 for Indians, ₹50 for Indian students, ₹500 for foreign tourists, and ₹200 for camera." },
+      { q: "Is Jaigarh Fort connected to Amber Fort?", a: "Yes, an underground fortified tunnel connects Amber Fort to Jaigarh Fort for wartime military escape." },
+      { q: "What are the dimensions and weight of Jaivana cannon?", a: "Jaivana weighs 50 tons, has a 20-foot barrel, and required 100 kg of gunpowder per single test firing!" },
+      { q: "What are the opening hours of Jaigarh Fort?", a: "Jaigarh Fort is open daily from 9:00 AM to 4:30 PM." },
+      { q: "Is car parking available inside the fort?", a: "Yes, vehicles can drive right up to the upper fort gate parking lot." },
+      { q: "How much time is required to tour Jaigarh Fort?", a: "A complete tour of the armory, cannon foundry, garden courtyards, and museum takes 1.5 to 2 hours." },
+      { q: "What views can be seen from Jaigarh Fort?", a: "Panoramic 360-degree views of Amer Fort, Maota Lake, Aravalli hills, and Jal Mahal." },
+      { q: "Is there a cafeteria inside Jaigarh Fort?", a: "Yes, an RTDC heritage cafe serves hot tea, samosas, water, and cold drinks." },
+      { q: "Can I buy a combo ticket for Amber, Jaigarh, and Nahargarh?", a: "Composite tickets covering multiple monuments are sold at ASI ticket counters." }
+    ]
   },
   {
     _id: "galtaji_temple",
@@ -151,7 +271,19 @@ export const fallbackPlaces = [
     category: "Temple",
     bestVisitTime: "Morning",
     nearbyFoods: ["Sun Temple", "Tea"],
-    transportOptions: ["Cab", "Auto"]
+    transportOptions: ["Cab", "Auto"],
+    faqs: [
+      { q: "Why is Galtaji Temple known as the Monkey Temple?", a: "Large tribes of friendly Rhesus macaque monkeys inhabit the surrounding pink sandstone gorge and ancient Kund tanks." },
+      { q: "What is the ticket fee for entering Galtaji?", a: "Entry to Galtaji Temple is 100% FREE. Nominal camera fees (₹50) may apply." },
+      { q: "What are the 7 holy water tanks (Kunds) at Galtaji?", a: "Natural mountain springs feed 7 sacred stone Kunds, with Galta Kund considered holy for ritual dips." },
+      { q: "What are the opening hours of Galtaji Temple?", a: "The complex is open daily from 5:00 AM to 9:00 PM." },
+      { q: "How to reach Galtaji Temple from central Jaipur?", a: "Take an auto or cab to Galta Gate (10 km) or trek via the Sun Temple scenic trail from Surajpol." },
+      { q: "Is it safe around the monkeys at Galtaji?", a: "Monkeys are generally harmless; avoid holding open food bags or shiny items in your hands." },
+      { q: "What is the Sun Temple (Surya Mandir) at Galtaji?", a: "A hilltop temple offering one of the highest panoramic sunset viewpoints over Jaipur." },
+      { q: "What is the best time of year to visit Galtaji?", a: "October to March during cool winter weather, especially during Makar Sankranti festival in January." },
+      { q: "How much walking/hiking is involved at Galtaji?", a: "Navigating the temple pavilions and steps involves about 1 hour of moderate walking." },
+      { q: "Are holy pujas and prasad available?", a: "Priests offer traditional blessings and prasad at the main Hanuman Ji and Sita-Ram temples." }
+    ]
   },
   {
     _id: "rambagh_palace",
@@ -165,7 +297,19 @@ export const fallbackPlaces = [
     category: "Palace",
     bestVisitTime: "Evening",
     nearbyFoods: ["Central Park", "Coffee"],
-    transportOptions: ["Cab", "Auto"]
+    transportOptions: ["Cab", "Auto"],
+    faqs: [
+      { q: "What is the historical significance of Rambagh Palace?", a: "Built in 1835, it served as the royal residence of Maharaja Sawai Man Singh II and Maharani Gayatri Devi." },
+      { q: "Can non-hotel guests visit Rambagh Palace?", a: "Yes! Visitors can book a dining reservation at Suvarna Mahal, Rajput Room, or Steam Bar to experience the palace." },
+      { q: "What is Steam Bar at Rambagh Palace?", a: "A unique lounge bar crafted inside a restored vintage steam train engine on royal tracks." },
+      { q: "Where is Rambagh Palace located in Jaipur?", a: "It is located along Bhawani Singh Road, directly opposite Jaipur Central Park." },
+      { q: "What fine dining cuisine is served at Suvarna Mahal?", a: "Authentic royal Indian recipes from the princely states of Rajasthan, Awadh, Punjab, and Hyderabad." },
+      { q: "Which metro station is nearest to Rambagh Palace?", a: "Civil Lines or SMS Hospital stations are within 2 km." },
+      { q: "Are peacocks visible in Rambagh Palace gardens?", a: "Yes, dozens of royal peacocks roam freely across 47 acres of manicured Mughal gardens." },
+      { q: "What is the dress code for visiting Rambagh Palace restaurants?", a: "Smart casual or formal attire is required for dining guests." },
+      { q: "Is prior booking mandatory for high tea or dinner?", a: "Yes, advance table reservations via Taj Hotels are strongly recommended." },
+      { q: "What awards has Rambagh Palace received?", a: "It has repeatedly been voted the #1 Best Hotel in the World by TripAdvisor Travellers' Choice." }
+    ]
   },
   {
     _id: "jhalana_safari",
@@ -179,7 +323,19 @@ export const fallbackPlaces = [
     category: "Other",
     bestVisitTime: "Early morning or evening",
     nearbyFoods: ["Kebabs & Curries"],
-    transportOptions: ["Cab", "Auto"]
+    transportOptions: ["Cab", "Auto"],
+    faqs: [
+      { q: "Why is Jhalana Leopard Reserve unique in India?", a: "It is India's first exclusive leopard reserve situated right inside a major metro city boundary!" },
+      { q: "What wildlife can be spotted on a Jhalana Safari?", a: "Leopards, striped hyenas, desert foxes, golden jackals, spotted deer, and over 100 bird species." },
+      { q: "How to book a Jeep Safari at Jhalana?", a: "Safaris can be booked online via the official Forest Department Rajasthan portal or through certified wildlife safari operators." },
+      { q: "What are the daily safari timings at Jhalana?", a: "Morning Shift: 6:00 AM to 9:00 AM; Evening Shift: 4:30 PM to 7:00 PM." },
+      { q: "What is the cost of a 6-seater Open Gypsy Jeep Safari?", a: "Approx. ₹1,200 to ₹1,500 per seat including park permit, gypsy fee, and official forest guide." },
+      { q: "What is the leopard sighting success rate at Jhalana?", a: "Jhalana boasts over 85% leopard sighting probability due to a dense population of 40+ wild leopards." },
+      { q: "Where is Jhalana Safari located in Jaipur?", a: "It is located in Malviya Nagar, near Apex Circle (approx. 15 mins from Jaipur Airport)." },
+      { q: "What safari zones exist in Jhalana?", a: "Zone 1, Zone 2, and Zone 3 cover different terrain tracks across the Aravalli scrub forest." },
+      { q: "Is ID proof mandatory for safari entry?", a: "Yes, original Aadhaar card or Passport must be shown at the safari gate." },
+      { q: "Are open camera lenses and photography allowed?", a: "Yes, camera fees are included in standard forest permits." }
+    ]
   },
   {
     _id: "chokhi_dhani",
@@ -193,7 +349,19 @@ export const fallbackPlaces = [
     category: "Other",
     bestVisitTime: "Evening",
     nearbyFoods: ["Rajasthani Thali", "Dal Baati Churma"],
-    transportOptions: ["Cab", "Auto"]
+    transportOptions: ["Cab", "Auto"],
+    faqs: [
+      { q: "What is Chokhi Dhani Ethnic Village Resort?", a: "A famous 5-star ethnic village resort celebrating Rajasthani folk dance, music, puppet shows, and traditional dining." },
+      { q: "What are the entry ticket prices for Chokhi Dhani?", a: "Adult ticket ranges from ₹900 (Traditional Dining) to ₹1,200 (Royal AC Hall Dining); children ₹500." },
+      { q: "What are the operating hours of Chokhi Dhani?", a: "Open daily from 5:00 PM to 11:00 PM in the evening." },
+      { q: "What food is served in the traditional Rajasthani Thali?", a: "Unlimited Dal Baati Churma, Gatte Ki Sabzi, Sangri, Bajra Roti, Makkhan, Kheer, and Jaggery." },
+      { q: "What cultural performances happen inside Chokhi Dhani?", a: "Kalbelia snake dance, Ghoomar, acrobatics, puppet shows, camel rides, magic shows, and fortune telling." },
+      { q: "Where is Chokhi Dhani located?", a: "12 Mile, Tonk Road, Via Sitapura, Jaipur (approx 20 km from Pink City centre)." },
+      { q: "Is advance booking required for dinner?", a: "Tickets can be bought directly at the entrance gate or booked online." },
+      { q: "How much time is required to enjoy Chokhi Dhani fully?", a: "Plan 3 to 4 hours in the evening (from 6:00 PM to 10:00 PM)." },
+      { q: "Are camel and bullock cart rides included?", a: "Small nominal tokens (₹20-50) are charged for rides and traditional games." },
+      { q: "Is Jain / vegetarian food served?", a: "100% pure vegetarian food is served, with Jain options available on request." }
+    ]
   },
   {
     _id: "bapu_bazaar",
@@ -207,7 +375,19 @@ export const fallbackPlaces = [
     category: "Market",
     bestVisitTime: "Evening",
     nearbyFoods: ["Laxmi Chat Bhandar", "Samrat Kachori"],
-    transportOptions: ["Walk", "Auto", "Metro"]
+    transportOptions: ["Walk", "Auto", "Metro"],
+    faqs: [
+      { q: "What is Bapu Bazaar famous for buying?", a: "Jaipuri camel leather Mojari footwear, Bandhani & Sanganeri print dupattas, lac bangles, and handicrafts." },
+      { q: "What are the opening timings of Bapu Bazaar?", a: "Shops open around 10:30 AM and close around 9:00 PM daily." },
+      { q: "Where is Bapu Bazaar located in Pink City?", a: "Situated between Sanganeri Gate and New Gate in the walled Pink City." },
+      { q: "Is bargaining acceptable in Bapu Bazaar?", a: "Yes! Polite bargaining can lower quoted prices by 20% to 30%." },
+      { q: "Which metro station is nearest to Bapu Bazaar?", a: "Chandpole or Badi Chaupar metro stations are within 1 km walking distance." },
+      { q: "What famous food places are inside Bapu Bazaar?", a: "Faluda Kulfi at Shop 28, Laxmi Chat Bhandar, and hot Mirchi Vada." },
+      { q: "Is Bapu Bazaar closed on Sundays?", a: "Most shops remain open all 7 days of the week." },
+      { q: "Can I buy authentic Jaipuri Razai (quilts) here?", a: "Yes, lightweight pure cotton Jaipuri Razais are a specialty of Bapu Bazaar." },
+      { q: "Is vehicle parking available at Bapu Bazaar?", a: "Paid parking is available at Ramniwas Bagh underground parking nearby." },
+      { q: "How much time is ideal for shopping in Bapu Bazaar?", a: "2 to 3 hours for exploring stalls and enjoying street food." }
+    ]
   },
   {
     _id: "johari_bazaar",
@@ -221,6 +401,18 @@ export const fallbackPlaces = [
     category: "Market",
     bestVisitTime: "Evening",
     nearbyFoods: ["LMB", "Pandit Kulfi"],
-    transportOptions: ["Walk", "Auto", "Metro"]
+    transportOptions: ["Walk", "Auto", "Metro"],
+    faqs: [
+      { q: "Why is Johari Bazaar world famous?", a: "It is India's most famous market for Kundan, Meenakari, gold, silver, and precious gemstone jewelry." },
+      { q: "Where is Johari Bazaar located?", a: "Extending from Sanganeri Gate to Badi Chaupar directly in front of Hawa Mahal." },
+      { q: "Which metro station serves Johari Bazaar directly?", a: "Badi Chaupar Metro Station exits right into Johari Bazaar." },
+      { q: "What are the market timings?", a: "Shops open by 10:30 AM and operate until 9:00 PM." },
+      { q: "What is Gopalji Ka Rasta inside Johari Bazaar?", a: "A famous narrow lane dedicated exclusively to gemstone cutters and wholesale jewelers." },
+      { q: "What famous sweet shop is located in Johari Bazaar?", a: "Laxmi Misthan Bhandar (LMB), famous for Paneer Ghewar, Rajbhog, and Pyaaz Kachori." },
+      { q: "Can I buy authentic Jaipuri Bandhani sarees here?", a: "Yes, saree showrooms line the main bazaar offering Bandhej, Leheriya, and Gota Patti work." },
+      { q: "Is street food available late in the evening?", a: "Pandit Kulfi and chat stalls operate till 10:30 PM." },
+      { q: "Are currency exchange counters available?", a: "Yes, authorized forex exchange counters operate near Sanganeri Gate." },
+      { q: "How to navigate Johari Bazaar conveniently?", a: "Walking or taking an e-rickshaw is best due to pink city pedestrian traffic." }
+    ]
   }
 ];

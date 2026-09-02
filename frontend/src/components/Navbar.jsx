@@ -74,6 +74,7 @@ export default function Navbar() {
                 <NavLink to="/places" className={activeClass}>Explore Places</NavLink>
                 <NavLink to="/transport" className={activeClass}>Smart Transport</NavLink>
                 <NavLink to="/bus-routes" className={activeClass}>Bus Directory</NavLink>
+                <NavLink to="/metro-directory" className={activeClass}>Metro Directory</NavLink>
               </>
             )}
 
@@ -84,6 +85,7 @@ export default function Navbar() {
                 <NavLink to="/places" className={activeClass}>Explore Places</NavLink>
                 <NavLink to="/transport" className={activeClass}>Smart Transport</NavLink>
                 <NavLink to="/bus-routes" className={activeClass}>Bus Directory</NavLink>
+                <NavLink to="/metro-directory" className={activeClass}>Metro Directory</NavLink>
               </>
             )}
 
@@ -205,6 +207,7 @@ export default function Navbar() {
               <NavLink to="/places" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Explore Places</NavLink>
               <NavLink to="/transport" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Smart Transport</NavLink>
               <NavLink to="/bus-routes" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Bus Directory</NavLink>
+              <NavLink to="/metro-directory" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Metro Directory</NavLink>
               <NavLink to="/saved-trips" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Saved Trips</NavLink>
             </>
           )}
@@ -215,6 +218,7 @@ export default function Navbar() {
               <NavLink to="/places" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Explore Places</NavLink>
               <NavLink to="/transport" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Smart Transport</NavLink>
               <NavLink to="/bus-routes" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Bus Directory</NavLink>
+              <NavLink to="/metro-directory" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Metro Directory</NavLink>
             </>
           )}
 

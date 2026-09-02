@@ -26,6 +26,7 @@ export default function PlaceDetails() {
   const [reviewLoading, setReviewLoading] = useState(false);
   const [reviewMessage, setReviewMessage] = useState(null);
   const [saveMessage, setSaveMessage] = useState(null);
+  const [openFaq, setOpenFaq] = useState(null);
 
   useEffect(() => {
     const loadPlace = async () => {
@@ -645,6 +646,43 @@ export default function PlaceDetails() {
                     Be the first to share your experience!
                   </div>
                 )}
+              </div>
+            </section>
+
+            {/* 10 Online-Verified Frequently Asked Questions Section */}
+            <section className="rounded-3xl border border-[#E6D6C3] bg-white p-8 shadow-xl space-y-6">
+              <div className="flex items-center justify-between border-b border-[#F3E8DB] pb-4">
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#B35D38]">Online Verified Guide</span>
+                  <h2 className="text-2xl font-marcellus text-[#2C1E18] mt-1">Frequently Asked Questions</h2>
+                </div>
+                <span className="rounded-xl bg-[#FAF1EC] border border-[#EBC5B2] px-3.5 py-1.5 text-xs font-bold text-[#B35D38]">
+                  10 Key Answers
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {(place.faqs || fallbackPlaces.find(p => p.name === place.name || p._id === place._id)?.faqs || []).map((faq, idx) => (
+                  <div key={idx} className="rounded-2xl border border-[#E6D6C3] bg-[#FAF5EF] overflow-hidden transition">
+                    <button
+                      onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                      className="w-full flex items-center justify-between p-4 text-left text-sm font-bold text-[#2C1E18] hover:bg-[#FAF1EC]"
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="text-[#B35D38] font-black">Q{idx + 1}.</span>
+                        {faq.q}
+                      </span>
+                      <span className="text-[#B35D38] font-bold text-lg ml-2">
+                        {openFaq === idx ? "−" : "+"}
+                      </span>
+                    </button>
+                    {openFaq === idx && (
+                      <div className="px-5 pb-5 text-sm font-medium text-[#543C32] bg-white border-t border-[#F3E8DB] pt-3 leading-relaxed">
+                        {faq.a}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </section>
           </div>
