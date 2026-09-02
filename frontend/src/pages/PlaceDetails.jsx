@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { addPlaceReviewApi, deleteSavedTripApi, getPlaceByIdApi, getSavedTripsApi, saveTripApi } from "../services/api";
+import { getNearestMetroStation, OUTSTATION_TRANSIT_INFO } from "../data/jaipurTransitChecker";
 import ImageCarousel from "../components/ImageCarousel";
 import { AuthContext } from "../context/AuthContext";
 import ExperienceCard from "../components/ExperienceCard";
@@ -116,15 +117,14 @@ export default function PlaceDetails() {
     );
   }
 
-  const nearestMetro = place.nearestMetro || "Badi Chaupar";
-  const walkingTime = place.walkingTime || "8 min walk";
+  const outstationKey = Object.keys(OUTSTATION_TRANSIT_INFO).find(k => 
+    place.name.toLowerCase().includes(k) || k.includes(place.name.toLowerCase())
+  );
+  const outstationData = outstationKey ? OUTSTATION_TRANSIT_INFO[outstationKey] : null;
+  const metroObj = getNearestMetroStation(place.name);
+
   const famousFood = place.famousForFood || "Tattoo Cafe & LMB Paneer Ghewar";
   const placeFaqs = place.faqs || fallbackPlaces.find(p => p.name === place.name || p._id === place._id)?.faqs || [];
-  const nearbyList = place.nearbyPlaces || [
-    { name: "City Palace", distance: "400 m", time: "5 min walk" },
-    { name: "Jantar Mantar", distance: "450 m", time: "6 min walk" },
-    { name: "Johari Bazaar", distance: "100 m", time: "2 min walk" }
-  ];
 
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-10">
@@ -134,9 +134,9 @@ export default function PlaceDetails() {
           {/* Left Main Column */}
           <div className="space-y-8">
             
-            {/* Image Gallery */}
-            <div className="overflow-hidden rounded-3xl border border-[#E6D6C3] bg-white p-4 shadow-xl">
-              <ImageCarousel images={place.images} />
+            {/* Image Carousel */}
+            <div className="overflow-hidden rounded-3xl border border-[#E6D6C3] shadow-2xl">
+              <ImageCarousel images={place.images || []} altText={place.name} />
             </div>
 
             {/* Header Info */}
@@ -158,63 +158,117 @@ export default function PlaceDetails() {
               <p className="text-base text-[#543C32] leading-relaxed font-medium">{place.description}</p>
             </div>
 
-            {/* How to Reach Card (Matching Screenshots 2 & 4) */}
-            <div className="rounded-3xl border border-emerald-200 bg-white p-8 shadow-xl space-y-6">
-              <div className="flex items-center gap-3 border-b border-[#F3E8DB] pb-4">
-                <span className="text-2xl">🚀</span>
+            {/* How to Reach [Place] Section */}
+            <div className="rounded-3xl border border-[#E6D6C3] bg-white p-8 shadow-xl space-y-6">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">🗺️</span>
                 <div>
                   <h2 className="text-2xl font-marcellus text-[#2C1E18]">How to Reach {place.name}</h2>
-                  <p className="text-xs text-[#543C32] font-medium">Fastest metro and local transit options</p>
+                  <p className="text-xs text-[#543C32] font-medium">Verified transit and route options</p>
                 </div>
               </div>
 
-              {/* Nearest Metro Station Card */}
-              <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-5 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white text-xl shadow-md">
-                    🚇
+              {outstationData ? (
+                /* OUTSTATION TRANSIT CARD (No Metro) */
+                <div className="space-y-4">
+                  <div className="rounded-2xl bg-amber-50 border border-amber-200 p-5">
+                    <div className="flex items-center gap-3 text-amber-950 font-bold text-sm mb-1">
+                      <span>🚌 Outstation Destination ({outstationData.distanceKm} km from Jaipur)</span>
+                    </div>
+                    <p className="text-xs text-amber-900 font-medium leading-relaxed">
+                      There is no Metro line to {place.name}. Use RSRTC Express Bus or Indian Railways train connection.
+                    </p>
                   </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-2xl bg-[#FAF5EF] border border-[#E6D6C3] p-4">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#B35D38]">Nearest Railway Station</span>
+                      <h3 className="text-base font-bold text-[#2C1E18] mt-1">{outstationData.nearestRailway}</h3>
+                    </div>
+                    <div className="rounded-2xl bg-[#FAF5EF] border border-[#E6D6C3] p-4">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#B35D38]">Express Bus Terminal</span>
+                      <h3 className="text-base font-bold text-[#2C1E18] mt-1">{outstationData.busTerminal}</h3>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl bg-[#FAF5EF] p-4 border border-[#E6D6C3] flex items-center justify-between">
+                    <div className="text-xs text-[#543C32] font-semibold">
+                      💡 <span className="font-bold text-[#2C1E18]">Route Tip:</span> {outstationData.routeNotes}
+                    </div>
+                    <button
+                      onClick={handleTravelNow}
+                      className="rounded-xl bg-[#B35D38] hover:bg-[#964B2A] text-white px-4 py-2.5 text-xs font-bold shadow"
+                    >
+                      Plan Transit →
+                    </button>
+                  </div>
+                </div>
+              ) : metroObj ? (
+                /* METRO TRANSIT CARD */
+                <div className="space-y-4">
+                  <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-5 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white text-xl shadow-md">
+                        🚇
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800">Nearest Metro Station</span>
+                        <h3 className="text-xl font-bold text-emerald-950">{metroObj.name}</h3>
+                        <p className="text-xs text-emerald-800 font-semibold mt-0.5">Pink Line • {metroObj.walkTime}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleTravelNow}
+                      className="hidden sm:inline-flex rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 text-xs font-bold shadow"
+                    >
+                      Plan Transit →
+                    </button>
+                  </div>
+
+                  {/* Step-by-Step Directions */}
+                  <div className="space-y-3">
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#A37B66]">Step-by-Step Transit Route</div>
+                    
+                    <div className="rounded-2xl bg-[#FAF5EF] p-4 border border-[#E6D6C3] flex items-start gap-3">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-bold">1</span>
+                      <div className="text-xs text-[#2C1E18] font-semibold">
+                        <span className="font-bold text-[#B35D38]">Board Jaipur Metro:</span> Take Pink Line train to <span className="font-bold">{metroObj.name}</span> station.
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-[#FAF5EF] p-4 border border-[#E6D6C3] flex items-start gap-3">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-bold">2</span>
+                      <div className="text-xs text-[#2C1E18] font-semibold">
+                        <span className="font-bold text-[#B35D38]">Exit Station:</span> Follow signs to main exit gate at {metroObj.name}.
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl bg-[#FAF5EF] p-4 border border-[#E6D6C3] flex items-start gap-3">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-bold">3</span>
+                      <div className="text-xs text-[#2C1E18] font-semibold">
+                        <span className="font-bold text-[#B35D38]">Final Stretch:</span> Walk ({metroObj.walkTime}) or hire a ₹20 shared e-rickshaw to {place.name}.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                /* LOCAL ROAD/CAB TRANSIT CARD */
+                <div className="rounded-2xl bg-[#FAF5EF] border border-[#E6D6C3] p-5 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800">Nearest Metro Station</span>
-                    <h3 className="text-xl font-bold text-emerald-950">{nearestMetro}</h3>
-                    <p className="text-xs text-emerald-800 font-semibold mt-0.5">Pink Line • {walkingTime}</p>
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#B35D38]">Local City Transit</span>
+                    <h3 className="text-base font-bold text-[#2C1E18] mt-1">Direct Auto / City Bus Connection</h3>
+                    <p className="text-xs text-[#543C32] mt-0.5">Take JCTSL City Bus or book doorstep Auto / Taxi.</p>
                   </div>
+                  <button
+                    onClick={handleTravelNow}
+                    className="rounded-xl bg-[#B35D38] hover:bg-[#964B2A] text-white px-4 py-2.5 text-xs font-bold shadow"
+                  >
+                    Plan Transit →
+                  </button>
                 </div>
-                <button
-                  onClick={handleTravelNow}
-                  className="hidden sm:inline-flex rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 text-xs font-bold shadow"
-                >
-                  Plan Transit →
-                </button>
-              </div>
+              )}
 
-              {/* Step-by-Step Directions */}
-              <div className="space-y-3">
-                <div className="text-xs font-bold uppercase tracking-wider text-[#A37B66]">Step-by-Step Transit Route</div>
-                
-                <div className="rounded-2xl bg-[#FAF5EF] p-4 border border-[#E6D6C3] flex items-start gap-3">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-bold">1</span>
-                  <div className="text-xs text-[#2C1E18] font-semibold">
-                    <span className="font-bold text-[#B35D38]">Board Jaipur Metro:</span> Take the Pink Line train heading to <span className="font-bold">{nearestMetro}</span> station.
-                  </div>
-                </div>
-
-                <div className="rounded-2xl bg-[#FAF5EF] p-4 border border-[#E6D6C3] flex items-start gap-3">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-bold">2</span>
-                  <div className="text-xs text-[#2C1E18] font-semibold">
-                    <span className="font-bold text-[#B35D38]">Exit Station:</span> Follow signs to the main exit gate at {nearestMetro}.
-                  </div>
-                </div>
-
-                <div className="rounded-2xl bg-[#FAF5EF] p-4 border border-[#E6D6C3] flex items-start gap-3">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-600 text-white text-xs font-bold">3</span>
-                  <div className="text-xs text-[#2C1E18] font-semibold">
-                    <span className="font-bold text-[#B35D38]">Reach {place.name}:</span> Walk or take an e-rickshaw ({walkingTime}).
-                  </div>
-                </div>
-              </div>
-
-              {/* Popular Hubs Routes (Matching Screenshot 4) */}
+              {/* Popular Hubs Routes */}
               <div className="space-y-3 pt-2">
                 <div className="text-xs font-bold uppercase tracking-wider text-[#A37B66]">Popular Routes to {place.name}</div>
                 <div className="grid gap-3 sm:grid-cols-3">

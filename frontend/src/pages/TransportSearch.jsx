@@ -128,58 +128,82 @@ export default function TransportSearch() {
     setLoading(true);
     setSuggestionsVisible(false);
     setError(null);
+
+    // Validate if locations have genuine Metro connectivity
+    const sourceMetro = getNearestMetroStation(finalSource);
+    const destMetro = getNearestMetroStation(finalDest);
+    
+    const outstationKey = Object.keys(OUTSTATION_TRANSIT_INFO).find(k => 
+      finalDest.toLowerCase().includes(k) || k.includes(finalDest.toLowerCase()) ||
+      finalSource.toLowerCase().includes(k) || k.includes(finalSource.toLowerCase())
+    );
+    const outstationData = outstationKey ? OUTSTATION_TRANSIT_INFO[outstationKey] : null;
+
+    const hasValidMetro = (!outstationData) && (sourceMetro && destMetro);
+
     try {
       const response = await searchTransportApi({ source: finalSource, destination: finalDest });
-      if (response && response.success) {
+      if (response && response.success && hasValidMetro) {
         setResult(response.data);
-        if (response.data.metroRoute) setActiveTimeline("metro");
-        else if (response.data.busRoute) setActiveTimeline("bus");
+        setActiveTimeline("metro");
       } else {
-        throw new Error("Invalid response from server");
+        throw new Error("Local transit processing");
       }
     } catch (err) {
-      console.warn("API unavailable, using local multi-hop transit calculator:", err);
       const multiHopBus = findMultiHopBusRoute(finalSource, finalDest);
 
+      const recommendations = [];
+      if (hasValidMetro) {
+        recommendations.push({ mode: "Metro", fare: 20, time: "18 mins", badge: "best", note: `Via ${sourceMetro.name} to ${destMetro.name}` });
+      }
+
+      if (outstationData) {
+        recommendations.push({ mode: "Bus", fare: 150, time: "1.5 hrs", badge: "best", note: outstationData.busTerminal });
+        recommendations.push({ mode: "Train", fare: 50, time: "1.2 hrs", badge: "cheapest", note: outstationData.nearestRailway });
+        recommendations.push({ mode: "Cab", fare: 2000, time: "1.5 hrs", badge: "fastest", note: "Outstation Doorstep Cab" });
+      } else {
+        recommendations.push({ 
+          mode: "Bus", 
+          fare: multiHopBus?.fare || 15, 
+          time: `${multiHopBus?.time || 22} mins`, 
+          badge: "cheapest", 
+          note: multiHopBus?.transfers === 0 ? "Direct JCTSL City Bus" : `${multiHopBus?.transfers || 1} Bus Transfer Required` 
+        });
+        recommendations.push({ mode: "Auto", fare: 80, time: "20 mins", badge: "default", note: "Direct doorstep pickup" });
+        recommendations.push({ mode: "Cab", fare: 150, time: "16 mins", badge: "fastest", note: "Verified local driver" });
+      }
+
       const localResult = {
-        route: { distanceKm: 7.4 },
+        route: { distanceKm: outstationData ? outstationData.distanceKm : 7.4 },
         currentTime: new Date().toISOString(),
-        metroRoute: {
-          stationSequence: [{ name: finalSource, lat: 26.92, lng: 75.78 }, { name: finalDest, lat: 26.92, lng: 75.82 }],
-          sourceStation: { name: finalSource },
-          destinationStation: { name: finalDest },
+        outstationData: outstationData,
+        metroRoute: hasValidMetro ? {
+          stationSequence: [{ name: sourceMetro.name, lat: 26.92, lng: 75.78 }, { name: destMetro.name, lat: 26.92, lng: 75.82 }],
+          sourceStation: { name: sourceMetro.name },
+          destinationStation: { name: destMetro.name },
           fare: 20,
           travelTimeMinutes: 18,
           waitingTimeMinutes: 4,
           nextTrainMinutes: 4
-        },
+        } : null,
         busRoute: multiHopBus || {
           type: 'direct',
           transfers: 0,
-          busNumber: "AC 1",
+          busNumber: outstationData ? "RSRTC Express Bus" : "AC 1",
           sourceStop: finalSource,
           destStop: finalDest,
-          fare: 15,
-          time: 20
+          fare: outstationData ? 150 : 15,
+          time: outstationData ? 90 : 20
         },
-        recommendations: [
-          { mode: "Metro", fare: 20, time: "18 mins", badge: "best", note: "Fastest & direct connection" },
-          { 
-            mode: "Bus", 
-            fare: multiHopBus?.fare || 15, 
-            time: `${multiHopBus?.time || 22} mins`, 
-            badge: "cheapest", 
-            note: multiHopBus?.transfers === 0 ? "Direct JCTSL City Bus" : `${multiHopBus?.transfers || 1} Bus Transfer Required` 
-          },
-          { mode: "Auto", fare: 80, time: "20 mins", badge: "default", note: "Direct doorstep pickup" },
-          { mode: "Cab", fare: 150, time: "16 mins", badge: "fastest", note: "Verified local driver" }
-        ],
+        recommendations,
         map: {
           source: { latitude: 26.9196, longitude: 75.7878, name: finalSource },
           destination: { latitude: 26.9265, longitude: 75.8242, name: finalDest }
         }
       };
+
       setResult(localResult);
+      setActiveTimeline(hasValidMetro ? "metro" : "bus");
       setError(null);
     } finally {
       setLoading(false);
