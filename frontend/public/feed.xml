@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Sheher Saathi (Shehar App) — Urban Travel &amp; Transport Guide</title>
+  <link>https://shehersaathi.com/</link>
+  <description>Real-time public transit routing, 140+ heritage place guides, Pink Line Metro schedule, JCTSL city bus directory, and hotel stays in Jaipur.</description>
+  <language>en-us</language>
+  <atom:link href="https://shehersaathi.com/feed.xml" rel="self" type="application/rss+xml" />
+  
+  <item>
+    <title>Explore 140+ Jaipur Heritage Spots with Sheher Saathi</title>
+    <link>https://shehersaathi.com/places</link>
+    <description>Verified timings, ticket prices, and real-time transit routes for Hawa Mahal, Amer Fort, City Palace, and 140+ places.</description>
+    <guid>https://shehersaathi.com/places</guid>
+  </item>
+
+  <item>
+    <title>Smart Jaipur Public Transport Route Comparison</title>
+    <link>https://shehersaathi.com/transport</link>
+    <description>Compare Pink Line Metro, 27 JCTSL City Bus routes, and verified doorstep auto cab fares in Jaipur.</description>
+    <guid>https://shehersaathi.com/transport</guid>
+  </item>
+
+  <item>
+    <title>Royal Havelis &amp; Heritage Stays Directory in Jaipur</title>
+    <link>https://shehersaathi.com/hotels</link>
+    <description>Hand-picked royal havelis, 5-star luxury resorts, and boutique stays near top tourist spots.</description>
+    <guid>https://shehersaathi.com/hotels</guid>
+  </item>
+</channel>
+</rss>

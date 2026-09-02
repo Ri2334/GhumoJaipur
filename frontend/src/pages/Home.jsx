@@ -483,11 +483,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* FOOTER & SEO KEYWORD INDEX MATRIX */}
       <footer className="py-14 border-t border-[#3D2B23] bg-[#1C110C] text-[#FAF5EF]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          
+          {/* SEO Search Index Matrix */}
+          <div className="pt-6 border-t border-[#3D2B23]/60 text-[11px] text-[#A37B66] leading-relaxed space-y-4">
+            <div className="font-extrabold uppercase tracking-widest text-[#D98A5B]">
+              Popular Searches &amp; Keywords Index:
+            </div>
+            <p>
+              <strong className="text-[#E6D6C3]">Sheher Saathi (Shehar App / Sheher App / Shehar Saathi / SheherSathi / SheharSathi / Ghumo Jaipur)</strong> is India's leading smart city travel companion and urban transport routing platform. 
+              Search and compare <strong>Jaipur travel app</strong> features, <strong>Jaipur 140+ tourist places guide</strong>, <strong>Hawa Mahal ticket price &amp; timings</strong>, <strong>Amer Fort bus metro routes</strong>, <strong>JCTSL 27 city bus schedule</strong>, <strong>Jaipur Pink Line Metro station directory</strong>, <strong>auto cab fare calculator</strong>, <strong>verified local street food spots (LMB, Tattoo Cafe, Masala Chowk)</strong>, and <strong>royal haveli hotel bookings in Jaipur</strong>.
+            </p>
+            <div className="flex flex-wrap gap-2 text-[10px] text-[#D98A5B] font-bold">
+              <span>• Sheher Saathi</span>
+              <span>• Shehar Saathi</span>
+              <span>• Shehar App</span>
+              <span>• Sheher App</span>
+              <span>• Jaipur Travel App</span>
+              <span>• Jaipur City Bus App</span>
+              <span>• Jaipur Metro App</span>
+              <span>• Jaipur Transport App</span>
+              <span>• Jaipur Heritage Guide</span>
+              <span>• Ghumo Jaipur</span>
+              <span>• Har Sheher Apna Sa</span>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-6 border-t border-[#3D2B23]">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-[#FAF5EF] p-1.5 shadow-xl border border-[#E6D6C3] flex items-center justify-center overflow-hidden">
                 <img src="/logo.png" alt="Sheher Saathi Logo" className="w-full h-full object-contain" />
@@ -501,8 +525,8 @@ export default function Home() {
             <p className="text-xs font-bold text-[#A37B66] uppercase tracking-widest text-center md:text-right">
               © 2026 Sheher Saathi (shehersaathi.com) • Built with ❤️ for Urban Explorers
             </p>
-
           </div>
+
         </div>
       </footer>
 
