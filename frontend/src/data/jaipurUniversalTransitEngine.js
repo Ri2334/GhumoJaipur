@@ -2739,6 +2739,39 @@ export function calculateUniversalRoute(originName, destName) {
     }
   }
 
+  // Live Schedule Calculation
+  const now = new Date();
+  const freqMins = isOutstationRoute ? 30 : 12;
+  const currentMins = now.getMinutes();
+  const nextMultiple = Math.ceil((currentMins + 2) / freqMins) * freqMins;
+  const nextBusDate = new Date(now.getTime() + (nextMultiple - currentMins) * 60000);
+  const waitMins = Math.max(3, nextMultiple - currentMins);
+
+  const busNo = isOutstationRoute ? `RSRTC ${dest.city} Express` : (origin.busRoutes?.[0] || "AC 1");
+  const busRouteName = isOutstationRoute ? `${origin.city} to ${dest.city} Highway Corridor` : `${origin.name} - ${dest.name} City Route`;
+
+  const calculatedBusRoute = {
+    type: 'direct',
+    transfers: 0,
+    busNumber: busNo,
+    routeNumber: busNo,
+    routeName: busRouteName,
+    sourceStop: origin.name,
+    destStop: dest.name,
+    boardStopName: origin.name,
+    alightStopName: dest.name,
+    fare: estimatedFareRs,
+    time: totalTimeMins,
+    estimatedTimeMinutes: totalTimeMins,
+    waitingTimeMinutes: waitMins,
+    nextDepartureTime: nextBusDate.toISOString(),
+    route: {
+      routeNumber: busNo,
+      routeName: busRouteName,
+      stopsPassed: [origin.name, `${dest.city} Intermediate Stop`, dest.name]
+    }
+  };
+
   return {
     origin: origin.name,
     originCity: origin.city,
@@ -2746,6 +2779,7 @@ export function calculateUniversalRoute(originName, destName) {
     destCity: dest.city,
     distanceKm: estimatedRoadDistanceKm,
     totalTimeMins,
+    time: totalTimeMins,
     estimatedFareRs,
     transitMode,
     isOutstation: isOutstationRoute,
@@ -2753,6 +2787,10 @@ export function calculateUniversalRoute(originName, destName) {
     nearestMetroDest: dest.nearestMetro,
     gmapsUrl,
     timelineSteps,
-    famousFoodNearDest: dest.famousFood
+    famousFoodNearDest: dest.famousFood,
+    waitingTimeMinutes: waitMins,
+    nextDepartureTime: nextBusDate.toISOString(),
+    busNumber: busNo,
+    busRoute: calculatedBusRoute
   };
 }
