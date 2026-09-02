@@ -193,13 +193,14 @@ export const calculateUdaipurRoute = (originName, destName) => {
   }
 
   return {
-    mode: "UCTSL City Bus & Auto",
-    summary: `UCTSL City Bus Corridor connecting ${originName} to ${destName}`,
-    totalDuration: "20 min",
-    totalCost: "₹15 - ₹80",
+    mode: "Multi-Modal (Bus / Bike Rental / Auto)",
+    summary: `UCTSL City Bus Corridor & Self-Drive Bike option connecting ${originName} to ${destName}`,
+    totalDuration: "18 min",
+    totalCost: "₹15 - ₹400/day",
     steps: [
       { type: "bus", title: "UCTSL Route 1 / Route 2 / Route 5 Tourist Loop", duration: "15 min", cost: "₹15" },
-      { type: "walk", title: "Short Walk to Destination Gate", duration: "5 min", cost: "Free" }
+      { type: "bike", title: "Self-Drive Activa 6G / Bullet Rental (Pickup at Railway Station / Lal Ghat)", duration: "Full Day", cost: "₹400 / day" },
+      { type: "walk", title: "Short Walk to Destination Gate", duration: "3 min", cost: "Free" }
     ]
   };
 };

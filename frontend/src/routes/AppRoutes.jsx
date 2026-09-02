@@ -28,6 +28,7 @@ import MetroLines from "../pages/MetroLines";
 import DayTrips from "../pages/DayTrips";
 import Hotels from "../pages/Hotels";
 import UdaipurTransit from "../pages/UdaipurTransit";
+import Rentals from "../pages/Rentals";
 
 export default function AppRoutes() {
   return (
@@ -37,6 +38,7 @@ export default function AppRoutes() {
       <Route path="/places" element={<Places />} />
       <Route path="/places/:id" element={<PlaceDetails />} />
       <Route path="/hotels" element={<Hotels />} />
+      <Route path="/rentals" element={<Rentals />} />
       <Route path="/transport" element={<TransportSearch />} />
       <Route path="/bus-routes" element={<BusRoutes />} />
       <Route path="/udaipur-transit" element={<UdaipurTransit />} />

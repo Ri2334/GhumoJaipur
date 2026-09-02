@@ -166,6 +166,9 @@ export default function Navbar() {
             {/* Hotels Direct Top-level Link */}
             <NavLink to="/hotels" className={activeClass}>Hotels 🏨</NavLink>
 
+            {/* Vehicle Rentals Link */}
+            <NavLink to="/rentals" className={activeClass}>Rentals 🛵</NavLink>
+
             {/* Explore Dropdown */}
             <div 
               className="relative"
@@ -318,6 +321,7 @@ export default function Navbar() {
           <NavLink to="/places" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Explore All Places (20+)</NavLink>
           <NavLink to="/bus-routes" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">City Bus Directory (27 Routes)</NavLink>
           <NavLink to="/hotels" onClick={() => setOpen(false)} className="block text-[#D98A5B] px-3 py-2 rounded-xl font-bold">🏨 Hotels & Heritage Stays</NavLink>
+          <NavLink to="/rentals" onClick={() => setOpen(false)} className="block text-[#D98A5B] px-3 py-2 rounded-xl font-bold">🛵 Activa, Bike &amp; Car Rentals</NavLink>
           <NavLink to="/metro-directory" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Metro Directory (11 Stations)</NavLink>
           <NavLink to="/metro-lines" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Metro Lines Overview</NavLink>
           <NavLink to="/day-trips" onClick={() => setOpen(false)} className="block text-[#FAF5EF] px-3 py-2 rounded-xl font-medium">Day Trips (Pushkar, Ranthambore...)</NavLink>
