@@ -6,6 +6,7 @@ import HotelBookingCard from "../components/HotelBookingCard";
 import ImageCarousel from "../components/ImageCarousel";
 import { AuthContext } from "../context/AuthContext";
 import ExperienceCard from "../components/ExperienceCard";
+import SEOHead from "../components/SEOHead";
 import { fallbackPlaces } from "../data/fallbackPlaces";
 
 export default function PlaceDetails() {
@@ -141,6 +142,24 @@ export default function PlaceDetails() {
 
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-10">
+      <SEOHead
+        title={`${place.name} Jaipur — Ticket Price, Bus Metro Routes & Guide | Sheher Saathi (Shehar App)`}
+        description={`Complete traveler guide for ${place.name} in Jaipur. Timings, entry ticket fees, real-time JCTSL bus routes, Pink Line Metro station, famous nearby food, and hotels.`}
+        keywords={`${place.name}, ${place.name} Jaipur, ${place.name} timing, ${place.name} ticket price, ${place.name} nearest metro station, Sheher Saathi, Shehar App, Jaipur tourist spots`}
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "TouristAttraction",
+          "name": place.name,
+          "description": place.description,
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Jaipur",
+            "addressRegion": "Rajasthan",
+            "addressCountry": "IN"
+          },
+          "image": place.imageUrl || place.image
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr] items-start">
           

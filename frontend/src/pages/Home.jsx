@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import GoogleAd from "../components/GoogleAd";
+import SEOHead from "../components/SEOHead";
 
 export default function Home() {
   const { user } = useContext(AuthContext);
@@ -100,6 +101,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] selection:bg-[#B35D38] selection:text-white">
+      <SEOHead
+        title="Sheher Saathi (Shehar App) — Har Sheher. Apna Sa. | #1 Jaipur Travel & Smart City Transit App"
+        description="Sheher Saathi (Shehar App) is India's premier smart city companion. Explore 140+ Jaipur heritage places, real-time JCTSL city bus schedules, Pink Line Metro routes, auto cab fare comparison, verified local food, and royal hotel stays."
+        keywords="Sheher Saathi, Shehar Saathi, Shehar App, Sheher App, SheherSathi, SheharSathi, Jaipur travel app, Jaipur city bus app, Jaipur metro app, Jaipur transport app, Jaipur heritage guide, Jaipur 140 places, Ghumo Jaipur, Hawa Mahal, Amer Fort, Jaipur hotel booking"
+      />
       
       {/* HYPER ATTRACTIVE HERO SECTION */}
       <section className="relative pt-12 pb-24 lg:pt-20 lg:pb-32 bg-gradient-to-b from-[#1C110C] via-[#2C1E18] to-[#241712] text-[#FAF5EF] overflow-hidden">
