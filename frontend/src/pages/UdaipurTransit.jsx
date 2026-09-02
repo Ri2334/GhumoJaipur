@@ -1,6 +1,6 @@
 import React from "react";
 import SEOHead from "../components/SEOHead";
-import { UDAIPUR_ELECTRIC_BUS_ROUTES } from "../data/udaipurTransitEngine";
+import { UCTSL_BUS_ROUTES } from "../data/udaipurTransitEngine";
 
 export default function UdaipurTransit() {
   const ferries = [
@@ -64,11 +64,11 @@ export default function UdaipurTransit() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {UDAIPUR_ELECTRIC_BUS_ROUTES.map((route) => (
+            {UCTSL_BUS_ROUTES.map((route) => (
               <div key={route.id} className="bg-white rounded-3xl border border-[#E6D6C3] p-6 shadow-xl space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="px-3 py-1 rounded-full bg-[#FAF1EC] text-[#B35D38] text-xs font-black uppercase border border-[#EBC5B2]">
-                    {route.busNumber}
+                    {route.routeNumber}
                   </span>
                   <span className="text-xs font-bold text-[#D98A5B]">{route.operatingHours}</span>
                 </div>

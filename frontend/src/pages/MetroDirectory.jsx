@@ -1,11 +1,51 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import { jaipurMetroStations } from "../data/jaipurMetroData";
+import { CityContext } from "../context/CityContext";
+import { Link } from "react-router-dom";
+import SEOHead from "../components/SEOHead";
 
 export default function MetroDirectory() {
+  const { currentCity, cityDetails } = useContext(CityContext);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeZone, setActiveZone] = useState("all");
   const [selectedStation, setSelectedStation] = useState(null);
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
+
+  if (currentCity === "udaipur") {
+    return (
+      <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-16 px-4 sm:px-6 lg:px-8">
+        <SEOHead
+          title="Udaipur Transit Guide — City Buses, Lake Ferries & Cable Car | Sheher Saathi"
+          description="Udaipur is a UNESCO Heritage Lake City with zero metro railway lines. Urban transit is operated by high-frequency UCTSL Electric Buses, Lake Ferries, and Cable Car Ropeway."
+        />
+        <div className="max-w-3xl mx-auto text-center space-y-8 bg-white p-10 sm:p-14 rounded-[2.5rem] border border-[#E6D6C3] shadow-2xl">
+          <div className="text-6xl">🌅</div>
+          <h1 className="text-4xl sm:text-5xl font-marcellus text-[#2C1E18]">
+            Udaipur Transit Network
+          </h1>
+          <p className="text-base text-[#543C32] font-medium leading-relaxed">
+            Udaipur is a preserved UNESCO Heritage Lake City with zero underground or elevated Metro railway lines. 
+            Urban public transport is operated by high-frequency <strong>UCTSL Electric Buses</strong>, <strong>Lake Pichola &amp; Fatehsagar Ferries</strong>, and the <strong>Karni Mata Cable Car Ropeway</strong>.
+          </p>
+
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              to="/bus-routes"
+              className="w-full sm:w-auto bg-[#B35D38] hover:bg-[#964B2A] text-white px-8 py-4 rounded-2xl font-bold text-sm shadow-xl transition"
+            >
+              View Udaipur City Bus Directory →
+            </Link>
+            <Link
+              to="/udaipur-transit"
+              className="w-full sm:w-auto bg-[#FAF1EC] text-[#B35D38] border border-[#EBC5B2] px-8 py-4 rounded-2xl font-bold text-sm hover:bg-[#F3E8DB] transition"
+            >
+              View Lake Ferries &amp; Ropeway →
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   // Journey planner states inside modal
   const [targetStationId, setTargetStationId] = useState("badi_chaupar");
