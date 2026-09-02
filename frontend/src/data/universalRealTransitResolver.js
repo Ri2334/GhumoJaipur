@@ -71,6 +71,31 @@ export function resolveJaipurRealRoute(originName, destName) {
   const origGeo = MASTER_COORDINATES[origKey] || { name: originName, lat: 26.9124, lng: 75.7872 };
   const destGeo = MASTER_COORDINATES[destKey] || { name: destName, lat: 26.9238, lng: 75.8267 };
 
+  // SAME LOCATION CHECK
+  if (origKey === destKey || (origGeo.name && destGeo.name && origGeo.name.toLowerCase() === destGeo.name.toLowerCase())) {
+    return {
+      origin: origGeo.name,
+      destination: destGeo.name,
+      distanceKm: 0,
+      totalTimeMins: 0,
+      mode: "Already at Destination",
+      summary: `You are already at ${origGeo.name || originName}. No transit required.`,
+      isOutstation: false,
+      hasValidMetro: false,
+      busRoute: {
+        busNumber: "Direct Walk",
+        routeName: "Already at Destination",
+        type: "direct",
+        transfers: 0,
+        fare: "₹0",
+        estimatedTimeMinutes: 0,
+        boardStop: origGeo.name,
+        alightStop: destGeo.name,
+        route: { stopsPassed: [origGeo.name] }
+      }
+    };
+  }
+
   const directKm = getHaversineKm(origGeo.lat, origGeo.lng, destGeo.lat, destGeo.lng);
   const roadKm = Math.round((Math.max(1.2, directKm * 1.25)) * 10) / 10;
   const isOutstation = roadKm > 35;
@@ -171,6 +196,25 @@ export function resolveUdaipurRealRoute(originName, destName) {
 
   const origGeo = MASTER_COORDINATES[origKey] || { name: originName, lat: 24.5764, lng: 73.6835 };
   const destGeo = MASTER_COORDINATES[destKey] || { name: destName, lat: 24.6015, lng: 73.6735 };
+
+  // SAME LOCATION CHECK
+  if (origKey === destKey || (origGeo.name && destGeo.name && origGeo.name.toLowerCase() === destGeo.name.toLowerCase())) {
+    return {
+      distanceKm: 0,
+      mode: "Already at Destination",
+      summary: `You are already at ${origGeo.name || originName}. No transit required.`,
+      totalDuration: "0 min",
+      totalCost: "Free",
+      steps: [
+        {
+          type: "walk",
+          title: `You are currently at ${origGeo.name || originName}. Explore nearby sights on foot!`,
+          duration: "0 min",
+          cost: "Free"
+        }
+      ]
+    };
+  }
 
   const directKm = getHaversineKm(origGeo.lat, origGeo.lng, destGeo.lat, destGeo.lng);
   const roadKm = Math.round((Math.max(1.5, directKm * 1.35)) * 10) / 10;

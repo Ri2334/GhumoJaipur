@@ -9,6 +9,11 @@
     <meta name="apple-mobile-web-app-title" content="Shehar App" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <script>
+      if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        location.replace(`https:${location.href.substring(location.protocol.length)}`);
+      }
+    </script>
     
     <!-- Ultra-Optimized Search Engine & AI Meta Tags -->
     <title>Sheher Saathi (Shehar App) — Har Sheher. Apna Sa. | #1 Jaipur Travel & Smart City Transit App</title>
