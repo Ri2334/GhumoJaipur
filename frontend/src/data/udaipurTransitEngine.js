@@ -150,57 +150,111 @@ export const calculateUdaipurRoute = (originName, destName) => {
   const destLow = destName.toLowerCase();
 
   const isJagMandir = destLow.includes("jag mandir") || origLow.includes("jag mandir");
-  const isFatehsagarNehru = destLow.includes("nehru park") || origLow.includes("nehru park");
-  const isRopeway = destLow.includes("ropeway") || destLow.includes("karni mata");
+  const isFatehsagar = destLow.includes("fatehsagar") || origLow.includes("fatehsagar") || destLow.includes("nehru park") || origLow.includes("nehru park");
+  const isSajjangarh = destLow.includes("sajjangarh") || origLow.includes("sajjangarh") || destLow.includes("monsoon") || origLow.includes("monsoon");
+  const isRopeway = destLow.includes("ropeway") || destLow.includes("karni mata") || origLow.includes("ropeway") || origLow.includes("karni mata");
   const isAirport = destLow.includes("airport") || origLow.includes("airport") || destLow.includes("dabok") || origLow.includes("dabok");
+  const isShilpgram = destLow.includes("shilpgram") || origLow.includes("shilpgram") || destLow.includes("bahubali") || origLow.includes("bahubali") || destLow.includes("badi lake");
+  const isCityPalace = destLow.includes("palace") || origLow.includes("palace") || destLow.includes("jagdish") || origLow.includes("jagdish") || destLow.includes("bagore") || origLow.includes("bagore");
 
   if (isJagMandir) {
     return {
       mode: "Boat Ferry + E-Rickshaw",
-      summary: "E-Rickshaw to Rameshwar Ghat + Pichola Boat Ferry to Jag Mandir",
+      summary: `E-Rickshaw to Rameshwar Ghat + Pichola Boat Cruise to ${destName}`,
       totalDuration: "25 min",
       totalCost: "₹550 - ₹850",
       steps: [
-        { type: "auto", title: "E-Rickshaw through Heritage Alleys to City Palace Gate", duration: "12 min", cost: "₹50 - ₹100" },
-        { type: "boat", title: "Lake Pichola Official Boat Ferry to Jag Mandir Island", duration: "10 min", cost: "₹500 (Day) / ₹800 (Sunset)" }
+        { type: "auto", title: `E-Rickshaw from ${originName} to Rameshwar Ghat (City Palace Jetty)`, duration: "12 min", cost: "₹50 - ₹100" },
+        { type: "boat", title: `Lake Pichola Official Boat Ferry Cruise to ${destName}`, duration: "12 min", cost: "₹500 (Day) / ₹800 (Sunset)" }
+      ]
+    };
+  }
+
+  if (isFatehsagar) {
+    return {
+      mode: "UCTSL Bus + Motorboat Ferry",
+      summary: `UCTSL Route 5 Tourist Loop + Fatehsagar Promenade Cruise`,
+      totalDuration: "22 min",
+      totalCost: "₹135",
+      steps: [
+        { type: "bus", title: `UCTSL Route 5 Tourist Loop Bus from ${originName} to Fatehsagar Promenade`, duration: "12 min", cost: "₹15" },
+        { type: "boat", title: `Motorboat Ferry to Nehru Park Island / Promenade Jetty`, duration: "10 min", cost: "₹120" }
+      ]
+    };
+  }
+
+  if (isSajjangarh) {
+    return {
+      mode: "UCTSL Bus + Forest Jeep Shuttle",
+      summary: `UCTSL Route 2/5 to Malla Talai + Forest Department Shuttle to Sajjangarh Monsoon Palace`,
+      totalDuration: "30 min",
+      totalCost: "₹135",
+      steps: [
+        { type: "bus", title: `UCTSL Route 2 / Route 5 Bus from ${originName} to Malla Talai Chouraha`, duration: "15 min", cost: "₹15" },
+        { type: "auto", title: `Forest Dept Jeep / Electric Shuttle up Aravalli Hill to Sajjangarh Palace`, duration: "15 min", cost: "₹120" }
       ]
     };
   }
 
   if (isRopeway) {
     return {
-      mode: "Ropeway Cable Car",
-      summary: "Auto to Doodh Talai + Mansapurna Karni Mata Ropeway to Hilltop",
+      mode: "Ropeway Cable Car + Auto",
+      summary: `Auto to Doodh Talai + Mansapurna Karni Mata Cable Car Aerial Ride`,
       totalDuration: "18 min",
       totalCost: "₹170 - ₹220",
       steps: [
-        { type: "auto", title: "Auto / E-Rickshaw to Doodh Talai Base Station", duration: "10 min", cost: "₹50 - ₹80" },
-        { type: "ropeway", title: "Mansapurna Karni Mata Cable Car Aerial Ride", duration: "4 min", cost: "₹120 (Round Trip)" }
+        { type: "auto", title: `Auto / E-Rickshaw from ${originName} to Doodh Talai Ropeway Base`, duration: "10 min", cost: "₹50 - ₹80" },
+        { type: "ropeway", title: "Mansapurna Karni Mata Cable Car Aerial Ride to Hilltop Viewpoint", duration: "4 min", cost: "₹120 (Round Trip)" }
       ]
     };
   }
 
   if (isAirport) {
     return {
-      mode: "Airport Express Shuttle Bus",
-      summary: "Direct Municipal Express Bus from Chetak Pahada / Delhi Gate to Dabok Airport",
+      mode: "UCTSL Airport Express Shuttle",
+      summary: `Direct Municipal AC Airport Express Shuttle connecting ${originName} and Dabok Airport`,
       totalDuration: "35 min",
       totalCost: "Flat ₹100",
       steps: [
-        { type: "bus", title: "UCTSL AC Airport Express Shuttle (Chetak / Surajpol stop)", duration: "35 min", cost: "₹100 Flat Rate" }
+        { type: "bus", title: `UCTSL AC Airport Express Shuttle (Chetak / Surajpol / Thokar stop)`, duration: "35 min", cost: "₹100 Flat Rate" }
+      ]
+    };
+  }
+
+  if (isShilpgram) {
+    return {
+      mode: "Electric Bus + Trek / Auto",
+      summary: `UCTSL Route 3 to Badi Road + Auto to Shilpgram / Bahubali Hills`,
+      totalDuration: "25 min",
+      totalCost: "₹65",
+      steps: [
+        { type: "bus", title: `UCTSL Route 3 Electric Bus from ${originName} to Sukher / Badi Road`, duration: "15 min", cost: "₹15" },
+        { type: "auto", title: `Auto / E-Rickshaw to Shilpgram Crafts Village / Bahubali Hills Base`, duration: "10 min", cost: "₹50" }
+      ]
+    };
+  }
+
+  if (isCityPalace) {
+    return {
+      mode: "UCTSL Route 5 Tourist Loop + Heritage Walk",
+      summary: `UCTSL Route 5 Bus + Heritage Alley Walk to ${destName}`,
+      totalDuration: "18 min",
+      totalCost: "₹15",
+      steps: [
+        { type: "bus", title: `UCTSL Route 5 Tourist Loop Bus from ${originName} to Hathipole / Delhi Gate`, duration: "12 min", cost: "₹15" },
+        { type: "walk", title: `Short Heritage Walk through Jagdish Chowk to ${destName} Gate`, duration: "6 min", cost: "Free" }
       ]
     };
   }
 
   return {
-    mode: "Multi-Modal (Bus / Bike Rental / Auto)",
-    summary: `UCTSL City Bus Corridor & Self-Drive Bike option connecting ${originName} to ${destName}`,
-    totalDuration: "18 min",
-    totalCost: "₹15 - ₹400/day",
+    mode: "UCTSL Electric Bus (Route 1 / 2 / 3 / 4)",
+    summary: `UCTSL Electric Bus Corridor connecting ${originName} to ${destName}`,
+    totalDuration: "20 min",
+    totalCost: "₹15 - ₹40",
     steps: [
-      { type: "bus", title: "UCTSL Route 1 / Route 2 / Route 5 Tourist Loop", duration: "15 min", cost: "₹15" },
-      { type: "bike", title: "Self-Drive Activa 6G / Bullet Rental (Pickup at Railway Station / Lal Ghat)", duration: "Full Day", cost: "₹400 / day" },
-      { type: "walk", title: "Short Walk to Destination Gate", duration: "3 min", cost: "Free" }
+      { type: "bus", title: `UCTSL Route 1 (Badgaon-Titardi) / Route 2 (Rampura-Airport Rd) Electric Bus`, duration: "15 min", cost: "₹15" },
+      { type: "walk", title: `Walk from UCTSL Bus Stop to ${destName}`, duration: "5 min", cost: "Free" }
     ]
   };
 };
