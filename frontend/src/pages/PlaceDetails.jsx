@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { addPlaceReviewApi, deleteSavedTripApi, getPlaceByIdApi, getSavedTripsApi, saveTripApi } from "../services/api";
 import { getNearestMetroStation, OUTSTATION_TRANSIT_INFO } from "../data/jaipurTransitChecker";
+import HotelBookingCard from "../components/HotelBookingCard";
 import ImageCarousel from "../components/ImageCarousel";
 import { AuthContext } from "../context/AuthContext";
 import ExperienceCard from "../components/ExperienceCard";
@@ -384,6 +385,9 @@ export default function PlaceDetails() {
                 ))}
               </div>
             </section>
+
+            {/* Hotel & Heritage Stay Monetization Card */}
+            <HotelBookingCard locationName={place.name} cityName={place.city || "Jaipur"} />
 
           </div>
 
