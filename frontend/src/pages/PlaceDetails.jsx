@@ -32,24 +32,28 @@ export default function PlaceDetails() {
         if (res?.data) {
           setPlace(res.data);
         } else {
-          const searchStr = String(id || '').toLowerCase().replace(/_/g, ' ');
+          const rawId = String(id || '').toLowerCase();
+          const cleanId = rawId.replace(/[^a-z0-9]/g, '');
           const found = fallbackPlaces.find(p => 
             p._id === id || 
-            p._id?.toLowerCase() === id?.toLowerCase() || 
-            p.name?.toLowerCase().includes(searchStr) || 
-            searchStr.includes(p.name?.toLowerCase())
+            p._id?.toLowerCase() === rawId || 
+            p.name?.toLowerCase().replace(/[^a-z0-9]/g, '') === cleanId ||
+            p.name?.toLowerCase().includes(rawId.replace(/_/g, ' ')) || 
+            rawId.includes(p._id)
           );
-          setPlace(found || fallbackPlaces[1]); // Default Hawa Mahal
+          setPlace(found || fallbackPlaces[0]);
         }
       } catch (err) {
-        const searchStr = String(id || '').toLowerCase().replace(/_/g, ' ');
+        const rawId = String(id || '').toLowerCase();
+        const cleanId = rawId.replace(/[^a-z0-9]/g, '');
         const found = fallbackPlaces.find(p => 
           p._id === id || 
-          p._id?.toLowerCase() === id?.toLowerCase() || 
-          p.name?.toLowerCase().includes(searchStr) || 
-          searchStr.includes(p.name?.toLowerCase())
+          p._id?.toLowerCase() === rawId || 
+          p.name?.toLowerCase().replace(/[^a-z0-9]/g, '') === cleanId ||
+          p.name?.toLowerCase().includes(rawId.replace(/_/g, ' ')) || 
+          rawId.includes(p._id)
         );
-        setPlace(found || fallbackPlaces[1]);
+        setPlace(found || fallbackPlaces[0]);
       } finally {
         setLoading(false);
       }
@@ -125,6 +129,14 @@ export default function PlaceDetails() {
 
   const famousFood = place.famousForFood || "Tattoo Cafe & LMB Paneer Ghewar";
   const placeFaqs = place.faqs || fallbackPlaces.find(p => p.name === place.name || p._id === place._id)?.faqs || [];
+
+  const nearestMetro = place.nearestMetro || (metroObj ? metroObj.name : "RSRTC Bus / Railway Station");
+  const walkingTime = place.walkingTime || (metroObj ? metroObj.walkTime : "10 min drive");
+  const nearbyList = place.nearbyPlaces?.length ? place.nearbyPlaces : [
+    { name: "Hawa Mahal", distance: "400 m", time: "5 min" },
+    { name: "City Palace", distance: "600 m", time: "8 min" },
+    { name: "Johari Bazaar", distance: "200 m", time: "3 min" }
+  ];
 
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-10">
