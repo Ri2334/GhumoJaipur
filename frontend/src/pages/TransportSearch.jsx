@@ -7,7 +7,9 @@ import { jaipurBusStops } from "../data/jaipurBusStops";
 import TransportCard from "../components/TransportCard";
 import RouteTimeline from "../components/RouteTimeline";
 import BusRouteTimeline from "../components/BusRouteTimeline";
+import TransportRouteMap from "../components/TransportRouteMap";
 import { getNearestMetroStation } from "../data/jaipurTransitChecker";
+import { calculateUniversalRoute } from "../data/jaipurUniversalTransitEngine";
 import { getAllCitiesPlaces, getCityRouteResult } from "../data/cityResolver";
 import { CityContext } from "../context/CityContext";
 import SEOHead from "../components/SEOHead";
@@ -88,47 +90,93 @@ export default function TransportSearch() {
     setSuggestionsVisible(false);
     setError(null);
 
-    const routeRes = getCityRouteResult(finalSource, finalDest, currentCity);
+    if (isUdaipur) {
+      const routeRes = getCityRouteResult(finalSource, finalDest, "udaipur");
+      const recommendations = [];
 
-    const sourceMetro = isUdaipur ? null : getNearestMetroStation(finalSource);
-    const destMetro = isUdaipur ? null : getNearestMetroStation(finalDest);
+      if (routeRes?.steps) {
+        routeRes.steps.forEach(step => {
+          recommendations.push({
+            mode: step.type === "boat" ? "Boat Ferry" : step.type === "ropeway" ? "Ropeway" : step.type === "bus" ? "Electric Bus" : "Auto / Cab",
+            fare: step.cost,
+            time: step.duration,
+            badge: step.type === "boat" ? "lake ferry" : step.type === "ropeway" ? "aerial cable" : "best",
+            note: step.title
+          });
+        });
+      } else {
+        recommendations.push({ mode: "Bus", fare: "₹15", time: "20 min", badge: "best", note: "UCTSL Municipal Bus" });
+        recommendations.push({ mode: "Auto", fare: "₹60", time: "15 min", badge: "default", note: "Doorstep Auto Ride" });
+        recommendations.push({ mode: "Cab", fare: "₹120", time: "12 min", badge: "fastest", note: "AC Sedan Cab" });
+      }
+
+      setResult({
+        route: { distanceKm: routeRes?.distanceKm || 5 },
+        currentTime: new Date().toISOString(),
+        univRoute: routeRes,
+        recommendations: recommendations
+      });
+      setLoading(false);
+      return;
+    }
+
+    // JAIPUR SMART TRANSIT USP ENGINE (WITH LEAFLET MAP & FULL METRO/BUS ROUTING)
+    const univRoute = calculateUniversalRoute(finalSource, finalDest);
+    const sourceMetro = getNearestMetroStation(finalSource);
+    const destMetro = getNearestMetroStation(finalDest);
     const hasValidMetro = Boolean(sourceMetro && destMetro);
 
     const recommendations = [];
 
-    if (routeRes?.steps) {
-      routeRes.steps.forEach(step => {
-        recommendations.push({
-          mode: step.type === "boat" ? "Boat Ferry" : step.type === "ropeway" ? "Ropeway" : step.type === "bus" ? "Electric Bus" : "Auto / Cab",
-          fare: step.cost,
-          time: step.duration,
-          badge: step.type === "boat" ? "lake ferry" : step.type === "ropeway" ? "aerial cable" : "best",
-          note: step.title
-        });
-      });
+    if (univRoute.isOutstation) {
+      recommendations.push({ mode: "Bus", fare: `₹${univRoute.estimatedFareRs}`, time: `${univRoute.totalTimeMins || 120} mins`, badge: "best", note: `RSRTC Express Bus to ${univRoute.destCity}` });
+      recommendations.push({ mode: "Train", fare: `₹${Math.round(univRoute.estimatedFareRs * 0.4)}`, time: `${Math.round((univRoute.totalTimeMins || 120) * 0.9)} mins`, badge: "cheapest", note: `Indian Railways via ${univRoute.destCity}` });
+      recommendations.push({ mode: "Cab", fare: `₹${Math.round(univRoute.distanceKm * 14)}`, time: `${Math.round((univRoute.totalTimeMins || 120) * 0.8)} mins`, badge: "fastest", note: "Outstation Doorstep Cab" });
     } else {
-      recommendations.push({ mode: "Bus", fare: "₹15", time: "20 min", badge: "best", note: `${cityDetails.name} Municipal Transit` });
-      recommendations.push({ mode: "Auto", fare: "₹60", time: "15 min", badge: "default", note: "Doorstep Auto Ride" });
-      recommendations.push({ mode: "Cab", fare: "₹120", time: "12 min", badge: "fastest", note: "AC Sedan Cab" });
+      if (hasValidMetro) {
+        recommendations.push({ mode: "Metro", fare: "₹20", time: `${univRoute.totalTimeMins || 20} mins`, badge: "best", note: `Via ${sourceMetro.name} to ${destMetro.name}` });
+      }
+      recommendations.push({ mode: "Bus", fare: `₹${univRoute.estimatedFareRs || 15}`, time: `${(univRoute.totalTimeMins || 20) + 5} mins`, badge: "cheapest", note: `JCTSL City Bus Corridor` });
+      recommendations.push({ mode: "Auto", fare: `₹${Math.round(univRoute.distanceKm * 15)}`, time: `${univRoute.totalTimeMins || 20} mins`, badge: "default", note: "Direct auto doorstep" });
+      recommendations.push({ mode: "Cab", fare: `₹${Math.round(univRoute.distanceKm * 20)}`, time: `${Math.max(10, (univRoute.totalTimeMins || 20) - 5)} mins`, badge: "fastest", note: "Verified local driver" });
     }
 
     const localResult = {
-      route: { distanceKm: routeRes?.distanceKm || 5 },
+      route: { distanceKm: univRoute.distanceKm },
       currentTime: new Date().toISOString(),
-      univRoute: routeRes,
+      outstationData: univRoute.isOutstation ? {
+        isOutstation: true,
+        distanceKm: univRoute.distanceKm,
+        nearestRailway: `${univRoute.destCity} Railway Station`,
+        busTerminal: `Sindhi Camp ISBT (${univRoute.destCity} Bus)`,
+        routeNotes: `Take Express Transit from Jaipur to ${univRoute.destCity}.`
+      } : null,
+      univRoute: univRoute,
       metroRoute: hasValidMetro ? {
-        stationSequence: [{ name: sourceMetro.name }, { name: destMetro.name }],
+        stationSequence: [
+          { name: sourceMetro.name, area: "Source Metro Station" },
+          { name: destMetro.name, area: "Destination Metro Station" }
+        ],
         sourceStation: { name: sourceMetro.name },
         destinationStation: { name: destMetro.name },
         fare: 20,
-        travelTimeMinutes: 20
+        travelTimeMinutes: univRoute.totalTimeMins || 20,
+        waitingTimeMinutes: 4,
+        nextTrainMinutes: 4
       } : null,
-      busRoute: {
+      busRoute: univRoute.busRoute || {
         type: 'direct',
         transfers: 0,
-        busNumber: isUdaipur ? "UCTSL Route 1 / 2" : "AC 1",
+        busNumber: univRoute.busNumber || "AC 1",
+        routeNumber: univRoute.busNumber || "AC 1",
         fare: "₹15",
-        estimatedTimeMinutes: 20
+        estimatedTimeMinutes: univRoute.totalTimeMins || 25,
+        boardStop: finalSource,
+        alightStop: finalDest
+      },
+      map: {
+        source: univRoute.sourceCoords || { latitude: 26.9124, longitude: 75.7873 },
+        destination: univRoute.destCoords || { latitude: 26.9855, longitude: 75.8513 }
       },
       recommendations: recommendations
     };
@@ -142,7 +190,7 @@ export default function TransportSearch() {
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-10">
       <SEOHead
         title={`${cityDetails.name} Smart Transit & Route Comparison | Sheher Saathi`}
-        description={`Compare real-time ${cityDetails.transitModes.join(", ")} fares and route connections in ${cityDetails.name}.`}
+        description={`Compare real-time ${cityDetails.transitModes.join(", ")} fares, live interactive Leaflet maps, and route connections in ${cityDetails.name}.`}
       />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
@@ -222,6 +270,34 @@ export default function TransportSearch() {
         {/* Results Section */}
         {result && (
           <div className="space-y-8">
+            
+            {/* Outstation Excursion Banner */}
+            {result.outstationData && (
+              <div className="bg-amber-50 rounded-3xl border border-amber-300 p-8 shadow-xl space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="px-4 py-1.5 rounded-full bg-amber-200 text-amber-900 text-xs font-black uppercase tracking-wider">
+                    🚌 Outstation Excursion ({result.outstationData.distanceKm} km)
+                  </span>
+                  <span className="text-xs font-bold text-amber-800">RSRTC Express &amp; Outstation Transit</span>
+                </div>
+                <h3 className="text-2xl font-marcellus text-[#2C1E18]">
+                  Outstation Route to {destination}
+                </h3>
+                <p className="text-sm text-[#543C32] font-medium">
+                  {result.outstationData.routeNotes}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-bold text-[#2C1E18]">
+                  <div className="bg-white p-4 rounded-2xl border border-amber-200">
+                    🚆 Nearest Railway Station: <span className="text-[#B35D38]">{result.outstationData.nearestRailway}</span>
+                  </div>
+                  <div className="bg-white p-4 rounded-2xl border border-amber-200">
+                    🚌 Bus Terminal: <span className="text-[#B35D38]">{result.outstationData.busTerminal}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Smart Transit Mode Comparison Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {result.recommendations.map((rec, index) => (
                 <TransportCard 
@@ -237,8 +313,60 @@ export default function TransportSearch() {
               ))}
             </div>
 
+            {/* JAIPUR USP ENGINE: INTERACTIVE LEAFLET MAP & METRO / BUS TIMELINE */}
+            {!isUdaipur && (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                {/* Left Column: Timeline Selector & Detail View */}
+                <div className="lg:col-span-2 space-y-6">
+                  
+                  {/* Timeline Tab Selector */}
+                  <div className="flex items-center gap-2 bg-white p-2 rounded-2xl border border-[#E6D6C3] shadow-md">
+                    {result.metroRoute && (
+                      <button
+                        type="button"
+                        onClick={() => setActiveTimeline("metro")}
+                        className={`flex-1 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 ${
+                          activeTimeline === "metro"
+                            ? "bg-[#B35D38] text-white shadow-md"
+                            : "text-[#2C1E18] hover:bg-[#FAF5EF]"
+                        }`}
+                      >
+                        <span>🚇 Metro Timeline</span>
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setActiveTimeline("bus")}
+                      className={`flex-1 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 ${
+                        activeTimeline === "bus" || !result.metroRoute
+                          ? "bg-[#B35D38] text-white shadow-md"
+                          : "text-[#2C1E18] hover:bg-[#FAF5EF]"
+                      }`}
+                    >
+                      <span>🚌 JCTSL City Bus Route</span>
+                    </button>
+                  </div>
+
+                  {/* Render Selected Timeline */}
+                  {activeTimeline === "metro" && result.metroRoute ? (
+                    <RouteTimeline stations={result.metroRoute.stationSequence} />
+                  ) : (
+                    <BusRouteTimeline busRoute={result.busRoute} />
+                  )}
+
+                </div>
+
+                {/* Right Column: Interactive Leaflet Map Container */}
+                <div className="lg:col-span-1 min-h-[400px] bg-white rounded-3xl border border-[#E6D6C3] shadow-xl overflow-hidden relative">
+                  <TransportRouteMap routeData={result} />
+                </div>
+
+              </div>
+            )}
+
             {/* Udaipur Multi-Modal Step Timeline */}
-            {result.univRoute?.steps && (
+            {isUdaipur && result.univRoute?.steps && (
               <div className="bg-white rounded-3xl border border-[#E6D6C3] p-8 shadow-xl space-y-6">
                 <h3 className="text-2xl font-marcellus text-[#2C1E18]">
                   {cityDetails.name} Journey Step-by-Step Guide
@@ -258,6 +386,7 @@ export default function TransportSearch() {
                 </div>
               </div>
             )}
+
           </div>
         )}
 
