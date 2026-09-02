@@ -1,5 +1,13 @@
 import { AFFILIATE_CONFIG } from "../config/affiliateConfig";
 
+const buildBookingUrl = (hotelName) => {
+  const query = encodeURIComponent(`${hotelName}, Jaipur`);
+  if (AFFILIATE_CONFIG.bookingComAid && AFFILIATE_CONFIG.bookingComAid !== "304140") {
+    return `https://www.booking.com/searchresults.html?ss=${query}&aid=${AFFILIATE_CONFIG.bookingComAid}`;
+  }
+  return `https://www.booking.com/searchresults.html?ss=${query}`;
+};
+
 const INITIAL_JAIPUR_HOTELS = [
   {
     id: "rambagh-palace",
@@ -15,7 +23,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
     description: "Former residence of the Maharaja of Jaipur. Known as the 'Jewel of Jaipur', featuring 47 acres of manicured gardens and opulent royal suites.",
     featured: true,
-    bookingUrl: `https://www.booking.com/searchresults.html?ss=Rambagh+Palace+Jaipur&aid=${AFFILIATE_CONFIG.bookingComAid}`
+    bookingUrl: buildBookingUrl("Rambagh Palace")
   },
   {
     id: "samode-haveli",
@@ -31,7 +39,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80",
     description: "An authentic 175-year-old royal haveli built by the Samode family. Nestled inside the old walled city with exquisite frescoes and poolside dining.",
     featured: true,
-    bookingUrl: `https://www.booking.com/searchresults.html?ss=Samode+Haveli+Jaipur&aid=${AFFILIATE_CONFIG.bookingComAid}`
+    bookingUrl: buildBookingUrl("Samode Haveli")
   },
   {
     id: "alsisar-haveli",
@@ -47,7 +55,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
     description: "Restored Rajput mansion owned by the Alsisar nobles. Features intricate arches, antique chandeliers, and serene inner courtyards.",
     featured: true,
-    bookingUrl: `https://www.booking.com/searchresults.html?ss=Alsisar+Haveli+Jaipur&aid=${AFFILIATE_CONFIG.bookingComAid}`
+    bookingUrl: buildBookingUrl("Alsisar Haveli")
   },
   {
     id: "trident-jaipur",
@@ -63,7 +71,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80",
     description: "Breathtaking lakefront resort overlooking Jal Mahal and the Aravalli Hills. Minutes from Amer Fort.",
     featured: true,
-    bookingUrl: `https://www.booking.com/searchresults.html?ss=Trident+Jaipur&aid=${AFFILIATE_CONFIG.bookingComAid}`
+    bookingUrl: buildBookingUrl("Trident Jaipur")
   },
   {
     id: "shahpura-house",
@@ -79,7 +87,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80",
     description: "Authentic Indo-Saracenic royal house boasting gilded mirrors, traditional frescoes, and a popular sunset rooftop restaurant.",
     featured: false,
-    bookingUrl: `https://www.booking.com/searchresults.html?ss=Shahpura+House+Jaipur&aid=${AFFILIATE_CONFIG.bookingComAid}`
+    bookingUrl: buildBookingUrl("Shahpura House")
   },
   {
     id: "pearl-palace-heritage",
@@ -95,7 +103,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80",
     description: "Award-winning boutique hotel where every room represents a different Indian state & art heritage. Highly rated by international travelers.",
     featured: true,
-    bookingUrl: `https://www.booking.com/searchresults.html?ss=Pearl+Palace+Heritage+Jaipur&aid=${AFFILIATE_CONFIG.bookingComAid}`
+    bookingUrl: buildBookingUrl("Pearl Palace Heritage")
   },
   {
     id: "zostel-jaipur",
@@ -111,7 +119,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80",
     description: "Vibrant backpacker hostel right in the heart of the walled Pink City. Steps away from Hawa Mahal.",
     featured: false,
-    bookingUrl: `https://www.booking.com/searchresults.html?ss=Zostel+Jaipur&aid=${AFFILIATE_CONFIG.bookingComAid}`
+    bookingUrl: buildBookingUrl("Zostel Jaipur")
   }
 ];
 
