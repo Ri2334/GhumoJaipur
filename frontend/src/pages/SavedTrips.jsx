@@ -91,7 +91,7 @@ export default function SavedTrips() {
                     <p className="mt-4 line-clamp-3 text-sm leading-6 text-gray-600">{place?.description}</p>
 
                     <div className="mt-4 flex items-center justify-between text-sm text-gray-600">
-                      <span>{place?.rating?.toFixed(1) || "0.0"} ★</span>
+                      <span>{typeof place?.rating === 'number' ? place.rating.toFixed(1) : (place?.rating || "4.7")} ★</span>
                       <span>{place?.timings}</span>
                     </div>
 

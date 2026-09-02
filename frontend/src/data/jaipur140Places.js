@@ -672,7 +672,7 @@ for (let i = 1; i <= 125; i++) {
     description: pDesc,
     location: `${loc}, Jaipur, Rajasthan`,
     images: [pImg],
-    rating: (4.2 + (i % 8) * 0.1).toFixed(1),
+    rating: Number((4.2 + (i % 8) * 0.1).toFixed(1)),
     timings: cat === "Food" ? "11:00 AM - 11:00 PM" : "9:00 AM - 8:00 PM",
     ticketPrice: cat === "Parks" || cat === "Religious" ? 0 : 50 + (i % 5) * 50,
     category: cat,

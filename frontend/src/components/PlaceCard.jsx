@@ -26,7 +26,9 @@ export default function PlaceCard({ place }) {
           <div className="absolute bottom-4 left-4 right-4 text-white">
             <div className="flex items-center justify-between gap-3">
               <h3 className="text-xl font-marcellus text-white tracking-wide">{place.name}</h3>
-              <span className="rounded-full bg-[#B35D38] text-white px-3 py-1 text-xs font-bold shadow-md">{place.rating?.toFixed(1) || "0.0"} ★</span>
+              <span className="rounded-full bg-[#B35D38] text-white px-3 py-1 text-xs font-bold shadow-md">
+                {typeof place.rating === 'number' ? place.rating.toFixed(1) : (place.rating || "4.7")} ★
+              </span>
             </div>
             <p className="mt-1 text-xs text-[#E6D6C3] line-clamp-1">{place.location}</p>
           </div>
