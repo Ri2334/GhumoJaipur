@@ -42,32 +42,28 @@ class MapErrorBoundary extends React.Component {
 export default function TransportSearch() {
   const navigate = useNavigate();
   const location = useLocation();
+  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const passedDest = location.state?.destination || searchParams.get("destination");
 
-  const [source, setSource] = useState("Jaipur Railway Station");
-  const [destination, setDestination] = useState(location.state?.destination || "Badi Chaupar");
+  const [source, setSource] = useState(passedDest ? "" : "Jaipur Railway Station");
+  const [destination, setDestination] = useState(passedDest || "Badi Chaupar");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
   const [suggestionsVisible, setSuggestionsVisible] = useState(false);
-  const [activeField, setActiveField] = useState("source");
+  const [activeField, setActiveField] = useState(passedDest ? "source" : "source");
   const [activeTimeline, setActiveTimeline] = useState("metro");
 
   const metroStations = jaipurMetroLines[0].stations;
 
   useEffect(() => {
-    if (location.state?.destination) {
-      setDestination(location.state.destination);
-      // We'll let the user click search or we can auto-trigger
-      const allValidNames = [
-        ...jaipurPlaces.map(p => p.name.toLowerCase()),
-        ...metroStations.map(s => s.name.toLowerCase()),
-        ...jaipurBusStops.map(b => b.name.toLowerCase())
-      ];
-      if (allValidNames.includes(source.toLowerCase()) && allValidNames.includes(location.state.destination.toLowerCase())) {
-        handleSearch(null, source, location.state.destination);
-      }
+    if (passedDest) {
+      setDestination(passedDest);
+      setSource("");
+      setActiveField("source");
+      setSuggestionsVisible(true);
     }
-  }, [location.state, metroStations]);
+  }, [passedDest]);
 
   const suggestions = useMemo(() => {
     const query = (activeField === "destination" ? destination : source || "").trim().toLowerCase();
