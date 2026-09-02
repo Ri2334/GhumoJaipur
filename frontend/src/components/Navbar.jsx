@@ -163,11 +163,8 @@ export default function Navbar() {
             {/* City Bus Direct Link */}
             <NavLink to="/bus-routes" className={activeClass}>City Bus</NavLink>
 
-            {/* Hotels Direct Top-level Link */}
+            {/* Hotels Direct Link */}
             <NavLink to="/hotels" className={activeClass}>Hotels 🏨</NavLink>
-
-            {/* Vehicle Rentals Link */}
-            <NavLink to="/rentals" className={activeClass}>Rentals 🛵</NavLink>
 
             {/* Explore Dropdown */}
             <div 
@@ -175,20 +172,28 @@ export default function Navbar() {
               onMouseEnter={() => setExploreDropdown(true)}
               onMouseLeave={() => setExploreDropdown(false)}
             >
-              <button className="text-[#E6D6C3] hover:text-white hover:bg-white/10 px-3.5 py-2 rounded-xl transition font-medium flex items-center gap-1">
+              <button className="text-[#E6D6C3] hover:text-white hover:bg-white/10 px-3 py-2 rounded-xl transition text-xs font-semibold flex items-center gap-1">
                 <span>Explore</span>
                 <span className="text-[10px]">▼</span>
               </button>
 
               {exploreDropdown && (
-                <div className="absolute left-0 mt-1 w-60 rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 z-50 space-y-1">
+                <div className="absolute left-0 mt-1 w-64 rounded-2xl bg-white p-2 text-[#2C1E18] shadow-2xl border border-[#E6D6C3] animate-in fade-in slide-in-from-top-2 z-50 space-y-1">
+                  <NavLink
+                    to="/rentals"
+                    onClick={() => setExploreDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition bg-[#FAF1EC] border border-[#EBC5B2]"
+                  >
+                    <span className="font-bold text-xs text-[#B35D38]">🛵 Activa, Bike &amp; Car Rentals</span>
+                    <span className="text-[10px] text-gray-500">Rent Activa 6G, Royal Enfield &amp; cars</span>
+                  </NavLink>
                   <NavLink
                     to="/places"
                     onClick={() => setExploreDropdown(false)}
                     className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
                   >
                     <span className="font-bold text-xs text-[#2C1E18]">📍 All Tourist Places</span>
-                    <span className="text-[10px] text-gray-500">20+ destinations with 10 FAQs each</span>
+                    <span className="text-[10px] text-gray-500">Verified destinations with FAQs &amp; guides</span>
                   </NavLink>
                   <NavLink
                     to="/day-trips"

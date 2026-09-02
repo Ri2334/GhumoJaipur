@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import SEOHead from "../components/SEOHead";
 import { CityContext } from "../context/CityContext";
+import { AuthContext } from "../context/AuthContext";
 import { getStoredRentals, saveStoredRentals } from "../data/rentalsData";
 
 export default function Rentals() {
   const { currentCity, cityDetails } = useContext(CityContext);
+  const { user } = useContext(AuthContext);
   const [rentals, setRentals] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [search, setSearch] = useState("");
@@ -20,7 +22,6 @@ export default function Rentals() {
     pickupLocation: "",
     hostName: "",
     hostPhone: "",
-    image: "",
     description: ""
   });
   const [hostSuccess, setHostSuccess] = useState(false);
@@ -29,9 +30,10 @@ export default function Rentals() {
     setRentals(getStoredRentals());
   }, []);
 
-  // Filter rentals by current city and category
-  const filtered = rentals.filter((item) => {
+  // Filter rentals for travelers: show approved listings & initial verified fleet for current city
+  const approvedListings = rentals.filter((item) => {
     const matchCity = (item.city || "Udaipur").toLowerCase() === currentCity.toLowerCase();
+    const isApproved = item.status === "approved" || !item.status; // default ones have no status or approved
     const matchCat = selectedCategory === "All" || item.category === selectedCategory;
     const matchSearch =
       search.trim() === "" ||
@@ -39,8 +41,11 @@ export default function Rentals() {
       item.pickupLocation.toLowerCase().includes(search.toLowerCase()) ||
       item.hostName.toLowerCase().includes(search.toLowerCase());
 
-    return matchCity && matchCat && matchSearch;
+    return matchCity && isApproved && matchCat && matchSearch;
   });
+
+  // Pending listings for Admin Verification
+  const pendingListings = rentals.filter((item) => item.status === "pending_approval");
 
   const handleAddListing = (e) => {
     e.preventDefault();
@@ -55,15 +60,15 @@ export default function Rentals() {
       hourlyRate: Number(hostForm.hourlyRate || Math.round(hostForm.dailyRate / 7)),
       deposit: Number(hostForm.deposit || 1000),
       pickupLocation: hostForm.pickupLocation || `${cityDetails.name} City Center`,
-      hostName: hostForm.hostName || "Local Verified Host",
+      hostName: hostForm.hostName || "Local Host",
       hostPhone: hostForm.hostPhone,
       rating: 5.0,
       reviewsCount: 1,
       fuelType: "Petrol",
       helmetIncluded: "2 Helmets Included Free",
-      image: hostForm.image || "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=80",
       description: hostForm.description || "Self-drive rental vehicle available for daily and hourly rental.",
-      featured: true
+      status: "pending_approval",
+      submittedAt: new Date().toISOString()
     };
 
     const updated = [newListing, ...rentals];
@@ -83,19 +88,36 @@ export default function Rentals() {
         pickupLocation: "",
         hostName: "",
         hostPhone: "",
-        image: "",
         description: ""
       });
-    }, 2000);
+    }, 3000);
+  };
+
+  const handleAdminApprove = (id) => {
+    const updated = rentals.map((item) => (item.id === id ? { ...item, status: "approved" } : item));
+    setRentals(updated);
+    saveStoredRentals(updated);
+  };
+
+  const handleAdminReject = (id) => {
+    const updated = rentals.filter((item) => item.id !== id);
+    setRentals(updated);
+    saveStoredRentals(updated);
   };
 
   const categories = ["All", "Activa & Scooty", "Bikes & Cruisers", "Self-Drive Cars"];
+
+  const getVehicleIcon = (category) => {
+    if (category.includes("Activa") || category.includes("Scooty")) return "🛵";
+    if (category.includes("Bike") || category.includes("Cruiser")) return "🏍️";
+    return "🚗";
+  };
 
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-8 selection:bg-[#B35D38] selection:text-white">
       <SEOHead
         title={`${cityDetails.name} Self-Drive Vehicle Rentals — Activa, Bikes & Cars | Sheher Saathi`}
-        description={`Rent Honda Activas, Royal Enfield bullets, and self-drive cars in ${cityDetails.name}. Transparent daily rates, verified hosts, and instant pickup.`}
+        description={`Rent Honda Activas, Royal Enfield bikes, and self-drive cars in ${cityDetails.name}. Transparent daily rates, verified hosts, and instant pickup.`}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -119,9 +141,47 @@ export default function Rentals() {
             onClick={() => setShowHostModal(true)}
             className="bg-gradient-to-r from-[#B35D38] to-[#D98A5B] hover:brightness-110 text-white px-7 py-4 rounded-2xl font-bold text-sm shadow-xl transition whitespace-nowrap flex items-center gap-2"
           >
-            <span>💼 List Your Vehicle / Host Signup</span>
+            <span>💼 Business Partner / Host Signup</span>
           </button>
         </div>
+
+        {/* ADMIN VERIFICATION QUEUE SECTION (Visible if Admin or pending items exist) */}
+        {pendingListings.length > 0 && (
+          <div className="bg-amber-50 rounded-3xl border border-amber-300 p-6 shadow-xl space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="px-3 py-1 rounded-full bg-amber-200 text-amber-900 text-xs font-black uppercase">
+                🛡️ Admin Verification Queue ({pendingListings.length} Pending)
+              </span>
+              <span className="text-xs text-amber-800 font-bold">Listings require Admin verification before going live</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {pendingListings.map((item) => (
+                <div key={item.id} className="bg-white p-4 rounded-2xl border border-amber-200 shadow-md flex items-center justify-between">
+                  <div>
+                    <div className="font-bold text-sm text-[#2C1E18]">{item.title} ({item.city})</div>
+                    <div className="text-xs text-[#543C32]">Host: {item.hostName} ({item.hostPhone})</div>
+                    <div className="text-xs font-black text-[#B35D38] mt-1">₹{item.dailyRate}/day • {item.pickupLocation}</div>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleAdminApprove(item.id)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl"
+                    >
+                      Approve ✅
+                    </button>
+                    <button
+                      onClick={() => handleAdminReject(item.id)}
+                      className="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-2 rounded-xl"
+                    >
+                      Reject ❌
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Filter Controls Bar */}
         <div className="bg-white p-6 rounded-3xl border border-[#E6D6C3] shadow-lg flex flex-col md:flex-row items-center justify-between gap-4">
@@ -153,71 +213,70 @@ export default function Rentals() {
           </div>
         </div>
 
-        {/* Rentals Grid */}
+        {/* Rentals Grid - CLEAN MINIMAL CARDS (NO WRONG STOCK PICS) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((item) => (
-            <div key={item.id} className="bg-white rounded-3xl border border-[#E6D6C3] overflow-hidden shadow-xl flex flex-col justify-between group hover:shadow-2xl transition duration-300">
-              <div>
-                <div className="relative h-52 overflow-hidden bg-[#2C1E18]">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-[#B35D38] text-white text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-md">
-                      {item.category}
-                    </span>
-                  </div>
-                  <div className="absolute top-4 right-4 bg-[#1C110C]/80 text-[#D98A5B] font-bold text-xs px-3 py-1 rounded-full backdrop-blur-md border border-[#3D2B23]">
+          {approvedListings.map((item) => (
+            <div key={item.id} className="bg-white rounded-3xl border border-[#E6D6C3] overflow-hidden shadow-xl flex flex-col justify-between group hover:shadow-2xl transition duration-300 p-6 space-y-6">
+              
+              <div className="space-y-4">
+                {/* Header Vehicle Badge */}
+                <div className="flex items-center justify-between">
+                  <span className="bg-[#FAF1EC] text-[#B35D38] border border-[#EBC5B2] text-xs font-black uppercase tracking-wider px-3.5 py-1 rounded-full flex items-center gap-1.5">
+                    <span>{getVehicleIcon(item.category)}</span>
+                    <span>{item.category}</span>
+                  </span>
+                  <span className="bg-[#FAF5EF] text-[#2C1E18] font-bold text-xs px-3 py-1 rounded-full border border-[#E6D6C3]">
                     ★ {item.rating} ({item.reviewsCount})
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="font-marcellus text-2xl text-[#2C1E18]">{item.title}</h3>
+                  <p className="text-xs text-[#A37B66] font-semibold mt-1">📍 {item.pickupLocation}</p>
+                </div>
+
+                <p className="text-xs text-[#543C32] leading-relaxed font-medium">{item.description}</p>
+
+                <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#E6D6C3] text-xs">
+                  <div className="bg-[#FAF5EF] p-3 rounded-2xl border border-[#E6D6C3]">
+                    <div className="text-[10px] text-[#A37B66] font-bold uppercase">Daily Tariff</div>
+                    <div className="font-black text-[#B35D38] text-lg">₹{item.dailyRate} <span className="text-xs font-normal text-[#543C32]">/day</span></div>
+                  </div>
+                  <div className="bg-[#FAF5EF] p-3 rounded-2xl border border-[#E6D6C3]">
+                    <div className="text-[10px] text-[#A37B66] font-bold uppercase">Security Deposit</div>
+                    <div className="font-bold text-[#2C1E18] text-base">₹{item.deposit}</div>
                   </div>
                 </div>
 
-                <div className="p-6 space-y-4">
-                  <div>
-                    <h3 className="font-marcellus text-2xl text-[#2C1E18]">{item.title}</h3>
-                    <p className="text-xs text-[#A37B66] font-semibold mt-1">📍 {item.pickupLocation}</p>
-                  </div>
-
-                  <p className="text-xs text-[#543C32] leading-relaxed font-medium line-clamp-2">{item.description}</p>
-
-                  <div className="grid grid-cols-2 gap-2 pt-3 border-t border-[#E6D6C3] text-xs">
-                    <div className="bg-[#FAF5EF] p-2.5 rounded-xl border border-[#E6D6C3]">
-                      <div className="text-[10px] text-[#A37B66] font-bold uppercase">Daily Tariff</div>
-                      <div className="font-black text-[#B35D38] text-base">₹{item.dailyRate} <span className="text-xs font-normal text-[#543C32]">/day</span></div>
-                    </div>
-                    <div className="bg-[#FAF5EF] p-2.5 rounded-xl border border-[#E6D6C3]">
-                      <div className="text-[10px] text-[#A37B66] font-bold uppercase">Security Deposit</div>
-                      <div className="font-bold text-[#2C1E18] text-sm">₹{item.deposit}</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between text-[11px] font-bold text-[#543C32] bg-[#FAF1EC] px-3 py-2 rounded-xl">
-                    <span>Host: {item.hostName}</span>
-                    <span className="text-[#B35D38]">✔ {item.helmetIncluded}</span>
-                  </div>
+                <div className="flex items-center justify-between text-[11px] font-bold text-[#543C32] bg-[#FAF1EC] px-3.5 py-2.5 rounded-xl border border-[#EBC5B2]/60">
+                  <span>Host: {item.hostName}</span>
+                  <span className="text-[#B35D38]">✔ {item.helmetIncluded}</span>
                 </div>
               </div>
 
               {/* Booking Actions */}
-              <div className="p-6 pt-0 grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2 pt-2">
                 <a
                   href={`https://wa.me/${item.hostPhone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi, I want to book ${item.title} in ${cityDetails.name} via Sheher Saathi.`)}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-md transition"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-md transition"
                 >
                   <span>💬 WhatsApp</span>
                 </a>
                 <a
                   href={`tel:${item.hostPhone}`}
-                  className="bg-[#3D2B23] hover:bg-[#4A362B] text-white font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-md transition"
+                  className="bg-[#3D2B23] hover:bg-[#4A362B] text-white font-bold py-3.5 rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow-md transition"
                 >
                   <span>📞 Call Host</span>
                 </a>
               </div>
+
             </div>
           ))}
         </div>
 
-        {/* BUSINESS HOST SIGNUP MODAL */}
+        {/* BUSINESS HOST SIGNUP MODAL WITH ADMIN APPROVAL NOTICE */}
         {showHostModal && (
           <div className="fixed inset-0 z-[200] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
             <div className="bg-white rounded-3xl border border-[#E6D6C3] max-w-xl w-full p-8 shadow-2xl space-y-6 relative max-h-[90vh] overflow-y-auto">
@@ -233,14 +292,14 @@ export default function Rentals() {
                   Partner Host Signup 💼
                 </span>
                 <h2 className="text-3xl font-marcellus text-[#2C1E18] mt-2">List Your Vehicle on Sheher Saathi</h2>
-                <p className="text-xs text-[#543C32] font-semibold mt-1">Rent out your Activa, Bike, or Car to tourists in {cityDetails.name}.</p>
+                <p className="text-xs text-[#543C32] font-semibold mt-1">Rent out your Activa, Bike, or Car in {cityDetails.name}. All listings undergo Admin verification before publishing live.</p>
               </div>
 
               {hostSuccess ? (
-                <div className="p-6 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl font-bold text-center space-y-2">
-                  <div className="text-3xl">🎉</div>
-                  <div>Vehicle Listed Successfully!</div>
-                  <p className="text-xs font-normal">Your rental listing is now live in the {cityDetails.name} marketplace.</p>
+                <div className="p-6 bg-amber-50 border border-amber-200 text-amber-900 rounded-2xl font-bold text-center space-y-2">
+                  <div className="text-3xl">🛡️</div>
+                  <div>Submitted for Admin Verification!</div>
+                  <p className="text-xs font-normal">Our team will verify your vehicle listing details within 2 hours before publishing it live.</p>
                 </div>
               ) : (
                 <form onSubmit={handleAddListing} className="space-y-4">
@@ -341,22 +400,11 @@ export default function Rentals() {
                     />
                   </div>
 
-                  <div>
-                    <label className="text-xs font-bold text-[#2C1E18]">Vehicle Image URL (Optional)</label>
-                    <input
-                      type="url"
-                      value={hostForm.image}
-                      onChange={(e) => setHostForm({ ...hostForm, image: e.target.value })}
-                      placeholder="https://..."
-                      className="w-full bg-[#FAF5EF] border border-[#E6D6C3] rounded-xl px-3.5 py-2.5 text-xs font-semibold outline-none"
-                    />
-                  </div>
-
                   <button
                     type="submit"
                     className="w-full bg-[#B35D38] hover:bg-[#964B2A] text-white py-3.5 rounded-2xl font-bold text-sm shadow-xl transition"
                   >
-                    Publish Vehicle Listing Live →
+                    Submit Listing for Admin Verification →
                   </button>
                 </form>
               )}
