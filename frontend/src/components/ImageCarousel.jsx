@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 
+const NEUTRAL_PLACEHOLDER = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><rect width="800" height="600" fill="%232C1E18"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%23E6D6C3" font-family="serif" font-size="26" font-weight="bold">📍 Photo Pending Verification</text><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="%23A37B66" font-family="sans-serif" font-size="16">SheherSaathi Place System</text></svg>`;
+
 export default function ImageCarousel({ images = [] }) {
-  const gallery = images.length ? images : ["https://images.unsplash.com/photo-1518639192441-8fce0a0c2e0e?auto=format&fit=crop&w=1200&q=80"];
+  const validImages = images.filter(Boolean);
+  const gallery = validImages.length ? validImages : [NEUTRAL_PLACEHOLDER];
   const [active, setActive] = useState(0);
 
   return (

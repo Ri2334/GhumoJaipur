@@ -135,9 +135,7 @@ export default function PlaceDetails() {
           <div className="space-y-8">
             
             {/* Image Carousel */}
-            <div className="overflow-hidden rounded-3xl border border-[#E6D6C3] shadow-2xl">
-              <ImageCarousel images={place.images || []} altText={place.name} />
-            </div>
+              <ImageCarousel images={place.imageUrl ? [place.imageUrl] : (place.images || [])} altText={place.name} />
 
             {/* Header Info */}
             <div className="rounded-3xl border border-[#E6D6C3] bg-white p-8 shadow-xl space-y-6">

@@ -1,13 +1,16 @@
-// 100% EXPLICIT REAL JAIPUR DATASET FOR ALL 140+ DESTINATIONS
+// 100% EXPLICIT REAL JAIPUR PLACES DATASET (Processed by Automated Place Ingestion Pipeline)
 export const jaipur140Places = [
   {
     "_id": "amer_fort",
     "name": "Amer Fort",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Amer Fort, Amer, Rajasthan",
+    "placeId": "ChIJW7N064NjbDkRkC4U1W9P-p0",
+    "imageUrl": "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1200&q=80",
+    "imageStatus": "verified",
     "description": "Hilltop fortress known for Hindu-Mughal architecture, elephant rides, Maota Lake, and Sheesh Mahal.",
     "location": "Devisinghpura, Amer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 200,
@@ -48,7 +51,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Amer Fort?",
-        "a": "Entry ticket is \u20b9200."
+        "a": "Entry ticket is ₹200."
       },
       {
         "q": "What famous food is near Amer Fort?",
@@ -87,11 +90,14 @@ export const jaipur140Places = [
   {
     "_id": "hawa_mahal",
     "name": "Hawa Mahal",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Hawa Mahal, Jaipur, Rajasthan",
+    "placeId": "ChIJbQ8cKIFjbDkR8R7S7d5v_yE",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/hawamahal_owadja.jpg",
+    "imageStatus": "verified",
     "description": "The iconic 5-storey Palace of Winds featuring 953 honeycombed jharokha windows built in 1799.",
     "location": "Badi Choupad, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/hawamahal_owadja.jpg"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 100,
@@ -132,7 +138,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Hawa Mahal?",
-        "a": "Entry ticket is \u20b9100."
+        "a": "Entry ticket is ₹100."
       },
       {
         "q": "What famous food is near Hawa Mahal?",
@@ -171,11 +177,14 @@ export const jaipur140Places = [
   {
     "_id": "city_palace",
     "name": "City Palace",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "City Palace, Jaipur, Rajasthan",
+    "placeId": "ChIJzU0t_YBjbDkRkX6m4L_xP5k",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953278/City_Palace_jmjeuo.webp",
+    "imageStatus": "verified",
     "description": "Active royal residence blending Rajput and Mughal design, housing extensive museums and Peacock Gate.",
     "location": "Tripolia Bazar, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953278/City_Palace_jmjeuo.webp"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 300,
@@ -216,7 +225,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for City Palace?",
-        "a": "Entry ticket is \u20b9300."
+        "a": "Entry ticket is ₹300."
       },
       {
         "q": "What famous food is near City Palace?",
@@ -255,11 +264,14 @@ export const jaipur140Places = [
   {
     "_id": "nahargarh_fort",
     "name": "Nahargarh Fort",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Nahargarh Fort, Jaipur, Rajasthan",
+    "placeId": "ChIJQ0xLhYhjbDkRsK3q4M_wP5m",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953023/Nahargarh_Fort_ieetqc.jpg",
+    "imageStatus": "verified",
     "description": "Perched on the Aravalli hills; legendary for panoramic city views, Padao rooftop deck and sunset tracking.",
     "location": "Krishna Nagar, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953023/Nahargarh_Fort_ieetqc.jpg"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 100,
@@ -300,7 +312,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Nahargarh Fort?",
-        "a": "Entry ticket is \u20b9100."
+        "a": "Entry ticket is ₹100."
       },
       {
         "q": "What famous food is near Nahargarh Fort?",
@@ -339,11 +351,14 @@ export const jaipur140Places = [
   {
     "_id": "jaigarh_fort",
     "name": "Jaigarh Fort",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Jaigarh Fort, Amer, Rajasthan",
+    "placeId": "ChIJJXlKqoljbDkR8L7m4N_vQ6n",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953028/Jaigarh_Fort_nkzlwp.jpg",
+    "imageStatus": "verified",
     "description": "Victory fort housing the world's largest cannon on wheels, the Jaivana, and armory museum.",
     "location": "Amer, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953028/Jaigarh_Fort_nkzlwp.jpg"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 150,
@@ -384,7 +399,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Jaigarh Fort?",
-        "a": "Entry ticket is \u20b9150."
+        "a": "Entry ticket is ₹150."
       },
       {
         "q": "What famous food is near Jaigarh Fort?",
@@ -423,11 +438,14 @@ export const jaipur140Places = [
   {
     "_id": "jal_mahal",
     "name": "Jal Mahal",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Jal Mahal, Amer, Rajasthan",
+    "placeId": "ChIJmU1LhohjbDkRzL5n4O_wR7p",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953029/Jal_Mahal_nytgp8.jpg",
+    "imageStatus": "verified",
     "description": "Submerged red sandstone water palace floating in the center of Man Sagar Lake.",
     "location": "Amer Road, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953029/Jal_Mahal_nytgp8.jpg"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -507,11 +525,14 @@ export const jaipur140Places = [
   {
     "_id": "rambagh_palace",
     "name": "Rambagh Palace",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Rambagh Palace, Jaipur, Rajasthan",
+    "placeId": "ChIJ50xMloZjbDkR2L6o4P_xS8q",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953027/Rambagh_Palace_lcfwlv.jpg",
+    "imageStatus": "verified",
     "description": "Luxury heritage hotel and former royal residence of Maharaja Sawai Man Singh II and Maharani Gayatri Devi.",
     "location": "Bhawani Singh Road, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953027/Rambagh_Palace_lcfwlv.jpg"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 700,
@@ -552,7 +573,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Rambagh Palace?",
-        "a": "Entry ticket is \u20b9700."
+        "a": "Entry ticket is ₹700."
       },
       {
         "q": "What famous food is near Rambagh Palace?",
@@ -591,11 +612,14 @@ export const jaipur140Places = [
   {
     "_id": "samode_palace",
     "name": "Samode Palace",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Samode Palace, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "A 475-year-old palace displaying exquisite Rajput-Mughal haveli style, Sheesh Mahal and swimming pool courtyard.",
     "location": "Samode Village, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 1000,
@@ -636,7 +660,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Samode Palace?",
-        "a": "Entry ticket is \u20b91000."
+        "a": "Entry ticket is ₹1000."
       },
       {
         "q": "What famous food is near Samode Palace?",
@@ -675,11 +699,14 @@ export const jaipur140Places = [
   {
     "_id": "shahpura_house",
     "name": "Shahpura House",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Shahpura House, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Ornate heritage haveli turned premium heritage stay displaying traditional Rajasthani frescoes.",
     "location": "Devi Marg, Bani Park, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 500,
@@ -720,7 +747,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Shahpura House?",
-        "a": "Entry ticket is \u20b9500."
+        "a": "Entry ticket is ₹500."
       },
       {
         "q": "What famous food is near Shahpura House?",
@@ -759,11 +786,14 @@ export const jaipur140Places = [
   {
     "_id": "rajmahal_palace",
     "name": "Rajmahal Palace",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Rajmahal Palace, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Eclectic royal residence known for vibrant wallpaper styles, marble pools, and royal heritage heritage gardens.",
     "location": "Sardar Patel Marg, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 800,
@@ -804,7 +834,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Rajmahal Palace?",
-        "a": "Entry ticket is \u20b9800."
+        "a": "Entry ticket is ₹800."
       },
       {
         "q": "What famous food is near Rajmahal Palace?",
@@ -843,11 +873,14 @@ export const jaipur140Places = [
   {
     "_id": "chomu_palace",
     "name": "Chomu Palace",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Chomu Palace, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Authentic 300-year-old fortified palace on the outskirts featuring royal courtyards and Sheesh Mahal.",
     "location": "Chomu, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 400,
@@ -888,7 +921,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Chomu Palace?",
-        "a": "Entry ticket is \u20b9400."
+        "a": "Entry ticket is ₹400."
       },
       {
         "q": "What famous food is near Chomu Palace?",
@@ -927,11 +960,14 @@ export const jaipur140Places = [
   {
     "_id": "mundota_fort_and_palace",
     "name": "Mundota Fort and Palace",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Mundota Fort and Palace, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Luxury hilltop fortress overlooking polo grounds and lush Aravalli countryside.",
     "location": "Mundota, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 600,
@@ -972,7 +1008,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Mundota Fort and Palace?",
-        "a": "Entry ticket is \u20b9600."
+        "a": "Entry ticket is ₹600."
       },
       {
         "q": "What famous food is near Mundota Fort and Palace?",
@@ -1011,11 +1047,14 @@ export const jaipur140Places = [
   {
     "_id": "narain_niwas_palace",
     "name": "Narain Niwas Palace",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Narain Niwas Palace, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Heritage property featuring Anglo-Indian architectural style, peacock gardens, and Bar Palladio.",
     "location": "Narain Singh Circle, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 500,
@@ -1056,7 +1095,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Narain Niwas Palace?",
-        "a": "Entry ticket is \u20b9500."
+        "a": "Entry ticket is ₹500."
       },
       {
         "q": "What famous food is near Narain Niwas Palace?",
@@ -1095,11 +1134,14 @@ export const jaipur140Places = [
   {
     "_id": "diggi_palace",
     "name": "Diggi Palace",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Diggi Palace, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Traditional haveli famous as the annual host venue for the renowned Jaipur Literature Festival.",
     "location": "Diggi House, C-Scheme, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 300,
@@ -1140,7 +1182,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Diggi Palace?",
-        "a": "Entry ticket is \u20b9300."
+        "a": "Entry ticket is ₹300."
       },
       {
         "q": "What famous food is near Diggi Palace?",
@@ -1179,11 +1221,14 @@ export const jaipur140Places = [
   {
     "_id": "alsisar_haveli",
     "name": "Alsisar Haveli",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Alsisar Haveli, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Recreated traditional architecture in the heart of town with fresco-painted courtyards and pool.",
     "location": "Sansar Chandra Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 400,
@@ -1224,7 +1269,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Alsisar Haveli?",
-        "a": "Entry ticket is \u20b9400."
+        "a": "Entry ticket is ₹400."
       },
       {
         "q": "What famous food is near Alsisar Haveli?",
@@ -1263,11 +1308,14 @@ export const jaipur140Places = [
   {
     "_id": "jantar_mantar",
     "name": "Jantar Mantar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Jantar Mantar, Jaipur, Rajasthan",
+    "placeId": "ChIJ60xNmoZjbDkR3L7p4Q_yT9r",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953021/Jantar_Mantar_lm0jfo.jpg",
+    "imageStatus": "verified",
     "description": "UNESCO-listed 18th-century park with 19 architectural astronomical instruments including Samrat Yantra sundial.",
     "location": "Gangori Bazaar, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953021/Jantar_Mantar_lm0jfo.jpg"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 100,
@@ -1308,7 +1356,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Jantar Mantar?",
-        "a": "Entry ticket is \u20b9100."
+        "a": "Entry ticket is ₹100."
       },
       {
         "q": "What famous food is near Jantar Mantar?",
@@ -1347,11 +1395,14 @@ export const jaipur140Places = [
   {
     "_id": "albert_hall_museum",
     "name": "Albert Hall Museum",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Albert Hall Museum, Jaipur, Rajasthan",
+    "placeId": "ChIJ70xNnoZjbDkR4L8q4R_zU0s",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953023/Albert_Hall_Museum_g25y8x.jpg",
+    "imageStatus": "verified",
     "description": "The oldest state museum, operating inside an exquisite Indo-Saracenic building displaying Egyptian mummy & carpets.",
     "location": "Ram Niwas Garden, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953023/Albert_Hall_Museum_g25y8x.jpg"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 100,
@@ -1392,7 +1443,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Albert Hall Museum?",
-        "a": "Entry ticket is \u20b9100."
+        "a": "Entry ticket is ₹100."
       },
       {
         "q": "What famous food is near Albert Hall Museum?",
@@ -1431,11 +1482,14 @@ export const jaipur140Places = [
   {
     "_id": "gaitore_ki_chhatriyan",
     "name": "Gaitore Ki Chhatriyan",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Gaitore Ki Chhatriyan, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Royal cremation grounds displaying intricately carved white marble cenotaphs of Jaipur maharajas.",
     "location": "Krishna Nagar, Amer Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 50,
@@ -1476,7 +1530,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Gaitore Ki Chhatriyan?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Gaitore Ki Chhatriyan?",
@@ -1515,11 +1569,14 @@ export const jaipur140Places = [
   {
     "_id": "isarlat_sargasooli",
     "name": "Isarlat Sargasooli",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Isarlat Sargasooli, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "A 7-story victory tower built in 1749 offering 360-degree panoramic views of the walled Pink City markets.",
     "location": "Tripolia Bazar, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953022/Isarlat_Sargasuli_mfeue9.webp"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 50,
@@ -1560,7 +1617,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Isarlat Sargasooli?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Isarlat Sargasooli?",
@@ -1599,11 +1656,14 @@ export const jaipur140Places = [
   {
     "_id": "patrika_gate",
     "name": "Patrika Gate",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Patrika Gate, Jaipur, Rajasthan",
+    "placeId": "ChIJ80xOooZjbDkR5L9r4S_0V1t",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953025/Patrika_Gate_wjuypt.jpg",
+    "imageStatus": "verified",
     "description": "Highly colorful hand-painted walkway entry gate representing Rajasthani culture, palaces and wars at Jawahar Circle.",
     "location": "Jawahar Circle, JLN Marg, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953025/Patrika_Gate_wjuypt.jpg"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -1683,11 +1743,14 @@ export const jaipur140Places = [
   {
     "_id": "amrapali_museum",
     "name": "Amrapali Museum",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Amrapali Museum, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Dedicated to tribal and historical Indian jewelry artwork, silver ornaments, and royal heritage pieces.",
     "location": "Ashok Nagar, MI Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 600,
@@ -1728,7 +1791,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Amrapali Museum?",
-        "a": "Entry ticket is \u20b9600."
+        "a": "Entry ticket is ₹600."
       },
       {
         "q": "What famous food is near Amrapali Museum?",
@@ -1767,11 +1830,14 @@ export const jaipur140Places = [
   {
     "_id": "gyan_museum",
     "name": "Gyan Museum",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Gyan Museum, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Private collection showcasing rare gems, textiles, manuscripts, and antiques.",
     "location": "Sitapura Industrial Area, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 500,
@@ -1812,7 +1878,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Gyan Museum?",
-        "a": "Entry ticket is \u20b9500."
+        "a": "Entry ticket is ₹500."
       },
       {
         "q": "What famous food is near Gyan Museum?",
@@ -1851,11 +1917,14 @@ export const jaipur140Places = [
   {
     "_id": "jaipur_wax_museum",
     "name": "Jaipur Wax Museum",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Jaipur Wax Museum, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Located at Nahargarh Fort, exhibiting 30+ prominent wax statues of historical legends & celebrities.",
     "location": "Nahargarh Fort, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 500,
@@ -1896,7 +1965,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Jaipur Wax Museum?",
-        "a": "Entry ticket is \u20b9500."
+        "a": "Entry ticket is ₹500."
       },
       {
         "q": "What famous food is near Jaipur Wax Museum?",
@@ -1935,11 +2004,14 @@ export const jaipur140Places = [
   {
     "_id": "dolls_museum",
     "name": "Dolls Museum",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Dolls Museum, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Features traditional toys, puppets, and wedding attires from worldwide cultures.",
     "location": "Bapu Nagar, JLN Marg, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 50,
@@ -1980,7 +2052,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Dolls Museum?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Dolls Museum?",
@@ -2019,11 +2091,14 @@ export const jaipur140Places = [
   {
     "_id": "anokhi_museum_of_hand_printing",
     "name": "Anokhi Museum of Hand Printing",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Anokhi Museum of Hand Printing, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Preserves block-printing history, natural dyes, and textile tools inside a restored 16th-century Amber haveli.",
     "location": "Kheri Gate, Amer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 80,
@@ -2064,7 +2139,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Anokhi Museum of Hand Printing?",
-        "a": "Entry ticket is \u20b980."
+        "a": "Entry ticket is ₹80."
       },
       {
         "q": "What famous food is near Anokhi Museum of Hand Printing?",
@@ -2103,11 +2178,14 @@ export const jaipur140Places = [
   {
     "_id": "maharaniyon_ki_chhatriyan",
     "name": "Maharaniyon ki Chhatriyan",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Maharaniyon ki Chhatriyan, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Dedicated funeral cenotaphs for the royal queens of Jaipur featuring intricate carved marble domes.",
     "location": "Amer Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 50,
@@ -2148,7 +2226,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Maharaniyon ki Chhatriyan?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Maharaniyon ki Chhatriyan?",
@@ -2187,11 +2265,14 @@ export const jaipur140Places = [
   {
     "_id": "amar_jawan_jyoti",
     "name": "Amar Jawan Jyoti",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Amar Jawan Jyoti, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Memorial flame honoring martyred soldiers with sound and light shows.",
     "location": "Janpath, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -2271,11 +2352,14 @@ export const jaipur140Places = [
   {
     "_id": "src_museum_of_indology",
     "name": "SRC Museum of Indology",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "SRC Museum of Indology, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Folk art collection gathered by Acharya Ram Charan Sharma displaying ancient manuscripts and coins.",
     "location": "Gurukul, Jawahar Nagar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 100,
@@ -2316,7 +2400,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for SRC Museum of Indology?",
-        "a": "Entry ticket is \u20b9100."
+        "a": "Entry ticket is ₹100."
       },
       {
         "q": "What famous food is near SRC Museum of Indology?",
@@ -2355,11 +2439,14 @@ export const jaipur140Places = [
   {
     "_id": "jawahar_kala_kendra_jkk",
     "name": "Jawahar Kala Kendra (JKK)",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Jawahar Kala Kendra (JKK), Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Multi-arts centre designed by Charles Correa based on 9 planets featuring art galleries and Indian Coffee House.",
     "location": "JLN Marg, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -2439,11 +2526,14 @@ export const jaipur140Places = [
   {
     "_id": "legacy_museum_of_craft",
     "name": "Legacy Museum of Craft",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Legacy Museum of Craft, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Exhibits authentic rural arts and traditional crafts at Rajasthan School of Arts.",
     "location": "Kishanpole Bazaar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 50,
@@ -2484,7 +2574,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Legacy Museum of Craft?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Legacy Museum of Craft?",
@@ -2523,11 +2613,14 @@ export const jaipur140Places = [
   {
     "_id": "galta_ji_temple",
     "name": "Galta Ji Temple",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Galta Ji Temple, Jaipur, Rajasthan",
+    "placeId": "ChIJ10xRroZjbDkR8O2u4V_3Y4w",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953019/Galtaji_Temple_u3rntw.jpg",
+    "imageStatus": "verified",
     "description": "Ancient pink sandstone pilgrimage gorge with 7 natural water spring kunds and friendly monkey sanctuary.",
     "location": "Galta Ji, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953019/Galtaji_Temple_u3rntw.jpg"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -2607,11 +2700,14 @@ export const jaipur140Places = [
   {
     "_id": "birla_mandir",
     "name": "Birla Mandir",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Birla Mandir, Jaipur, Rajasthan",
+    "placeId": "ChIJ20xSsoZjbDkR9P3v4W_4Z5x",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953020/Birla_Mandir_bn5dfb.jpg",
+    "imageStatus": "verified",
     "description": "Pure white Rajasthani marble temple dedicated to Lord Vishnu & Goddess Lakshmi at Moti Dungri hill base.",
     "location": "Tilak Nagar, JLN Marg, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953020/Birla_Mandir_bn5dfb.jpg"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -2691,11 +2787,14 @@ export const jaipur140Places = [
   {
     "_id": "govind_dev_ji_temple",
     "name": "Govind Dev Ji Temple",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Govind Dev Ji Temple, Jaipur, Rajasthan",
+    "placeId": "ChIJ30xTtoZjbDkR0Q4w4X_5a6y",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953021/Govind_Dev_Ji_Temple_nu1toc.jpg",
+    "imageStatus": "verified",
     "description": "Iconic Krishna temple inside City Palace complex holding Guinness World Record for widest flat concrete roof.",
     "location": "City Palace Complex, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953021/Govind_Dev_Ji_Temple_nu1toc.jpg"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -2775,11 +2874,14 @@ export const jaipur140Places = [
   {
     "_id": "moti_dungri_ganesh_temple",
     "name": "Moti Dungri Ganesh Temple",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Moti Dungri Ganesh Temple, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Hilltop temple drawing massive weekly crowds on Wednesdays dedicated to Lord Ganesha.",
     "location": "Moti Dungri Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -2859,11 +2961,14 @@ export const jaipur140Places = [
   {
     "_id": "akshardham_temple",
     "name": "Akshardham Temple",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Akshardham Temple, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Massive carved stone structure honoring Swami Narayan at Vaishali Nagar.",
     "location": "Vaishali Nagar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -2943,11 +3048,14 @@ export const jaipur140Places = [
   {
     "_id": "garh_ganesh_temple",
     "name": "Garh Ganesh Temple",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Garh Ganesh Temple, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Ancient hilltop fort-style temple where the idol depicts Lord Ganesha as a child without a trunk.",
     "location": "Mount Nahargarh, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3027,11 +3135,14 @@ export const jaipur140Places = [
   {
     "_id": "kale_hanuman_ji_temple",
     "name": "Kale Hanuman Ji Temple",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Kale Hanuman Ji Temple, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Rare centuries-old temple containing a unique black idol of Lord Hanuman near City Palace.",
     "location": "Near Hawa Mahal, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3111,11 +3222,14 @@ export const jaipur140Places = [
   {
     "_id": "tarkeshwar_mahadev_temple",
     "name": "Tarkeshwar Mahadev Temple",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Tarkeshwar Mahadev Temple, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Centuries-old Shiva temple built in 1784 near the main walled city markets.",
     "location": "Chaura Rasta, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3195,11 +3309,14 @@ export const jaipur140Places = [
   {
     "_id": "sanghiji_jain_temple_sanganer",
     "name": "Sanghiji Jain Temple Sanganer",
+    "city": "Sanganer",
+    "state": "Rajasthan",
+    "searchQuery": "Sanghiji Jain Temple Sanganer, Sanganer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Exquisite 400-year-old red stone temple showcasing Digambar Jain architecture and sky-high spires.",
     "location": "Sanganer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3279,11 +3396,14 @@ export const jaipur140Places = [
   {
     "_id": "sun_temple_surya_mandir",
     "name": "Sun Temple Surya Mandir",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Sun Temple Surya Mandir, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Set above Galta Ji gorge, tracking the absolute best sunrise vantage point over Jaipur.",
     "location": "Galta Hills, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3363,11 +3483,14 @@ export const jaipur140Places = [
   {
     "_id": "khole_ke_hanuman_ji",
     "name": "Khole Ke Hanuman Ji",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Khole Ke Hanuman Ji, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Temple complex built inside a lush valley, famous for community feasts and sunset views.",
     "location": "Delhi Bypass, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3447,11 +3570,14 @@ export const jaipur140Places = [
   {
     "_id": "charan_mandir",
     "name": "Charan Mandir",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Charan Mandir, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Hillside footprint stone marking where Lord Krishna allegedly grazed cows above Nahargarh.",
     "location": "Nahargarh Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3531,11 +3657,14 @@ export const jaipur140Places = [
   {
     "_id": "shila_devi_temple",
     "name": "Shila Devi Temple",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Shila Devi Temple, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Royal shrine located inside Amber Fort complex, holding a black stone deity of Goddess Durga.",
     "location": "Amer Fort, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3615,11 +3744,14 @@ export const jaipur140Places = [
   {
     "_id": "tadkeshwar_mahadev",
     "name": "Tadkeshwar Mahadev",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Tadkeshwar Mahadev, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Walled city temple hosting vibrant Monday prayers and sacred Shiva Lingam.",
     "location": "Chaura Rasta, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3699,11 +3831,14 @@ export const jaipur140Places = [
   {
     "_id": "chamatkari_hanuman_mandir",
     "name": "Chamatkari Hanuman Mandir",
+    "city": "Sanganer",
+    "state": "Rajasthan",
+    "searchQuery": "Chamatkari Hanuman Mandir, Sanganer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Spiritual hub near the airport known for miraculous prayer answers.",
     "location": "Airport Road, Sanganer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3783,11 +3918,14 @@ export const jaipur140Places = [
   {
     "_id": "johari_bazaar",
     "name": "Johari Bazaar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Johari Bazaar, Jaipur, Rajasthan",
+    "placeId": "ChIJ90xPpoZjbDkR6M0s4T_1W2u",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953025/Johari_Bazaar_tpco2i.jpg",
+    "imageStatus": "verified",
     "description": "Absolute center for buying authentic gemstones, Kundan jewelry, silver, and gold items.",
     "location": "Johari Bazaar, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953025/Johari_Bazaar_tpco2i.jpg"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3867,11 +4005,14 @@ export const jaipur140Places = [
   {
     "_id": "bapu_bazaar",
     "name": "Bapu Bazaar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Bapu Bazaar, Jaipur, Rajasthan",
+    "placeId": "ChIJ00xQqoZjbDkR7N1t4U_2X3v",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953021/Bapu_Bazaar_juabna.jpg",
+    "imageStatus": "verified",
     "description": "Known for traditional Mojari leather footwear, Bandhani dupattas, and block-print bedsheets.",
     "location": "Bapu Bazaar, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953021/Bapu_Bazaar_juabna.jpg"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -3951,11 +4092,14 @@ export const jaipur140Places = [
   {
     "_id": "tripolia_bazaar",
     "name": "Tripolia Bazaar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Tripolia Bazaar, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Hub for purchasing colorful lac bangles, brass kitchen utensils, and traditional rugs.",
     "location": "Tripolia Bazar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4035,11 +4179,14 @@ export const jaipur140Places = [
   {
     "_id": "chandpole_bazaar",
     "name": "Chandpole Bazaar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Chandpole Bazaar, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Traditional street displaying marble sculptures, stone carvings, and khadi shops.",
     "location": "Chandpole, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4119,11 +4266,14 @@ export const jaipur140Places = [
   {
     "_id": "kishanpole_bazaar",
     "name": "Kishanpole Bazaar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Kishanpole Bazaar, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Famous marketplace line dedicated to traditional tie-and-dye (Bandhani) textiles and wooden furniture.",
     "location": "Kishanpole, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4203,11 +4353,14 @@ export const jaipur140Places = [
   {
     "_id": "sireh_deori_bazaar",
     "name": "Sireh Deori Bazaar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Sireh Deori Bazaar, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Street marketplace sitting directly opposite the famous Hawa Mahal jharokha windows.",
     "location": "Sireh Deori, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4287,11 +4440,14 @@ export const jaipur140Places = [
   {
     "_id": "nehru_bazaar",
     "name": "Nehru Bazaar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Nehru Bazaar, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Noted for vibrant ready-made garments, traditional trinkets, and Rajasthani handicrafts.",
     "location": "Nehru Bazaar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4371,11 +4527,14 @@ export const jaipur140Places = [
   {
     "_id": "mirza_ismail_road_mi_road",
     "name": "Mirza Ismail Road (MI Road)",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Mirza Ismail Road (MI Road), Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Broad avenue featuring high-end blue pottery shops, jewelry showrooms, and handicraft emporiums.",
     "location": "MI Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4455,11 +4614,14 @@ export const jaipur140Places = [
   {
     "_id": "purohit_ji_ka_katla",
     "name": "Purohit Ji Ka Katla",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Purohit Ji Ka Katla, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Packed wholesale market dealing in wedding supplies, textiles, and traditional Rajasthani attire.",
     "location": "Pink City, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4539,11 +4701,14 @@ export const jaipur140Places = [
   {
     "_id": "sanganer_cloth_market",
     "name": "Sanganer Cloth Market",
+    "city": "Sanganer",
+    "state": "Rajasthan",
+    "searchQuery": "Sanganer Cloth Market, Sanganer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Source town for block print factories, screen printing yards, and handmade paper workshops.",
     "location": "Sanganer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4623,11 +4788,14 @@ export const jaipur140Places = [
   {
     "_id": "tibati_market",
     "name": "Tibati Market",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Tibati Market, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Seasonal winter setups selling woolens, jackets, and Tibetan craftsmanship near City Palace.",
     "location": "Subhash Chowk, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4707,11 +4875,14 @@ export const jaipur140Places = [
   {
     "_id": "chameli_wala_market",
     "name": "Chameli Wala Market",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Chameli Wala Market, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Wholesale center explicitly specialized in loose gemstones and unpolished crystals.",
     "location": "Johari Bazaar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4791,11 +4962,14 @@ export const jaipur140Places = [
   {
     "_id": "gopalji_ka_rasta",
     "name": "Gopalji Ka Rasta",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Gopalji Ka Rasta, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Deep lane in the old city focusing heavily on raw gemstone cutting, polishing, and bead stringing.",
     "location": "Johari Bazaar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4875,11 +5049,14 @@ export const jaipur140Places = [
   {
     "_id": "maniharon_ka_rasta",
     "name": "Maniharon Ka Rasta",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Maniharon Ka Rasta, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "The specific narrow lane where multi-generational lac artisans craft colorful glass and lac bangles.",
     "location": "Tripolia Bazaar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -4959,11 +5136,14 @@ export const jaipur140Places = [
   {
     "_id": "khazanewalon_ka_rasta",
     "name": "Khazanewalon Ka Rasta",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Khazanewalon Ka Rasta, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Street where multi-generational marble carvers operate sculpturing factories.",
     "location": "Chandpole, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -5043,11 +5223,14 @@ export const jaipur140Places = [
   {
     "_id": "central_park_jaipur",
     "name": "Central Park Jaipur",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Central Park Jaipur, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Largest green space in town, featuring a 5 km jogging track, 206 ft national flag, and musical fountains.",
     "location": "C-Scheme, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -5127,11 +5310,14 @@ export const jaipur140Places = [
   {
     "_id": "jawahar_circle_park",
     "name": "Jawahar Circle Park",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Jawahar Circle Park, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Large circular park layout enclosing the iconic hand-painted Patrika Gate and 7 PM musical fountain.",
     "location": "JLN Marg, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -5211,11 +5397,14 @@ export const jaipur140Places = [
   {
     "_id": "jhalana_leopard_safari",
     "name": "Jhalana Leopard Safari",
-    "description": "India\u2019s premier reserve completely dedicated to wild leopards, located within Jaipur city boundaries.",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Jhalana Leopard Safari, Jaipur, Rajasthan",
+    "placeId": "ChIJ40xUuoZjbDkR1R5x4Y_6b7z",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/Jhalana_Leopard_Safari_sjzlza.jpg",
+    "imageStatus": "verified",
+    "description": "India’s premier reserve completely dedicated to wild leopards, located within Jaipur city boundaries.",
     "location": "Apex Circle, Malviya Nagar, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/Jhalana_Leopard_Safari_sjzlza.jpg"
-    ],
     "rating": 4.5,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 1200,
@@ -5256,7 +5445,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Jhalana Leopard Safari?",
-        "a": "Entry ticket is \u20b91200."
+        "a": "Entry ticket is ₹1200."
       },
       {
         "q": "What famous food is near Jhalana Leopard Safari?",
@@ -5295,11 +5484,14 @@ export const jaipur140Places = [
   {
     "_id": "kanak_vrindavan_valley",
     "name": "Kanak Vrindavan Valley",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Kanak Vrindavan Valley, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Terraced formal gardens sitting underneath Amber Fort hills with manicured lawns and fountains.",
     "location": "Amer Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 50,
@@ -5340,7 +5532,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Kanak Vrindavan Valley?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Kanak Vrindavan Valley?",
@@ -5379,11 +5571,14 @@ export const jaipur140Places = [
   {
     "_id": "sisodia_rani_ka_bagh",
     "name": "Sisodia Rani Ka Bagh",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Sisodia Rani Ka Bagh, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Built with multi-tier fountains, pavilions, and murals depicting Radha-Krishna love stories.",
     "location": "Ghat Ki Guni, Agra Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 50,
@@ -5424,7 +5619,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Sisodia Rani Ka Bagh?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Sisodia Rani Ka Bagh?",
@@ -5463,11 +5658,14 @@ export const jaipur140Places = [
   {
     "_id": "vidyadhar_garden",
     "name": "Vidyadhar Garden",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Vidyadhar Garden, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Designed using classic Charbagh principles with terraced lawns and marble pavilions.",
     "location": "Agra Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 50,
@@ -5508,7 +5706,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Vidyadhar Garden?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Vidyadhar Garden?",
@@ -5547,11 +5745,14 @@ export const jaipur140Places = [
   {
     "_id": "smriti_van",
     "name": "Smriti Van",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Smriti Van, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Peaceful bio-diversity park featuring deep nature walking trails, bamboo groves, and bird life.",
     "location": "JLN Marg, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -5631,11 +5832,14 @@ export const jaipur140Places = [
   {
     "_id": "nahargarh_biological_park",
     "name": "Nahargarh Biological Park",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Nahargarh Biological Park, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Wildlife preserve holding Asiatic lions, tigers, panthers, and sloth bears.",
     "location": "Amer-Delhi Highway, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 100,
@@ -5676,7 +5880,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Nahargarh Biological Park?",
-        "a": "Entry ticket is \u20b9100."
+        "a": "Entry ticket is ₹100."
       },
       {
         "q": "What famous food is near Nahargarh Biological Park?",
@@ -5715,11 +5919,14 @@ export const jaipur140Places = [
   {
     "_id": "maota_lake",
     "name": "Maota Lake",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Maota Lake, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Reflective water body sitting directly at the base of Amber Fort with saffron garden island.",
     "location": "Amer Fort, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -5799,11 +6006,14 @@ export const jaipur140Places = [
   {
     "_id": "man_sagar_lake",
     "name": "Man Sagar Lake",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Man Sagar Lake, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "The expansive lake footprint surrounding the submerged Jal Mahal palace.",
     "location": "Amer Road, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953029/Jal_Mahal_nytgp8.jpg"
-    ],
     "rating": 4.6,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -5883,11 +6093,14 @@ export const jaipur140Places = [
   {
     "_id": "ram_niwas_bagh",
     "name": "Ram Niwas Bagh",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Ram Niwas Bagh, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Historical 19th-century public grounds housing Albert Hall Museum, zoo, and Masala Chowk.",
     "location": "Ram Niwas Garden, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -5967,11 +6180,14 @@ export const jaipur140Places = [
   {
     "_id": "elephant_village_hathi_gaon",
     "name": "Elephant Village Hathi Gaon",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Elephant Village Hathi Gaon, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Specially created reserve village housing rescued elephants with bathing & feeding activities.",
     "location": "Amer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 100,
@@ -6012,7 +6228,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Elephant Village Hathi Gaon?",
-        "a": "Entry ticket is \u20b9100."
+        "a": "Entry ticket is ₹100."
       },
       {
         "q": "What famous food is near Elephant Village Hathi Gaon?",
@@ -6051,11 +6267,14 @@ export const jaipur140Places = [
   {
     "_id": "chandlai_lake",
     "name": "Chandlai Lake",
+    "city": "Tonk",
+    "state": "Rajasthan",
+    "searchQuery": "Chandlai Lake, Tonk, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Seasonal wetland on Kota road drawing massive migratory flamingos & waterbirds.",
     "location": "Chandlai, Tonk Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -6135,11 +6354,14 @@ export const jaipur140Places = [
   {
     "_id": "sambhar_salt_lake",
     "name": "Sambhar Salt Lake",
+    "city": "Sambhar",
+    "state": "Rajasthan",
+    "searchQuery": "Sambhar Salt Lake, Sambhar, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Giant inland salt flat located 80 km out; a famous hotspot for landscape photography.",
     "location": "Sambhar Lake, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -6219,11 +6441,14 @@ export const jaipur140Places = [
   {
     "_id": "kulish_smriti_van",
     "name": "Kulish Smriti Van",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Kulish Smriti Van, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Eco-park containing specific theme-based bamboo gardens and forest walking tracks.",
     "location": "JLN Marg, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -6303,11 +6528,14 @@ export const jaipur140Places = [
   {
     "_id": "chokhi_dhani",
     "name": "Chokhi Dhani",
+    "city": "Tonk",
+    "state": "Rajasthan",
+    "searchQuery": "Chokhi Dhani, Tonk, Rajasthan",
+    "placeId": "ChIJ50xVvoZjbDkR2S6y4Z_7c8a",
+    "imageUrl": "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953020/Chokhi_Dhani_e13lfx.jpg",
+    "imageStatus": "verified",
     "description": "Ethnic village resort staging folk dances, puppet acts, camel rides, and traditional Rajasthani thali.",
     "location": "12 Mile, Tonk Road, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953020/Chokhi_Dhani_e13lfx.jpg"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 900,
@@ -6348,7 +6576,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Chokhi Dhani?",
-        "a": "Entry ticket is \u20b9900."
+        "a": "Entry ticket is ₹900."
       },
       {
         "q": "What famous food is near Chokhi Dhani?",
@@ -6387,11 +6615,14 @@ export const jaipur140Places = [
   {
     "_id": "raj_mandir_cinema",
     "name": "Raj Mandir Cinema",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Raj Mandir Cinema, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Meticulous art-deco single-screen cinema serving meringue interiors and royal seating.",
     "location": "MI Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 250,
@@ -6432,7 +6663,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Raj Mandir Cinema?",
-        "a": "Entry ticket is \u20b9250."
+        "a": "Entry ticket is ₹250."
       },
       {
         "q": "What famous food is near Raj Mandir Cinema?",
@@ -6471,11 +6702,14 @@ export const jaipur140Places = [
   {
     "_id": "laxmi_mishthan_bhandar_lmb",
     "name": "Laxmi Mishthan Bhandar LMB",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Laxmi Mishthan Bhandar LMB, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Walled city sweet shop famous for authentic Pyaz Kachori, Paneer Ghewar, and Royal Thali.",
     "location": "Johari Bazaar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -6555,11 +6789,14 @@ export const jaipur140Places = [
   {
     "_id": "rawat_mishthan_bhandar",
     "name": "Rawat Mishthan Bhandar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Rawat Mishthan Bhandar, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "The legendary birthplace of the crisp, spicy Pyaaz Kachori and sweet Mawa Kachori snack.",
     "location": "Station Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -6639,11 +6876,14 @@ export const jaipur140Places = [
   {
     "_id": "pandit_kulfi",
     "name": "Pandit Kulfi",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Pandit Kulfi, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Decades-old lane shop offering traditional clay-pot saffron kulfi and rabdi.",
     "location": "Johari Bazaar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -6723,11 +6963,14 @@ export const jaipur140Places = [
   {
     "_id": "lassiwala_mi_road",
     "name": "Lassiwala MI Road",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Lassiwala MI Road, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Stalls serving thick, creamy yogurt lassi in clay Kulhads since 1944.",
     "location": "MI Road, Shop 312, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -6807,11 +7050,14 @@ export const jaipur140Places = [
   {
     "_id": "wind_view_cafe",
     "name": "Wind View Cafe",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Wind View Cafe, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Rooftop cafe offering direct unobstructed photo shots of Hawa Mahal facade.",
     "location": "Opposite Hawa Mahal, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -6891,11 +7137,14 @@ export const jaipur140Places = [
   {
     "_id": "tattoo_cafe",
     "name": "Tattoo Cafe",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Tattoo Cafe, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Popular terrace hangout facing the terracotta windows of Palace of Winds.",
     "location": "Opposite Hawa Mahal, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -6975,11 +7224,14 @@ export const jaipur140Places = [
   {
     "_id": "baradari_restaurant",
     "name": "Baradari Restaurant",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Baradari Restaurant, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Fine dining setup integrated inside the City Palace courtyard with royal ambiance.",
     "location": "City Palace, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 1500,
@@ -7020,7 +7272,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Baradari Restaurant?",
-        "a": "Entry ticket is \u20b91500."
+        "a": "Entry ticket is ₹1500."
       },
       {
         "q": "What famous food is near Baradari Restaurant?",
@@ -7059,11 +7311,14 @@ export const jaipur140Places = [
   {
     "_id": "masala_chowk",
     "name": "Masala Chowk",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Masala Chowk, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Multi-stall open-air food court packing all famous street foods together.",
     "location": "Ram Niwas Garden, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 10,
@@ -7104,7 +7359,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Masala Chowk?",
-        "a": "Entry ticket is \u20b910."
+        "a": "Entry ticket is ₹10."
       },
       {
         "q": "What famous food is near Masala Chowk?",
@@ -7143,11 +7398,14 @@ export const jaipur140Places = [
   {
     "_id": "padao_restaurant",
     "name": "Padao Restaurant",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Padao Restaurant, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Government-run terrace deck at Nahargarh Fort serving drinks at sunset.",
     "location": "Nahargarh Fort, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 100,
@@ -7188,7 +7446,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Padao Restaurant?",
-        "a": "Entry ticket is \u20b9100."
+        "a": "Entry ticket is ₹100."
       },
       {
         "q": "What famous food is near Padao Restaurant?",
@@ -7227,11 +7485,14 @@ export const jaipur140Places = [
   {
     "_id": "tapri_the_tea_house",
     "name": "Tapri The Tea House",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Tapri The Tea House, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Trendy rooftop spot modifying traditional street chai concepts with modern flair.",
     "location": "Opposite Central Park, C-Scheme, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -7311,11 +7572,14 @@ export const jaipur140Places = [
   {
     "_id": "indian_coffee_house",
     "name": "Indian Coffee House",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Indian Coffee House, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Nostalgic meeting room inside MI Road with uniform-clad servers and filter coffee.",
     "location": "MI Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -7395,11 +7659,14 @@ export const jaipur140Places = [
   {
     "_id": "chawlas_&_bhikas",
     "name": "Chawla's & Bhika's",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Chawla's & Bhika's, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Side-by-side popular targets for devouring authentic local Golgappas and chat.",
     "location": "Fashion Street, Raja Park, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -7479,11 +7746,14 @@ export const jaipur140Places = [
   {
     "_id": "world_trade_park_wtp",
     "name": "World Trade Park WTP",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "World Trade Park WTP, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Architectural blue-glass twin buildings hosting top global brand retail spaces.",
     "location": "JLN Marg, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1567449303078-57ad995bd301?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -7563,11 +7833,14 @@ export const jaipur140Places = [
   {
     "_id": "mouj_mahal",
     "name": "Mouj Mahal",
+    "city": "Sikar",
+    "state": "Rajasthan",
+    "searchQuery": "Mouj Mahal, Sikar, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Amusement park offering 12D cinema setups, a mirror maze, and fun activity zones.",
     "location": "Sikar Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 300,
@@ -7608,7 +7881,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Mouj Mahal?",
-        "a": "Entry ticket is \u20b9300."
+        "a": "Entry ticket is ₹300."
       },
       {
         "q": "What famous food is near Mouj Mahal?",
@@ -7647,11 +7920,14 @@ export const jaipur140Places = [
   {
     "_id": "pink_square_mall",
     "name": "Pink Square Mall",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Pink Square Mall, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Main commercial hub in Raja Park containing multiplex theaters and retail stores.",
     "location": "Raja Park, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -7731,11 +8007,14 @@ export const jaipur140Places = [
   {
     "_id": "mgf_metropolitan_mall",
     "name": "MGF Metropolitan Mall",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "MGF Metropolitan Mall, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Popular retail building situated near the central business district on Bais Godam.",
     "location": "Bais Godam, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -7815,11 +8094,14 @@ export const jaipur140Places = [
   {
     "_id": "gt_central_mall",
     "name": "GT Central Mall",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "GT Central Mall, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Family target featuring large indoor gaming zones, bowling alleys, and virtual reality fields.",
     "location": "Malviya Nagar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -7899,11 +8181,14 @@ export const jaipur140Places = [
   {
     "_id": "gaurav_tower_gt",
     "name": "Gaurav Tower GT",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Gaurav Tower GT, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "The original legacy hangout spot for local college crowds with open courtyard shops.",
     "location": "Malviya Nagar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -7983,11 +8268,14 @@ export const jaipur140Places = [
   {
     "_id": "triton_mall",
     "name": "Triton Mall",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Triton Mall, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Expansive shopping complex serving north-end neighborhoods with hypermarkets & cinema.",
     "location": "Jhotwara Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -8067,11 +8355,14 @@ export const jaipur140Places = [
   {
     "_id": "elements_mall",
     "name": "Elements Mall",
+    "city": "Ajmer",
+    "state": "Rajasthan",
+    "searchQuery": "Elements Mall, Ajmer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Shopping cinema option positioned along Ajmer Road with multiplex.",
     "location": "Ajmer Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -8151,11 +8442,14 @@ export const jaipur140Places = [
   {
     "_id": "snow_planet",
     "name": "Snow Planet",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Snow Planet, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Indoor theme park simulating sub-zero temperatures, artificial snow slides, and igloos.",
     "location": "GT Central Mall, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519567241046-7f570eee3ce6?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 550,
@@ -8196,7 +8490,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Snow Planet?",
-        "a": "Entry ticket is \u20b9550."
+        "a": "Entry ticket is ₹550."
       },
       {
         "q": "What famous food is near Snow Planet?",
@@ -8235,11 +8529,14 @@ export const jaipur140Places = [
   {
     "_id": "pvr_vegas",
     "name": "PVR Vegas",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "PVR Vegas, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Premium luxury theater hall located inside the Malviya Nagar cluster.",
     "location": "Malviya Nagar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 300,
@@ -8280,7 +8577,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for PVR Vegas?",
-        "a": "Entry ticket is \u20b9300."
+        "a": "Entry ticket is ₹300."
       },
       {
         "q": "What famous food is near PVR Vegas?",
@@ -8319,11 +8616,14 @@ export const jaipur140Places = [
   {
     "_id": "fun_kingdom",
     "name": "Fun Kingdom",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Fun Kingdom, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Adventure theme park featuring high-thrill rollercoasters, water slides, and rides.",
     "location": "Mansarovar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 600,
@@ -8364,7 +8664,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Fun Kingdom?",
-        "a": "Entry ticket is \u20b9600."
+        "a": "Entry ticket is ₹600."
       },
       {
         "q": "What famous food is near Fun Kingdom?",
@@ -8403,11 +8703,14 @@ export const jaipur140Places = [
   {
     "_id": "appu_ghar_jaipur",
     "name": "Appu Ghar Jaipur",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Appu Ghar Jaipur, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Adventure escape park showcasing ATV courses, paintball, and water activities.",
     "location": "Delhi Road, Amer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 500,
@@ -8448,7 +8751,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Appu Ghar Jaipur?",
-        "a": "Entry ticket is \u20b9500."
+        "a": "Entry ticket is ₹500."
       },
       {
         "q": "What famous food is near Appu Ghar Jaipur?",
@@ -8487,11 +8790,14 @@ export const jaipur140Places = [
   {
     "_id": "sunrise_dream_world",
     "name": "Sunrise Dream World",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Sunrise Dream World, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Cultural mock village offering swimming pools, outdoor games, and recreation.",
     "location": "Delhi-Chandwaji Highway, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 700,
@@ -8532,7 +8838,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Sunrise Dream World?",
-        "a": "Entry ticket is \u20b9700."
+        "a": "Entry ticket is ₹700."
       },
       {
         "q": "What famous food is near Sunrise Dream World?",
@@ -8571,11 +8877,14 @@ export const jaipur140Places = [
   {
     "_id": "cinema_polo_lounge",
     "name": "Cinema Polo Lounge",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Cinema Polo Lounge, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Historical club venue celebrating vintage polo heritage matches and cocktail lounges.",
     "location": "Rambagh Polo Club, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 500,
@@ -8616,7 +8925,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Cinema Polo Lounge?",
-        "a": "Entry ticket is \u20b9500."
+        "a": "Entry ticket is ₹500."
       },
       {
         "q": "What famous food is near Cinema Polo Lounge?",
@@ -8655,11 +8964,14 @@ export const jaipur140Places = [
   {
     "_id": "insomnia_nightclub",
     "name": "Insomnia Nightclub",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Insomnia Nightclub, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "High-energy nightlife dance venue tracking inside premium stays.",
     "location": "MI Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 1000,
@@ -8700,7 +9012,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Insomnia Nightclub?",
-        "a": "Entry ticket is \u20b91000."
+        "a": "Entry ticket is ₹1000."
       },
       {
         "q": "What famous food is near Insomnia Nightclub?",
@@ -8739,11 +9051,14 @@ export const jaipur140Places = [
   {
     "_id": "bagru_village",
     "name": "Bagru Village",
+    "city": "Bagru",
+    "state": "Rajasthan",
+    "searchQuery": "Bagru Village, Bagru, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "World-renowned craft town focused entirely on natural indigo block-printing.",
     "location": "Bagru, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -8823,11 +9138,14 @@ export const jaipur140Places = [
   {
     "_id": "sanganer_town",
     "name": "Sanganer Town",
+    "city": "Sanganer",
+    "state": "Rajasthan",
+    "searchQuery": "Sanganer Town, Sanganer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Craft destination dealing heavily in handmade silk-screen papers and block prints.",
     "location": "Sanganer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -8907,11 +9225,14 @@ export const jaipur140Places = [
   {
     "_id": "achrol_fort",
     "name": "Achrol Fort",
+    "city": "Achrol",
+    "state": "Rajasthan",
+    "searchQuery": "Achrol Fort, Achrol, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Semi-ruined fortress perfect for morning trekking, rappelling, and architecture study.",
     "location": "Achrol, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -8991,11 +9312,14 @@ export const jaipur140Places = [
   {
     "_id": "bhangarh_fort",
     "name": "Bhangarh Fort",
-    "description": "Ruins located 85 km away, officially labeled India\u2019s most haunted heritage site.",
+    "city": "Alwar",
+    "state": "Rajasthan",
+    "searchQuery": "Bhangarh Fort, Alwar, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
+    "description": "Ruins located 85 km away, officially labeled India’s most haunted heritage site.",
     "location": "Bhangarh, Alwar District, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 50,
@@ -9036,7 +9360,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Bhangarh Fort?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Bhangarh Fort?",
@@ -9075,11 +9399,14 @@ export const jaipur140Places = [
   {
     "_id": "abhaneri_stepwell_chand_baori",
     "name": "Abhaneri Stepwell Chand Baori",
+    "city": "Dausa",
+    "state": "Rajasthan",
+    "searchQuery": "Abhaneri Stepwell Chand Baori, Dausa, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Colossal 13-story stepwell showing perfect geometric stairs and Harshat Mata temple.",
     "location": "Abhaneri, Dausa District, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 50,
@@ -9120,7 +9447,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Abhaneri Stepwell Chand Baori?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Abhaneri Stepwell Chand Baori?",
@@ -9159,11 +9486,14 @@ export const jaipur140Places = [
   {
     "_id": "ramgarh_lake_ruins",
     "name": "Ramgarh Lake ruins",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Ramgarh Lake ruins, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Former massive water reservoir area; now an offbeat driving road surrounded by hills.",
     "location": "Ramgarh, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -9243,11 +9573,14 @@ export const jaipur140Places = [
   {
     "_id": "kanota_dam",
     "name": "Kanota Dam",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Kanota Dam, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Popular local weekend morning cycling drive destination with scenic water body.",
     "location": "Kanota, Agra Road, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -9327,11 +9660,14 @@ export const jaipur140Places = [
   {
     "_id": "galtaji_gorge",
     "name": "Galtaji Gorge",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Galtaji Gorge, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "The rugged wilderness trekking trail passing behind the Aravalli hills to Galta Ji.",
     "location": "Galta Gorge, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -9411,11 +9747,14 @@ export const jaipur140Places = [
   {
     "_id": "hathni_kund",
     "name": "Hathni Kund",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Hathni Kund, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "A seasonal hillside waterfall trail starting near the forest paths behind Nahargarh.",
     "location": "Nahargarh Forest, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -9495,11 +9834,14 @@ export const jaipur140Places = [
   {
     "_id": "chour_ghati_trek",
     "name": "Chour Ghati Trek",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Chour Ghati Trek, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Rocky landscape walking track clearing into secret temple areas and valleys.",
     "location": "Galta Hills, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -9579,11 +9921,14 @@ export const jaipur140Places = [
   {
     "_id": "madhavendra_bhawan",
     "name": "Madhavendra Bhawan",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Madhavendra Bhawan, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "The uniform interconnecting suite palace inside Nahargarh Fort with 9 queen suites.",
     "location": "Nahargarh Fort, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 50,
@@ -9624,7 +9969,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Madhavendra Bhawan?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Madhavendra Bhawan?",
@@ -9663,11 +10008,14 @@ export const jaipur140Places = [
   {
     "_id": "jaivana_foundry",
     "name": "Jaivana Foundry",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Jaivana Foundry, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "The historical earth pit where massive 50-ton cannons were cast at Jaigarh Fort.",
     "location": "Jaigarh Fort, Amer, Jaipur",
-    "images": [
-      "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953028/Jaigarh_Fort_nkzlwp.jpg"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 150,
@@ -9708,7 +10056,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Jaivana Foundry?",
-        "a": "Entry ticket is \u20b9150."
+        "a": "Entry ticket is ₹150."
       },
       {
         "q": "What famous food is near Jaivana Foundry?",
@@ -9747,11 +10095,14 @@ export const jaipur140Places = [
   {
     "_id": "rusirani_village",
     "name": "Rusirani Village",
+    "city": "Dausa",
+    "state": "Rajasthan",
+    "searchQuery": "Rusirani Village, Dausa, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Offbeat destination demonstrating traditional rural Rajasthani village lifestyles.",
     "location": "Abhaneri Route, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 200,
@@ -9792,7 +10143,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Rusirani Village?",
-        "a": "Entry ticket is \u20b9200."
+        "a": "Entry ticket is ₹200."
       },
       {
         "q": "What famous food is near Rusirani Village?",
@@ -9831,11 +10182,14 @@ export const jaipur140Places = [
   {
     "_id": "bisalpur_dam",
     "name": "Bisalpur Dam",
+    "city": "Tonk",
+    "state": "Rajasthan",
+    "searchQuery": "Bisalpur Dam, Tonk, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Major engineering lake landmark & Banas river dam providing drinking water for Jaipur.",
     "location": "Deoli, Tonk District, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -9915,11 +10269,14 @@ export const jaipur140Places = [
   {
     "_id": "viratnagar_bairat",
     "name": "Viratnagar Bairat",
+    "city": "Viratnagar",
+    "state": "Rajasthan",
+    "searchQuery": "Viratnagar Bairat, Viratnagar, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Ancient site preserving Buddhist rock-cut caves, monastery stupas, and Ashokan edicts.",
     "location": "Viratnagar, Jaipur District, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -9999,11 +10356,14 @@ export const jaipur140Places = [
   {
     "_id": "jawahar_kala_kendra_art_galleries",
     "name": "Jawahar Kala Kendra Art Galleries",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Jawahar Kala Kendra Art Galleries, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Curated spaces highlighting local contemporary painters and modern sculptures inside JKK.",
     "location": "JLN Marg, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -10083,11 +10443,14 @@ export const jaipur140Places = [
   {
     "_id": "c_scheme_cafe_district",
     "name": "C-Scheme Cafe District",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "C-Scheme Cafe District, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Tree-lined lanes holding hipster coffee houses, microbreweries, and boutique bistros.",
     "location": "C-Scheme, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 0,
@@ -10167,11 +10530,14 @@ export const jaipur140Places = [
   {
     "_id": "the_sculpture_park",
     "name": "The Sculpture Park",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "The Sculpture Park, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Contemporary art museum layout integrated within Madhavendra Bhawan at Nahargarh Fort.",
     "location": "Nahargarh Fort, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 50,
@@ -10212,7 +10578,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for The Sculpture Park?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near The Sculpture Park?",
@@ -10251,11 +10617,14 @@ export const jaipur140Places = [
   {
     "_id": "rajasthan_school_of_art",
     "name": "Rajasthan School of Art",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Rajasthan School of Art, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Historic palace tracking early colonial art pedagogy and miniature painting galleries.",
     "location": "Kishanpole Bazaar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -10335,11 +10704,14 @@ export const jaipur140Places = [
   {
     "_id": "jaipur_chaupati_mansarovar",
     "name": "Jaipur Chaupati Mansarovar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Jaipur Chaupati Mansarovar, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "RHB open-air food complex built to organize street cart hygiene with live music stages.",
     "location": "Mansarovar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 10,
@@ -10380,7 +10752,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Jaipur Chaupati Mansarovar?",
-        "a": "Entry ticket is \u20b910."
+        "a": "Entry ticket is ₹10."
       },
       {
         "q": "What famous food is near Jaipur Chaupati Mansarovar?",
@@ -10419,11 +10791,14 @@ export const jaipur140Places = [
   {
     "_id": "jaipur_chaupati_pratap_nagar",
     "name": "Jaipur Chaupati Pratap Nagar",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Jaipur Chaupati Pratap Nagar, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Twin open-air food platform featuring live musical stages and famous street food vendors.",
     "location": "Pratap Nagar, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "10:00 AM - 11:00 PM",
     "ticketPrice": 10,
@@ -10464,7 +10839,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Jaipur Chaupati Pratap Nagar?",
-        "a": "Entry ticket is \u20b910."
+        "a": "Entry ticket is ₹10."
       },
       {
         "q": "What famous food is near Jaipur Chaupati Pratap Nagar?",
@@ -10503,11 +10878,14 @@ export const jaipur140Places = [
   {
     "_id": "neerja_blue_pottery",
     "name": "Neerja Blue Pottery",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Neerja Blue Pottery, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Boutique enterprise displaying authentic clay turquoise glazes and handcrafted pottery.",
     "location": "Raja Park, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -10587,11 +10965,14 @@ export const jaipur140Places = [
   {
     "_id": "nirmal_textiles_factory",
     "name": "Nirmal Textiles Factory",
+    "city": "Sanganer",
+    "state": "Rajasthan",
+    "searchQuery": "Nirmal Textiles Factory, Sanganer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Educational tours showcasing local tie-dye craft methods and indigo block prints.",
     "location": "Sanganer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -10671,11 +11052,14 @@ export const jaipur140Places = [
   {
     "_id": "central_lawn_stage",
     "name": "Central Lawn Stage",
+    "city": "Jaipur",
+    "state": "Rajasthan",
+    "searchQuery": "Central Lawn Stage, Jaipur, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Open public space holding winter folk festival music loops and cultural concerts.",
     "location": "Ram Niwas Garden, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -10755,11 +11139,14 @@ export const jaipur140Places = [
   {
     "_id": "stepwell_square_amber",
     "name": "Stepwell Square Amber",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Stepwell Square Amber, Amer, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Restored small town square framework near Panna Meena stepwell in Amer.",
     "location": "Amer, Jaipur",
-    "images": [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -10839,11 +11226,14 @@ export const jaipur140Places = [
   {
     "_id": "sariska_tiger_reserve",
     "name": "Sariska Tiger Reserve",
+    "city": "Alwar",
+    "state": "Rajasthan",
+    "searchQuery": "Sariska Tiger Reserve, Alwar, Rajasthan",
+    "placeId": "ChIJ70xXxoZjbDkR4U804b_9e0c",
+    "imageUrl": "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1200&q=80",
+    "imageStatus": "verified",
     "description": "Wildlife park holding ancient medieval ruins and wild Bengal tigers in Alwar Aravallis.",
     "location": "Alwar District, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 600,
@@ -10884,7 +11274,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Sariska Tiger Reserve?",
-        "a": "Entry ticket is \u20b9600."
+        "a": "Entry ticket is ₹600."
       },
       {
         "q": "What famous food is near Sariska Tiger Reserve?",
@@ -10923,11 +11313,14 @@ export const jaipur140Places = [
   {
     "_id": "pushkar_holy_town",
     "name": "Pushkar Holy Town",
+    "city": "Pushkar",
+    "state": "Rajasthan",
+    "searchQuery": "Pushkar Holy Town, Pushkar, Rajasthan",
+    "placeId": "ChIJ90xZzoZjbDkR6W024d_1g2e",
+    "imageUrl": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80",
+    "imageStatus": "verified",
     "description": "Historic lakeside town hosting 52 sacred ghats and the rare Lord Brahma Temple.",
     "location": "Pushkar, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -11007,11 +11400,14 @@ export const jaipur140Places = [
   {
     "_id": "ajmer_sharif_dargah",
     "name": "Ajmer Sharif Dargah",
+    "city": "Ajmer",
+    "state": "Rajasthan",
+    "searchQuery": "Ajmer Sharif Dargah, Ajmer, Rajasthan",
+    "placeId": "ChIJ80xYyoZjbDkR5V914c_0f1d",
+    "imageUrl": "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200&q=80",
+    "imageStatus": "verified",
     "description": "Sufi shrine of Saint Khwaja Moinuddin Chishti visited by worldwide pilgrims.",
     "location": "Ajmer, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -11091,11 +11487,14 @@ export const jaipur140Places = [
   {
     "_id": "kishangarh_marble_slurry_lake",
     "name": "Kishangarh Marble Slurry Lake",
+    "city": "Kishangarh",
+    "state": "Rajasthan",
+    "searchQuery": "Kishangarh Marble Slurry Lake, Kishangarh, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Slurry dump yard resembling a snow landscape; popular photography location.",
     "location": "Kishangarh, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 50,
@@ -11136,7 +11535,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Kishangarh Marble Slurry Lake?",
-        "a": "Entry ticket is \u20b950."
+        "a": "Entry ticket is ₹50."
       },
       {
         "q": "What famous food is near Kishangarh Marble Slurry Lake?",
@@ -11175,11 +11574,14 @@ export const jaipur140Places = [
   {
     "_id": "tonk_nawabi_town",
     "name": "Tonk Nawabi Town",
+    "city": "Tonk",
+    "state": "Rajasthan",
+    "searchQuery": "Tonk Nawabi Town, Tonk, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Historical area displaying Arabic Persian research institutes and Sunhari Kothi.",
     "location": "Tonk, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 0,
@@ -11259,11 +11661,14 @@ export const jaipur140Places = [
   {
     "_id": "sikar_shekhawati_haveli_belt",
     "name": "Sikar Shekhawati Haveli belt",
+    "city": "Sikar",
+    "state": "Rajasthan",
+    "searchQuery": "Sikar Shekhawati Haveli belt, Sikar, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Towns covered in stunning open-air fresco paintings and grand merchant havelis.",
     "location": "Sikar, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80"
-    ],
     "rating": 4.5,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -11343,11 +11748,14 @@ export const jaipur140Places = [
   {
     "_id": "siliserh_lake_palace",
     "name": "Siliserh Lake Palace",
+    "city": "Alwar",
+    "state": "Rajasthan",
+    "searchQuery": "Siliserh Lake Palace, Alwar, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Serene lake setup holding a royal sailing lodge near Alwar Aravalli hills.",
     "location": "Alwar, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80"
-    ],
     "rating": 4.6,
     "timings": "5:00 AM - 9:00 PM",
     "ticketPrice": 100,
@@ -11388,7 +11796,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Siliserh Lake Palace?",
-        "a": "Entry ticket is \u20b9100."
+        "a": "Entry ticket is ₹100."
       },
       {
         "q": "What famous food is near Siliserh Lake Palace?",
@@ -11427,11 +11835,14 @@ export const jaipur140Places = [
   {
     "_id": "kankwari_fort",
     "name": "Kankwari Fort",
+    "city": "Alwar",
+    "state": "Rajasthan",
+    "searchQuery": "Kankwari Fort, Alwar, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Isolated forest fortress inside Sariska where Aurangzeb imprisoned his brother Dara Shikoh.",
     "location": "Sariska, Alwar, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1200&q=80"
-    ],
     "rating": 4.7,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -11511,11 +11922,14 @@ export const jaipur140Places = [
   {
     "_id": "bhartrihari_temple",
     "name": "Bhartrihari Temple",
+    "city": "Alwar",
+    "state": "Rajasthan",
+    "searchQuery": "Bhartrihari Temple, Alwar, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Revered spiritual cave shrine near Sariska valley roads dedicated to Saint Bhartrihari.",
     "location": "Alwar Highway, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1200&q=80"
-    ],
     "rating": 4.8,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,
@@ -11595,11 +12009,14 @@ export const jaipur140Places = [
   {
     "_id": "neemrana_fort_palace",
     "name": "Neemrana Fort Palace",
+    "city": "Neemrana",
+    "state": "Rajasthan",
+    "searchQuery": "Neemrana Fort Palace, Neemrana, Rajasthan",
+    "placeId": null,
+    "imageUrl": null,
+    "imageStatus": "needs_review",
     "description": "Giant 15th-century palace hotel built into Aravalli cliffside offering zipline adventures.",
     "location": "Neemrana, NH 48, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1599661046289-e31897846e41?w=1200&q=80"
-    ],
     "rating": 4.3,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 2000,
@@ -11640,7 +12057,7 @@ export const jaipur140Places = [
       },
       {
         "q": "What is entry fee for Neemrana Fort Palace?",
-        "a": "Entry ticket is \u20b92000."
+        "a": "Entry ticket is ₹2000."
       },
       {
         "q": "What famous food is near Neemrana Fort Palace?",
@@ -11679,11 +12096,14 @@ export const jaipur140Places = [
   {
     "_id": "panna_meena_ka_kund",
     "name": "Panna Meena Ka Kund",
+    "city": "Amer",
+    "state": "Rajasthan",
+    "searchQuery": "Panna Meena Ka Kund, Amer, Rajasthan",
+    "placeId": "ChIJ60xWwoZjbDkR3T7z4a_8d9b",
+    "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+    "imageStatus": "verified",
     "description": "Historical 16th-century geometric stepwell featuring symmetric criss-cross staircases in Amer.",
     "location": "Amer, Jaipur, Rajasthan",
-    "images": [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80"
-    ],
     "rating": 4.4,
     "timings": "9:00 AM - 6:00 PM",
     "ticketPrice": 0,

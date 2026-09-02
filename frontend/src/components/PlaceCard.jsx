@@ -6,17 +6,19 @@ const stars = (rating) => {
   return "★".repeat(full).padEnd(5, "☆");
 };
 
+const NEUTRAL_PLACEHOLDER = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600"><rect width="800" height="600" fill="%232C1E18"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" fill="%23E6D6C3" font-family="serif" font-size="26" font-weight="bold">📍 Photo Pending Verification</text><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="%23A37B66" font-family="sans-serif" font-size="16">SheherSaathi Place System</text></svg>`;
+
 export default function PlaceCard({ place }) {
-  const image = place?.images?.[0] || "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=80";
+  const imageUrl = place?.imageUrl || place?.images?.[0] || NEUTRAL_PLACEHOLDER;
 
   return (
     <div className="group overflow-hidden rounded-3xl border border-[#E6D6C3] bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-2xl flex flex-col justify-between">
       <div>
         <div className="relative h-60 overflow-hidden bg-[#2C1E18]">
           <img 
-            src={image} 
+            src={imageUrl} 
             alt={place.name} 
-            onError={(e) => { e.target.src = "https://res.cloudinary.com/dtaoqmefw/image/upload/f_auto,q_auto/v1779953024/hawamahal_owadja.jpg"; }}
+            onError={(e) => { e.target.src = NEUTRAL_PLACEHOLDER; }}
             className="h-full w-full object-cover transition duration-500 group-hover:scale-105" 
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#2C1E18]/80 via-[#2C1E18]/20 to-transparent" />
