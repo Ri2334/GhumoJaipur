@@ -40,12 +40,12 @@ export default function Home() {
       id: "udaipur",
       name: "Udaipur",
       tagline: "City of Lakes",
-      status: "coming_soon",
-      badge: "COMING SOON ⏳",
-      desc: "Lakeside rides & palace trails. Launching late 2026.",
+      status: "active",
+      badge: "LIVE NOW 🟢",
+      desc: "Full lakeside boat ferries, Karni Mata ropeway, electric city bus, & heritage palace guides active.",
       image: "/udaipur.jpg",
-      placesCount: "18+ Planned",
-      transportTypes: "Boat • Auto • Cab"
+      placesCount: "25+ Places",
+      transportTypes: "Boat • Ropeway • Bus • Auto"
     },
     {
       id: "mumbai",

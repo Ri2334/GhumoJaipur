@@ -8,6 +8,7 @@ import { AuthContext } from "../context/AuthContext";
 import ExperienceCard from "../components/ExperienceCard";
 import SEOHead from "../components/SEOHead";
 import { fallbackPlaces } from "../data/fallbackPlaces";
+import { getAllCitiesPlaces } from "../data/cityResolver";
 
 export default function PlaceDetails() {
   const { id } = useParams();
@@ -30,32 +31,36 @@ export default function PlaceDetails() {
       try {
         setLoading(true);
         setError(null);
+        const allCombined = getAllCitiesPlaces("all");
         const res = await getPlaceByIdApi(id);
         if (res?.data) {
           setPlace(res.data);
         } else {
           const rawId = String(id || '').toLowerCase();
           const cleanId = rawId.replace(/[^a-z0-9]/g, '');
-          const found = fallbackPlaces.find(p => 
+          const found = allCombined.find(p => 
             p._id === id || 
+            p.id === id ||
             p._id?.toLowerCase() === rawId || 
             p.name?.toLowerCase().replace(/[^a-z0-9]/g, '') === cleanId ||
             p.name?.toLowerCase().includes(rawId.replace(/_/g, ' ')) || 
-            rawId.includes(p._id)
+            rawId.includes(p._id || p.id)
           );
-          setPlace(found || fallbackPlaces[0]);
+          setPlace(found || allCombined[0]);
         }
       } catch (err) {
+        const allCombined = getAllCitiesPlaces("all");
         const rawId = String(id || '').toLowerCase();
         const cleanId = rawId.replace(/[^a-z0-9]/g, '');
-        const found = fallbackPlaces.find(p => 
+        const found = allCombined.find(p => 
           p._id === id || 
+          p.id === id ||
           p._id?.toLowerCase() === rawId || 
           p.name?.toLowerCase().replace(/[^a-z0-9]/g, '') === cleanId ||
           p.name?.toLowerCase().includes(rawId.replace(/_/g, ' ')) || 
-          rawId.includes(p._id)
+          rawId.includes(p._id || p.id)
         );
-        setPlace(found || fallbackPlaces[0]);
+        setPlace(found || allCombined[0]);
       } finally {
         setLoading(false);
       }
