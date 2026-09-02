@@ -430,60 +430,8 @@ export const OFFICIAL_JCTSL_ROUTES = [
   }
 ];
 
-// Real-world nearest official JCTSL bus stop for places
-export const REAL_PLACE_BUS_STOPS = {
-  "hawa mahal": { busStop: "Badi Chopad", walkTime: "2 min walk (150m)" },
-  "wind view cafe": { busStop: "Badi Chopad", walkTime: "2 min walk (120m)" },
-  "tattoo cafe": { busStop: "Badi Chopad", walkTime: "2 min walk (120m)" },
-  "city palace": { busStop: "Badi Chopad", walkTime: "6 min walk (450m)" },
-  "jantar mantar": { busStop: "Choti Chopad", walkTime: "5 min walk (350m)" },
-  "johari bazaar": { busStop: "Badi Chopad", walkTime: "1 min walk (50m)" },
-  "bapu bazaar": { busStop: "Sanganeri Gate", walkTime: "4 min walk (250m)" },
-  "tripolia bazaar": { busStop: "Choti Chopad", walkTime: "3 min walk (200m)" },
-  "isarlat sargasooli": { busStop: "Choti Chopad", walkTime: "3 min walk (200m)" },
-  "govind dev ji temple": { busStop: "Badi Chopad", walkTime: "6 min walk (500m)" },
-  "albert hall museum": { busStop: "Ramniwas Bag Parking", walkTime: "2 min walk (100m)" },
-  "masala chowk": { busStop: "Ramniwas Bag Parking", walkTime: "2 min walk (150m)" },
-  "ram niwas bagh": { busStop: "Ramniwas Bag Parking", walkTime: "1 min walk (50m)" },
-  "central park jaipur": { busStop: "SMS Hospital", walkTime: "4 min walk (300m)" },
-  "tapri the tea house": { busStop: "SMS Hospital", walkTime: "5 min walk (350m)" },
-  "birla mandir": { busStop: "SMS Hospital", walkTime: "8 min walk (600m)" },
-  "moti dungri ganesh temple": { busStop: "Moti Dungri Circle", walkTime: "4 min walk (250m)" },
-  "amer fort": { busStop: "Amber Fort", walkTime: "3 min walk (250m)" },
-  "maota lake": { busStop: "Amber Fort", walkTime: "2 min walk (100m)" },
-  "shila devi temple": { busStop: "Amber Fort", walkTime: "4 min walk (300m)" },
-  "jaigarh fort": { busStop: "Amber Fort", walkTime: "8 min auto/hill drive (2 km)" },
-  "panna meena ka kund": { busStop: "Kunda", walkTime: "5 min auto / walk (400m)" },
-  "anokhi museum of hand printing": { busStop: "Kunda", walkTime: "6 min walk (500m)" },
-  "nahargarh fort": { busStop: "Chandpole", walkTime: "15 min cab/auto up hill road (6 km)" },
-  "madhavendra bhawan": { busStop: "Chandpole", walkTime: "15 min cab/auto up hill road (6 km)" },
-  "the sculpture park": { busStop: "Chandpole", walkTime: "15 min cab/auto up hill road (6 km)" },
-  "jaipur wax museum": { busStop: "Chandpole", walkTime: "15 min cab/auto up hill road (6 km)" },
-  "padao restaurant": { busStop: "Chandpole", walkTime: "15 min cab/auto up hill road (6 km)" },
-  "jal mahal": { busStop: "Jal Mahal", walkTime: "1 min walk (50m)" },
-  "man sagar lake": { busStop: "Jal Mahal", walkTime: "1 min walk (50m)" },
-  "kanak vrindavan valley": { busStop: "Ramgarh Mode", walkTime: "4 min auto (1 km)" },
-  "patrika gate": { busStop: "Airport", walkTime: "2 min walk (100m)" },
-  "jawahar circle park": { busStop: "Airport", walkTime: "2 min walk (150m)" },
-  "world trade park wtp": { busStop: "Malviya Nagar", walkTime: "3 min walk (200m)" },
-  "gt central mall": { busStop: "Malviya Nagar", walkTime: "4 min walk (250m)" },
-  "gaurav tower gt": { busStop: "Malviya Nagar", walkTime: "4 min walk (250m)" },
-  "chokhi dhani": { busStop: "12 Meel", walkTime: "5 min walk (300m)" },
-  "jhalana leopard safari": { busStop: "Jhalana", walkTime: "8 min auto (1.5 km)" },
-  "rawat mishthan bhandar": { busStop: "Railway Station", walkTime: "2 min walk (100m)" },
-  "lassiwala mi road": { busStop: "Ajmeri Gate", walkTime: "3 min walk (200m)" },
-  "raj mandir cinema": { busStop: "Ajmeri Gate", walkTime: "4 min walk (300m)" },
-  "sanganer town": { busStop: "Sanganer Police Station", walkTime: "2 min walk (150m)" },
-  "sanghiji jain temple sanganer": { busStop: "Sanganer Police Station", walkTime: "4 min walk (300m)" },
-  "sanganer cloth market": { busStop: "Sanganer Police Station", walkTime: "3 min walk (200m)" },
-  "bagru village": { busStop: "Bagru", walkTime: "3 min walk (200m)" },
-  "chomu palace": { busStop: "Chomu", walkTime: "5 min auto (1 km)" },
-  "bassi": { busStop: "Bassi", walkTime: "2 min walk" },
-  "chaksu": { busStop: "Chaksu", walkTime: "2 min walk" }
-};
-
 /**
- * Finds exact official JCTSL city bus route and intermediate stops
+ * Finds exact official JCTSL city bus route, compares ALL matching buses, and returns the FASTEST route with least stops.
  */
 export function findOfficialJCTSBusRoute(originPlaceName, destPlaceName) {
   if (!originPlaceName || !destPlaceName) return null;
@@ -491,13 +439,80 @@ export function findOfficialJCTSBusRoute(originPlaceName, destPlaceName) {
   const origKey = originPlaceName.toLowerCase().trim();
   const destKey = destPlaceName.toLowerCase().trim();
 
-  const origInfo = REAL_PLACE_BUS_STOPS[origKey] || { busStop: originPlaceName, walkTime: "1 min walk" };
-  const destInfo = REAL_PLACE_BUS_STOPS[destKey] || { busStop: destPlaceName, walkTime: "1 min walk" };
+  // Helper resolver for bus stop
+  const getStop = (name) => {
+    const p = name.toLowerCase().strip ? name.toLowerCase().strip() : name.toLowerCase().trim();
+    if (p.includes("hawa mahal") || p.includes("wind view") || p.includes("tattoo") || p.includes("city palace") || p.includes("johari") || p.includes("govind dev") || p.includes("isarlat") || p.includes("badi chopad") || p.includes("badi chaupar")) {
+      return { busStop: "Badi Chopad", walkTime: "2 min walk (150m)" };
+    }
+    if (p.includes("samode")) return { busStop: "Chomu Pulia", walkTime: "15 min auto/cab (25 km)" };
+    if (p.includes("jantar mantar") || p.includes("choti chopad") || p.includes("choti chaupar") || p.includes("tripolia")) {
+      return { busStop: "Choti Chopad", walkTime: "3 min walk (200m)" };
+    }
+    if (p.includes("bapu bazaar") || p.includes("sanganeri gate")) return { busStop: "Sanganeri Gate", walkTime: "3 min walk (200m)" };
+    if (p.includes("ajmeri gate") || p.includes("mi road") || p.includes("lassiwala") || p.includes("raj mandir")) return { busStop: "Ajmeri Gate", walkTime: "3 min walk (200m)" };
+    if (p.includes("albert hall") || p.includes("masala chowk") || p.includes("ram niwas")) return { busStop: "Ramniwas Bag Parking", walkTime: "2 min walk (100m)" };
+    if (p.includes("amer fort") || p.includes("amber fort") || p.includes("maota lake") || p.includes("shila devi")) return { busStop: "Amber Fort", walkTime: "3 min walk (200m)" };
+    if (p.includes("panna meena") || p.includes("anokhi")) return { busStop: "Kunda", walkTime: "5 min walk/auto (400m)" };
+    if (p.includes("jal mahal") || p.includes("man sagar")) return { busStop: "Jal Mahal", walkTime: "1 min walk (50m)" };
+    if (p.includes("kanak vrindavan")) return { busStop: "Ramgarh Mode", walkTime: "4 min auto (1 km)" };
+    if (p.includes("nahargarh") || p.includes("madhavendra") || p.includes("sculpture park") || p.includes("wax museum") || p.includes("padao") || p.includes("jaigarh")) {
+      return { busStop: "Chandpole", walkTime: "15 min cab/auto up hill road (6 km)" };
+    }
+    if (p.includes("rambagh") || p.includes("central park") || p.includes("tapri")) return { busStop: "Rambagh", walkTime: "3 min walk (250m)" };
+    if (p.includes("sms hospital") || p.includes("birla mandir")) return { busStop: "SMS Hospital", walkTime: "4 min walk (300m)" };
+    if (p.includes("moti dungri")) return { busStop: "Moti Dungri Circle", walkTime: "3 min walk (200m)" };
+    if (p.includes("patrika gate") || p.includes("jawahar circle") || p.includes("airport")) return { busStop: "Airport", walkTime: "2 min walk (100m)" };
+    if (p.includes("world trade park") || p.includes("wtp") || p.includes("gt central") || p.includes("gaurav tower")) return { busStop: "Malviya Nagar", walkTime: "3 min walk (200m)" };
+    if (p.includes("chokhi dhani")) return { busStop: "12 Meel", walkTime: "5 min walk (300m)" };
+    if (p.includes("jhalana")) return { busStop: "Jhalana", walkTime: "8 min auto (1.5 km)" };
+    if (p.includes("sanganer") || p.includes("sanghiji")) return { busStop: "Sanganer Police Station", walkTime: "3 min walk (200m)" };
+    if (p.includes("railway station") || p.includes("rawat")) return { busStop: "Railway Station", walkTime: "2 min walk (100m)" };
+    if (p.includes("sindhi camp")) return { busStop: "Sindhi Camp", walkTime: "1 min walk" };
+    if (p.includes("chomu")) return { busStop: "Chomu", walkTime: "5 min auto" };
+    if (p.includes("bagru")) return { busStop: "Bagru", walkTime: "3 min walk" };
+    if (p.includes("bassi")) return { busStop: "Bassi", walkTime: "2 min walk" };
+    if (p.includes("chaksu")) return { busStop: "Chaksu", walkTime: "2 min walk" };
+    if (p.includes("pushkar") || p.includes("ajmer") || p.includes("sariska") || p.includes("sambhar") || p.includes("bhangarh") || p.includes("neemrana") || p.includes("tonk") || p.includes("dausa")) {
+      return { busStop: "Sindhi Camp ISBT Terminal", walkTime: "RSRTC Express Bus Terminal" };
+    }
+    return { busStop: name, walkTime: "2 min walk" };
+  };
+
+  const origInfo = getStop(originPlaceName);
+  const destInfo = getStop(destPlaceName);
 
   const origStopName = origInfo.busStop;
   const destStopName = destInfo.busStop;
 
-  // Search 1: Direct JCTSL Route
+  // Case 1: Same Bus Stop (Walking distance)
+  if (origStopName.toLowerCase() === destStopName.toLowerCase()) {
+    return {
+      type: 'walk',
+      transfers: 0,
+      busNumber: "Direct Walk",
+      routeNumber: "Direct Walk",
+      routeName: "Destinations are within walking distance",
+      sourceStop: origStopName,
+      destStop: destStopName,
+      originPlace: originPlaceName,
+      destPlace: destPlaceName,
+      firstLegWalk: origInfo.walkTime,
+      lastLegWalk: destInfo.walkTime,
+      fare: 0,
+      estimatedTimeMinutes: 5,
+      waitingTimeMinutes: 0,
+      route: {
+        routeNumber: "Direct Walk",
+        routeName: "Walking distance within same heritage cluster",
+        stopsPassed: [origStopName, destStopName]
+      }
+    };
+  }
+
+  // Case 2: Direct JCTSL Buses (Search ALL matching buses and select the FASTEST one with fewest stops)
+  const matchingDirectBuses = [];
+
   for (const route of OFFICIAL_JCTSL_ROUTES) {
     const origIdx = route.stops.findIndex(s => s.toLowerCase() === origStopName.toLowerCase() || origStopName.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(origStopName.toLowerCase()));
     const destIdx = route.stops.findIndex(s => s.toLowerCase() === destStopName.toLowerCase() || destStopName.toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(destStopName.toLowerCase()));
@@ -508,31 +523,46 @@ export function findOfficialJCTSBusRoute(originPlaceName, destPlaceName) {
       let stopsPassed = route.stops.slice(start, end + 1);
       if (origIdx > destIdx) stopsPassed = stopsPassed.reverse();
 
-      return {
-        type: 'direct',
-        transfers: 0,
-        busNumber: `JCTSL Route ${route.routeNo}`,
-        routeNumber: `Route ${route.routeNo}`,
+      matchingDirectBuses.push({
+        routeNo: route.routeNo,
         routeName: route.name,
-        sourceStop: origStopName,
-        destStop: destStopName,
-        originPlace: originPlaceName,
-        destPlace: destPlaceName,
-        firstLegWalk: origInfo.walkTime,
-        lastLegWalk: destInfo.walkTime,
-        fare: 15 + Math.min(20, Math.round(stopsPassed.length * 2.5)),
-        estimatedTimeMinutes: Math.max(12, stopsPassed.length * 4),
-        waitingTimeMinutes: 8,
-        route: {
-          routeNumber: `Route ${route.routeNo}`,
-          routeName: route.name,
-          stopsPassed: stopsPassed
-        }
-      };
+        type: route.type,
+        stopsCount: stopsPassed.length,
+        stopsPassed: stopsPassed
+      });
     }
   }
 
-  // Search 2: 1 Transfer Route (Hub Transfer at Ajmeri Gate, Badi Chopad, Chandpole, Rambagh, or Tonk Phatak)
+  if (matchingDirectBuses.length > 0) {
+    // Sort by fewest stops (fastest route)
+    matchingDirectBuses.sort((a, b) => a.stopsCount - b.stopsCount);
+    const fastestBus = matchingDirectBuses[0];
+    const allBusNumbersStr = matchingDirectBuses.map(b => `Route ${b.routeNo}`).join(", ");
+
+    return {
+      type: 'direct',
+      transfers: 0,
+      busNumber: `JCTSL Route ${fastestBus.routeNo}`,
+      routeNumber: `Route ${fastestBus.routeNo}`,
+      routeName: `${fastestBus.routeName} (Fastest of ${matchingDirectBuses.length} buses: ${allBusNumbersStr})`,
+      sourceStop: origStopName,
+      destStop: destStopName,
+      originPlace: originPlaceName,
+      destPlace: destPlaceName,
+      firstLegWalk: origInfo.walkTime,
+      lastLegWalk: destInfo.walkTime,
+      fare: 15 + Math.min(20, Math.round(fastestBus.stopsCount * 2.5)),
+      estimatedTimeMinutes: Math.max(10, fastestBus.stopsCount * 3.5),
+      waitingTimeMinutes: 6,
+      route: {
+        routeNumber: `Route ${fastestBus.routeNo}`,
+        routeName: `${fastestBus.routeName} — Fastest of ${matchingDirectBuses.length} direct buses`,
+        stopsPassed: fastestBus.stopsPassed
+      }
+    };
+  }
+
+  // Case 3: 1 Transfer Route via Real JCTSL Hubs
   const HUBS = ["Ajmeri Gate", "Badi Chopad", "Chandpole", "Rambagh", "Railway Station", "Tonk Phatak", "Chomu Pulia", "Sanganer Police Station"];
 
   for (const hub of HUBS) {
@@ -589,26 +619,26 @@ export function findOfficialJCTSBusRoute(originPlaceName, destPlaceName) {
     }
   }
 
-  // Default fallback for places outside core urban grid
+  // Fallback Outstation Bus / Express Route (NEVER uses fake "Intermediate City Junction")
   return {
     type: 'direct',
     transfers: 0,
-    busNumber: `JCTSL City Connector Route`,
-    routeNumber: `City Connector`,
-    routeName: `${origStopName} - ${destStopName} Service`,
+    busNumber: `RSRTC Express Bus`,
+    routeNumber: `RSRTC Express`,
+    routeName: `${origStopName} to ${destStopName} Express Transit`,
     sourceStop: origStopName,
     destStop: destStopName,
     originPlace: originPlaceName,
     destPlace: destPlaceName,
     firstLegWalk: origInfo.walkTime,
     lastLegWalk: destInfo.walkTime,
-    fare: 20,
-    estimatedTimeMinutes: 25,
-    waitingTimeMinutes: 10,
+    fare: 150,
+    estimatedTimeMinutes: 60,
+    waitingTimeMinutes: 15,
     route: {
-      routeNumber: `City Connector`,
-      routeName: `${origStopName} - ${destStopName}`,
-      stopsPassed: [origStopName, "Intermediate City Junction", destStopName]
+      routeNumber: `RSRTC Express`,
+      routeName: `${origStopName} - ${destStopName} Highway Corridor`,
+      stopsPassed: [origStopName, "Sindhi Camp ISBT Main Terminal", destStopName]
     }
   };
 }

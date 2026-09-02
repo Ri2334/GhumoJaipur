@@ -68,8 +68,21 @@ export default function BusRouteTimeline({ busRoute }) {
         </div>
       )}
 
+      {/* Direct Walk Card */}
+      {busRoute.type === 'walk' && (
+        <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-5 text-center space-y-2">
+          <div className="text-emerald-950 font-bold text-base">🚶 Direct Walk Available</div>
+          <p className="text-xs text-emerald-800 font-medium">
+            <strong>{busRoute.originPlace}</strong> and <strong>{busRoute.destPlace}</strong> are located in close proximity within the <strong>{busRoute.sourceStop}</strong> cluster.
+          </p>
+          <div className="text-xs font-bold text-emerald-700 bg-white/80 inline-block px-4 py-1.5 rounded-full border border-emerald-300">
+            Est. 3-5 min walk (under 350 meters) — No bus ride needed!
+          </div>
+        </div>
+      )}
+
       {/* Direct Route */}
-      {(!busRoute.transfers || busRoute.transfers === 0 || busRoute.type === 'direct') && (
+      {busRoute.type !== 'walk' && (!busRoute.transfers || busRoute.transfers === 0 || busRoute.type === 'direct') && (
         renderLeg(busRoute.route || busRoute, "Direct Bus", busRoute.sourceStop, busRoute.destStop)
       )}
 
