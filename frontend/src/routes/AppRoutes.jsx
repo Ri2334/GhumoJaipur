@@ -16,6 +16,7 @@ import PlaceDetails from "../pages/PlaceDetails";
 import AdminPlaces from "../pages/AdminPlaces";
 import AdminDrivers from "../pages/AdminDrivers";
 import AdminUsers from "../pages/AdminUsers";
+import AdminHotels from "../pages/AdminHotels";
 import TransportSearch from "../pages/TransportSearch";
 import BookCab from "../pages/BookCab";
 import BookAuto from "../pages/BookAuto";
@@ -25,6 +26,7 @@ import BusRoutes from "../pages/BusRoutes";
 import MetroDirectory from "../pages/MetroDirectory";
 import MetroLines from "../pages/MetroLines";
 import DayTrips from "../pages/DayTrips";
+import Hotels from "../pages/Hotels";
 
 export default function AppRoutes() {
   return (
@@ -33,6 +35,7 @@ export default function AppRoutes() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/places" element={<Places />} />
       <Route path="/places/:id" element={<PlaceDetails />} />
+      <Route path="/hotels" element={<Hotels />} />
       <Route path="/transport" element={<TransportSearch />} />
       <Route path="/bus-routes" element={<BusRoutes />} />
       <Route path="/metro-directory" element={<MetroDirectory />} />
@@ -49,6 +52,7 @@ export default function AppRoutes() {
       <Route path="/admin/places" element={<ProtectedRoute adminOnly><AdminPlaces /></ProtectedRoute>} />
       <Route path="/admin/drivers" element={<ProtectedRoute adminOnly><AdminDrivers /></ProtectedRoute>} />
       <Route path="/admin/users" element={<ProtectedRoute adminOnly><AdminUsers /></ProtectedRoute>} />
+      <Route path="/admin/hotels" element={<ProtectedRoute adminOnly><AdminHotels /></ProtectedRoute>} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/login" element={<Login />} />

@@ -205,6 +205,14 @@ export default function Navbar() {
                     <span className="font-bold text-xs text-[#2C1E18]">🛍️ Markets & Bazaars</span>
                     <span className="text-[10px] text-gray-500">Bapu Bazaar, Johari Bazaar</span>
                   </NavLink>
+                  <NavLink
+                    to="/hotels"
+                    onClick={() => setExploreDropdown(false)}
+                    className="flex flex-col p-2.5 rounded-xl hover:bg-[#FAF5EF] transition"
+                  >
+                    <span className="font-bold text-xs text-[#2C1E18]">🏨 Hotels & Heritage Stays</span>
+                    <span className="text-[10px] text-gray-500">Royal havelis & stay directory</span>
+                  </NavLink>
                 </div>
               )}
             </div>
@@ -259,8 +267,12 @@ export default function Navbar() {
                        <p className="font-bold text-[#2C1E18] text-xs truncate">{user.email}</p>
                     </div>
                     <div className="pt-1 space-y-1">
+                      <NavLink to="/hotels" onClick={() => setOpen(false)} className="block px-4 py-2 hover:bg-white rounded-xl text-xs font-bold text-[#2C1E18]">🏨 Hotels & Stays</NavLink>
                       <NavLink to="/profile" onClick={() => setOpen(false)} className="block px-4 py-2 hover:bg-white rounded-xl text-xs font-bold text-[#2C1E18]">Profile</NavLink>
                       <NavLink to="/saved-trips" onClick={() => setOpen(false)} className="block px-4 py-2 hover:bg-white rounded-xl text-xs font-bold text-[#2C1E18]">Saved Trips</NavLink>
+                      {user?.role === 'admin' && (
+                        <NavLink to="/admin/hotels" onClick={() => setOpen(false)} className="block px-4 py-2 hover:bg-amber-50 rounded-xl text-xs font-bold text-[#B35D38]">👑 Admin Hotel Manager</NavLink>
+                      )}
                       <button 
                         onClick={handleLogout} 
                         className="flex items-center gap-2 w-full text-left px-4 py-2 hover:bg-red-50 rounded-xl font-bold text-xs text-red-600"
