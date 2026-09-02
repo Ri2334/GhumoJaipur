@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { CityContext } from "../context/CityContext";
 import GoogleAd from "../components/GoogleAd";
 import SEOHead from "../components/SEOHead";
 
 export default function Home() {
   const { user } = useContext(AuthContext);
+  const { switchCity } = useContext(CityContext);
   const navigate = useNavigate();
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistCity, setWaitlistCity] = useState("Delhi");
@@ -319,10 +321,13 @@ export default function Home() {
                 {c.status === 'active' ? (
                   <div className="space-y-2.5">
                     <button 
-                      onClick={() => navigate('/places')}
+                      onClick={() => {
+                        switchCity(c.id);
+                        navigate(`/places?city=${c.id}`);
+                      }}
                       className="w-full bg-[#B35D38] hover:bg-[#964B2A] text-white py-4 rounded-2xl font-bold text-sm shadow-xl transition-all hover:shadow-[#B35D38]/30 flex items-center justify-center gap-2"
                     >
-                      <span>Explore 140+ Jaipur Spots</span>
+                      <span>Explore {c.placesCount} {c.name} Spots</span>
                       <span>→</span>
                     </button>
                     {!user && (

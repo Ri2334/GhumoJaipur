@@ -11,6 +11,7 @@ import TransportRouteMap from "../components/TransportRouteMap";
 import { calculateUniversalRoute } from "../data/jaipurUniversalTransitEngine";
 import { getNearestMetroStation, OUTSTATION_TRANSIT_INFO } from "../data/jaipurTransitChecker";
 import { getAllCitiesPlaces, getCityRouteResult } from "../data/cityResolver";
+import { CityContext } from "../context/CityContext";
 import SEOHead from "../components/SEOHead";
 
 class MapErrorBoundary extends React.Component {
@@ -211,13 +212,28 @@ export default function TransportSearch() {
     }
   };
 
+  const { currentCity, cityDetails } = useContext(CityContext);
+
+  useEffect(() => {
+    if (!source || source === "Jaipur Railway Station" || source === "Udaipur City Railway Station") {
+      setSource(cityDetails.defaultSource);
+      setDestination(cityDetails.defaultDest);
+    }
+  }, [currentCity]);
+
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-10">
+      <SEOHead
+        title={`${cityDetails.name} Smart Transit & Route Comparison | Sheher Saathi`}
+        description={`Compare real-time ${cityDetails.transitModes.join(", ")} fares and route connections in ${cityDetails.name}.`}
+      />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="relative z-[50] mb-10 rounded-3xl border border-[#E6D6C3] bg-white p-8 shadow-xl">
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#B35D38]">Smart Urban Assistant</p>
-          <h1 className="mt-2 text-4xl sm:text-5xl font-marcellus text-[#2C1E18]">Jaipur Transit Comparison</h1>
-          <p className="mt-3 max-w-2xl text-[#543C32] font-medium">Search any source and destination to compare realistic fares, live metro connections, bus routes, and book verified cabs & autos.</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#B35D38]">Smart Urban Assistant • {cityDetails.name}</p>
+          </div>
+          <h1 className="mt-2 text-4xl sm:text-5xl font-marcellus text-[#2C1E18]">{cityDetails.name} Transit &amp; Route Comparison</h1>
+          <p className="mt-3 max-w-2xl text-[#543C32] font-medium">Search any source and destination in {cityDetails.name} to compare realistic fares, {cityDetails.transitModes.join(" • ")}, and book verified rides.</p>
 
           <form onSubmit={handleSearch} className="mt-8 grid gap-4 lg:grid-cols-[1.2fr_1.2fr_0.8fr]">
             <input value={source} onChange={(e) => setSource(e.target.value)} onFocus={() => { setSuggestionsVisible(true); setActiveField("source"); }} placeholder="Source e.g. Jaipur Railway Station" className="rounded-2xl border border-[#E6D6C3] bg-[#FAF5EF] px-5 py-4 text-[#2C1E18] font-medium shadow-sm outline-none focus:border-[#B35D38]" />

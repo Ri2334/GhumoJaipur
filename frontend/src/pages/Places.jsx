@@ -1,15 +1,16 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import PlaceCard from "../components/PlaceCard";
 import SEOHead from "../components/SEOHead";
 import { getAllCitiesPlaces } from "../data/cityResolver";
+import { CityContext } from "../context/CityContext";
+import CitySwitcher from "../components/CitySwitcher";
 
 export default function Places() {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialCategory = searchParams.get("category") || "";
-  const initialCity = searchParams.get("city") || "all";
+  const { currentCity, switchCity, cityDetails } = useContext(CityContext);
 
-  const [selectedCity, setSelectedCity] = useState(initialCity);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState(initialCategory);
   const [sort, setSort] = useState("rating");
@@ -18,12 +19,15 @@ export default function Places() {
     const urlCat = searchParams.get("category");
     if (urlCat !== null) setCategory(urlCat);
     const urlCity = searchParams.get("city");
-    if (urlCity !== null) setSelectedCity(urlCity);
+    if (urlCity && (urlCity === "jaipur" || urlCity === "udaipur")) {
+      switchCity(urlCity);
+    }
   }, [searchParams]);
 
+  // Strictly return places for the selected city
   const allPlaces = useMemo(() => {
-    return getAllCitiesPlaces(selectedCity);
-  }, [selectedCity]);
+    return getAllCitiesPlaces(currentCity);
+  }, [currentCity]);
 
   const filteredPlaces = useMemo(() => {
     let list = [...allPlaces];
@@ -63,55 +67,36 @@ export default function Places() {
     { id: "Parks & Nature", label: "Parks & Nature" },
   ];
 
-  const handleCitySelect = (city) => {
-    setSelectedCity(city);
-    setSearchParams(city === "all" ? {} : { city });
-  };
-
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-8 selection:bg-[#B35D38] selection:text-white">
       <SEOHead
-        title="160+ Rajasthan Tourist Places Guide & Map | Sheher Saathi (Shehar App)"
-        description="Browse 160+ verified tourist places in Jaipur and Udaipur. Complete with entry fees, timings, real-time bus metro boat routes, and food guides."
-        keywords="Jaipur tourist places, Udaipur tourist places, City Palace Udaipur, Lake Pichola, Hawa Mahal, Amer Fort, Sheher Saathi, Shehar App"
+        title={`${cityDetails.name} (${cityDetails.placesCount} Tourist Places) Guide & Map | Sheher Saathi`}
+        description={`Explore all ${cityDetails.placesCount} verified tourist places in ${cityDetails.name}. Complete entry fees, timings, real-time public transit routes, and local food guides.`}
+        keywords={`${cityDetails.name} tourist places, ${cityDetails.name} guide, Sheher Saathi, Shehar App`}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Header */}
         <div className="bg-gradient-to-r from-[#2C1E18] via-[#3D2B23] to-[#241712] rounded-[2.5rem] p-8 sm:p-12 text-[#FAF5EF] shadow-2xl relative overflow-hidden">
-          <div className="max-w-2xl relative z-10 space-y-4">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-[#B35D38] text-white text-xs font-black uppercase tracking-widest shadow-md">
-              Multi-City Heritage Directory 🏰🌅
-            </span>
+          <div className="max-w-3xl relative z-10 space-y-4">
+            
+            <div className="flex items-center gap-3">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-[#B35D38] text-white text-xs font-black uppercase tracking-widest shadow-md">
+                {cityDetails.name} Directory • {allPlaces.length} Destinations
+              </span>
+              <CitySwitcher />
+            </div>
+
             <h1 className="text-4xl sm:text-6xl font-marcellus leading-tight">
-              Explore Jaipur &amp; <br />
-              <span className="text-[#D98A5B]">Udaipur Destinations</span>
+              Explore <span className="text-[#D98A5B]">{cityDetails.name}</span> <br />
+              {cityDetails.tagline}
             </h1>
+            
             <p className="text-sm sm:text-base text-[#E6D6C3] font-medium leading-relaxed">
-              Complete catalog of verified heritage spots, real-time public transit routes, entry fees, and famous local tastes.
+              Complete catalog of verified heritage spots, real-time public transit routes, entry fees, and famous local tastes in {cityDetails.name}.
             </p>
 
-            {/* City Selector Buttons */}
-            <div className="flex flex-wrap gap-2 pt-2">
-              {[
-                { id: "all", label: "All Cities (165+)" },
-                { id: "jaipur", label: "🏰 Jaipur (140+)" },
-                { id: "udaipur", label: "🌅 Udaipur (25+)" }
-              ].map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => handleCitySelect(c.id)}
-                  className={`px-5 py-2.5 rounded-2xl text-xs font-bold transition shadow-md ${
-                    selectedCity === c.id
-                      ? "bg-[#B35D38] text-white ring-2 ring-[#D98A5B]"
-                      : "bg-[#3D2B23] hover:bg-[#4A362B] text-[#E6D6C3] border border-[#543C32]"
-                  }`}
-                >
-                  {c.label}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -123,7 +108,7 @@ export default function Places() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search place name, food, or location..."
+              placeholder={`Search ${cityDetails.name} places, food, or location...`}
               className="w-full bg-[#FAF5EF] border border-[#E6D6C3] rounded-2xl pl-11 pr-4 py-3 text-xs sm:text-sm font-semibold text-[#2C1E18] outline-none focus:border-[#B35D38]"
             />
           </div>

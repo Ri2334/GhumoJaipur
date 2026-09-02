@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getStoredHotels } from "../data/jaipurHotelsData";
 import GoogleAd from "../components/GoogleAd";
+import { CityContext } from "../context/CityContext";
+import SEOHead from "../components/SEOHead";
 
 export default function Hotels() {
+  const { currentCity, cityDetails } = useContext(CityContext);
   const [hotels, setHotels] = useState([]);
   const [selectedType, setSelectedType] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,17 +17,22 @@ export default function Hotels() {
   const types = ["All", "Heritage Haveli", "Luxury Resort", "Boutique Hotel", "Budget & Hostel"];
 
   const filteredHotels = hotels.filter((h) => {
+    const matchesCity = (h.city || "Jaipur").toLowerCase() === currentCity.toLowerCase();
     const matchesType = selectedType === "All" || h.type.toLowerCase().includes(selectedType.toLowerCase());
     const matchesSearch =
       h.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       h.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
       h.nearestSpots.some((s) => s.toLowerCase().includes(searchTerm.toLowerCase()));
-    return matchesType && matchesSearch;
+    return matchesCity && matchesType && matchesSearch;
   });
 
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] pt-8 pb-20 selection:bg-[#B35D38] selection:text-white">
-      
+      <SEOHead
+        title={`${cityDetails.name} Royal Havelis & Heritage Hotels Directory | Sheher Saathi`}
+        description={`Hand-picked heritage havelis, luxury lake resorts, and boutique hotel stays in ${cityDetails.name}.`}
+      />
+
       {/* Header Banner */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <div className="bg-gradient-to-r from-[#2C1E18] via-[#3D2B23] to-[#241712] rounded-[2.5rem] p-8 sm:p-14 text-[#FAF5EF] shadow-2xl relative overflow-hidden">
@@ -32,10 +40,10 @@ export default function Hotels() {
           
           <div className="max-w-2xl relative z-10">
             <span className="inline-block px-4 py-1.5 rounded-full bg-[#B35D38] text-white text-xs font-black uppercase tracking-widest mb-4 shadow-md">
-              Jaipur Stay Directory 🏨
+              {cityDetails.name} Stay Directory 🏨
             </span>
             <h1 className="text-4xl sm:text-6xl font-marcellus leading-tight text-[#FAF5EF]">
-              Royal Havelis & <br />
+              {cityDetails.name} Havelis &amp; <br />
               <span className="text-[#D98A5B]">Heritage Stays</span>
             </h1>
             <p className="mt-4 text-base sm:text-lg text-[#E6D6C3] font-medium leading-relaxed">

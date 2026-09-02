@@ -1,14 +1,15 @@
 import { AFFILIATE_CONFIG } from "../config/affiliateConfig";
 
-const buildBookingUrl = (hotelName) => {
-  const query = encodeURIComponent(`${hotelName}, Jaipur`);
+const buildBookingUrl = (hotelName, city = "Jaipur") => {
+  const query = encodeURIComponent(`${hotelName}, ${city}`);
   if (AFFILIATE_CONFIG.bookingComAid && AFFILIATE_CONFIG.bookingComAid !== "304140") {
     return `https://www.booking.com/searchresults.html?ss=${query}&aid=${AFFILIATE_CONFIG.bookingComAid}`;
   }
   return `https://www.booking.com/searchresults.html?ss=${query}`;
 };
 
-const INITIAL_JAIPUR_HOTELS = [
+const INITIAL_HOTELS = [
+  // JAIPUR HOTELS
   {
     id: "rambagh-palace",
     name: "Rambagh Palace (Taj)",
@@ -23,7 +24,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
     description: "Former residence of the Maharaja of Jaipur. Known as the 'Jewel of Jaipur', featuring 47 acres of manicured gardens and opulent royal suites.",
     featured: true,
-    bookingUrl: buildBookingUrl("Rambagh Palace")
+    bookingUrl: buildBookingUrl("Rambagh Palace", "Jaipur")
   },
   {
     id: "samode-haveli",
@@ -39,7 +40,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80",
     description: "An authentic 175-year-old royal haveli built by the Samode family. Nestled inside the old walled city with exquisite frescoes and poolside dining.",
     featured: true,
-    bookingUrl: buildBookingUrl("Samode Haveli")
+    bookingUrl: buildBookingUrl("Samode Haveli", "Jaipur")
   },
   {
     id: "alsisar-haveli",
@@ -55,7 +56,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
     description: "Restored Rajput mansion owned by the Alsisar nobles. Features intricate arches, antique chandeliers, and serene inner courtyards.",
     featured: true,
-    bookingUrl: buildBookingUrl("Alsisar Haveli")
+    bookingUrl: buildBookingUrl("Alsisar Haveli", "Jaipur")
   },
   {
     id: "trident-jaipur",
@@ -71,23 +72,7 @@ const INITIAL_JAIPUR_HOTELS = [
     image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80",
     description: "Breathtaking lakefront resort overlooking Jal Mahal and the Aravalli Hills. Minutes from Amer Fort.",
     featured: true,
-    bookingUrl: buildBookingUrl("Trident Jaipur")
-  },
-  {
-    id: "shahpura-house",
-    name: "Shahpura House",
-    type: "Heritage Haveli",
-    rating: 4.6,
-    reviewsCount: 860,
-    startingPrice: 6500,
-    location: "Devi Marg, Bani Park",
-    city: "Jaipur",
-    nearestSpots: ["Jaipur Railway Station", "Bani Park", "Sindhi Camp"],
-    amenities: ["Rooftop Pool", "Fresco Suites", "Ayurvedic Spa", "Traditional Music Evening"],
-    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80",
-    description: "Authentic Indo-Saracenic royal house boasting gilded mirrors, traditional frescoes, and a popular sunset rooftop restaurant.",
-    featured: false,
-    bookingUrl: buildBookingUrl("Shahpura House")
+    bookingUrl: buildBookingUrl("Trident Jaipur", "Jaipur")
   },
   {
     id: "pearl-palace-heritage",
@@ -101,25 +86,75 @@ const INITIAL_JAIPUR_HOTELS = [
     nearestSpots: ["Jaipur Railway Station", "MI Road", "Raj Mandir"],
     amenities: ["Artisanal Rooms", "Free High Speed Wi-Fi", "Airport Shuttle", "Rooftop Cafe"],
     image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80",
-    description: "Award-winning boutique hotel where every room represents a different Indian state & art heritage. Highly rated by international travelers.",
+    description: "Award-winning boutique hotel where every room represents a different Indian state & art heritage.",
     featured: true,
-    bookingUrl: buildBookingUrl("Pearl Palace Heritage")
+    bookingUrl: buildBookingUrl("Pearl Palace Heritage", "Jaipur")
+  },
+
+  // UDAIPUR HOTELS
+  {
+    id: "taj-lake-palace-hotel",
+    name: "Taj Lake Palace Udaipur",
+    type: "Luxury Resort",
+    rating: 4.9,
+    reviewsCount: 2100,
+    startingPrice: 42000,
+    location: "Lake Pichola, Udaipur",
+    city: "Udaipur",
+    nearestSpots: ["City Palace Udaipur", "Jag Mandir", "Lake Pichola"],
+    amenities: ["Island Floating Hotel", "Jiva Spa Boat", "Private Butler", "Picholi Bar"],
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+    description: "Floating like a white marble jewel on Lake Pichola. Iconic 18th-century palace hotel accessed by private boat.",
+    featured: true,
+    bookingUrl: buildBookingUrl("Taj Lake Palace", "Udaipur")
   },
   {
-    id: "zostel-jaipur",
-    name: "Zostel Jaipur",
+    id: "leela-palace-udaipur",
+    name: "The Leela Palace Udaipur",
+    type: "Luxury Resort",
+    rating: 4.9,
+    reviewsCount: 1850,
+    startingPrice: 36000,
+    location: "Pichola, Lakefront, Udaipur",
+    city: "Udaipur",
+    nearestSpots: ["Lake Pichola", "Ambrai Ghat", "City Palace Udaipur"],
+    amenities: ["Panoramic Lake View", "ESPA Spa", "Waterfront Fine Dining", "Private Boat Transfer"],
+    image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80",
+    description: "Ultra-luxury lakeside palace hotel offering majestic views of the Aravalli mountains and City Palace across the lake.",
+    featured: true,
+    bookingUrl: buildBookingUrl("The Leela Palace", "Udaipur")
+  },
+  {
+    id: "jagat-niwas-palace",
+    name: "Jagat Niwas Palace Hotel",
+    type: "Heritage Haveli",
+    rating: 4.8,
+    reviewsCount: 1250,
+    startingPrice: 6800,
+    location: "Lal Ghat, Old City, Udaipur",
+    city: "Udaipur",
+    nearestSpots: ["Lal Ghat", "City Palace Udaipur", "Jagdish Temple"],
+    amenities: ["Lakeside Jharokhas", "Rooftop Restaurant", "Traditional Mewari Decor", "Free Wi-Fi"],
+    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
+    description: "17th-century haveli right on the eastern bank of Lake Pichola. Famous for its overhanging Jharokha seats overlooking the water.",
+    featured: true,
+    bookingUrl: buildBookingUrl("Jagat Niwas Palace", "Udaipur")
+  },
+  {
+    id: "zostel-udaipur",
+    name: "Zostel Udaipur",
     type: "Budget & Hostel",
-    rating: 4.5,
-    reviewsCount: 2100,
-    startingPrice: 899,
-    location: "Hawa Mahal Road, Old City",
-    city: "Jaipur",
-    nearestSpots: ["Hawa Mahal", "Badi Chaupar", "Johari Bazaar"],
-    amenities: ["Social Common Room", "Dormitories & Private Rooms", "Free Wi-Fi", "Walking Tours"],
+    rating: 4.6,
+    reviewsCount: 1950,
+    startingPrice: 999,
+    location: "Hanuman Ghat, Old City, Udaipur",
+    city: "Udaipur",
+    nearestSpots: ["Ambrai Ghat", "Daiji Bridge", "Lake Pichola"],
+    amenities: ["Rooftop Lake View Cafe", "Social Common Area", "Dormitories & Private Rooms"],
     image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80",
-    description: "Vibrant backpacker hostel right in the heart of the walled Pink City. Steps away from Hawa Mahal.",
+    description: "Lakeside backpacker hostel at Hanuman Ghat with breathtaking rooftop views of City Palace across Pichola.",
     featured: false,
-    bookingUrl: buildBookingUrl("Zostel Jaipur")
+    bookingUrl: buildBookingUrl("Zostel Udaipur", "Udaipur")
   }
 ];
 
@@ -130,7 +165,7 @@ export const getStoredHotels = () => {
   } catch (err) {
     console.error("Error loading hotels:", err);
   }
-  return INITIAL_JAIPUR_HOTELS;
+  return INITIAL_HOTELS;
 };
 
 export const saveStoredHotels = (hotels) => {

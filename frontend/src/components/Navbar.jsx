@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import apiClient from "../services/api";
+import CitySwitcher from "./CitySwitcher";
 
 // Sticky responsive navbar with warm terracotta branding & connected dropdowns
 export default function Navbar() {
@@ -58,8 +59,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           
-          {/* Logo Branding */}
-          <div className="flex items-center gap-3">
+          {/* Logo Branding + City Switcher */}
+          <div className="flex items-center gap-4">
             <div className="flex items-center gap-3.5 cursor-pointer group" onClick={() => navigate(user ? '/dashboard' : '/') }>
               <div className="w-12 h-12 rounded-2xl bg-[#FAF5EF] p-1 shadow-md group-hover:scale-105 transition-transform duration-300 border border-[#E6D6C3] flex items-center justify-center overflow-hidden">
                 <img src="/logo.png" alt="Sheher Saathi Logo" className="w-full h-full object-contain" />
@@ -69,6 +70,8 @@ export default function Navbar() {
                 <div className="text-[9px] text-[#D98A5B] font-bold uppercase tracking-[0.2em] mt-1">Har Sheher, Apna Sa.</div>
               </div>
             </div>
+
+            <CitySwitcher className="hidden sm:inline-flex ml-2" />
           </div>
 
           {/* Desktop Nav Links with Dropdowns */}
