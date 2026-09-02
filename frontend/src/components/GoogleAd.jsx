@@ -5,8 +5,8 @@ import React, { useEffect } from "react";
  * Pass client (Publisher ID) and slot (Ad Slot ID) from Google AdSense dashboard.
  */
 export default function GoogleAd({
-  client = "ca-pub-XXXXXXXXXXXXXXXX", // Replace with your Publisher ID
-  slot = "1234567890",              // Replace with your Ad Slot ID
+  client = "ca-pub-4209575023821354",
+  slot = "1234567890",
   format = "auto",
   responsive = "true",
   className = ""
