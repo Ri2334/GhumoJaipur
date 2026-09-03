@@ -56,10 +56,26 @@ export function resolveDelhiRealRoute(originName, destName) {
   const hasMetro = Boolean(srcMetro && dstMetro && srcMetro.name !== dstMetro.name);
 
   // Match DTC Official Bus Route from Catalog
-  const matchedBus = DTC_BUS_ROUTES.find(r => 
+  let matchedBus = DTC_BUS_ROUTES.find(r => 
     r.stops.some(s => s.toLowerCase().includes(origKey) || origKey.includes(s.toLowerCase())) &&
     r.stops.some(s => s.toLowerCase().includes(destKey) || destKey.includes(s.toLowerCase()))
-  ) || DTC_BUS_ROUTES[0];
+  );
+
+  if (!matchedBus) {
+    if (origKey.includes("iit") || destKey.includes("iit")) {
+      matchedBus = DTC_BUS_ROUTES.find(r => r.busNumber === "Route 764" || r.busNumber === "Route 620") || DTC_BUS_ROUTES[3];
+    } else if (origKey.includes("aiims") || destKey.includes("aiims")) {
+      matchedBus = DTC_BUS_ROUTES.find(r => r.busNumber === "Route 419" || r.busNumber === "Route 505") || DTC_BUS_ROUTES[0];
+    } else if (origKey.includes("airport") || destKey.includes("airport") || origKey.includes("igi") || destKey.includes("igi")) {
+      matchedBus = DTC_BUS_ROUTES.find(r => r.busNumber === "Airport Express-4") || DTC_BUS_ROUTES[6];
+    } else if (origKey.includes("anand vihar") || destKey.includes("anand vihar")) {
+      matchedBus = DTC_BUS_ROUTES.find(r => r.busNumber === "Route 534" || r.busNumber === "Route 212") || DTC_BUS_ROUTES[2];
+    } else if (origKey.includes("qutub") || destKey.includes("qutub") || origKey.includes("mehrauli") || destKey.includes("mehrauli")) {
+      matchedBus = DTC_BUS_ROUTES.find(r => r.busNumber === "Route 505") || DTC_BUS_ROUTES[1];
+    } else {
+      matchedBus = DTC_BUS_ROUTES[0];
+    }
+  }
 
   // DMRC Metro Fare Tier (₹10 - ₹60)
   const metroFare = Math.min(60, Math.max(10, Math.round(roadKm * 2.5)));
