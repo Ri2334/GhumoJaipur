@@ -202,16 +202,38 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   // Dynamic DTC Bus Route matching from raw_delhi_routes.json (1,653 objects)
   const qOrig = origGeo.name.toLowerCase();
   const qDest = destGeo.name.toLowerCase();
+
   let matchedBus = DTC_BUS_ROUTES.find(r => 
     (r.stops || []).some(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase())) &&
     (r.stops || []).some(s => s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase()))
   );
 
-  if (!matchedBus) {
-    if (qOrig.includes("iit") || qDest.includes("iit")) matchedBus = DTC_BUS_ROUTES.find(r => r.busNumber === "Route 620" || r.busNumber === "Route 764") || DTC_BUS_ROUTES[0];
-    else if (qOrig.includes("aiims") || qDest.includes("aiims")) matchedBus = DTC_BUS_ROUTES.find(r => r.busNumber === "Route 505" || r.busNumber === "Route 419") || DTC_BUS_ROUTES[0];
-    else if (qOrig.includes("anand vihar") || qDest.includes("anand vihar")) matchedBus = DTC_BUS_ROUTES.find(r => r.busNumber === "Route 534") || DTC_BUS_ROUTES[0];
-    else matchedBus = DTC_BUS_ROUTES[0];
+  let hasValidBus = Boolean(matchedBus);
+  let busStopsSliced = [];
+
+  if (matchedBus) {
+    const stops = matchedBus.stops || [];
+    const bOrigIdx = stops.findIndex(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase()));
+    const bDestIdx = stops.findIndex(s => s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase()));
+
+    if (bOrigIdx !== -1 && bDestIdx !== -1) {
+      if (bOrigIdx <= bDestIdx) {
+        busStopsSliced = stops.slice(bOrigIdx, bDestIdx + 1);
+      } else {
+        busStopsSliced = stops.slice(bDestIdx, bOrigIdx + 1).reverse();
+      }
+    } else {
+      busStopsSliced = stops.slice(0, 6);
+    }
+  } else {
+    // Check if a bus passes origin
+    matchedBus = DTC_BUS_ROUTES.find(r => 
+      (r.stops || []).some(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase()))
+    );
+    if (matchedBus) {
+      hasValidBus = true;
+      busStopsSliced = (matchedBus.stops || []).slice(0, 6);
+    }
   }
 
   const firstMileDistKm = srcNearest.distanceKm;
@@ -257,7 +279,9 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
       name: s.station_name,
       area: `${s.line_color} Line Station (Seq ${s.sequence_index || 0})`
     })),
-    busRoute: {
+    hasValidBus: hasValidBus,
+    busNoDirectMsg: !hasValidBus ? "No direct bus found. Use the recommended Metro route for this trip." : null,
+    busRoute: hasValidBus ? {
       busNumber: matchedBus.busNumber || matchedBus.route_short_name,
       routeName: matchedBus.routeName || `${matchedBus.origin} ⇄ ${matchedBus.destination}`,
       type: "direct",
@@ -269,9 +293,9 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
       route: {
         busNumber: matchedBus.busNumber || matchedBus.route_short_name,
         routeName: matchedBus.routeName || `${matchedBus.origin} ⇄ ${matchedBus.destination}`,
-        stopsPassed: (matchedBus.stops || []).slice(0, 5)
+        stopsPassed: busStopsSliced
       }
-    },
+    } : null,
     steps: metroSteps
   };
 }

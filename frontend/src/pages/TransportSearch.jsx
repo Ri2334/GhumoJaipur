@@ -671,8 +671,12 @@ export default function TransportSearch() {
                 {/* Render Selected Timeline */}
                 {activeTimeline === "metro" && result.metroRoute ? (
                   <RouteTimeline stations={result.metroRoute.stationSequence} />
-                ) : (
+                ) : result.busRoute ? (
                   <BusRouteTimeline busRoute={result.busRoute} />
+                ) : (
+                  <div className="rounded-3xl border border-amber-300 bg-amber-50 p-6 text-amber-900 font-bold shadow-md text-center">
+                    🚌 No direct bus found. Use the recommended Metro route for this trip.
+                  </div>
                 )}
 
               </div>
