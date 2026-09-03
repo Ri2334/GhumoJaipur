@@ -160,10 +160,19 @@ function MetroDirectoryContent() {
                     ⏱️ Hours: {line.firstTrain || '05:30 AM'} - {line.lastTrain || '11:30 PM'} | 🚉 Terminals: {line.terminals?.start || 'Start'} ⇄ {line.terminals?.end || 'End'}
                   </p>
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66]">Station Sequence &amp; Interchanges:</span>
-                    <div className="mt-2 flex flex-wrap gap-1.5 max-h-48 overflow-y-auto pr-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66]">
+                      Station Sequence &amp; Interchanges ({(line.stations || []).length}):
+                    </span>
+                    <div className="mt-2 flex flex-wrap gap-1 max-h-44 overflow-y-auto pr-1">
                       {(line.stations || []).map((st, sIdx) => (
-                        <span key={sIdx} className={`text-xs font-bold px-2.5 py-1 rounded-xl border transition ${st?.interchange ? 'bg-amber-100 text-amber-950 border-amber-400 shadow-xs' : 'bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3]'}`}>
+                        <span
+                          key={sIdx}
+                          className={`text-[11px] font-semibold px-2 py-0.5 rounded-lg border transition ${
+                            st?.interchange
+                              ? 'bg-amber-100 text-amber-950 border-amber-400 font-bold ring-1 ring-amber-300/60 shadow-xs'
+                              : 'bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3]'
+                          }`}
+                        >
                           {st?.name} {st?.interchange && '🔄'}
                         </span>
                       ))}

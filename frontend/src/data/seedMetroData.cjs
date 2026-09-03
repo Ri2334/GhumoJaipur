@@ -7,7 +7,7 @@ const METRO_LINES_SPEC = [
     line_color: "Red",
     line_number: 1,
     start: "Rithala",
-    end: "Shaheed Sthal (Ghaziabad)",
+    end: "Shaheed Sthal (New Bus Adda)",
     stations: [
       { name: "Rithala", interchange: [] },
       { name: "Rohini West", interchange: [] },
@@ -29,11 +29,11 @@ const METRO_LINES_SPEC = [
       { name: "Mansarovar Park", interchange: [] },
       { name: "Jhilmil", interchange: [] },
       { name: "Dilshad Garden", interchange: [] },
-      { name: "Major Mohit Sharma Rajendra Nagar", interchange: [] },
+      { name: "Major Mohit Sharma (Rajendra Nagar)", interchange: [] },
       { name: "Shyam Park", interchange: [] },
       { name: "Mohan Nagar", interchange: [] },
       { name: "Arthala", interchange: [] },
-      { name: "Shaheed Sthal", interchange: [] }
+      { name: "Shaheed Sthal (New Bus Adda)", interchange: [] }
     ]
   },
   {
@@ -107,7 +107,7 @@ const METRO_LINES_SPEC = [
       { name: "Rajouri Garden", interchange: ["Blue", "Pink"] },
       { name: "Ramesh Nagar", interchange: [] },
       { name: "Moti Nagar", interchange: [] },
-      { name: "Karai Nagar", interchange: [] },
+      { name: "Kirti Nagar", interchange: ["Blue", "Green"] },
       { name: "Shadipur", interchange: [] },
       { name: "Patel Nagar", interchange: [] },
       { name: "Rajendra Place", interchange: [] },

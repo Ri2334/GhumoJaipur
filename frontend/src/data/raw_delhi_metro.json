@@ -11,7 +11,7 @@
     "sequence_index": 1,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -26,7 +26,7 @@
     "sequence_index": 2,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -41,7 +41,7 @@
     "sequence_index": 3,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -56,7 +56,7 @@
     "sequence_index": 4,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -71,7 +71,7 @@
     "sequence_index": 5,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -87,7 +87,7 @@
     "sequence_index": 6,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -102,7 +102,7 @@
     "sequence_index": 7,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -118,7 +118,7 @@
     "sequence_index": 8,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -133,7 +133,7 @@
     "sequence_index": 9,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -148,7 +148,7 @@
     "sequence_index": 10,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -163,7 +163,7 @@
     "sequence_index": 11,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -178,7 +178,7 @@
     "sequence_index": 12,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -195,7 +195,7 @@
     "sequence_index": 13,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -210,7 +210,7 @@
     "sequence_index": 14,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -225,7 +225,7 @@
     "sequence_index": 15,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -241,7 +241,7 @@
     "sequence_index": 16,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -256,7 +256,7 @@
     "sequence_index": 17,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -271,7 +271,7 @@
     "sequence_index": 18,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -286,7 +286,7 @@
     "sequence_index": 19,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -301,12 +301,12 @@
     "sequence_index": 20,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
     "station_id": "STN-R-21",
-    "station_name": "Major Mohit Sharma Rajendra Nagar",
+    "station_name": "Major Mohit Sharma (Rajendra Nagar)",
     "line_color": "Red",
     "line_number": 1,
     "is_interchange": false,
@@ -316,7 +316,7 @@
     "sequence_index": 21,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -331,7 +331,7 @@
     "sequence_index": 22,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -346,7 +346,7 @@
     "sequence_index": 23,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -361,12 +361,12 @@
     "sequence_index": 24,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
     "station_id": "STN-R-25",
-    "station_name": "Shaheed Sthal",
+    "station_name": "Shaheed Sthal (New Bus Adda)",
     "line_color": "Red",
     "line_number": 1,
     "is_interchange": false,
@@ -376,7 +376,7 @@
     "sequence_index": 25,
     "terminal_mappings": {
       "start": "Rithala",
-      "end": "Shaheed Sthal (Ghaziabad)"
+      "end": "Shaheed Sthal (New Bus Adda)"
     }
   },
   {
@@ -1249,12 +1249,13 @@
   },
   {
     "station_id": "STN-B-22",
-    "station_name": "Karai Nagar",
+    "station_name": "Kirti Nagar",
     "line_color": "Blue",
     "line_number": 3,
-    "is_interchange": false,
+    "is_interchange": true,
     "interchange_lines": [
-      "Blue"
+      "Blue",
+      "Green"
     ],
     "sequence_index": 22,
     "terminal_mappings": {
