@@ -46,12 +46,16 @@ export async function geocodeNominatimNCR(queryText) {
       const data = await res.json();
       if (data && data.length > 0) {
         const top = data[0];
-        console.log(`[OSM Nominatim Geocode] "${queryText}" -> Lat: ${top.lat}, Lon: ${top.lon} (${top.display_name})`);
-        return {
-          name: queryText,
-          lat: parseFloat(top.lat),
-          lng: parseFloat(top.lon)
-        };
+        const parsedLat = parseFloat(top.lat);
+        const parsedLon = parseFloat(top.lon);
+        if (!isNaN(parsedLat) && !isNaN(parsedLon)) {
+          console.log(`[OSM Nominatim Geocode] "${queryText}" -> Lat: ${parsedLat}, Lon: ${parsedLon}`);
+          return {
+            name: queryText,
+            lat: parsedLat,
+            lng: parsedLon
+          };
+        }
       }
     }
   } catch (err) {
@@ -63,14 +67,18 @@ export async function geocodeNominatimNCR(queryText) {
 
 // Pure spatial Haversine station lookup across all 244 DMRC stations in raw_delhi_metro.json
 export function findNearestMetroStationByCoords(targetLat, targetLng) {
+  // Defensive check against cold state assignment / undefined coordinates
+  const safeLat = typeof targetLat === 'number' && !isNaN(targetLat) ? targetLat : 28.6315;
+  const safeLng = typeof targetLng === 'number' && !isNaN(targetLng) ? targetLng : 77.2167;
+
   let nearestStation = RAW_DELHI_METRO_STATIONS[0];
   let minDistance = Infinity;
 
   RAW_DELHI_METRO_STATIONS.forEach(st => {
-    const stLat = st.lat || (28.6315 + ((st.line_number * 3 + st.sequence_index) % 30 - 15) * 0.008);
-    const stLng = st.lng || (77.2167 + ((st.line_number * 5 + st.sequence_index) % 30 - 15) * 0.008);
+    const stLat = typeof st.lat === 'number' ? st.lat : (28.6315 + ((st.line_number * 3 + st.sequence_index) % 30 - 15) * 0.008);
+    const stLng = typeof st.lng === 'number' ? st.lng : (77.2167 + ((st.line_number * 5 + st.sequence_index) % 30 - 15) * 0.008);
     
-    const dist = getHaversineKm(targetLat, targetLng, stLat, stLng);
+    const dist = getHaversineKm(safeLat, safeLng, stLat, stLng);
     if (dist < minDistance) {
       minDistance = dist;
       nearestStation = st;
@@ -84,12 +92,20 @@ export function findNearestMetroStationByCoords(targetLat, targetLng) {
 }
 
 export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
+  if (!origGeo || !destGeo) {
+    throw new Error("Routing engine could not verify location coordinate paths.");
+  }
+
   const directKm = getHaversineKm(origGeo.lat, origGeo.lng, destGeo.lat, destGeo.lng);
   const roadKm = Math.max(1.5, Math.round((directKm * 1.35) * 10) / 10);
 
   // Compute physical satellite stations via Haversine distance
   const srcNearest = findNearestMetroStationByCoords(origGeo.lat, origGeo.lng);
   const dstNearest = findNearestMetroStationByCoords(destGeo.lat, destGeo.lng);
+
+  if (!srcNearest.station || !dstNearest.station) {
+    throw new Error("Routing engine could not verify location coordinate paths.");
+  }
 
   // Hard failure if distance is out of service radius (> 25 km)
   if (srcNearest.distanceKm > 25 || dstNearest.distanceKm > 25) {
@@ -116,7 +132,7 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   }
 
   if (evaluatedSequence.length === 0) {
-    throw new Error("Location coordinates found, but transit connections are outside the service radius.");
+    throw new Error("Routing engine could not verify location coordinate paths.");
   }
 
   // MANDATORY SYSTEM VERIFICATION LOG
