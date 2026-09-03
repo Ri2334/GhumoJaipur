@@ -94,16 +94,25 @@ export function findNearestMetroStationByCoords(targetLat, targetLng) {
   };
 }
 
-// Authentic DMRC Multi-Line Transfer Pathfinder
+// Authentic DMRC Multi-Line Transfer Pathfinder with Strict Directionality
 export function computeDMRCMultiLinePath(srcStation, dstStation) {
   // 1. Same Line Direct Corridor
   if (srcStation.line_color === dstStation.line_color) {
-    const sameLine = RAW_DELHI_METRO_STATIONS.filter(s => s.line_color === srcStation.line_color);
+    const sameLine = RAW_DELHI_METRO_STATIONS
+      .filter(s => s.line_color === srcStation.line_color)
+      .sort((a, b) => (a.sequence_index || 0) - (b.sequence_index || 0));
+
     const sIdx = sameLine.findIndex(s => s.station_id === srcStation.station_id);
     const dIdx = sameLine.findIndex(s => s.station_id === dstStation.station_id);
-    const seq = (sIdx !== -1 && dIdx !== -1)
-      ? (sIdx <= dIdx ? sameLine.slice(sIdx, dIdx + 1) : sameLine.slice(dIdx, sIdx + 1).reverse())
-      : [srcStation, dstStation];
+
+    let seq = [srcStation, dstStation];
+    if (sIdx !== -1 && dIdx !== -1) {
+      if (sIdx <= dIdx) {
+        seq = sameLine.slice(sIdx, dIdx + 1);
+      } else {
+        seq = sameLine.slice(dIdx, sIdx + 1).reverse();
+      }
+    }
 
     return {
       transfers: 0,
@@ -130,8 +139,13 @@ export function computeDMRCMultiLinePath(srcStation, dstStation) {
     if (hub.lines.includes(srcStation.line_color) && hub.lines.includes(dstStation.line_color)) {
       const hubStation = RAW_DELHI_METRO_STATIONS.find(s => s.station_name.includes(hub.name)) || { station_name: hub.name, line_color: srcStation.line_color, sequence_index: 0 };
       
-      const leg1 = RAW_DELHI_METRO_STATIONS.filter(s => s.line_color === srcStation.line_color);
-      const leg2 = RAW_DELHI_METRO_STATIONS.filter(s => s.line_color === dstStation.line_color);
+      const leg1 = RAW_DELHI_METRO_STATIONS
+        .filter(s => s.line_color === srcStation.line_color)
+        .sort((a, b) => (a.sequence_index || 0) - (b.sequence_index || 0));
+
+      const leg2 = RAW_DELHI_METRO_STATIONS
+        .filter(s => s.line_color === dstStation.line_color)
+        .sort((a, b) => (a.sequence_index || 0) - (b.sequence_index || 0));
 
       const sIdx1 = leg1.findIndex(s => s.station_id === srcStation.station_id);
       const hIdx1 = leg1.findIndex(s => s.station_name.includes(hub.name));
@@ -182,7 +196,7 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   const srcStation = srcNearest.station;
   const dstStation = dstNearest.station;
 
-  // Compute multi-line transfer path dynamically
+  // Compute multi-line transfer path dynamically with directionality
   const pathResult = computeDMRCMultiLinePath(srcStation, dstStation);
   const evaluatedSequence = pathResult.sequence;
 
@@ -224,15 +238,6 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
       }
     } else {
       busStopsSliced = stops.slice(0, 6);
-    }
-  } else {
-    // Check if a bus passes origin
-    matchedBus = DTC_BUS_ROUTES.find(r => 
-      (r.stops || []).some(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase()))
-    );
-    if (matchedBus) {
-      hasValidBus = true;
-      busStopsSliced = (matchedBus.stops || []).slice(0, 6);
     }
   }
 
@@ -280,7 +285,7 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
       area: `${s.line_color} Line Station (Seq ${s.sequence_index || 0})`
     })),
     hasValidBus: hasValidBus,
-    busNoDirectMsg: !hasValidBus ? "No direct bus found. Use the recommended Metro route for this trip." : null,
+    busNoDirectMsg: !hasValidBus ? "No direct bus route found for this corridor." : null,
     busRoute: hasValidBus ? {
       busNumber: matchedBus.busNumber || matchedBus.route_short_name,
       routeName: matchedBus.routeName || `${matchedBus.origin} ⇄ ${matchedBus.destination}`,
