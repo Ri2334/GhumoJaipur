@@ -264,13 +264,41 @@ export default function BusRoutes() {
                   </div>
 
                   <div className="border-t border-[#E6D6C3] pt-3">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66]">Key Stops:</span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66]">
+                      Key Stops ({totalStops}):
+                    </span>
                     <div className="mt-1 flex flex-wrap gap-1">
-                      {stopsList.slice(0, 4).map((s, i) => (
-                        <span key={i} className="text-[11px] font-medium bg-[#FAF5EF] text-[#2C1E18] px-2 py-1 rounded-lg border border-[#E6D6C3]">
-                          {s}
-                        </span>
-                      ))}
+                      {(() => {
+                        const q = searchQuery.trim().toLowerCase();
+                        let visibleStops = stopsList.slice(0, 4);
+                        let matchedStop = null;
+
+                        if (q.length > 0) {
+                          const found = stopsList.find((s) => s.toLowerCase().includes(q));
+                          if (found) {
+                            matchedStop = found;
+                            if (!visibleStops.some((s) => s.toLowerCase() === found.toLowerCase())) {
+                              visibleStops = [found, ...stopsList.slice(0, 3)];
+                            }
+                          }
+                        }
+
+                        return visibleStops.map((s, i) => {
+                          const isHighlighted = matchedStop && s.toLowerCase() === matchedStop.toLowerCase();
+                          return (
+                            <span
+                              key={i}
+                              className={`text-[11px] font-bold px-2 py-1 rounded-lg border transition ${
+                                isHighlighted
+                                  ? "bg-amber-100 text-amber-950 border-amber-400 ring-2 ring-amber-300/60 shadow-xs"
+                                  : "bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3]"
+                              }`}
+                            >
+                              {isHighlighted ? `📍 ${s}` : s}
+                            </span>
+                          );
+                        });
+                      })()}
                     </div>
                   </div>
                 </div>
