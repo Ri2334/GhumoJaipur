@@ -1,0 +1,3713 @@
+[
+  {
+    "station_id": "STN-R-01",
+    "station_name": "Rithala",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-02",
+    "station_name": "Rohini West",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-03",
+    "station_name": "Rohini East",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-04",
+    "station_name": "Pitampura",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-05",
+    "station_name": "Kohat Enclave",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 5,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-06",
+    "station_name": "Netaji Subhash Place",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Red",
+      "Pink"
+    ],
+    "sequence_index": 6,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-07",
+    "station_name": "Kanhiya Nagar",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 7,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-08",
+    "station_name": "Inderlok",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Red",
+      "Green"
+    ],
+    "sequence_index": 8,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-09",
+    "station_name": "Shastri Nagar",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 9,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-10",
+    "station_name": "Pratap Nagar",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 10,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-11",
+    "station_name": "Pul Bangash",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 11,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-12",
+    "station_name": "Tis Hazari",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 12,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-13",
+    "station_name": "Kashmere Gate",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Red",
+      "Yellow",
+      "Violet"
+    ],
+    "sequence_index": 13,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-14",
+    "station_name": "Shastri Park",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 14,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-15",
+    "station_name": "Seelampur",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 15,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-16",
+    "station_name": "Welcome",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Red",
+      "Pink"
+    ],
+    "sequence_index": 16,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-17",
+    "station_name": "Shahdara",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 17,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-18",
+    "station_name": "Mansarovar Park",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 18,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-19",
+    "station_name": "Jhilmil",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 19,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-20",
+    "station_name": "Dilshad Garden",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 20,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-21",
+    "station_name": "Major Mohit Sharma Rajendra Nagar",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 21,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-22",
+    "station_name": "Shyam Park",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 22,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-23",
+    "station_name": "Mohan Nagar",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 23,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-24",
+    "station_name": "Arthala",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 24,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-R-25",
+    "station_name": "Shaheed Sthal",
+    "line_color": "Red",
+    "line_number": 1,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Red"
+    ],
+    "sequence_index": 25,
+    "terminal_mappings": {
+      "start": "Rithala",
+      "end": "Shaheed Sthal (Ghaziabad)"
+    }
+  },
+  {
+    "station_id": "STN-Y-01",
+    "station_name": "Samaypur Badli",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-02",
+    "station_name": "Rohini Sector 18, 19",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-03",
+    "station_name": "Haiderpur Badli Mor",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-04",
+    "station_name": "Jahangirpuri",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-05",
+    "station_name": "Adarsh Nagar",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 5,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-06",
+    "station_name": "Azadpur",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Yellow",
+      "Pink"
+    ],
+    "sequence_index": 6,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-07",
+    "station_name": "Model Town",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 7,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-08",
+    "station_name": "G.T.B. Nagar",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 8,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-09",
+    "station_name": "Vishwa Vidyalaya",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 9,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-10",
+    "station_name": "Civil Lines",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 10,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-11",
+    "station_name": "Kashmere Gate",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Yellow",
+      "Red",
+      "Violet"
+    ],
+    "sequence_index": 11,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-12",
+    "station_name": "Chandni Chowk",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 12,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-13",
+    "station_name": "Chawri Bazar",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 13,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-14",
+    "station_name": "New Delhi",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Yellow",
+      "Airport Express"
+    ],
+    "sequence_index": 14,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-15",
+    "station_name": "Rajiv Chowk",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Yellow",
+      "Blue"
+    ],
+    "sequence_index": 15,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-16",
+    "station_name": "Patel Chowk",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 16,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-17",
+    "station_name": "Central Secretariat",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Yellow",
+      "Violet"
+    ],
+    "sequence_index": 17,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-18",
+    "station_name": "Udyog Bhawan",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 18,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-19",
+    "station_name": "Lok Kalyan Marg",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 19,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-20",
+    "station_name": "Jor Bagh",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 20,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-21",
+    "station_name": "Dilli Haat INA",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Yellow",
+      "Pink"
+    ],
+    "sequence_index": 21,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-22",
+    "station_name": "AIIMS",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 22,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-23",
+    "station_name": "Green Park",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 23,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-24",
+    "station_name": "Hauz Khas",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Yellow",
+      "Magenta"
+    ],
+    "sequence_index": 24,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-25",
+    "station_name": "Malviya Nagar",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 25,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-26",
+    "station_name": "Saket",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 26,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-27",
+    "station_name": "Qutub Minar",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 27,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-28",
+    "station_name": "Chhatarpur",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 28,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-29",
+    "station_name": "Sultanpur",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 29,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-30",
+    "station_name": "Ghitorni",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 30,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-31",
+    "station_name": "Arjan Garh",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 31,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-32",
+    "station_name": "Guru Dronacharya",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 32,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-33",
+    "station_name": "Sikanderpur",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Yellow",
+      "Rapid Metro"
+    ],
+    "sequence_index": 33,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-34",
+    "station_name": "MG Road",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 34,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-35",
+    "station_name": "IFFCO Chowk",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 35,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-Y-36",
+    "station_name": "Millennium City Centre Gurugram",
+    "line_color": "Yellow",
+    "line_number": 2,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Yellow"
+    ],
+    "sequence_index": 36,
+    "terminal_mappings": {
+      "start": "Samaypur Badli",
+      "end": "Millennium City Centre Gurugram"
+    }
+  },
+  {
+    "station_id": "STN-B-01",
+    "station_name": "Dwarka Sector 21",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Blue",
+      "Airport Express"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-02",
+    "station_name": "Dwarka Sector 8",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-03",
+    "station_name": "Dwarka Sector 9",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-04",
+    "station_name": "Dwarka Sector 10",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-05",
+    "station_name": "Dwarka Sector 11",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 5,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-06",
+    "station_name": "Dwarka Sector 12",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 6,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-07",
+    "station_name": "Dwarka Sector 13",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 7,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-08",
+    "station_name": "Dwarka Sector 14",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 8,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-09",
+    "station_name": "Dwarka",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Blue",
+      "Grey"
+    ],
+    "sequence_index": 9,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-10",
+    "station_name": "Dwarka Mor",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 10,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-11",
+    "station_name": "Nawada",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 11,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-12",
+    "station_name": "Uttam Nagar West",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 12,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-13",
+    "station_name": "Uttam Nagar East",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 13,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-14",
+    "station_name": "Janakpuri West",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Blue",
+      "Magenta"
+    ],
+    "sequence_index": 14,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-15",
+    "station_name": "Janakpuri East",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 15,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-16",
+    "station_name": "Tilak Nagar",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 16,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-17",
+    "station_name": "Subhash Nagar",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 17,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-18",
+    "station_name": "Tagore Garden",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 18,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-19",
+    "station_name": "Rajouri Garden",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Blue",
+      "Pink"
+    ],
+    "sequence_index": 19,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-20",
+    "station_name": "Ramesh Nagar",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 20,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-21",
+    "station_name": "Moti Nagar",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 21,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-22",
+    "station_name": "Karai Nagar",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 22,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-23",
+    "station_name": "Shadipur",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 23,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-24",
+    "station_name": "Patel Nagar",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 24,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-25",
+    "station_name": "Rajendra Place",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 25,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-26",
+    "station_name": "Karol Bagh",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 26,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-27",
+    "station_name": "Jhandewalan",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 27,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-28",
+    "station_name": "R.K. Ashram Marg",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 28,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-29",
+    "station_name": "Rajiv Chowk",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Blue",
+      "Yellow"
+    ],
+    "sequence_index": 29,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-30",
+    "station_name": "Barakhamba Road",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 30,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-31",
+    "station_name": "Mandi House",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Blue",
+      "Violet"
+    ],
+    "sequence_index": 31,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-32",
+    "station_name": "Supreme Court",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 32,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-33",
+    "station_name": "Yamuna Bank",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Blue Main",
+      "Blue Vaishali Branch"
+    ],
+    "sequence_index": 33,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-34",
+    "station_name": "Akshardham",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 34,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-35",
+    "station_name": "Mayur Vihar Phase 1",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Blue",
+      "Pink"
+    ],
+    "sequence_index": 35,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-36",
+    "station_name": "Mayur Vihar Extension",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 36,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-37",
+    "station_name": "New Ashok Nagar",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 37,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-38",
+    "station_name": "Noida Sector 15",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 38,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-39",
+    "station_name": "Noida Sector 16",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 39,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-40",
+    "station_name": "Noida Sector 18",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 40,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-41",
+    "station_name": "Botanical Garden",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Blue",
+      "Magenta"
+    ],
+    "sequence_index": 41,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-42",
+    "station_name": "Golf Course",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 42,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-43",
+    "station_name": "Noida City Centre",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 43,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-44",
+    "station_name": "Noida Sector 62",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 44,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-B-45",
+    "station_name": "Noida Electronic City",
+    "line_color": "Blue",
+    "line_number": 3,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Blue"
+    ],
+    "sequence_index": 45,
+    "terminal_mappings": {
+      "start": "Dwarka Sector 21",
+      "end": "Noida Electronic City"
+    }
+  },
+  {
+    "station_id": "STN-G-01",
+    "station_name": "Inderlok",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Green",
+      "Red"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-02",
+    "station_name": "Ashok Park Main",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-03",
+    "station_name": "Punjabi Bagh",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Green",
+      "Pink"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-04",
+    "station_name": "Shivaji Park",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-05",
+    "station_name": "Madipur",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 5,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-06",
+    "station_name": "Paschim Vihar East",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 6,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-07",
+    "station_name": "Paschim Vihar West",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 7,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-08",
+    "station_name": "Peera Garhi",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 8,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-09",
+    "station_name": "Udyog Nagar",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 9,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-10",
+    "station_name": "Surajmal Stadium",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 10,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-11",
+    "station_name": "Nangloi",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 11,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-12",
+    "station_name": "Nangloi Railway Station",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 12,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-13",
+    "station_name": "Rajdhani Park",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 13,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-14",
+    "station_name": "Mundka",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 14,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-15",
+    "station_name": "Mundka Industrial Area",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 15,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-16",
+    "station_name": "Ghevra Metro Station",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 16,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-17",
+    "station_name": "Tikri Kalan",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 17,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-18",
+    "station_name": "Tikri Border",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 18,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-19",
+    "station_name": "Pandit Shree Ram Sharma",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 19,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-20",
+    "station_name": "Bahadurgarh City",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 20,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-G-21",
+    "station_name": "Brigadier Hoshiyar Singh",
+    "line_color": "Green",
+    "line_number": 5,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Green"
+    ],
+    "sequence_index": 21,
+    "terminal_mappings": {
+      "start": "Inderlok",
+      "end": "Brigadier Hoshiyar Singh"
+    }
+  },
+  {
+    "station_id": "STN-V-01",
+    "station_name": "Kashmere Gate",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Violet",
+      "Red",
+      "Yellow"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-02",
+    "station_name": "Lal Qila",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-03",
+    "station_name": "Jama Masjid",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-04",
+    "station_name": "Delhi Gate",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-05",
+    "station_name": "ITO",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 5,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-06",
+    "station_name": "Mandi House",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Violet",
+      "Blue"
+    ],
+    "sequence_index": 6,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-07",
+    "station_name": "Janpath",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 7,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-08",
+    "station_name": "Central Secretariat",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Violet",
+      "Yellow"
+    ],
+    "sequence_index": 8,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-09",
+    "station_name": "Khan Market",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 9,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-10",
+    "station_name": "JLN Stadium",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 10,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-11",
+    "station_name": "Jangpura",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 11,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-12",
+    "station_name": "Lajpat Nagar",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Violet",
+      "Pink"
+    ],
+    "sequence_index": 12,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-13",
+    "station_name": "Moolchand",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 13,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-14",
+    "station_name": "Kailash Colony",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 14,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-15",
+    "station_name": "Nehru Place",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 15,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-16",
+    "station_name": "Kalkaji Mandir",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Violet",
+      "Magenta"
+    ],
+    "sequence_index": 16,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-17",
+    "station_name": "Govind Puri",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 17,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-18",
+    "station_name": "Harkesh Nagar Okhla",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 18,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-19",
+    "station_name": "Jasola Apollo",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 19,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-20",
+    "station_name": "Sarita Vihar",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 20,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-21",
+    "station_name": "Mohan Estate",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 21,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-22",
+    "station_name": "Tughlakabad Station",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 22,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-23",
+    "station_name": "Badarpur Border",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 23,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-24",
+    "station_name": "Sarai",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 24,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-25",
+    "station_name": "NHPC Chowk",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 25,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-26",
+    "station_name": "Mewala Maharajpur",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 26,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-27",
+    "station_name": "Sector 28",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 27,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-28",
+    "station_name": "Badkal Mor",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 28,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-29",
+    "station_name": "Old Faridabad",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 29,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-30",
+    "station_name": "Neelam Chowk Ajronda",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 30,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-31",
+    "station_name": "Bata Chowk",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 31,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-32",
+    "station_name": "Escorts Mujesar",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 32,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-V-33",
+    "station_name": "Raja Nahar Singh Ballabhgarh",
+    "line_color": "Violet",
+    "line_number": 6,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Violet"
+    ],
+    "sequence_index": 33,
+    "terminal_mappings": {
+      "start": "Kashmere Gate",
+      "end": "Raja Nahar Singh (Ballabhgarh)"
+    }
+  },
+  {
+    "station_id": "STN-P-01",
+    "station_name": "Majlis Park",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-02",
+    "station_name": "Azadpur",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Yellow"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-03",
+    "station_name": "Shalimar Bagh",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-04",
+    "station_name": "Netaji Subhash Place",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Red"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-05",
+    "station_name": "Shakurpur",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 5,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-06",
+    "station_name": "Punjabi Bagh West",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Green"
+    ],
+    "sequence_index": 6,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-07",
+    "station_name": "ESI-Basaidarapur",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 7,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-08",
+    "station_name": "Rajouri Garden",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Blue"
+    ],
+    "sequence_index": 8,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-09",
+    "station_name": "Mayapuri",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 9,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-10",
+    "station_name": "Naraina Vihar",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 10,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-11",
+    "station_name": "Delhi Cantt",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 11,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-12",
+    "station_name": "Durgabai Deshmukh South Campus",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Airport Express"
+    ],
+    "sequence_index": 12,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-13",
+    "station_name": "Sir M. Visvesvaraya Moti Bagh",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 13,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-14",
+    "station_name": "Bhikaji Cama Place",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 14,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-15",
+    "station_name": "Sarojini Nagar",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 15,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-16",
+    "station_name": "Dilli Haat INA",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Yellow"
+    ],
+    "sequence_index": 16,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-17",
+    "station_name": "South Extension",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 17,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-18",
+    "station_name": "Lajpat Nagar",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Violet"
+    ],
+    "sequence_index": 18,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-19",
+    "station_name": "Vinobapuri",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 19,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-20",
+    "station_name": "Hazrat Nizamuddin",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 20,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-21",
+    "station_name": "Mayur Vihar Phase 1",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Blue"
+    ],
+    "sequence_index": 21,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-22",
+    "station_name": "Mayur Vihar Pocket 1",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 22,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-23",
+    "station_name": "Trilokpuri Sanjay Lake",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 23,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-24",
+    "station_name": "East Vinod Nagar - Mayur Vihar-II",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 24,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-25",
+    "station_name": "Mandawali - West Vinod Nagar",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 25,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-26",
+    "station_name": "IP Extension",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 26,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-27",
+    "station_name": "Anand Vihar ISBT",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Blue"
+    ],
+    "sequence_index": 27,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-28",
+    "station_name": "Karkarduma",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Blue"
+    ],
+    "sequence_index": 28,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-29",
+    "station_name": "Karkarduma Court",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 29,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-30",
+    "station_name": "Krishna Nagar",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 30,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-31",
+    "station_name": "East Azad Nagar",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 31,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-32",
+    "station_name": "Welcome",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Pink",
+      "Red"
+    ],
+    "sequence_index": 32,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-33",
+    "station_name": "Jaffrabad",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 33,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-34",
+    "station_name": "Maujpur-Babarpur",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 34,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-35",
+    "station_name": "Gokulpuri",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 35,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-36",
+    "station_name": "Johri Enclave",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 36,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-P-37",
+    "station_name": "Shiv Vihar",
+    "line_color": "Pink",
+    "line_number": 7,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Pink"
+    ],
+    "sequence_index": 37,
+    "terminal_mappings": {
+      "start": "Majlis Park",
+      "end": "Shiv Vihar"
+    }
+  },
+  {
+    "station_id": "STN-M-01",
+    "station_name": "Janakpuri West",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Magenta",
+      "Blue"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-02",
+    "station_name": "Dabri Mor - Janakpuri South",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-03",
+    "station_name": "Dashrath Puri",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-04",
+    "station_name": "Palam",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-05",
+    "station_name": "Sadar Bazar Cantonment",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 5,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-06",
+    "station_name": "Terminal 1-IGI Airport",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 6,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-07",
+    "station_name": "Shankar Vihar",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 7,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-08",
+    "station_name": "Vasant Vihar",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 8,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-09",
+    "station_name": "Munirka",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 9,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-10",
+    "station_name": "R.K. Puram",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 10,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-11",
+    "station_name": "IIT Delhi",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 11,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-12",
+    "station_name": "Hauz Khas",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Magenta",
+      "Yellow"
+    ],
+    "sequence_index": 12,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-13",
+    "station_name": "Panchsheel Park",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 13,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-14",
+    "station_name": "Chirag Delhi",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 14,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-15",
+    "station_name": "Greater Kailash",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 15,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-16",
+    "station_name": "Nehru Enclave",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 16,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-17",
+    "station_name": "Kalkaji Mandir",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Magenta",
+      "Violet"
+    ],
+    "sequence_index": 17,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-18",
+    "station_name": "Okhla NSIC",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 18,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-19",
+    "station_name": "Sukhdev Vihar",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 19,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-20",
+    "station_name": "Jamia Millia Islamia",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 20,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-21",
+    "station_name": "Okhla Vihar",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 21,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-22",
+    "station_name": "Jasola Vihar Shaheen Bagh",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 22,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-23",
+    "station_name": "Kalindi Kunj",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 23,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-24",
+    "station_name": "Okhla Bird Sanctuary",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Magenta"
+    ],
+    "sequence_index": 24,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-M-25",
+    "station_name": "Botanical Garden",
+    "line_color": "Magenta",
+    "line_number": 8,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Magenta",
+      "Blue"
+    ],
+    "sequence_index": 25,
+    "terminal_mappings": {
+      "start": "Janakpuri West",
+      "end": "Botanical Garden"
+    }
+  },
+  {
+    "station_id": "STN-G-01",
+    "station_name": "Dwarka",
+    "line_color": "Grey",
+    "line_number": 9,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Grey",
+      "Blue"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "Dwarka",
+      "end": "Dhansa Bus Stand"
+    }
+  },
+  {
+    "station_id": "STN-G-02",
+    "station_name": "Nangli",
+    "line_color": "Grey",
+    "line_number": 9,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Grey"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "Dwarka",
+      "end": "Dhansa Bus Stand"
+    }
+  },
+  {
+    "station_id": "STN-G-03",
+    "station_name": "Najafgarh",
+    "line_color": "Grey",
+    "line_number": 9,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Grey"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "Dwarka",
+      "end": "Dhansa Bus Stand"
+    }
+  },
+  {
+    "station_id": "STN-G-04",
+    "station_name": "Dhansa Bus Stand",
+    "line_color": "Grey",
+    "line_number": 9,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Grey"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "Dwarka",
+      "end": "Dhansa Bus Stand"
+    }
+  },
+  {
+    "station_id": "STN-O-01",
+    "station_name": "New Delhi",
+    "line_color": "Orange",
+    "line_number": 10,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Airport Express",
+      "Yellow"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "New Delhi Railway Station",
+      "end": "Dwarka Sector 21"
+    }
+  },
+  {
+    "station_id": "STN-O-02",
+    "station_name": "Shivaji Stadium",
+    "line_color": "Orange",
+    "line_number": 10,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Orange"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "New Delhi Railway Station",
+      "end": "Dwarka Sector 21"
+    }
+  },
+  {
+    "station_id": "STN-O-03",
+    "station_name": "Dhaula Kuan",
+    "line_color": "Orange",
+    "line_number": 10,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Airport Express",
+      "Pink"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "New Delhi Railway Station",
+      "end": "Dwarka Sector 21"
+    }
+  },
+  {
+    "station_id": "STN-O-04",
+    "station_name": "Delhi Aerocity",
+    "line_color": "Orange",
+    "line_number": 10,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Orange"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "New Delhi Railway Station",
+      "end": "Dwarka Sector 21"
+    }
+  },
+  {
+    "station_id": "STN-O-05",
+    "station_name": "IGI Airport T3 Terminal",
+    "line_color": "Orange",
+    "line_number": 10,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Orange"
+    ],
+    "sequence_index": 5,
+    "terminal_mappings": {
+      "start": "New Delhi Railway Station",
+      "end": "Dwarka Sector 21"
+    }
+  },
+  {
+    "station_id": "STN-O-06",
+    "station_name": "Dwarka Sector 21",
+    "line_color": "Orange",
+    "line_number": 10,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Airport Express",
+      "Blue"
+    ],
+    "sequence_index": 6,
+    "terminal_mappings": {
+      "start": "New Delhi Railway Station",
+      "end": "Dwarka Sector 21"
+    }
+  },
+  {
+    "station_id": "STN-A-01",
+    "station_name": "Noida Sector 51",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": true,
+    "interchange_lines": [
+      "Aqua",
+      "Blue Sector 52"
+    ],
+    "sequence_index": 1,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-02",
+    "station_name": "Noida Sector 50",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 2,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-03",
+    "station_name": "Noida Sector 76",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 3,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-04",
+    "station_name": "Noida Sector 101",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 4,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-05",
+    "station_name": "Noida Sector 81",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 5,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-06",
+    "station_name": "NSEZ",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 6,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-07",
+    "station_name": "Noida Sector 83",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 7,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-08",
+    "station_name": "Noida Sector 137",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 8,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-09",
+    "station_name": "Noida Sector 142",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 9,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-10",
+    "station_name": "Knowledge Park II",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 10,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-11",
+    "station_name": "Pari Chowk Greater Noida",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 11,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  },
+  {
+    "station_id": "STN-A-12",
+    "station_name": "Depot Station",
+    "line_color": "Aqua (NMRC)",
+    "line_number": 11,
+    "is_interchange": false,
+    "interchange_lines": [
+      "Aqua (NMRC)"
+    ],
+    "sequence_index": 12,
+    "terminal_mappings": {
+      "start": "Noida Sector 51",
+      "end": "Depot Station"
+    }
+  }
+]

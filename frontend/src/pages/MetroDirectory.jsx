@@ -80,7 +80,7 @@ export default function MetroDirectory() {
 
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-[#4A362B]">
             <div className="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
-              <div className="text-2xl font-black text-[#D98A5B]">{isDelhi ? "286+" : "11"}</div>
+              <div className="text-2xl font-black text-[#D98A5B]">{isDelhi ? `${RAW_DELHI_METRO_STATIONS.length}` : "11"}</div>
               <div className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66] mt-1">Active Stations</div>
             </div>
             <div className="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
@@ -101,7 +101,7 @@ export default function MetroDirectory() {
         {/* Delhi Metro Lines Showcase */}
         {isDelhi && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-marcellus text-[#2C1E18]">DMRC Active Corridors</h2>
+            <h2 className="text-2xl font-marcellus text-[#2C1E18]">DMRC Active Corridors ({DELHI_METRO_LINES.length} Lines)</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {DELHI_METRO_LINES.map((line, idx) => (
                 <div key={idx} className="bg-white rounded-3xl border border-[#E6D6C3] p-6 shadow-md space-y-4">
@@ -111,17 +111,17 @@ export default function MetroDirectory() {
                       <h3 className="text-xl font-bold text-[#2C1E18]">{line.name}</h3>
                     </div>
                     <span className="px-3 py-1 rounded-xl bg-[#FAF5EF] text-xs font-bold text-[#543C32] border border-[#E6D6C3]">
-                      Wait: {line.averageWaitTime} min
+                      {line.stations.length} Stations • {line.averageWaitTime}m freq
                     </span>
                   </div>
                   <p className="text-xs text-[#543C32] font-semibold">
-                    ⏱️ Hours: {line.firstTrain} AM - {line.lastTrain} PM
+                    ⏱️ Hours: {line.firstTrain} - {line.lastTrain} | 🚉 Terminals: {line.terminals.start} ⇄ {line.terminals.end}
                   </p>
                   <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66]">Key Interchange Stations:</span>
-                    <div className="mt-2 flex flex-wrap gap-1.5">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66]">Station Sequence &amp; Interchanges:</span>
+                    <div className="mt-2 flex flex-wrap gap-1.5 max-h-48 overflow-y-auto pr-1">
                       {line.stations.map((st, sIdx) => (
-                        <span key={sIdx} className={`text-xs font-bold px-3 py-1 rounded-xl border ${st.interchange ? 'bg-amber-50 text-amber-900 border-amber-300' : 'bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3]'}`}>
+                        <span key={sIdx} className={`text-xs font-bold px-2.5 py-1 rounded-xl border transition ${st.interchange ? 'bg-amber-100 text-amber-950 border-amber-400 shadow-xs' : 'bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3]'}`}>
                           {st.name} {st.interchange && '🔄'}
                         </span>
                       ))}
