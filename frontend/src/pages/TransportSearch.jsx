@@ -13,7 +13,7 @@ import BusRouteTimeline from "../components/BusRouteTimeline";
 import TransportRouteMap from "../components/TransportRouteMap";
 import { getNearestMetroStation } from "../data/jaipurTransitChecker";
 import { calculateUniversalRoute } from "../data/jaipurUniversalTransitEngine";
-import { getCityRouteResult } from "../data/cityResolver";
+import { getCityRouteResult, getCityRouteResultAsync } from "../data/cityResolver";
 import { getGoogleMapsTransitUrl } from "../data/googleMapsLiveTransitEngine";
 import { CityContext } from "../context/CityContext";
 import SEOHead from "../components/SEOHead";
@@ -174,7 +174,7 @@ export default function TransportSearch() {
 
     // DELHI CITY ROUTE RESOLUTION
     if (isDelhi) {
-      const routeRes = getCityRouteResult(finalSource, finalDest, "delhi");
+      const routeRes = await getCityRouteResultAsync(finalSource, finalDest, "delhi");
       const distKm = routeRes?.distanceKm || 8;
       const recommendations = [];
 

@@ -17,7 +17,7 @@ export function getHaversineKm(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-// Landmark spatial coordinates dictionary fallback for NCR
+// Known spatial coordinates for Delhi NCR landmarks
 const LOCAL_NCR_LANDMARKS = {
   "dlf camellias": { lat: 28.4520, lng: 77.0980, name: "DLF Camellias Golf Course Road Gurugram" },
   "dlf cyber hub": { lat: 28.4950, lng: 77.0895, name: "DLF Cyber Hub Gurugram" },
@@ -45,25 +45,25 @@ const LOCAL_NCR_LANDMARKS = {
   "akshardham": { lat: 28.6127, lng: 77.2773, name: "Swaminarayan Akshardham Temple" }
 };
 
-// OpenStreetMap Nominatim Geocoding API with NCR viewbox bounding box (76.8, 28.4, 77.5, 28.9)
+// OpenStreetMap Nominatim Geocoding API with NCR viewbox bounding box
 export async function geocodeNominatimNCR(queryText) {
   if (!queryText) return { name: "Delhi Center", lat: 28.6315, lng: 77.2167 };
   const q = queryText.toLowerCase().trim();
 
-  // Check local dictionary
+  // 1. Local landmark match
   for (const [key, val] of Object.entries(LOCAL_NCR_LANDMARKS)) {
     if (q.includes(key) || key.includes(q)) {
       return { name: val.name, lat: val.lat, lng: val.lng };
     }
   }
 
-  // Check DELHI_PLACES
+  // 2. DELHI_PLACES match
   const placeMatch = DELHI_PLACES.find(p => p.name.toLowerCase().includes(q) || q.includes(p.name.toLowerCase()));
   if (placeMatch) {
     return { name: placeMatch.name, lat: placeMatch.lat, lng: placeMatch.lng };
   }
 
-  // Fetch OpenStreetMap Nominatim API bounded to NCR
+  // 3. OpenStreetMap Nominatim API call bounded to NCR
   try {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(queryText)}&viewbox=76.8,28.4,77.5,28.9&bounded=1`;
     const res = await fetch(url, { headers: { "User-Agent": "SheherSaathi-DelhiTransit/1.0" } });
@@ -92,7 +92,6 @@ export function findNearestMetroStationByCoords(targetLat, targetLng) {
   let minDistance = Infinity;
 
   RAW_DELHI_METRO_STATIONS.forEach(st => {
-    // Map sequence index to spatial lat/lng bounds for line corridors
     const stLat = st.lat || 28.6315 + ((st.line_number * 3 + st.sequence_index) % 30 - 15) * 0.008;
     const stLng = st.lng || 77.2167 + ((st.line_number * 5 + st.sequence_index) % 30 - 15) * 0.008;
     
@@ -109,19 +108,7 @@ export function findNearestMetroStationByCoords(targetLat, targetLng) {
   };
 }
 
-export function resolveDelhiRealRoute(originName, destName) {
-  const origKey = (originName || "").toLowerCase().trim();
-  const destKey = (destName || "").toLowerCase().trim();
-
-  // Lookup spatial coordinates
-  let origGeo = { name: originName || "Delhi Center", lat: 28.6315, lng: 77.2167 };
-  let destGeo = { name: destName || "South Delhi Hub", lat: 28.5245, lng: 77.1855 };
-
-  for (const [key, val] of Object.entries(LOCAL_NCR_LANDMARKS)) {
-    if (origKey.includes(key) || key.includes(origKey)) origGeo = { name: val.name, lat: val.lat, lng: val.lng };
-    if (destKey.includes(key) || key.includes(destKey)) destGeo = { name: val.name, lat: val.lat, lng: val.lng };
-  }
-
+export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   const directKm = getHaversineKm(origGeo.lat, origGeo.lng, destGeo.lat, destGeo.lng);
   const roadKm = Math.max(1.5, Math.round((directKm * 1.35) * 10) / 10);
   const driveTimeMins = Math.max(10, Math.round(roadKm * 2.2));
@@ -171,9 +158,11 @@ export function resolveDelhiRealRoute(originName, destName) {
     : { type: "auto", title: `🛺 Take E-Rickshaw / Auto ${lastMileDistKm} km (${Math.round(lastMileDistKm * 4)} mins) to ${destGeo.name}`, duration: `${Math.round(lastMileDistKm * 4)} min`, cost: "₹30" };
 
   // Dynamic DTC Bus Route matching from raw_delhi_routes.json (1,653 objects)
+  const qOrig = origGeo.name.toLowerCase();
+  const qDest = destGeo.name.toLowerCase();
   let matchedBus = DTC_BUS_ROUTES.find(r => 
-    (r.stops || []).some(s => s.toLowerCase().includes(origKey) || origKey.includes(s.toLowerCase())) &&
-    (r.stops || []).some(s => s.toLowerCase().includes(destKey) || destKey.includes(s.toLowerCase()))
+    (r.stops || []).some(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase())) &&
+    (r.stops || []).some(s => s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase()))
   ) || DTC_BUS_ROUTES[0];
 
   const metroSteps = [
@@ -223,4 +212,25 @@ export function resolveDelhiRealRoute(originName, destName) {
     },
     steps: metroSteps
   };
+}
+
+export async function resolveDelhiRealRouteAsync(originName, destName) {
+  const origGeo = await geocodeNominatimNCR(originName);
+  const destGeo = await geocodeNominatimNCR(destName);
+  return resolveDelhiRouteWithCoords(origGeo, destGeo);
+}
+
+export function resolveDelhiRealRoute(originName, destName) {
+  const origKey = (originName || "").toLowerCase().trim();
+  const destKey = (destName || "").toLowerCase().trim();
+
+  let origGeo = { name: originName || "Delhi Center", lat: 28.6315, lng: 77.2167 };
+  let destGeo = { name: destName || "South Delhi Hub", lat: 28.5245, lng: 77.1855 };
+
+  for (const [key, val] of Object.entries(LOCAL_NCR_LANDMARKS)) {
+    if (origKey.includes(key) || key.includes(origKey)) origGeo = { name: val.name, lat: val.lat, lng: val.lng };
+    if (destKey.includes(key) || key.includes(destKey)) destGeo = { name: val.name, lat: val.lat, lng: val.lng };
+  }
+
+  return resolveDelhiRouteWithCoords(origGeo, destGeo);
 }
