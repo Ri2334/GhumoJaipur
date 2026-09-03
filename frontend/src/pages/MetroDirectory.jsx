@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import { jaipurMetroStations } from "../data/jaipurMetroData";
 import { DELHI_METRO_LINES, RAW_DELHI_METRO_STATIONS } from "../data/delhiMetroData";
 import { CityContext } from "../context/CityContext";
@@ -48,12 +48,31 @@ class ErrorBoundary extends React.Component {
 
 function MetroDirectoryContent() {
   const { currentCity, cityDetails } = useContext(CityContext);
-  const [selectedStation, setSelectedStation] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const isDelhi = currentCity === "delhi";
   const isUdaipur = currentCity === "udaipur";
   const rawStationsCount = (RAW_DELHI_METRO_STATIONS || []).length;
   const metroLinesList = DELHI_METRO_LINES || [];
+
+  // Case-insensitive fuzzy search across DMRC Metro lines & stations
+  const filteredMetroLines = useMemo(() => {
+    if (!searchQuery.trim()) return metroLinesList;
+    const q = searchQuery.toLowerCase().trim();
+    return metroLinesList.filter((line) => {
+      const lineName = (line.name || "").toLowerCase();
+      const stations = line.stations || [];
+      return lineName.includes(q) || stations.some((st) => (st.name || "").toLowerCase().includes(q));
+    });
+  }, [metroLinesList, searchQuery]);
+
+  const filteredJaipurStations = useMemo(() => {
+    if (!searchQuery.trim()) return jaipurMetroStations || [];
+    const q = searchQuery.toLowerCase().trim();
+    return (jaipurMetroStations || []).filter(st => 
+      (st.name || "").toLowerCase().includes(q) || (st.code || "").toLowerCase().includes(q)
+    );
+  }, [searchQuery]);
 
   if (isUdaipur) {
     return (
@@ -140,12 +159,35 @@ function MetroDirectoryContent() {
           </div>
         </div>
 
+        {/* Search & Filter Input Bar */}
+        <div className="bg-white rounded-3xl p-6 border border-[#E6D6C3] shadow-lg">
+          <div className="relative">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={`Search Metro Station (e.g. Rajiv Chowk, Hauz Khas, Dwarka, Kashmere Gate, AIIMS, Mandi House)...`}
+              className="w-full pl-12 pr-4 py-4 rounded-2xl border border-[#E6D6C3] bg-[#FAF5EF] text-[#2C1E18] font-medium shadow-inner outline-none focus:border-[#B35D38]"
+            />
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A37B66] text-lg">🔍</span>
+          </div>
+        </div>
+
         {/* Delhi Metro Lines Showcase */}
         {isDelhi && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-marcellus text-[#2C1E18]">DMRC Active Corridors ({metroLinesList.length} Lines)</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-marcellus text-[#2C1E18]">
+                DMRC Active Corridors ({filteredMetroLines.length} Lines)
+              </h2>
+              {searchQuery.trim() && (
+                <span className="text-xs font-bold text-[#A37B66]">
+                  Filtered by &quot;{searchQuery}&quot;
+                </span>
+              )}
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {metroLinesList.map((line, idx) => (
+              {filteredMetroLines.map((line, idx) => (
                 <div key={idx} className="bg-white rounded-3xl border border-[#E6D6C3] p-6 shadow-md space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -164,18 +206,24 @@ function MetroDirectoryContent() {
                       Station Sequence &amp; Interchanges ({(line.stations || []).length}):
                     </span>
                     <div className="mt-2 flex flex-wrap gap-1 max-h-44 overflow-y-auto pr-1">
-                      {(line.stations || []).map((st, sIdx) => (
-                        <span
-                          key={sIdx}
-                          className={`text-[11px] font-semibold px-2 py-0.5 rounded-lg border transition ${
-                            st?.interchange
-                              ? 'bg-amber-100 text-amber-950 border-amber-400 font-bold ring-1 ring-amber-300/60 shadow-xs'
-                              : 'bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3]'
-                          }`}
-                        >
-                          {st?.name} {st?.interchange && '🔄'}
-                        </span>
-                      ))}
+                      {(line.stations || []).map((st, sIdx) => {
+                        const q = searchQuery.trim().toLowerCase();
+                        const isMatch = q.length > 0 && (st?.name || "").toLowerCase().includes(q);
+                        return (
+                          <span
+                            key={sIdx}
+                            className={`text-[11px] font-semibold px-2 py-0.5 rounded-lg border transition ${
+                              isMatch
+                                ? 'bg-amber-200 text-amber-950 border-amber-500 font-black ring-2 ring-amber-400 shadow-md'
+                                : st?.interchange
+                                ? 'bg-amber-100 text-amber-950 border-amber-400 font-bold ring-1 ring-amber-300/60 shadow-xs'
+                                : 'bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3]'
+                            }`}
+                          >
+                            {isMatch ? `📍 ${st?.name}` : st?.name} {st?.interchange && '🔄'}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -187,7 +235,7 @@ function MetroDirectoryContent() {
         {/* Jaipur Metro Stations Showcase */}
         {!isDelhi && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {(jaipurMetroStations || []).map((st, idx) => (
+            {filteredJaipurStations.map((st, idx) => (
               <div key={idx} className="bg-white rounded-3xl border border-[#E6D6C3] p-6 shadow-md space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="px-3 py-1 rounded-xl bg-[#B35D38] text-white text-xs font-black">
