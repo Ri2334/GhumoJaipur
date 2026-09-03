@@ -5,6 +5,8 @@ import { jaipur140Places } from "../data/jaipur140Places";
 import { jaipurMetroLines, jaipurMetroStations } from "../data/jaipurMetroData";
 import { jaipurBusStops } from "../data/jaipurBusStops";
 import { UDAIPUR_PLACES } from "../data/udaipurPlacesData";
+import { DELHI_PLACES } from "../data/delhiPlacesData";
+import { DELHI_METRO_LINES } from "../data/delhiMetroData";
 import TransportCard from "../components/TransportCard";
 import RouteTimeline from "../components/RouteTimeline";
 import BusRouteTimeline from "../components/BusRouteTimeline";
@@ -59,6 +61,7 @@ export default function TransportSearch() {
   const [activeTimeline, setActiveTimeline] = useState("bus");
 
   const isUdaipur = currentCity === "udaipur";
+  const isDelhi = currentCity === "delhi";
 
   useEffect(() => {
     setSource(cityDetails.defaultSource);
@@ -67,6 +70,22 @@ export default function TransportSearch() {
 
   // COMBINE ALL METRO STATIONS, BUS STOPS, AND HERITAGE PLACES FOR 100% SEARCH ACCURACY
   const allSearchableLocations = useMemo(() => {
+    if (isDelhi) {
+      return [
+        ...DELHI_PLACES.map(p => ({
+          id: `delhi-place-${p._id || p.id}`,
+          name: p.name,
+          subtitle: `${p.category} • Delhi`,
+          kind: "place",
+          searchStr: `${p.name} ${p.category} Delhi ${p.location || ''}`.toLowerCase()
+        })),
+        { id: "dl-hub-1", name: "New Delhi Railway Station (NDLS)", subtitle: "Railway Hub • Delhi", kind: "hub", searchStr: "ndls new delhi railway station" },
+        { id: "dl-hub-2", name: "ISBT Kashmere Gate", subtitle: "Interstate Bus Terminal", kind: "hub", searchStr: "kashmere gate isbt bus stand" },
+        { id: "dl-hub-3", name: "Indira Gandhi International Airport (IGI T3)", subtitle: "Airport Terminal", kind: "hub", searchStr: "igi airport t3 terminal palam" },
+        { id: "dl-hub-4", name: "Rajiv Chowk (Connaught Place)", subtitle: "DMRC Central Interchange", kind: "hub", searchStr: "rajiv chowk connaught place cp" }
+      ];
+    }
+
     if (isUdaipur) {
       return [
         ...UDAIPUR_PLACES.map(p => ({
@@ -79,9 +98,7 @@ export default function TransportSearch() {
         { id: "ud-hub-1", name: "Udaipur City Railway Station", subtitle: "Railway Hub • Udaipur", kind: "hub", searchStr: "udaipur railway station junction" },
         { id: "ud-hub-2", name: "Udiapole Central Bus Stand", subtitle: "Interstate Bus Terminal", kind: "hub", searchStr: "udiapol bus stand terminal" },
         { id: "ud-hub-3", name: "Maharana Pratap Dabok Airport", subtitle: "Airport Terminal", kind: "hub", searchStr: "dabok airport udaipur" },
-        { id: "ud-hub-4", name: "Chetak Circle", subtitle: "Central Transit Hub", kind: "hub", searchStr: "chetak circle" },
-        { id: "ud-hub-5", name: "Lal Ghat Jetty (Lake Pichola)", subtitle: "Ferry Boarding Jetty", kind: "hub", searchStr: "lal ghat lake pichola boat" },
-        { id: "ud-hub-6", name: "Doodh Talai Ropeway Base", subtitle: "Karni Mata Cable Car", kind: "hub", searchStr: "doodh talai ropeway karni mata" }
+        { id: "ud-hub-4", name: "Chetak Circle", subtitle: "Central Transit Hub", kind: "hub", searchStr: "chetak circle" }
       ];
     }
 
@@ -116,7 +133,7 @@ export default function TransportSearch() {
         searchStr: `${b.name} bus stop jctsl`.toLowerCase()
       }))
     ];
-  }, [isUdaipur]);
+  }, [isDelhi, isUdaipur]);
 
   const suggestions = useMemo(() => {
     const query = (activeField === "destination" ? destination : source || "").trim().toLowerCase();
@@ -155,12 +172,85 @@ export default function TransportSearch() {
     setSuggestionsVisible(false);
     setError(null);
 
+    // DELHI CITY ROUTE RESOLUTION
+    if (isDelhi) {
+      const routeRes = getCityRouteResult(finalSource, finalDest, "delhi");
+      const distKm = routeRes?.distanceKm || 8;
+      const recommendations = [];
+
+      const metroFare = Math.min(60, Math.max(10, Math.round(distKm * 2.5)));
+      const dtcBusFare = Math.min(25, Math.max(5, Math.round(distKm * 1.2)));
+      const autoCabFare = Math.min(350, Math.max(80, Math.round(distKm * 18 + 25)));
+
+      if (routeRes.hasValidMetro) {
+        recommendations.push({
+          mode: "DMRC Metro",
+          fare: `₹${metroFare}`,
+          time: `${routeRes.totalTimeMins} mins`,
+          badge: "best",
+          note: `DMRC ${routeRes.sourceMetroName} to ${routeRes.destMetroName}`
+        });
+      }
+
+      recommendations.push({
+        mode: "DTC Bus",
+        fare: `₹${dtcBusFare}`,
+        time: `${routeRes.totalTimeMins + 5} mins`,
+        badge: "cheapest",
+        note: routeRes.busRoute?.routeName || `DTC AC Electric Bus`
+      });
+
+      recommendations.push({
+        mode: "Auto / Cab",
+        fare: `₹${autoCabFare}`,
+        time: `${Math.max(10, routeRes.totalTimeMins - 5)} mins`,
+        badge: "fastest",
+        note: `Doorstep AC Sedan Cab / Auto via Ring Road`
+      });
+
+      setResult({
+        route: { distanceKm: distKm },
+        currentTime: new Date().toISOString(),
+        univRoute: routeRes,
+        metroRoute: routeRes.hasValidMetro ? {
+          stationSequence: routeRes.metroSequence || [
+            { name: routeRes.sourceMetroName, area: "Boarding DMRC Station" },
+            { name: "Rajiv Chowk (Interchange)", area: "DMRC Transfer Hub" },
+            { name: routeRes.destMetroName, area: "Destination DMRC Station" }
+          ],
+          sourceStation: { name: routeRes.sourceMetroName },
+          destinationStation: { name: routeRes.destMetroName },
+          fare: metroFare,
+          travelTimeMinutes: routeRes.totalTimeMins,
+          waitingTimeMinutes: 3
+        } : null,
+        busRoute: routeRes.busRoute || {
+          type: 'direct',
+          transfers: 0,
+          busNumber: "Route 419",
+          routeNumber: "Route 419",
+          fare: `₹${dtcBusFare}`,
+          estimatedTimeMinutes: routeRes.totalTimeMins + 5,
+          boardStop: finalSource,
+          alightStop: finalDest
+        },
+        map: {
+          source: routeRes.sourceCoords || { latitude: 28.6315, longitude: 77.2167 },
+          destination: routeRes.destCoords || { latitude: 28.5245, longitude: 77.1855 }
+        },
+        recommendations: recommendations
+      });
+      setActiveTimeline(routeRes.hasValidMetro ? "metro" : "bus");
+      setLoading(false);
+      return;
+    }
+
+    // UDAIPUR CITY ROUTE RESOLUTION
     if (isUdaipur) {
       const routeRes = getCityRouteResult(finalSource, finalDest, "udaipur");
       const distKm = routeRes?.distanceKm || 6;
       const recommendations = [];
 
-      // Option 1: Multi-Modal Transit (Bus / Shuttle / Ferry)
       recommendations.push({
         mode: routeRes?.mode?.includes("Shuttle") ? "Forest Shuttle + Bus" : routeRes?.mode?.includes("Ferry") ? "Boat Ferry" : "UCTSL Electric Bus",
         fare: routeRes?.totalCost || "₹15 - ₹135",
@@ -169,7 +259,6 @@ export default function TransportSearch() {
         note: routeRes?.summary || `UCTSL City Bus connecting ${finalSource} to ${finalDest}`
       });
 
-      // Option 2: Doorstep Auto / Taxi
       const autoFare = Math.min(380, Math.max(70, Math.round(distKm * 20 + 30)));
       recommendations.push({
         mode: "Auto / Taxi",
@@ -179,7 +268,6 @@ export default function TransportSearch() {
         note: `Direct Doorstep Auto / Taxi via Aravalli corridor`
       });
 
-      // Option 3: Self-Drive Activa 6G / Scooter
       recommendations.push({
         mode: "Self-Drive Activa",
         fare: "₹400 / day",
@@ -193,7 +281,7 @@ export default function TransportSearch() {
         currentTime: new Date().toISOString(),
         univRoute: routeRes,
         busRoute: {
-          busNumber: "DTC / UCTSL Bus",
+          busNumber: "UCTSL Bus",
           routeName: routeRes?.summary || "City Bus Transit",
           type: "direct",
           transfers: 0,
@@ -208,8 +296,8 @@ export default function TransportSearch() {
           }
         },
         map: {
-          source: routeRes?.sourceCoords || { latitude: isUdaipur ? 24.5764 : 28.6315, longitude: isUdaipur ? 73.6835 : 77.2167 },
-          destination: routeRes?.destCoords || { latitude: isUdaipur ? 24.6015 : 28.5245, longitude: isUdaipur ? 73.6735 : 77.1855 }
+          source: routeRes?.sourceCoords || { latitude: 24.5764, longitude: 73.6835 },
+          destination: routeRes?.destCoords || { latitude: 24.6015, longitude: 73.6735 }
         },
         recommendations: recommendations
       });
@@ -493,57 +581,55 @@ export default function TransportSearch() {
               ))}
             </div>
 
-            {/* JAIPUR USP ENGINE: INTERACTIVE LEAFLET MAP & METRO / BUS TIMELINE */}
-            {!isUdaipur && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* JAIPUR / UDAIPUR / DELHI ENGINE: INTERACTIVE LEAFLET MAP & METRO / BUS TIMELINE */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              
+              {/* Left Column: Timeline Selector & Detail View */}
+              <div className="lg:col-span-2 space-y-6">
                 
-                {/* Left Column: Timeline Selector & Detail View */}
-                <div className="lg:col-span-2 space-y-6">
-                  
-                  {/* Timeline Tab Selector */}
-                  <div className="flex items-center gap-2 bg-white p-2 rounded-2xl border border-[#E6D6C3] shadow-md">
-                    {result.metroRoute && (
-                      <button
-                        type="button"
-                        onClick={() => setActiveTimeline("metro")}
-                        className={`flex-1 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 ${
-                          activeTimeline === "metro"
-                            ? "bg-[#B35D38] text-white shadow-md"
-                            : "text-[#2C1E18] hover:bg-[#FAF5EF]"
-                        }`}
-                      >
-                        <span>🚇 Metro Timeline</span>
-                      </button>
-                    )}
+                {/* Timeline Tab Selector */}
+                <div className="flex items-center gap-2 bg-white p-2 rounded-2xl border border-[#E6D6C3] shadow-md">
+                  {result.metroRoute && (
                     <button
                       type="button"
-                      onClick={() => setActiveTimeline("bus")}
+                      onClick={() => setActiveTimeline("metro")}
                       className={`flex-1 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 ${
-                        activeTimeline === "bus" || !result.metroRoute
+                        activeTimeline === "metro"
                           ? "bg-[#B35D38] text-white shadow-md"
                           : "text-[#2C1E18] hover:bg-[#FAF5EF]"
                       }`}
                     >
-                      <span>🚌 {isDelhi ? "DTC Electric Bus Route" : isUdaipur ? "UCTSL Municipal Bus Route" : "JCTSL City Bus Route"}</span>
+                      <span>🚇 {isDelhi ? "DMRC Metro Timeline" : "Metro Timeline"}</span>
                     </button>
-                  </div>
-
-                  {/* Render Selected Timeline */}
-                  {activeTimeline === "metro" && result.metroRoute ? (
-                    <RouteTimeline stations={result.metroRoute.stationSequence} />
-                  ) : (
-                    <BusRouteTimeline busRoute={result.busRoute} />
                   )}
-
+                  <button
+                    type="button"
+                    onClick={() => setActiveTimeline("bus")}
+                    className={`flex-1 py-3 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2 ${
+                      activeTimeline === "bus" || !result.metroRoute
+                        ? "bg-[#B35D38] text-white shadow-md"
+                        : "text-[#2C1E18] hover:bg-[#FAF5EF]"
+                    }`}
+                  >
+                    <span>🚌 {isDelhi ? "DTC Electric Bus Route" : isUdaipur ? "UCTSL Municipal Bus Route" : "JCTSL City Bus Route"}</span>
+                  </button>
                 </div>
 
-                {/* Right Column: Interactive Leaflet Map Container */}
-                <div className="lg:col-span-1 min-h-[400px] bg-white rounded-3xl border border-[#E6D6C3] shadow-xl overflow-hidden relative">
-                  <TransportRouteMap routeData={result} />
-                </div>
+                {/* Render Selected Timeline */}
+                {activeTimeline === "metro" && result.metroRoute ? (
+                  <RouteTimeline stations={result.metroRoute.stationSequence} />
+                ) : (
+                  <BusRouteTimeline busRoute={result.busRoute} />
+                )}
 
               </div>
-            )}
+
+              {/* Right Column: Interactive Leaflet Map Container */}
+              <div className="lg:col-span-1 min-h-[400px] bg-white rounded-3xl border border-[#E6D6C3] shadow-xl overflow-hidden relative">
+                <TransportRouteMap routeData={result} />
+              </div>
+
+            </div>
 
             {/* Udaipur Multi-Modal Step Timeline */}
             {isUdaipur && result.univRoute?.steps && (
