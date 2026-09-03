@@ -174,8 +174,12 @@ export default function TransportSearch() {
 
     // DELHI CITY ROUTE RESOLUTION
     if (isDelhi) {
-      const routeRes = await getCityRouteResultAsync(finalSource, finalDest, "delhi");
-      const distKm = routeRes?.distanceKm || 8;
+      try {
+        const routeRes = await getCityRouteResultAsync(finalSource, finalDest, "delhi");
+        if (!routeRes || !routeRes.hasValidMetro) {
+          throw new Error("Routing engine could not verify location coordinate paths.");
+        }
+        const distKm = routeRes?.distanceKm || 8;
       const recommendations = [];
 
       const metroFare = Math.min(60, Math.max(10, Math.round(distKm * 2.5)));
@@ -243,7 +247,12 @@ export default function TransportSearch() {
       setActiveTimeline(routeRes.hasValidMetro ? "metro" : "bus");
       setLoading(false);
       return;
+    } catch (err) {
+      setError(err.message || "Routing engine could not verify location coordinate paths.");
+      setLoading(false);
+      return;
     }
+  }
 
     // UDAIPUR CITY ROUTE RESOLUTION
     if (isUdaipur) {
