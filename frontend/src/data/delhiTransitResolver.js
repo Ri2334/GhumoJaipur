@@ -22,12 +22,16 @@ export async function geocodeNominatimNCR(queryText) {
   if (!queryText) return { name: "Delhi Center", lat: 28.6315, lng: 77.2167 };
   const q = queryText.toLowerCase().trim();
 
-  // 1. Direct RAW_DELHI_METRO_STATIONS string match
+  // 1. Direct RAW_DELHI_METRO_STATIONS string match with real lat/lng
   const metroMatch = RAW_DELHI_METRO_STATIONS.find(s => 
     s.station_name.toLowerCase() === q || q.includes(s.station_name.toLowerCase())
   );
   if (metroMatch) {
-    return { name: `${metroMatch.station_name} Metro Station`, lat: 28.6315, lng: 77.2167 };
+    return { 
+      name: `${metroMatch.station_name} Metro Station`, 
+      lat: typeof metroMatch.lat === 'number' ? metroMatch.lat : 28.6315, 
+      lng: typeof metroMatch.lng === 'number' ? metroMatch.lng : 77.2167 
+    };
   }
 
   // 2. Direct DELHI_PLACES string match

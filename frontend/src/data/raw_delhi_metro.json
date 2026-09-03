@@ -12,7 +12,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.7208,
+    "lng": 77.1071
   },
   {
     "station_id": "STN-R-02",
@@ -27,7 +29,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.7147,
+    "lng": 77.1152
   },
   {
     "station_id": "STN-R-03",
@@ -42,7 +46,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.7107,
+    "lng": 77.1235
   },
   {
     "station_id": "STN-R-04",
@@ -57,7 +63,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.7032,
+    "lng": 77.1325
   },
   {
     "station_id": "STN-R-05",
@@ -72,7 +80,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.5755,
+    "lng": 77.1767
   },
   {
     "station_id": "STN-R-06",
@@ -88,7 +98,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6957,
+    "lng": 77.1527
   },
   {
     "station_id": "STN-R-07",
@@ -103,7 +115,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.5915,
+    "lng": 77.1927
   },
   {
     "station_id": "STN-R-08",
@@ -119,7 +133,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6732,
+    "lng": 77.1706
   },
   {
     "station_id": "STN-R-09",
@@ -134,7 +150,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6075,
+    "lng": 77.2087
   },
   {
     "station_id": "STN-R-10",
@@ -149,7 +167,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6155,
+    "lng": 77.2167
   },
   {
     "station_id": "STN-R-11",
@@ -164,7 +184,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6235,
+    "lng": 77.2247
   },
   {
     "station_id": "STN-R-12",
@@ -179,7 +201,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6315,
+    "lng": 77.2327
   },
   {
     "station_id": "STN-R-13",
@@ -196,7 +220,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6675,
+    "lng": 77.2283
   },
   {
     "station_id": "STN-R-14",
@@ -211,7 +237,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6475,
+    "lng": 77.2487
   },
   {
     "station_id": "STN-R-15",
@@ -226,7 +254,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6555,
+    "lng": 77.2567
   },
   {
     "station_id": "STN-R-16",
@@ -242,7 +272,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6635,
+    "lng": 77.2647
   },
   {
     "station_id": "STN-R-17",
@@ -257,7 +289,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6715,
+    "lng": 77.2727
   },
   {
     "station_id": "STN-R-18",
@@ -272,7 +306,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6795,
+    "lng": 77.2807
   },
   {
     "station_id": "STN-R-19",
@@ -287,7 +323,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6875,
+    "lng": 77.2887
   },
   {
     "station_id": "STN-R-20",
@@ -302,7 +340,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6955,
+    "lng": 77.2967
   },
   {
     "station_id": "STN-R-21",
@@ -317,7 +357,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.7035,
+    "lng": 77.3047
   },
   {
     "station_id": "STN-R-22",
@@ -332,7 +374,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.7115,
+    "lng": 77.3127
   },
   {
     "station_id": "STN-R-23",
@@ -347,7 +391,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.7195,
+    "lng": 77.3207
   },
   {
     "station_id": "STN-R-24",
@@ -362,7 +408,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.7275,
+    "lng": 77.3287
   },
   {
     "station_id": "STN-R-25",
@@ -377,7 +425,9 @@
     "terminal_mappings": {
       "start": "Rithala",
       "end": "Shaheed Sthal (New Bus Adda)"
-    }
+    },
+    "lat": 28.6738,
+    "lng": 77.4331
   },
   {
     "station_id": "STN-Y-01",
@@ -392,7 +442,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.746,
+    "lng": 77.135
   },
   {
     "station_id": "STN-Y-02",
@@ -407,7 +459,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5755,
+    "lng": 77.1927
   },
   {
     "station_id": "STN-Y-03",
@@ -422,7 +476,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5835,
+    "lng": 77.2007
   },
   {
     "station_id": "STN-Y-04",
@@ -437,7 +493,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.7258,
+    "lng": 77.162
   },
   {
     "station_id": "STN-Y-05",
@@ -452,7 +510,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5995,
+    "lng": 77.2167
   },
   {
     "station_id": "STN-Y-06",
@@ -468,7 +528,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.7073,
+    "lng": 77.1798
   },
   {
     "station_id": "STN-Y-07",
@@ -483,7 +545,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6155,
+    "lng": 77.2327
   },
   {
     "station_id": "STN-Y-08",
@@ -498,7 +562,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6978,
+    "lng": 77.2064
   },
   {
     "station_id": "STN-Y-09",
@@ -513,7 +579,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6946,
+    "lng": 77.214
   },
   {
     "station_id": "STN-Y-10",
@@ -528,7 +596,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6395,
+    "lng": 77.2567
   },
   {
     "station_id": "STN-Y-11",
@@ -545,7 +615,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6675,
+    "lng": 77.2283
   },
   {
     "station_id": "STN-Y-12",
@@ -560,7 +632,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6578,
+    "lng": 77.2302
   },
   {
     "station_id": "STN-Y-13",
@@ -575,7 +649,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6493,
+    "lng": 77.2264
   },
   {
     "station_id": "STN-Y-14",
@@ -591,7 +667,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.643,
+    "lng": 77.2194
   },
   {
     "station_id": "STN-Y-15",
@@ -607,7 +685,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6315,
+    "lng": 77.2167
   },
   {
     "station_id": "STN-Y-16",
@@ -622,7 +702,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6226,
+    "lng": 77.2137
   },
   {
     "station_id": "STN-Y-17",
@@ -638,7 +720,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6147,
+    "lng": 77.2119
   },
   {
     "station_id": "STN-Y-18",
@@ -653,7 +737,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.6115,
+    "lng": 77.2125
   },
   {
     "station_id": "STN-Y-19",
@@ -668,7 +754,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5982,
+    "lng": 77.2104
   },
   {
     "station_id": "STN-Y-20",
@@ -683,7 +771,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5886,
+    "lng": 77.2121
   },
   {
     "station_id": "STN-Y-21",
@@ -699,7 +789,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.7275,
+    "lng": 77.1047
   },
   {
     "station_id": "STN-Y-22",
@@ -714,7 +806,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5672,
+    "lng": 77.21
   },
   {
     "station_id": "STN-Y-23",
@@ -729,7 +823,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5587,
+    "lng": 77.2064
   },
   {
     "station_id": "STN-Y-24",
@@ -745,7 +841,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5494,
+    "lng": 77.2001
   },
   {
     "station_id": "STN-Y-25",
@@ -760,7 +858,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.543,
+    "lng": 77.2067
   },
   {
     "station_id": "STN-Y-26",
@@ -775,7 +875,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5208,
+    "lng": 77.2016
   },
   {
     "station_id": "STN-Y-27",
@@ -790,7 +892,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5245,
+    "lng": 77.1855
   },
   {
     "station_id": "STN-Y-28",
@@ -805,7 +909,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.5065,
+    "lng": 77.1743
   },
   {
     "station_id": "STN-Y-29",
@@ -820,7 +926,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.4988,
+    "lng": 77.161
   },
   {
     "station_id": "STN-Y-30",
@@ -835,7 +943,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.4842,
+    "lng": 77.1491
   },
   {
     "station_id": "STN-Y-31",
@@ -850,7 +960,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.4807,
+    "lng": 77.1261
   },
   {
     "station_id": "STN-Y-32",
@@ -865,7 +977,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.4816,
+    "lng": 77.1037
   },
   {
     "station_id": "STN-Y-33",
@@ -881,7 +995,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.4819,
+    "lng": 77.0924
   },
   {
     "station_id": "STN-Y-34",
@@ -896,7 +1012,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.4796,
+    "lng": 77.0801
   },
   {
     "station_id": "STN-Y-35",
@@ -911,7 +1029,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.4722,
+    "lng": 77.0725
   },
   {
     "station_id": "STN-Y-36",
@@ -926,7 +1046,9 @@
     "terminal_mappings": {
       "start": "Samaypur Badli",
       "end": "Millennium City Centre Gurugram"
-    }
+    },
+    "lat": 28.4593,
+    "lng": 77.0726
   },
   {
     "station_id": "STN-B-01",
@@ -942,7 +1064,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5524,
+    "lng": 77.0583
   },
   {
     "station_id": "STN-B-02",
@@ -957,7 +1081,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5647,
+    "lng": 77.0667
   },
   {
     "station_id": "STN-B-03",
@@ -972,7 +1098,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.575,
+    "lng": 77.065
   },
   {
     "station_id": "STN-B-04",
@@ -987,7 +1115,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.581,
+    "lng": 77.057
   },
   {
     "station_id": "STN-B-05",
@@ -1002,7 +1132,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5864,
+    "lng": 77.056
   },
   {
     "station_id": "STN-B-06",
@@ -1017,7 +1149,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5925,
+    "lng": 77.0425
   },
   {
     "station_id": "STN-B-07",
@@ -1032,7 +1166,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5997,
+    "lng": 77.0325
   },
   {
     "station_id": "STN-B-08",
@@ -1047,7 +1183,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6022,
+    "lng": 77.0258
   },
   {
     "station_id": "STN-B-09",
@@ -1063,7 +1201,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6151,
+    "lng": 77.0244
   },
   {
     "station_id": "STN-B-10",
@@ -1078,7 +1218,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6193,
+    "lng": 77.0328
   },
   {
     "station_id": "STN-B-11",
@@ -1093,7 +1235,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6715,
+    "lng": 77.3047
   },
   {
     "station_id": "STN-B-12",
@@ -1108,7 +1252,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6247,
+    "lng": 77.0504
   },
   {
     "station_id": "STN-B-13",
@@ -1123,7 +1269,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6247,
+    "lng": 77.0649
   },
   {
     "station_id": "STN-B-14",
@@ -1139,7 +1287,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6294,
+    "lng": 77.0778
   },
   {
     "station_id": "STN-B-15",
@@ -1154,7 +1304,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6293,
+    "lng": 77.0877
   },
   {
     "station_id": "STN-B-16",
@@ -1169,7 +1321,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6366,
+    "lng": 77.0964
   },
   {
     "station_id": "STN-B-17",
@@ -1184,7 +1338,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6402,
+    "lng": 77.1044
   },
   {
     "station_id": "STN-B-18",
@@ -1199,7 +1355,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6441,
+    "lng": 77.1122
   },
   {
     "station_id": "STN-B-19",
@@ -1215,7 +1373,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6493,
+    "lng": 77.123
   },
   {
     "station_id": "STN-B-20",
@@ -1230,7 +1390,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6507,
+    "lng": 77.134
   },
   {
     "station_id": "STN-B-21",
@@ -1245,7 +1407,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6578,
+    "lng": 77.1425
   },
   {
     "station_id": "STN-B-22",
@@ -1261,7 +1425,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6558,
+    "lng": 77.1517
   },
   {
     "station_id": "STN-B-23",
@@ -1276,7 +1442,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6517,
+    "lng": 77.1583
   },
   {
     "station_id": "STN-B-24",
@@ -1291,7 +1459,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6467,
+    "lng": 77.1667
   },
   {
     "station_id": "STN-B-25",
@@ -1306,7 +1476,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6425,
+    "lng": 77.1783
   },
   {
     "station_id": "STN-B-26",
@@ -1321,7 +1493,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6514,
+    "lng": 77.1907
   },
   {
     "station_id": "STN-B-27",
@@ -1336,7 +1510,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6447,
+    "lng": 77.1997
   },
   {
     "station_id": "STN-B-28",
@@ -1351,7 +1527,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5675,
+    "lng": 77.2007
   },
   {
     "station_id": "STN-B-29",
@@ -1367,7 +1545,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6315,
+    "lng": 77.2167
   },
   {
     "station_id": "STN-B-30",
@@ -1382,7 +1562,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5835,
+    "lng": 77.2167
   },
   {
     "station_id": "STN-B-31",
@@ -1398,7 +1580,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6258,
+    "lng": 77.2342
   },
   {
     "station_id": "STN-B-32",
@@ -1413,7 +1597,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6225,
+    "lng": 77.239
   },
   {
     "station_id": "STN-B-33",
@@ -1429,7 +1615,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6234,
+    "lng": 77.2685
   },
   {
     "station_id": "STN-B-34",
@@ -1444,7 +1632,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6127,
+    "lng": 77.2773
   },
   {
     "station_id": "STN-B-35",
@@ -1460,7 +1650,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6235,
+    "lng": 77.2567
   },
   {
     "station_id": "STN-B-36",
@@ -1475,7 +1667,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5947,
+    "lng": 77.3015
   },
   {
     "station_id": "STN-B-37",
@@ -1490,7 +1684,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5888,
+    "lng": 77.309
   },
   {
     "station_id": "STN-B-38",
@@ -1505,7 +1701,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5828,
+    "lng": 77.3135
   },
   {
     "station_id": "STN-B-39",
@@ -1520,7 +1718,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5786,
+    "lng": 77.3179
   },
   {
     "station_id": "STN-B-40",
@@ -1535,7 +1735,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5708,
+    "lng": 77.3261
   },
   {
     "station_id": "STN-B-41",
@@ -1551,7 +1753,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5642,
+    "lng": 77.3344
   },
   {
     "station_id": "STN-B-42",
@@ -1566,7 +1770,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5583,
+    "lng": 77.3458
   },
   {
     "station_id": "STN-B-43",
@@ -1581,7 +1787,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.5747,
+    "lng": 77.3564
   },
   {
     "station_id": "STN-B-44",
@@ -1596,7 +1804,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6955,
+    "lng": 77.3287
   },
   {
     "station_id": "STN-B-45",
@@ -1611,7 +1821,9 @@
     "terminal_mappings": {
       "start": "Dwarka Sector 21",
       "end": "Noida Electronic City"
-    }
+    },
+    "lat": 28.6277,
+    "lng": 77.3734
   },
   {
     "station_id": "STN-G-01",
@@ -1627,7 +1839,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.6732,
+    "lng": 77.1706
   },
   {
     "station_id": "STN-G-02",
@@ -1642,7 +1856,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.6475,
+    "lng": 77.3127
   },
   {
     "station_id": "STN-G-03",
@@ -1658,7 +1874,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.6555,
+    "lng": 77.3207
   },
   {
     "station_id": "STN-G-04",
@@ -1673,7 +1891,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.6635,
+    "lng": 77.3287
   },
   {
     "station_id": "STN-G-05",
@@ -1688,7 +1908,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.6715,
+    "lng": 77.0967
   },
   {
     "station_id": "STN-G-06",
@@ -1703,7 +1925,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.6795,
+    "lng": 77.1047
   },
   {
     "station_id": "STN-G-07",
@@ -1718,7 +1942,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.6875,
+    "lng": 77.1127
   },
   {
     "station_id": "STN-G-08",
@@ -1733,7 +1959,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.6955,
+    "lng": 77.1207
   },
   {
     "station_id": "STN-G-09",
@@ -1748,7 +1976,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.7035,
+    "lng": 77.1287
   },
   {
     "station_id": "STN-G-10",
@@ -1763,7 +1993,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.7115,
+    "lng": 77.1367
   },
   {
     "station_id": "STN-G-11",
@@ -1778,7 +2010,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.7195,
+    "lng": 77.1447
   },
   {
     "station_id": "STN-G-12",
@@ -1793,7 +2027,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.7275,
+    "lng": 77.1527
   },
   {
     "station_id": "STN-G-13",
@@ -1808,7 +2044,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.7355,
+    "lng": 77.1607
   },
   {
     "station_id": "STN-G-14",
@@ -1823,7 +2061,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.7435,
+    "lng": 77.1687
   },
   {
     "station_id": "STN-G-15",
@@ -1838,7 +2078,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.5115,
+    "lng": 77.1767
   },
   {
     "station_id": "STN-G-16",
@@ -1853,7 +2095,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.5195,
+    "lng": 77.1847
   },
   {
     "station_id": "STN-G-17",
@@ -1868,7 +2112,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.5275,
+    "lng": 77.1927
   },
   {
     "station_id": "STN-G-18",
@@ -1883,7 +2129,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.5355,
+    "lng": 77.2007
   },
   {
     "station_id": "STN-G-19",
@@ -1898,7 +2146,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.5435,
+    "lng": 77.2087
   },
   {
     "station_id": "STN-G-20",
@@ -1913,7 +2163,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.5515,
+    "lng": 77.2167
   },
   {
     "station_id": "STN-G-21",
@@ -1928,7 +2180,9 @@
     "terminal_mappings": {
       "start": "Inderlok",
       "end": "Brigadier Hoshiyar Singh"
-    }
+    },
+    "lat": 28.5595,
+    "lng": 77.2247
   },
   {
     "station_id": "STN-V-01",
@@ -1945,7 +2199,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6675,
+    "lng": 77.2283
   },
   {
     "station_id": "STN-V-02",
@@ -1960,7 +2216,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6562,
+    "lng": 77.241
   },
   {
     "station_id": "STN-V-03",
@@ -1975,7 +2233,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6517,
+    "lng": 77.2339
   },
   {
     "station_id": "STN-V-04",
@@ -1990,7 +2250,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6403,
+    "lng": 77.2403
   },
   {
     "station_id": "STN-V-05",
@@ -2005,7 +2267,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6294,
+    "lng": 77.2406
   },
   {
     "station_id": "STN-V-06",
@@ -2021,7 +2285,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6258,
+    "lng": 77.2342
   },
   {
     "station_id": "STN-V-07",
@@ -2036,7 +2302,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.7115,
+    "lng": 77.1527
   },
   {
     "station_id": "STN-V-08",
@@ -2052,7 +2320,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6147,
+    "lng": 77.2119
   },
   {
     "station_id": "STN-V-09",
@@ -2067,7 +2337,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6002,
+    "lng": 77.2273
   },
   {
     "station_id": "STN-V-10",
@@ -2082,7 +2354,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5878,
+    "lng": 77.2344
   },
   {
     "station_id": "STN-V-11",
@@ -2097,7 +2371,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5786,
+    "lng": 77.2406
   },
   {
     "station_id": "STN-V-12",
@@ -2113,7 +2389,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5677,
+    "lng": 77.2433
   },
   {
     "station_id": "STN-V-13",
@@ -2128,7 +2406,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5642,
+    "lng": 77.2344
   },
   {
     "station_id": "STN-V-14",
@@ -2143,7 +2423,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5553,
+    "lng": 77.2422
   },
   {
     "station_id": "STN-V-15",
@@ -2158,7 +2440,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5506,
+    "lng": 77.2514
   },
   {
     "station_id": "STN-V-16",
@@ -2174,7 +2458,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5492,
+    "lng": 77.2581
   },
   {
     "station_id": "STN-V-17",
@@ -2189,7 +2475,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5372,
+    "lng": 77.2642
   },
   {
     "station_id": "STN-V-18",
@@ -2204,7 +2492,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5283,
+    "lng": 77.2742
   },
   {
     "station_id": "STN-V-19",
@@ -2219,7 +2509,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5342,
+    "lng": 77.2842
   },
   {
     "station_id": "STN-V-20",
@@ -2234,7 +2526,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5289,
+    "lng": 77.2917
   },
   {
     "station_id": "STN-V-21",
@@ -2249,7 +2543,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5194,
+    "lng": 77.2967
   },
   {
     "station_id": "STN-V-22",
@@ -2264,7 +2560,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.5915,
+    "lng": 77.2727
   },
   {
     "station_id": "STN-V-23",
@@ -2279,7 +2577,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.4947,
+    "lng": 77.3075
   },
   {
     "station_id": "STN-V-24",
@@ -2294,7 +2594,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6075,
+    "lng": 77.2887
   },
   {
     "station_id": "STN-V-25",
@@ -2309,7 +2611,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6155,
+    "lng": 77.2967
   },
   {
     "station_id": "STN-V-26",
@@ -2324,7 +2628,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6235,
+    "lng": 77.3047
   },
   {
     "station_id": "STN-V-27",
@@ -2339,7 +2645,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6315,
+    "lng": 77.3127
   },
   {
     "station_id": "STN-V-28",
@@ -2354,7 +2662,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6395,
+    "lng": 77.3207
   },
   {
     "station_id": "STN-V-29",
@@ -2369,7 +2679,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6475,
+    "lng": 77.3287
   },
   {
     "station_id": "STN-V-30",
@@ -2384,7 +2696,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6555,
+    "lng": 77.0967
   },
   {
     "station_id": "STN-V-31",
@@ -2399,7 +2713,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6635,
+    "lng": 77.1047
   },
   {
     "station_id": "STN-V-32",
@@ -2414,7 +2730,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6715,
+    "lng": 77.1127
   },
   {
     "station_id": "STN-V-33",
@@ -2429,7 +2747,9 @@
     "terminal_mappings": {
       "start": "Kashmere Gate",
       "end": "Raja Nahar Singh (Ballabhgarh)"
-    }
+    },
+    "lat": 28.6795,
+    "lng": 77.1207
   },
   {
     "station_id": "STN-P-01",
@@ -2444,7 +2764,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6875,
+    "lng": 77.1447
   },
   {
     "station_id": "STN-P-02",
@@ -2460,7 +2782,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7073,
+    "lng": 77.1798
   },
   {
     "station_id": "STN-P-03",
@@ -2475,7 +2799,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7035,
+    "lng": 77.1607
   },
   {
     "station_id": "STN-P-04",
@@ -2491,7 +2817,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6957,
+    "lng": 77.1527
   },
   {
     "station_id": "STN-P-05",
@@ -2506,7 +2834,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7195,
+    "lng": 77.1767
   },
   {
     "station_id": "STN-P-06",
@@ -2522,7 +2852,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7275,
+    "lng": 77.1847
   },
   {
     "station_id": "STN-P-07",
@@ -2537,7 +2869,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7355,
+    "lng": 77.1927
   },
   {
     "station_id": "STN-P-08",
@@ -2553,7 +2887,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6493,
+    "lng": 77.123
   },
   {
     "station_id": "STN-P-09",
@@ -2568,7 +2904,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5115,
+    "lng": 77.2087
   },
   {
     "station_id": "STN-P-10",
@@ -2583,7 +2921,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5195,
+    "lng": 77.2167
   },
   {
     "station_id": "STN-P-11",
@@ -2598,7 +2938,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5275,
+    "lng": 77.2247
   },
   {
     "station_id": "STN-P-12",
@@ -2614,7 +2956,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5355,
+    "lng": 77.2327
   },
   {
     "station_id": "STN-P-13",
@@ -2629,7 +2973,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5435,
+    "lng": 77.2407
   },
   {
     "station_id": "STN-P-14",
@@ -2644,7 +2990,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5515,
+    "lng": 77.2487
   },
   {
     "station_id": "STN-P-15",
@@ -2659,7 +3007,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5595,
+    "lng": 77.2567
   },
   {
     "station_id": "STN-P-16",
@@ -2675,7 +3025,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5675,
+    "lng": 77.2647
   },
   {
     "station_id": "STN-P-17",
@@ -2690,7 +3042,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5755,
+    "lng": 77.2727
   },
   {
     "station_id": "STN-P-18",
@@ -2706,7 +3060,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5677,
+    "lng": 77.2433
   },
   {
     "station_id": "STN-P-19",
@@ -2721,7 +3077,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5915,
+    "lng": 77.2887
   },
   {
     "station_id": "STN-P-20",
@@ -2736,7 +3094,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.5995,
+    "lng": 77.2967
   },
   {
     "station_id": "STN-P-21",
@@ -2752,7 +3112,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6075,
+    "lng": 77.3047
   },
   {
     "station_id": "STN-P-22",
@@ -2767,7 +3129,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6155,
+    "lng": 77.3127
   },
   {
     "station_id": "STN-P-23",
@@ -2782,7 +3146,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6235,
+    "lng": 77.3207
   },
   {
     "station_id": "STN-P-24",
@@ -2797,7 +3163,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6315,
+    "lng": 77.3287
   },
   {
     "station_id": "STN-P-25",
@@ -2812,7 +3180,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6395,
+    "lng": 77.0967
   },
   {
     "station_id": "STN-P-26",
@@ -2827,7 +3197,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6475,
+    "lng": 77.1047
   },
   {
     "station_id": "STN-P-27",
@@ -2843,7 +3215,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6469,
+    "lng": 77.316
   },
   {
     "station_id": "STN-P-28",
@@ -2859,7 +3233,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6635,
+    "lng": 77.1207
   },
   {
     "station_id": "STN-P-29",
@@ -2874,7 +3250,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6715,
+    "lng": 77.1287
   },
   {
     "station_id": "STN-P-30",
@@ -2889,7 +3267,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6795,
+    "lng": 77.1367
   },
   {
     "station_id": "STN-P-31",
@@ -2904,7 +3284,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6875,
+    "lng": 77.1447
   },
   {
     "station_id": "STN-P-32",
@@ -2920,7 +3302,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.6955,
+    "lng": 77.1527
   },
   {
     "station_id": "STN-P-33",
@@ -2935,7 +3319,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7035,
+    "lng": 77.1607
   },
   {
     "station_id": "STN-P-34",
@@ -2950,7 +3336,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7115,
+    "lng": 77.1687
   },
   {
     "station_id": "STN-P-35",
@@ -2965,7 +3353,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7195,
+    "lng": 77.1767
   },
   {
     "station_id": "STN-P-36",
@@ -2980,7 +3370,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7275,
+    "lng": 77.1847
   },
   {
     "station_id": "STN-P-37",
@@ -2995,7 +3387,9 @@
     "terminal_mappings": {
       "start": "Majlis Park",
       "end": "Shiv Vihar"
-    }
+    },
+    "lat": 28.7355,
+    "lng": 77.1927
   },
   {
     "station_id": "STN-M-01",
@@ -3011,7 +3405,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.6294,
+    "lng": 77.0778
   },
   {
     "station_id": "STN-M-02",
@@ -3026,7 +3422,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.7195,
+    "lng": 77.1927
   },
   {
     "station_id": "STN-M-03",
@@ -3041,7 +3439,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.7275,
+    "lng": 77.2007
   },
   {
     "station_id": "STN-M-04",
@@ -3056,7 +3456,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.7355,
+    "lng": 77.2087
   },
   {
     "station_id": "STN-M-05",
@@ -3071,7 +3473,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.7435,
+    "lng": 77.2167
   },
   {
     "station_id": "STN-M-06",
@@ -3086,7 +3490,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5115,
+    "lng": 77.2247
   },
   {
     "station_id": "STN-M-07",
@@ -3101,7 +3507,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5195,
+    "lng": 77.2327
   },
   {
     "station_id": "STN-M-08",
@@ -3116,7 +3524,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5275,
+    "lng": 77.2407
   },
   {
     "station_id": "STN-M-09",
@@ -3131,7 +3541,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5586,
+    "lng": 77.1728
   },
   {
     "station_id": "STN-M-10",
@@ -3146,7 +3558,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5606,
+    "lng": 77.1812
   },
   {
     "station_id": "STN-M-11",
@@ -3161,7 +3575,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.545,
+    "lng": 77.1926
   },
   {
     "station_id": "STN-M-12",
@@ -3177,7 +3593,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5494,
+    "lng": 77.2001
   },
   {
     "station_id": "STN-M-13",
@@ -3192,7 +3610,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5433,
+    "lng": 77.2189
   },
   {
     "station_id": "STN-M-14",
@@ -3207,7 +3627,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5422,
+    "lng": 77.2281
   },
   {
     "station_id": "STN-M-15",
@@ -3222,7 +3644,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5428,
+    "lng": 77.2383
   },
   {
     "station_id": "STN-M-16",
@@ -3237,7 +3661,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5469,
+    "lng": 77.2525
   },
   {
     "station_id": "STN-M-17",
@@ -3253,7 +3679,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5492,
+    "lng": 77.2581
   },
   {
     "station_id": "STN-M-18",
@@ -3268,7 +3696,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5542,
+    "lng": 77.2644
   },
   {
     "station_id": "STN-M-19",
@@ -3283,7 +3713,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5614,
+    "lng": 77.2764
   },
   {
     "station_id": "STN-M-20",
@@ -3298,7 +3730,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.6235,
+    "lng": 77.0967
   },
   {
     "station_id": "STN-M-21",
@@ -3313,7 +3747,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.6315,
+    "lng": 77.1047
   },
   {
     "station_id": "STN-M-22",
@@ -3328,7 +3764,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.6395,
+    "lng": 77.1127
   },
   {
     "station_id": "STN-M-23",
@@ -3343,7 +3781,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.6475,
+    "lng": 77.1207
   },
   {
     "station_id": "STN-M-24",
@@ -3358,7 +3798,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5453,
+    "lng": 77.3197
   },
   {
     "station_id": "STN-M-25",
@@ -3374,7 +3816,9 @@
     "terminal_mappings": {
       "start": "Janakpuri West",
       "end": "Botanical Garden"
-    }
+    },
+    "lat": 28.5642,
+    "lng": 77.3344
   },
   {
     "station_id": "STN-G-01",
@@ -3390,7 +3834,9 @@
     "terminal_mappings": {
       "start": "Dwarka",
       "end": "Dhansa Bus Stand"
-    }
+    },
+    "lat": 28.6151,
+    "lng": 77.0244
   },
   {
     "station_id": "STN-G-02",
@@ -3405,7 +3851,9 @@
     "terminal_mappings": {
       "start": "Dwarka",
       "end": "Dhansa Bus Stand"
-    }
+    },
+    "lat": 28.7435,
+    "lng": 77.2327
   },
   {
     "station_id": "STN-G-03",
@@ -3420,7 +3868,9 @@
     "terminal_mappings": {
       "start": "Dwarka",
       "end": "Dhansa Bus Stand"
-    }
+    },
+    "lat": 28.5115,
+    "lng": 77.2407
   },
   {
     "station_id": "STN-G-04",
@@ -3435,7 +3885,9 @@
     "terminal_mappings": {
       "start": "Dwarka",
       "end": "Dhansa Bus Stand"
-    }
+    },
+    "lat": 28.5195,
+    "lng": 77.2487
   },
   {
     "station_id": "STN-O-01",
@@ -3451,7 +3903,9 @@
     "terminal_mappings": {
       "start": "New Delhi Railway Station",
       "end": "Dwarka Sector 21"
-    }
+    },
+    "lat": 28.643,
+    "lng": 77.2194
   },
   {
     "station_id": "STN-O-02",
@@ -3466,7 +3920,9 @@
     "terminal_mappings": {
       "start": "New Delhi Railway Station",
       "end": "Dwarka Sector 21"
-    }
+    },
+    "lat": 28.6289,
+    "lng": 77.2125
   },
   {
     "station_id": "STN-O-03",
@@ -3482,7 +3938,9 @@
     "terminal_mappings": {
       "start": "New Delhi Railway Station",
       "end": "Dwarka Sector 21"
-    }
+    },
+    "lat": 28.5914,
+    "lng": 77.1614
   },
   {
     "station_id": "STN-O-04",
@@ -3497,7 +3955,9 @@
     "terminal_mappings": {
       "start": "New Delhi Railway Station",
       "end": "Dwarka Sector 21"
-    }
+    },
+    "lat": 28.5492,
+    "lng": 77.1214
   },
   {
     "station_id": "STN-O-05",
@@ -3512,7 +3972,9 @@
     "terminal_mappings": {
       "start": "New Delhi Railway Station",
       "end": "Dwarka Sector 21"
-    }
+    },
+    "lat": 28.5562,
+    "lng": 77.1
   },
   {
     "station_id": "STN-O-06",
@@ -3528,7 +3990,9 @@
     "terminal_mappings": {
       "start": "New Delhi Railway Station",
       "end": "Dwarka Sector 21"
-    }
+    },
+    "lat": 28.5524,
+    "lng": 77.0583
   },
   {
     "station_id": "STN-A-01",
@@ -3544,7 +4008,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.5435,
+    "lng": 77.3047
   },
   {
     "station_id": "STN-A-02",
@@ -3559,7 +4025,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.5515,
+    "lng": 77.3127
   },
   {
     "station_id": "STN-A-03",
@@ -3574,7 +4042,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.5595,
+    "lng": 77.3207
   },
   {
     "station_id": "STN-A-04",
@@ -3589,7 +4059,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.5675,
+    "lng": 77.3287
   },
   {
     "station_id": "STN-A-05",
@@ -3604,7 +4076,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.5755,
+    "lng": 77.0967
   },
   {
     "station_id": "STN-A-06",
@@ -3619,7 +4093,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.5835,
+    "lng": 77.1047
   },
   {
     "station_id": "STN-A-07",
@@ -3634,7 +4110,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.5915,
+    "lng": 77.1127
   },
   {
     "station_id": "STN-A-08",
@@ -3649,7 +4127,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.5995,
+    "lng": 77.1207
   },
   {
     "station_id": "STN-A-09",
@@ -3664,7 +4144,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.6075,
+    "lng": 77.1287
   },
   {
     "station_id": "STN-A-10",
@@ -3679,7 +4161,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.6155,
+    "lng": 77.1367
   },
   {
     "station_id": "STN-A-11",
@@ -3694,7 +4178,9 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.6235,
+    "lng": 77.1447
   },
   {
     "station_id": "STN-A-12",
@@ -3709,6 +4195,8 @@
     "terminal_mappings": {
       "start": "Noida Sector 51",
       "end": "Depot Station"
-    }
+    },
+    "lat": 28.6315,
+    "lng": 77.1527
   }
 ]
