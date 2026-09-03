@@ -8,75 +8,97 @@ import SEOHead from "../components/SEOHead";
 export default function BusRoutes() {
   const { currentCity, cityDetails } = useContext(CityContext);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [activeZoneFilter, setActiveZoneFilter] = useState("all");
+  const [activeOperatorFilter, setActiveOperatorFilter] = useState("all");
   const [selectedRoute, setSelectedRoute] = useState(null);
+  const [displayCount, setDisplayCount] = useState(60);
 
   const isUdaipur = currentCity === "udaipur";
   const isDelhi = currentCity === "delhi";
 
-  // Filter routes based on active city, search query, and category tab
+  // Filter routes based on active city, search query, zonal tab, and operator
   const filteredRoutes = useMemo(() => {
     if (isDelhi) {
       return DTC_BUS_ROUTES.filter((r) => {
+        // Zone code filter
+        if (activeZoneFilter !== "all" && r.zone_code !== activeZoneFilter) {
+          return false;
+        }
+
+        // Operator filter (DTC / DIMTS)
+        if (activeOperatorFilter !== "all" && r.operator !== activeOperatorFilter) {
+          return false;
+        }
+
+        if (searchQuery.trim() === "") return true;
+
+        const q = searchQuery.toLowerCase().trim();
+        const shortName = (r.route_short_name || r.busNumber || "").toLowerCase();
+        const parentRoute = (r.parent_route || "").toLowerCase();
+        const orig = (r.origin || "").toLowerCase();
+        const dest = (r.destination || "").toLowerCase();
+        const name = (r.routeName || "").toLowerCase();
+        const stopsList = r.stops || [];
+
         return (
-          searchQuery.trim() === "" ||
-          r.busNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          r.routeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          r.stops.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()))
+          shortName.includes(q) ||
+          parentRoute.includes(q) ||
+          orig.includes(q) ||
+          dest.includes(q) ||
+          name.includes(q) ||
+          stopsList.some((s) => s.toLowerCase().includes(q))
         );
       });
     }
 
     if (isUdaipur) {
       return UCTSL_BUS_ROUTES.filter((r) => {
+        if (searchQuery.trim() === "") return true;
+        const q = searchQuery.toLowerCase();
         return (
-          searchQuery.trim() === "" ||
-          r.routeNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          r.routeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          r.stops.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()))
+          r.routeNumber.toLowerCase().includes(q) ||
+          r.routeName.toLowerCase().includes(q) ||
+          r.stops.some((s) => s.toLowerCase().includes(q))
         );
       });
     }
 
     return busRoutes.filter((r) => {
-      const matchSearch =
-        searchQuery.trim() === "" ||
-        r.routeNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        r.stops.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()));
-
-      if (!matchSearch) return false;
-
-      if (activeFilter === "regular") return !r.service.includes("AC");
-      if (activeFilter === "ac") return r.service.includes("AC");
-      if (activeFilter === "urban") return r.type === "Urban";
-      if (activeFilter === "suburban") return r.type === "Sub-Urban";
-
-      return true;
+      if (searchQuery.trim() === "") return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        r.routeNo.toLowerCase().includes(q) ||
+        r.name.toLowerCase().includes(q) ||
+        r.stops.some((s) => s.toLowerCase().includes(q))
+      );
     });
-  }, [isDelhi, isUdaipur, searchQuery, activeFilter]);
+  }, [isDelhi, isUdaipur, searchQuery, activeZoneFilter, activeOperatorFilter]);
+
+  const displayedRoutes = useMemo(() => {
+    return filteredRoutes.slice(0, displayCount);
+  }, [filteredRoutes, displayCount]);
 
   const networkTitle = isDelhi
-    ? "200+ OFFICIAL DTC & DIMTS BUS CORRIDORS 🕌"
+    ? "2,400+ OFFICIAL DTC & DIMTS BUS VARIANTS 🕌"
     : isUdaipur
     ? "UCTSL MUNICIPAL NETWORK 🌅"
     : "OFFICIAL JCTSL NETWORK 🏰";
 
   const networkDescription = isDelhi
-    ? "Search Delhi Transport Corporation's (DTC) 200+ official bus corridors including 100 to 900 series, Ring Road Mudrika, Outer Mudrika, and Airport Express. Inspect verified stop sequences, operational hours, and fares."
+    ? "Indexed directory of Delhi Transport Corporation (DTC) & DIMTS cluster bus network. Search across 600+ parent corridors, 2,400+ active alphanumeric variants (STL, Express, Mudrika), and 4,400+ physical stops."
     : isUdaipur
     ? "Explore official electric and AC bus corridors operated by UCTSL in Udaipur."
     : "Explore all 27 official bus routes operated by JCTSL in Jaipur. Inspect stop sequences, fares, and transit transfer points.";
 
-  const totalCorridors = isDelhi ? "200+" : isUdaipur ? UCTSL_BUS_ROUTES.length : busRoutes.length;
+  const totalCorridors = isDelhi ? "2,400+" : isUdaipur ? UCTSL_BUS_ROUTES.length : busRoutes.length;
   const fleetCount = isDelhi ? "6,000+" : isUdaipur ? "50+" : "200";
   const fareRange = isDelhi ? "₹5 - ₹25" : isUdaipur ? "₹10 - ₹30" : "₹5 - ₹35";
 
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-8 px-4 sm:px-6 lg:px-8">
       <SEOHead
-        title={`${cityDetails.name} City Bus Directory — Routes & Stop Sequences | Sheher Saathi`}
-        description={`Official public city bus directory for ${cityDetails.name}. Inspect route maps, stops, frequencies, and fares.`}
+        title={`${cityDetails.name} City Bus Directory — 2,400+ DTC & DIMTS Bus Variants | Sheher Saathi`}
+        description={`Official public city bus directory for ${cityDetails.name}. Search all 2,400+ active alphanumeric variants, parent corridors, and stop sequences.`}
       />
 
       <div className="max-w-7xl mx-auto space-y-8">
@@ -99,14 +121,14 @@ export default function BusRoutes() {
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-[#4A362B]">
             <div className="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
               <div className="text-2xl font-black text-[#D98A5B]">{totalCorridors}</div>
-              <div className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66] mt-1">Active Corridors</div>
+              <div className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66] mt-1">Active Bus Variants</div>
             </div>
             <div className="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
               <div className="text-2xl font-black text-[#D98A5B]">{fleetCount}</div>
               <div className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66] mt-1">Buses Fleet</div>
             </div>
             <div className="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
-              <div className="text-2xl font-black text-[#D98A5B]">5:30 AM – 11 PM</div>
+              <div className="text-2xl font-black text-[#D98A5B]">5:00 AM – 11:30 PM</div>
               <div className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66] mt-1">Operating Hours</div>
             </div>
             <div className="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
@@ -122,20 +144,90 @@ export default function BusRoutes() {
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={`Search route number or stop (e.g. ${isDelhi ? 'Route 419, Rajiv Chowk, Red Fort' : isUdaipur ? 'Route 1, Chetak Circle, Fatehsagar' : 'AC 1, Hawa Mahal, Sanganer'})...`}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setDisplayCount(60);
+              }}
+              placeholder={`Search route variant or stop (e.g. 543A, 764STL, OMS, IIT Delhi, AIIMS, Anand Vihar)...`}
               className="w-full pl-12 pr-4 py-4 rounded-2xl border border-[#E6D6C3] bg-[#FAF5EF] text-[#2C1E18] font-medium shadow-inner outline-none focus:border-[#B35D38]"
             />
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A37B66] text-lg">🔍</span>
           </div>
+
+          {/* Delhi Zonal Series Filters */}
+          {isDelhi && (
+            <div className="space-y-3 pt-2">
+              <div className="text-xs font-bold uppercase tracking-wider text-[#A37B66]">Zonal Series Filters:</div>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { id: "all", label: `All Series (${filteredRoutes.length})` },
+                  { id: "ZONE_100", label: "100s North" },
+                  { id: "ZONE_200", label: "200s East" },
+                  { id: "ZONE_300", label: "300s Trans-Yamuna" },
+                  { id: "ZONE_400", label: "400s South" },
+                  { id: "ZONE_500", label: "500s Express" },
+                  { id: "ZONE_600", label: "600s JNU/IIT" },
+                  { id: "ZONE_700", label: "700s West" },
+                  { id: "ZONE_MUDRIKA", label: "Mudrika Ring" },
+                  { id: "ZONE_AIRPORT", label: "Airport Express" }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setActiveZoneFilter(tab.id);
+                      setDisplayCount(60);
+                    }}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition border ${
+                      activeZoneFilter === tab.id
+                        ? "bg-[#B35D38] text-white border-[#B35D38] shadow-md"
+                        : "bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3] hover:bg-[#FAF1EC]"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Operator Filter */}
+              <div className="flex items-center gap-2 pt-2">
+                <span className="text-xs font-bold uppercase text-[#A37B66]">Operator:</span>
+                {["all", "DTC", "DIMTS"].map((op) => (
+                  <button
+                    key={op}
+                    onClick={() => {
+                      setActiveOperatorFilter(op);
+                      setDisplayCount(60);
+                    }}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition ${
+                      activeOperatorFilter === op
+                        ? "bg-[#2C1E18] text-white"
+                        : "bg-[#FAF5EF] text-[#543C32] border border-[#E6D6C3]"
+                    }`}
+                  >
+                    {op === "all" ? "All Operators" : op}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Showing Count Indicator */}
+        <div className="flex items-center justify-between text-xs font-bold text-[#A37B66] px-2">
+          <span>Showing {displayedRoutes.length} of {filteredRoutes.length} active variants</span>
         </div>
 
         {/* Routes Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredRoutes.map((route, idx) => {
-            const number = route.busNumber || route.routeNumber || route.routeNo;
-            const name = route.routeName || route.name;
+          {displayedRoutes.map((route, idx) => {
+            const shortName = route.route_short_name || route.busNumber || route.routeNumber || route.routeNo;
+            const orig = route.origin || "";
+            const dest = route.destination || "";
+            const name = route.routeName || (orig && dest ? `${orig} ⇄ ${dest}` : route.name);
             const stopsList = route.stops || [];
+            const operator = route.operator || "DTC";
+            const isVariant = route.is_variant;
+            const totalStops = route.total_stops || stopsList.length;
 
             return (
               <div
@@ -145,11 +237,18 @@ export default function BusRoutes() {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-xl bg-[#B35D38] text-white text-xs font-black">
-                      {number}
-                    </span>
-                    <span className="px-3 py-1 rounded-xl bg-[#FAF5EF] text-[#543C32] text-xs font-bold border border-[#E6D6C3]">
-                      Fare: {route.fare}
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 rounded-xl bg-[#B35D38] text-white text-xs font-black">
+                        {shortName}
+                      </span>
+                      {isVariant && (
+                        <span className="px-2 py-0.5 rounded-lg bg-amber-100 text-amber-900 text-[10px] font-black uppercase">
+                          Variant
+                        </span>
+                      )}
+                    </div>
+                    <span className="px-2.5 py-1 rounded-xl bg-[#FAF5EF] text-[#543C32] text-xs font-bold border border-[#E6D6C3]">
+                      {operator}
                     </span>
                   </div>
 
@@ -157,23 +256,19 @@ export default function BusRoutes() {
                     {name}
                   </h3>
 
-                  <p className="text-xs text-[#543C32] font-semibold">
-                    ⏱️ Hours: {route.operatingHours || route.frequency || 'Daily Operations'}
-                  </p>
+                  <div className="flex items-center justify-between text-xs text-[#543C32] font-semibold">
+                    <span>⏱️ {route.operatingHours || '05:30 AM - 10:45 PM'}</span>
+                    <span>🚏 {totalStops} Stops</span>
+                  </div>
 
                   <div className="border-t border-[#E6D6C3] pt-3">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66]">Key Stops ({stopsList.length}):</span>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66]">Key Stops:</span>
                     <div className="mt-1 flex flex-wrap gap-1">
                       {stopsList.slice(0, 4).map((s, i) => (
                         <span key={i} className="text-[11px] font-medium bg-[#FAF5EF] text-[#2C1E18] px-2 py-1 rounded-lg border border-[#E6D6C3]">
                           {s}
                         </span>
                       ))}
-                      {stopsList.length > 4 && (
-                        <span className="text-[11px] font-bold text-[#B35D38] self-center">
-                          +{stopsList.length - 4} more
-                        </span>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -182,21 +277,41 @@ export default function BusRoutes() {
                   type="button"
                   className="mt-6 w-full py-3 rounded-2xl bg-[#FAF5EF] hover:bg-[#FAF1EC] border border-[#E6D6C3] text-[#B35D38] font-bold text-xs transition text-center"
                 >
-                  View Full Stop Sequence →
+                  Inspect Full Route Metadata →
                 </button>
               </div>
             );
           })}
         </div>
 
+        {/* Load More Button */}
+        {displayCount < filteredRoutes.length && (
+          <div className="text-center pt-6">
+            <button
+              onClick={() => setDisplayCount((prev) => prev + 60)}
+              className="bg-[#2C1E18] hover:bg-[#3D2B23] text-white px-8 py-4 rounded-2xl font-bold text-sm shadow-xl transition"
+            >
+              Load More Variants (+60) — {filteredRoutes.length - displayCount} Remaining →
+            </button>
+          </div>
+        )}
+
         {/* Route Details Modal */}
         {selectedRoute && (
           <div className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
             <div className="bg-white rounded-3xl max-w-2xl w-full p-8 shadow-2xl border border-[#E6D6C3] space-y-6 max-h-[85vh] overflow-y-auto">
               <div className="flex items-center justify-between">
-                <span className="px-4 py-1.5 rounded-full bg-[#B35D38] text-white text-xs font-black">
-                  {selectedRoute.busNumber || selectedRoute.routeNumber || selectedRoute.routeNo}
-                </span>
+                <div className="flex items-center gap-3">
+                  <span className="px-4 py-1.5 rounded-full bg-[#B35D38] text-white text-xs font-black">
+                    {selectedRoute.route_short_name || selectedRoute.busNumber}
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-[#FAF5EF] text-[#2C1E18] text-xs font-bold border border-[#E6D6C3]">
+                    Operator: {selectedRoute.operator || 'DTC'}
+                  </span>
+                  {selectedRoute.parent_route && (
+                    <span className="text-xs font-bold text-[#A37B66]">Parent: Route {selectedRoute.parent_route}</span>
+                  )}
+                </div>
                 <button
                   onClick={() => setSelectedRoute(null)}
                   className="w-10 h-10 rounded-full bg-[#FAF5EF] text-[#2C1E18] font-bold hover:bg-gray-200 flex items-center justify-center"
@@ -206,20 +321,23 @@ export default function BusRoutes() {
               </div>
 
               <h2 className="text-2xl font-marcellus text-[#2C1E18]">
-                {selectedRoute.routeName || selectedRoute.name}
+                {selectedRoute.routeName || `${selectedRoute.origin} ⇄ ${selectedRoute.destination}`}
               </h2>
 
-              <div className="grid grid-cols-2 gap-4 text-xs font-bold text-[#2C1E18]">
+              <div className="grid grid-cols-3 gap-3 text-xs font-bold text-[#2C1E18]">
                 <div className="bg-[#FAF5EF] p-4 rounded-2xl border border-[#E6D6C3]">
-                  ⏱️ Operating Hours: <span className="text-[#B35D38]">{selectedRoute.operatingHours || 'Daily'}</span>
+                  ⏱️ Operating Hours: <br/><span className="text-[#B35D38]">{selectedRoute.operatingHours || 'Daily'}</span>
                 </div>
                 <div className="bg-[#FAF5EF] p-4 rounded-2xl border border-[#E6D6C3]">
-                  🎟️ Fare Tariff: <span className="text-[#B35D38]">{selectedRoute.fare}</span>
+                  🎟️ Fare Tariff: <br/><span className="text-[#B35D38]">{selectedRoute.fare || '₹5 - ₹25'}</span>
+                </div>
+                <div className="bg-[#FAF5EF] p-4 rounded-2xl border border-[#E6D6C3]">
+                  🚏 Total Corridor Stops: <br/><span className="text-[#B35D38]">{selectedRoute.total_stops || 24} Stops</span>
                 </div>
               </div>
 
               <div>
-                <h4 className="text-sm font-bold uppercase tracking-wider text-[#A37B66] mb-3">Complete Stop Sequence:</h4>
+                <h4 className="text-sm font-bold uppercase tracking-wider text-[#A37B66] mb-3">Key Corridor Sequence:</h4>
                 <div className="space-y-2 border-l-2 border-[#B35D38] pl-4">
                   {(selectedRoute.stops || []).map((stop, idx) => (
                     <div key={idx} className="flex items-center gap-3 text-sm font-medium text-[#2C1E18]">
