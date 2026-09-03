@@ -192,6 +192,25 @@ export default function TransportSearch() {
         route: { distanceKm: distKm },
         currentTime: new Date().toISOString(),
         univRoute: routeRes,
+        busRoute: {
+          busNumber: "DTC / UCTSL Bus",
+          routeName: routeRes?.summary || "City Bus Transit",
+          type: "direct",
+          transfers: 0,
+          fare: routeRes?.totalCost || "₹15",
+          estimatedTimeMinutes: 20,
+          boardStop: finalSource,
+          alightStop: finalDest,
+          route: {
+            busNumber: "City Bus",
+            routeName: routeRes?.summary,
+            stopsPassed: [finalSource, finalDest]
+          }
+        },
+        map: {
+          source: routeRes?.sourceCoords || { latitude: isUdaipur ? 24.5764 : 28.6315, longitude: isUdaipur ? 73.6835 : 77.2167 },
+          destination: routeRes?.destCoords || { latitude: isUdaipur ? 24.6015 : 28.5245, longitude: isUdaipur ? 73.6735 : 77.1855 }
+        },
         recommendations: recommendations
       });
       setLoading(false);
@@ -505,7 +524,7 @@ export default function TransportSearch() {
                           : "text-[#2C1E18] hover:bg-[#FAF5EF]"
                       }`}
                     >
-                      <span>🚌 JCTSL City Bus Route</span>
+                      <span>🚌 {isDelhi ? "DTC Electric Bus Route" : isUdaipur ? "UCTSL Municipal Bus Route" : "JCTSL City Bus Route"}</span>
                     </button>
                   </div>
 
