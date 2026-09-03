@@ -1,17 +1,59 @@
-import React, { useState, useMemo, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { jaipurMetroStations } from "../data/jaipurMetroData";
-import { DELHI_METRO_LINES } from "../data/delhiMetroData";
+import { DELHI_METRO_LINES, RAW_DELHI_METRO_STATIONS } from "../data/delhiMetroData";
 import { CityContext } from "../context/CityContext";
 import { Link } from "react-router-dom";
 import SEOHead from "../components/SEOHead";
 
-export default function MetroDirectory() {
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("MetroDirectory Render Crash Error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-16 px-4 text-center">
+          <div className="max-w-xl mx-auto bg-white p-10 rounded-3xl border border-red-200 shadow-xl space-y-4">
+            <div className="text-4xl">⚠️</div>
+            <h2 className="text-2xl font-bold text-red-900">Metro Directory Load Notice</h2>
+            <p className="text-sm text-gray-600 font-medium">
+              We encountered a minor layout parsing notice while rendering Metro stations.
+            </p>
+            <pre className="text-xs bg-red-50 text-red-800 p-4 rounded-xl text-left overflow-x-auto">
+              {this.state.error?.toString()}
+            </pre>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-[#B35D38] text-white px-6 py-3 rounded-xl font-bold text-xs"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function MetroDirectoryContent() {
   const { currentCity, cityDetails } = useContext(CityContext);
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedStation, setSelectedStation] = useState(null);
 
   const isDelhi = currentCity === "delhi";
   const isUdaipur = currentCity === "udaipur";
+  const rawStationsCount = (RAW_DELHI_METRO_STATIONS || []).length;
+  const metroLinesList = DELHI_METRO_LINES || [];
 
   if (isUdaipur) {
     return (
@@ -58,8 +100,8 @@ export default function MetroDirectory() {
   return (
     <div className="min-h-screen bg-[#FAF5EF] text-[#2C1E18] py-8 px-4 sm:px-6 lg:px-8">
       <SEOHead
-        title={`${cityDetails.name} Metro Directory — Stations & Schedules | Sheher Saathi`}
-        description={`Complete station directory and schedules for ${cityDetails.name} Metro.`}
+        title={`${cityDetails?.name || 'City'} Metro Directory — Stations & Schedules | Sheher Saathi`}
+        description={`Complete station directory and schedules for ${cityDetails?.name || 'City'} Metro.`}
       />
 
       <div className="max-w-7xl mx-auto space-y-8">
@@ -80,7 +122,7 @@ export default function MetroDirectory() {
 
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-[#4A362B]">
             <div className="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
-              <div className="text-2xl font-black text-[#D98A5B]">{isDelhi ? `${RAW_DELHI_METRO_STATIONS.length}` : "11"}</div>
+              <div className="text-2xl font-black text-[#D98A5B]">{isDelhi ? `${rawStationsCount}` : "11"}</div>
               <div className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66] mt-1">Active Stations</div>
             </div>
             <div className="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-xs">
@@ -101,28 +143,28 @@ export default function MetroDirectory() {
         {/* Delhi Metro Lines Showcase */}
         {isDelhi && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-marcellus text-[#2C1E18]">DMRC Active Corridors ({DELHI_METRO_LINES.length} Lines)</h2>
+            <h2 className="text-2xl font-marcellus text-[#2C1E18]">DMRC Active Corridors ({metroLinesList.length} Lines)</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {DELHI_METRO_LINES.map((line, idx) => (
+              {metroLinesList.map((line, idx) => (
                 <div key={idx} className="bg-white rounded-3xl border border-[#E6D6C3] p-6 shadow-md space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-4 h-4 rounded-full" style={{ backgroundColor: line.color }} />
+                      <div className="w-4 h-4 rounded-full" style={{ backgroundColor: line.color || '#3b82f6' }} />
                       <h3 className="text-xl font-bold text-[#2C1E18]">{line.name}</h3>
                     </div>
                     <span className="px-3 py-1 rounded-xl bg-[#FAF5EF] text-xs font-bold text-[#543C32] border border-[#E6D6C3]">
-                      {line.stations.length} Stations • {line.averageWaitTime}m freq
+                      {(line.stations || []).length} Stations • {line.averageWaitTime || 4}m freq
                     </span>
                   </div>
                   <p className="text-xs text-[#543C32] font-semibold">
-                    ⏱️ Hours: {line.firstTrain} - {line.lastTrain} | 🚉 Terminals: {line.terminals.start} ⇄ {line.terminals.end}
+                    ⏱️ Hours: {line.firstTrain || '05:30 AM'} - {line.lastTrain || '11:30 PM'} | 🚉 Terminals: {line.terminals?.start || 'Start'} ⇄ {line.terminals?.end || 'End'}
                   </p>
                   <div>
                     <span className="text-[11px] font-bold uppercase tracking-wider text-[#A37B66]">Station Sequence &amp; Interchanges:</span>
                     <div className="mt-2 flex flex-wrap gap-1.5 max-h-48 overflow-y-auto pr-1">
-                      {line.stations.map((st, sIdx) => (
-                        <span key={sIdx} className={`text-xs font-bold px-2.5 py-1 rounded-xl border transition ${st.interchange ? 'bg-amber-100 text-amber-950 border-amber-400 shadow-xs' : 'bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3]'}`}>
-                          {st.name} {st.interchange && '🔄'}
+                      {(line.stations || []).map((st, sIdx) => (
+                        <span key={sIdx} className={`text-xs font-bold px-2.5 py-1 rounded-xl border transition ${st?.interchange ? 'bg-amber-100 text-amber-950 border-amber-400 shadow-xs' : 'bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3]'}`}>
+                          {st?.name} {st?.interchange && '🔄'}
                         </span>
                       ))}
                     </div>
@@ -136,16 +178,19 @@ export default function MetroDirectory() {
         {/* Jaipur Metro Stations Showcase */}
         {!isDelhi && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {jaipurMetroStations.map((st, idx) => (
+            {(jaipurMetroStations || []).map((st, idx) => (
               <div key={idx} className="bg-white rounded-3xl border border-[#E6D6C3] p-6 shadow-md space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-xl bg-[#B35D38] text-white text-xs font-bold">
-                    Pink Line
+                  <span className="px-3 py-1 rounded-xl bg-[#B35D38] text-white text-xs font-black">
+                    {st.code}
                   </span>
-                  <span className="text-xs font-bold text-[#543C32]">{st.zone} Zone</span>
+                  <span className="text-xs font-bold text-[#A37B66]">Pink Line</span>
                 </div>
-                <h3 className="text-xl font-bold text-[#2C1E18]">{st.name}</h3>
-                <p className="text-xs text-[#543C32] font-medium">{st.location}</p>
+                <h3 className="text-lg font-bold text-[#2C1E18]">{st.name}</h3>
+                <div className="flex items-center justify-between text-xs text-[#543C32] font-semibold">
+                  <span>⏱️ 5:20 AM - 10:00 PM</span>
+                  <span>🎟️ ₹6 - ₹18</span>
+                </div>
               </div>
             ))}
           </div>
@@ -153,5 +198,13 @@ export default function MetroDirectory() {
 
       </div>
     </div>
+  );
+}
+
+export default function MetroDirectory() {
+  return (
+    <ErrorBoundary>
+      <MetroDirectoryContent />
+    </ErrorBoundary>
   );
 }
