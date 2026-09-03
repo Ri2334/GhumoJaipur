@@ -135,13 +135,35 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   const metroFare = Math.min(60, Math.max(10, Math.round(roadKm * 2.5)));
   const dtcBusFare = Math.min(25, Math.max(5, Math.round(roadKm * 1.2)));
 
-  // Dynamic DTC Bus Route matching from raw_delhi_routes.json (1,653 objects)
+  // Dynamic DTC Bus Route matching & stop sequence slicing from raw_delhi_routes.json (1,653 objects)
   const qOrig = origGeo.name.toLowerCase();
   const qDest = destGeo.name.toLowerCase();
+
   let matchedBus = DTC_BUS_ROUTES.find(r => 
     (r.stops || []).some(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase())) &&
     (r.stops || []).some(s => s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase()))
-  ) || DTC_BUS_ROUTES[0];
+  );
+
+  if (!matchedBus) {
+    matchedBus = DTC_BUS_ROUTES.find(r => 
+      (r.stops || []).some(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase()))
+    ) || DTC_BUS_ROUTES[0];
+  }
+
+  // Dynamic stop sequence slicing for Bus Timeline
+  let busStopsSliced = matchedBus.stops || [];
+  const bOrigIdx = busStopsSliced.findIndex(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase()));
+  const bDestIdx = busStopsSliced.findIndex(s => s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase()));
+
+  if (bOrigIdx !== -1 && bDestIdx !== -1) {
+    if (bOrigIdx <= bDestIdx) {
+      busStopsSliced = busStopsSliced.slice(bOrigIdx, bDestIdx + 1);
+    } else {
+      busStopsSliced = busStopsSliced.slice(bDestIdx, bOrigIdx + 1).reverse();
+    }
+  } else {
+    busStopsSliced = busStopsSliced.slice(0, 6);
+  }
 
   const metroSteps = [
     { type: "walk", title: `📍 Depart from ${origGeo.name}`, duration: "0 min", cost: "Free" },
@@ -185,7 +207,7 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
       route: {
         busNumber: matchedBus.busNumber || matchedBus.route_short_name,
         routeName: matchedBus.routeName || `${matchedBus.origin} ⇄ ${matchedBus.destination}`,
-        stopsPassed: (matchedBus.stops || []).slice(0, 5)
+        stopsPassed: busStopsSliced
       }
     },
     steps: metroSteps
