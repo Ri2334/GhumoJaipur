@@ -168,6 +168,8 @@ export default function BusRoutes() {
                   { id: "ZONE_500", label: "500s Express" },
                   { id: "ZONE_600", label: "600s JNU/IIT" },
                   { id: "ZONE_700", label: "700s West" },
+                  { id: "ZONE_800", label: "800s Janakpuri" },
+                  { id: "ZONE_900", label: "900s Rohini" },
                   { id: "ZONE_MUDRIKA", label: "Mudrika Ring" },
                   { id: "ZONE_AIRPORT", label: "Airport Express" }
                 ].map((tab) => (
@@ -177,7 +179,7 @@ export default function BusRoutes() {
                       setActiveZoneFilter(tab.id);
                       setDisplayCount(60);
                     }}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition border ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition border ${
                       activeZoneFilter === tab.id
                         ? "bg-[#B35D38] text-white border-[#B35D38] shadow-md"
                         : "bg-[#FAF5EF] text-[#2C1E18] border-[#E6D6C3] hover:bg-[#FAF1EC]"
