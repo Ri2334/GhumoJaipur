@@ -21,7 +21,7 @@ export default function CitySwitcher({ className = "" }) {
   const allCitiesList = [
     { id: "jaipur", name: "Jaipur", icon: "🏰", status: "active", subtitle: "140+ Places • Metro & Bus" },
     { id: "udaipur", name: "Udaipur", icon: "🌅", status: "active", subtitle: "30+ Places • Bus & Ferries" },
-    { id: "delhi", name: "Delhi", icon: "🕌", status: "coming_soon", subtitle: "35+ Planned • DMRC Metro" },
+    { id: "delhi", name: "Delhi", icon: "🕌", status: "active", subtitle: "40+ Places • DMRC & DTC Buses" },
     { id: "mumbai", name: "Mumbai", icon: "🌆", status: "coming_soon", subtitle: "40+ Planned • Local Train" },
     { id: "varanasi", name: "Varanasi", icon: "🛕", status: "coming_soon", subtitle: "20+ Planned • Ghats" },
     { id: "bengaluru", name: "Bengaluru", icon: "🌳", status: "coming_soon", subtitle: "30+ Planned • Namma Metro" }

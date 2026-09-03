@@ -34,6 +34,23 @@ export const CITY_CONFIGS = {
     ],
     defaultSource: "Udaipur City Railway Station",
     defaultDest: "City Palace Udaipur"
+  },
+  delhi: {
+    id: "delhi",
+    name: "Delhi",
+    tagline: "The Capital Metropolis",
+    placesCount: "40+",
+    transitModes: ["DMRC Metro", "DTC Electric Bus", "Auto", "Cab"],
+    hasMetro: true,
+    hasBoats: false,
+    hasRopeway: false,
+    popularSpots: [
+      "Red Fort (Lal Qila)", "Qutub Minar", "India Gate & Kartavya Path", 
+      "Lotus Temple", "Swaminarayan Akshardham", "Connaught Place", 
+      "Chandni Chowk", "IGI Airport T3"
+    ],
+    defaultSource: "Connaught Place (Rajiv Chowk)",
+    defaultDest: "Qutub Minar"
   }
 };
 

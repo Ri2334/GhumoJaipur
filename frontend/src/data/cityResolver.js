@@ -1,21 +1,29 @@
 import { jaipur140Places } from "./jaipur140Places";
 import { UDAIPUR_PLACES } from "./udaipurPlacesData";
-import { calculateUniversalRoute } from "./jaipurUniversalTransitEngine";
-import { calculateUdaipurRoute } from "./udaipurTransitEngine";
+import { DELHI_PLACES } from "./delhiPlacesData";
 import { resolveJaipurRealRoute, resolveUdaipurRealRoute } from "./universalRealTransitResolver";
+import { resolveDelhiRealRoute } from "./delhiTransitResolver";
 
 export const getAllCitiesPlaces = (selectedCity = "all") => {
-  if (selectedCity.toLowerCase() === "udaipur") {
+  const cityLow = (selectedCity || "").toLowerCase();
+  if (cityLow === "delhi") {
+    return DELHI_PLACES;
+  }
+  if (cityLow === "udaipur") {
     return UDAIPUR_PLACES;
   }
-  if (selectedCity.toLowerCase() === "jaipur") {
+  if (cityLow === "jaipur") {
     return jaipur140Places;
   }
-  return [...jaipur140Places, ...UDAIPUR_PLACES];
+  return [...jaipur140Places, ...UDAIPUR_PLACES, ...DELHI_PLACES];
 };
 
 export const getCityRouteResult = (origin, dest, city = "jaipur") => {
-  if (city.toLowerCase() === "udaipur") {
+  const cityLow = (city || "").toLowerCase();
+  if (cityLow === "delhi") {
+    return resolveDelhiRealRoute(origin, dest);
+  }
+  if (cityLow === "udaipur") {
     return resolveUdaipurRealRoute(origin, dest);
   }
   return resolveJaipurRealRoute(origin, dest);
