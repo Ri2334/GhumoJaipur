@@ -167,6 +167,9 @@ export function getNearestDelhiMetroStation(locationName) {
   if (!locationName) return null;
   const nameLower = locationName.toLowerCase().trim();
 
+  if (nameLower.includes("iit")) return { name: "IIT Delhi", line: "Magenta Line" };
+  if (nameLower.includes("aiims")) return { name: "AIIMS", line: "Yellow Line" };
+  if (nameLower.includes("jnu")) return { name: "Munirka", line: "Magenta Line" };
   if (nameLower.includes("red fort") || nameLower.includes("lal qila")) return { name: "Lal Qila", line: "Violet Line" };
   if (nameLower.includes("qutub")) return { name: "Qutub Minar", line: "Yellow Line" };
   if (nameLower.includes("india gate") || nameLower.includes("kartavya") || nameLower.includes("rajpath")) return { name: "Central Secretariat", line: "Yellow Line" };
