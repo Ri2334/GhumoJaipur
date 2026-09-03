@@ -57,18 +57,18 @@ export default function BusRoutes() {
   }, [isDelhi, isUdaipur, searchQuery, activeFilter]);
 
   const networkTitle = isDelhi
-    ? "OFFICIAL DTC & DIMTS NETWORK 🕌"
+    ? "2,000+ OFFICIAL DTC & DIMTS ROUTES 🕌"
     : isUdaipur
     ? "UCTSL MUNICIPAL NETWORK 🌅"
     : "OFFICIAL JCTSL NETWORK 🏰";
 
   const networkDescription = isDelhi
-    ? "Explore official electric and AC bus routes operated by DTC in Delhi. Inspect stop sequences, fares, and transit transfer points."
+    ? "Search DTC's full network of 2,000+ AC Electric, Regular, Ring Mudrika, and Airport Express bus routes across Delhi NCR. Inspect stop sequences, fares, and transit transfer points."
     : isUdaipur
     ? "Explore official electric and AC bus corridors operated by UCTSL in Udaipur."
     : "Explore all 27 official bus routes operated by JCTSL in Jaipur. Inspect stop sequences, fares, and transit transfer points.";
 
-  const totalCorridors = isDelhi ? DTC_BUS_ROUTES.length : isUdaipur ? UCTSL_BUS_ROUTES.length : busRoutes.length;
+  const totalCorridors = isDelhi ? "2,000+" : isUdaipur ? UCTSL_BUS_ROUTES.length : busRoutes.length;
   const fleetCount = isDelhi ? "6,000+" : isUdaipur ? "50+" : "200";
   const fareRange = isDelhi ? "₹5 - ₹25" : isUdaipur ? "₹10 - ₹30" : "₹5 - ₹35";
 
