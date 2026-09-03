@@ -1,5 +1,6 @@
 import { DELHI_PLACES } from "./delhiPlacesData";
 import { getNearestDelhiMetroStation } from "./delhiMetroData";
+import { DTC_BUS_ROUTES } from "./delhiDTCBusCatalog";
 
 function getHaversineKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
@@ -54,13 +55,19 @@ export function resolveDelhiRealRoute(originName, destName) {
 
   const hasMetro = Boolean(srcMetro && dstMetro && srcMetro.name !== dstMetro.name);
 
+  // Match DTC Official Bus Route from Catalog
+  const matchedBus = DTC_BUS_ROUTES.find(r => 
+    r.stops.some(s => s.toLowerCase().includes(origKey) || origKey.includes(s.toLowerCase())) &&
+    r.stops.some(s => s.toLowerCase().includes(destKey) || destKey.includes(s.toLowerCase()))
+  ) || DTC_BUS_ROUTES[0];
+
   // DMRC Metro Fare Tier (₹10 - ₹60)
   const metroFare = Math.min(60, Math.max(10, Math.round(roadKm * 2.5)));
-  const dtcBusFare = Math.min(25, Math.max(10, Math.round(roadKm * 1.2)));
+  const dtcBusFare = Math.min(25, Math.max(5, Math.round(roadKm * 1.2)));
 
   const metroSequence = hasMetro ? [
     { name: srcMetro.name, area: `Boarding Station (${srcMetro.line})` },
-    { name: "Rajiv Chowk (Interchange)", area: "DMRC Transfer Station" },
+    { name: "Rajiv Chowk (Interchange)", area: "DMRC Transfer Hub" },
     { name: dstMetro.name, area: `Destination Station (${dstMetro.line})` }
   ] : null;
 
@@ -69,26 +76,41 @@ export function resolveDelhiRealRoute(originName, destName) {
     totalTimeMins: driveTimeMins,
     totalDuration: `${driveTimeMins} min`,
     totalCost: `₹${metroFare} (Metro) / ₹${dtcBusFare} (Bus)`,
-    mode: hasMetro ? `DMRC ${srcMetro.line}` : "DTC Electric Bus Corridor",
+    mode: hasMetro ? `DMRC ${srcMetro.line}` : `${matchedBus.busNumber} DTC Electric Bus`,
     summary: hasMetro 
       ? `DMRC Metro from ${srcMetro.name} to ${dstMetro.name}` 
-      : `DTC Electric Bus Corridor connecting ${origObj.name} to ${destObj.name}`,
+      : `${matchedBus.busNumber} (${matchedBus.routeName}) connecting ${origObj.name} to ${destObj.name}`,
     sourceCoords: { latitude: origObj.lat, longitude: origObj.lng },
     destCoords: { latitude: destObj.lat, longitude: destObj.lng },
     hasValidMetro: hasMetro,
     sourceMetroName: srcMetro?.name,
     destMetroName: dstMetro?.name,
     metroSequence: metroSequence,
+    busRoute: {
+      busNumber: matchedBus.busNumber,
+      routeName: matchedBus.routeName,
+      type: "direct",
+      transfers: 0,
+      fare: `₹${dtcBusFare}`,
+      estimatedTimeMinutes: driveTimeMins + 5,
+      boardStop: origObj.name,
+      alightStop: destObj.name,
+      route: {
+        busNumber: matchedBus.busNumber,
+        routeName: matchedBus.routeName,
+        stopsPassed: matchedBus.stops.slice(0, 5)
+      }
+    },
     steps: [
       { 
         type: "bus", 
-        title: hasMetro ? `DMRC ${srcMetro.line} from ${srcMetro.name} to ${dstMetro.name}` : `DTC Electric Bus from ${origObj.name}`, 
+        title: hasMetro ? `DMRC ${srcMetro.line} from ${srcMetro.name} to ${dstMetro.name}` : `${matchedBus.busNumber} DTC Electric Bus from ${origObj.name}`, 
         duration: `${driveTimeMins} min`, 
-        cost: `₹${metroFare}` 
+        cost: `₹${hasMetro ? metroFare : dtcBusFare}` 
       },
       { 
         type: "walk", 
-        title: `Walk / E-Rickshaw from Metro Station to ${destObj.name}`, 
+        title: `Walk / E-Rickshaw to ${destObj.name} entry gate`, 
         duration: "5 min", 
         cost: "₹10" 
       }
