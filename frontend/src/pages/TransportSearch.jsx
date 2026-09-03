@@ -135,7 +135,49 @@ export default function TransportSearch() {
     ];
   }, [isDelhi, isUdaipur]);
 
+  const [liveSuggestions, setLiveSuggestions] = useState([]);
+  const [sourceCoordsObj, setSourceCoordsObj] = useState(null);
+  const [destCoordsObj, setDestCoordsObj] = useState(null);
+
+  useEffect(() => {
+    if (!isDelhi) return;
+    const queryText = (activeField === "destination" ? destination : source || "").trim();
+    if (queryText.length < 2) {
+      setLiveSuggestions([]);
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(queryText)}&viewbox=76.8,28.4,77.5,28.9&bounded=1`;
+        const res = await fetch(url, { headers: { "User-Agent": "SheherSaathi-DelhiTransit/1.0" } });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            setLiveSuggestions(data.map((item, idx) => ({
+              id: `osm-live-${idx}`,
+              name: item.display_name.split(',')[0].trim(),
+              subtitle: item.display_name,
+              lat: parseFloat(item.lat),
+              lon: parseFloat(item.lon)
+            })));
+          } else {
+            setLiveSuggestions([]);
+          }
+        }
+      } catch (err) {
+        console.warn("[OSM Live Search]", err);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [activeField, source, destination, isDelhi]);
+
   const suggestions = useMemo(() => {
+    if (isDelhi) {
+      return liveSuggestions;
+    }
+
     const query = (activeField === "destination" ? destination : source || "").trim().toLowerCase();
 
     if (!query) {
@@ -160,7 +202,7 @@ export default function TransportSearch() {
         return true;
       })
       .slice(0, 12);
-  }, [activeField, destination, source, allSearchableLocations]);
+  }, [activeField, destination, source, allSearchableLocations, isDelhi, liveSuggestions]);
 
   const handleSearch = async (event, overrideSource, overrideDest) => {
     if (event) event.preventDefault();
@@ -491,8 +533,10 @@ export default function TransportSearch() {
                   onClick={() => {
                     if (activeField === "destination") {
                       setDestination(location.name);
+                      if (location.lat && location.lon) setDestCoordsObj({ name: location.name, lat: location.lat, lng: location.lon });
                     } else {
                       setSource(location.name);
+                      if (location.lat && location.lon) setSourceCoordsObj({ name: location.name, lat: location.lat, lng: location.lon });
                     }
                     setSuggestionsVisible(false);
                   }}
