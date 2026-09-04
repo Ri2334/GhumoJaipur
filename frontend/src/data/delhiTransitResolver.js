@@ -299,6 +299,8 @@ export function resolveVerifiedBusRoute(origLocation, destLocation) {
 
   const evaluatedPairs = [];
 
+  const directDist = getHaversineKm(origLat, origLng, destLat, destLng);
+
   // 2. Cross-Evaluate Candidate Pairs
   for (const oCand of origCandidates) {
     const oEntries = stopIndexMap.get(oCand.normName) || [];
@@ -311,8 +313,10 @@ export function resolveVerifiedBusRoute(origLocation, destLocation) {
         const busNo = route.busNumber || route.route_short_name || "DTC Bus";
 
         if (matchingDest) {
-          // STRICT DIRECTIONAL CHRONOLOGY: originIndex < destIndex
-          const isValid = oEntry.stopIdx < matchingDest.stopIdx;
+          // STRICT DIRECTIONAL CHRONOLOGY & ACCESS DISTANCE VALIDATION
+          const totalAccessDist = oCand.distanceKm + dCand.distanceKm;
+          const isReasonableAccess = directDist > 3.0 || (totalAccessDist < directDist * 0.85);
+          const isValid = (oEntry.stopIdx < matchingDest.stopIdx) && isReasonableAccess;
           const stopsPassed = isValid ? (route.stops || []).slice(oEntry.stopIdx, matchingDest.stopIdx + 1) : [];
           
           const pairScore = isValid ? (oCand.score + dCand.score - (stopsPassed.length * 2)) : -999;
@@ -344,11 +348,29 @@ export function resolveVerifiedBusRoute(origLocation, destLocation) {
     
     console.log("🏆 BEST DISCOVERED ROUTE:", winner.routeVariant, "| Sequence:", winner.stopsPassed.join(" ➔ "));
 
+    const firstMileDist = winner.originDistance;
+    const lastMileDist = winner.destinationDistance;
+
+    const firstMileLabel = firstMileDist <= 1.0 ? `Walk ${firstMileDist} km` : `E-rickshaw / Auto ${firstMileDist} km`;
+    const lastMileLabel = lastMileDist <= 1.0 ? `Walk ${lastMileDist} km` : `E-rickshaw / Auto ${lastMileDist} km`;
+
     return {
       routeNumber: winner.routeVariant,
       operator: "DTC",
       originStop: winner.originStop,
       destinationStop: winner.destinationStop,
+      originDistanceKm: firstMileDist,
+      destinationDistanceKm: lastMileDist,
+      firstMile: {
+        mode: firstMileDist <= 1.0 ? "walk" : "erickshaw_auto",
+        distanceKm: firstMileDist,
+        label: firstMileLabel
+      },
+      lastMile: {
+        mode: lastMileDist <= 1.0 ? "walk" : "erickshaw_auto",
+        distanceKm: lastMileDist,
+        label: lastMileLabel
+      },
       direction: `${winner.originStop} → ${winner.destinationStop}`,
       stopCount: winner.stopsPassed.length,
       fare: Math.min(25, Math.max(5, Math.round(winner.stopsPassed.length * 1.5))),
@@ -512,6 +534,10 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
       estimatedTimeMinutes: Math.round((roadKm / 20) * 60) + 5,
       boardStop: busResult.originStop,
       alightStop: busResult.destinationStop,
+      originDistanceKm: busResult.originDistanceKm,
+      destinationDistanceKm: busResult.destinationDistanceKm,
+      firstMile: busResult.firstMile,
+      lastMile: busResult.lastMile,
       confidence: busResult.confidence,
       route: {
         busNumber: busResult.routeNumber,
