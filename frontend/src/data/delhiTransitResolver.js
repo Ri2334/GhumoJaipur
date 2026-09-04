@@ -222,20 +222,20 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   const metroFare = Math.min(60, Math.max(10, Math.round(roadKm * 2.5)));
   const dtcBusFare = Math.min(25, Math.max(5, Math.round(roadKm * 1.2)));
 
-  // Dynamic DTC Bus Route matching from raw_delhi_routes.json (1,653 objects)
+  // STRICT DOUBLE-CONDITIONAL INCLUSION CHECK ACROSS RAW DATASET (1,653 ROUTES)
   const qOrig = origGeo.name.toLowerCase();
   const qDest = destGeo.name.toLowerCase();
 
-  let matchedBus = DTC_BUS_ROUTES.find(r => 
+  const validRoute = DTC_BUS_ROUTES.find(r => 
     (r.stops || []).some(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase())) &&
     (r.stops || []).some(s => s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase()))
   );
 
-  let hasValidBus = Boolean(matchedBus);
+  const hasValidBus = Boolean(validRoute);
   let busStopsSliced = [];
 
-  if (matchedBus) {
-    const stops = matchedBus.stops || [];
+  if (validRoute) {
+    const stops = validRoute.stops || [];
     const bOrigIdx = stops.findIndex(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase()));
     const bDestIdx = stops.findIndex(s => s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase()));
 
@@ -277,7 +277,7 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
     distanceKm: roadKm,
     totalTimeMins: totalJourneyTimeMins,
     totalDuration: `${totalJourneyTimeMins} min`,
-    totalCost: `₹${metroFare} (Metro) / ₹${dtcBusFare} (Bus)`,
+    totalCost: `₹${metroFare} (Metro)${hasValidBus ? ` / ₹${dtcBusFare} (Bus)` : ''}`,
     mode: `DMRC ${srcStation.line_color} Line`,
     summary: pathResult.summary,
     sourceCoords: { latitude: origGeo.lat, longitude: origGeo.lng },
@@ -291,10 +291,10 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
       area: `${s.line_color} Line Station (Seq ${s.sequence_index || 0})`
     })),
     hasValidBus: hasValidBus,
-    busNoDirectMsg: !hasValidBus ? "No direct bus route found for this corridor." : null,
+    busNoDirectMsg: !hasValidBus ? "❌ No direct bus route connects these specific coordinates. Please use the DMRC Metro option above." : null,
     busRoute: hasValidBus ? {
-      busNumber: matchedBus.busNumber || matchedBus.route_short_name,
-      routeName: matchedBus.routeName || `${matchedBus.origin} ⇄ ${matchedBus.destination}`,
+      busNumber: validRoute.busNumber || validRoute.route_short_name,
+      routeName: validRoute.routeName || `${validRoute.origin} ⇄ ${validRoute.destination}`,
       type: "direct",
       transfers: 0,
       fare: `₹${dtcBusFare}`,
@@ -302,8 +302,8 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
       boardStop: origGeo.name,
       alightStop: destGeo.name,
       route: {
-        busNumber: matchedBus.busNumber || matchedBus.route_short_name,
-        routeName: matchedBus.routeName || `${matchedBus.origin} ⇄ ${matchedBus.destination}`,
+        busNumber: validRoute.busNumber || validRoute.route_short_name,
+        routeName: validRoute.routeName || `${validRoute.origin} ⇄ ${validRoute.destination}`,
         stopsPassed: busStopsSliced
       }
     } : null,
