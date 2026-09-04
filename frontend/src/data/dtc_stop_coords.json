@@ -382,5 +382,57 @@
   "Zakhira": {
     "lat": 28.6349,
     "lng": 77.272
+  },
+  "Super Bazar": {
+    "lat": 28.6315,
+    "lng": 77.2205
+  },
+  "Super Bazaar": {
+    "lat": 28.6315,
+    "lng": 77.2205
+  },
+  "Super Bazar (Connaught Place)": {
+    "lat": 28.6315,
+    "lng": 77.2205
+  },
+  "Shivaji Stadium (CP)": {
+    "lat": 28.631,
+    "lng": 77.214
+  },
+  "Shivaji Stadium Terminal": {
+    "lat": 28.631,
+    "lng": 77.214
+  },
+  "Connaught Place (Rajiv Chowk)": {
+    "lat": 28.6328,
+    "lng": 77.2197
+  },
+  "Rajiv Chowk": {
+    "lat": 28.6328,
+    "lng": 77.2197
+  },
+  "Qutab Minar": {
+    "lat": 28.5245,
+    "lng": 77.1855
+  },
+  "Mehrauli Bus Terminal": {
+    "lat": 28.519,
+    "lng": 77.185
+  },
+  "IIT Gate": {
+    "lat": 28.545,
+    "lng": 77.1926
+  },
+  "Nehru Place Terminal": {
+    "lat": 28.5506,
+    "lng": 77.2514
+  },
+  "Lotus Temple": {
+    "lat": 28.5535,
+    "lng": 77.2588
+  },
+  "NDLS Railway Station": {
+    "lat": 28.643,
+    "lng": 77.2194
   }
 }
