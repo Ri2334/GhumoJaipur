@@ -683,21 +683,53 @@ export default function TransportSearch() {
               </div>
             </div>
 
+            {/* Missing API Key or No Route Banner */}
+            {result.status === "MISSING_API_KEY" && (
+              <div className="rounded-3xl border border-amber-300 bg-amber-50 p-6 text-amber-950 shadow-md space-y-3">
+                <div className="flex items-center gap-2 text-amber-800 font-extrabold text-lg">
+                  <span className="text-xl">⚠️</span>
+                  <span>Google Maps API Key Action Required</span>
+                </div>
+                <p className="text-sm font-medium text-amber-900">
+                  {result.message || "GOOGLE_MAPS_API_KEY is missing in backend/.env. Please configure a valid key with Places API & Routes API enabled."}
+                </p>
+              </div>
+            )}
+
+            {result.status === "NO_ROUTE" && (
+              <div className="rounded-3xl border border-red-300 bg-red-50 p-6 text-red-950 shadow-md space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-red-700 font-extrabold text-lg">
+                    <span className="text-xl">🔴</span>
+                    <span>NO VERIFIED TRANSIT ROUTE FOUND</span>
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-red-200 text-red-900 text-xs font-black uppercase tracking-wider">
+                    NO_ROUTE
+                  </span>
+                </div>
+                <p className="text-sm font-medium text-red-900">
+                  {result.message || "Google Transit API found no public transport route between these two locations."}
+                </p>
+              </div>
+            )}
+
             {/* Smart Transit Mode Comparison Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {result.recommendations.map((rec, index) => (
-                <TransportCard 
-                  key={index}
-                  mode={rec.mode}
-                  fare={rec.fare}
-                  time={rec.time}
-                  badge={rec.badge}
-                  note={rec.note}
-                  source={source}
-                  destination={destination}
-                />
-              ))}
-            </div>
+            {result.recommendations && result.recommendations.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {result.recommendations.map((rec, index) => (
+                  <TransportCard 
+                    key={index}
+                    mode={rec.mode}
+                    fare={rec.fare}
+                    time={rec.time}
+                    badge={rec.badge}
+                    note={rec.note}
+                    source={source}
+                    destination={destination}
+                  />
+                ))}
+              </div>
+            )}
 
             {/* JAIPUR / UDAIPUR / DELHI ENGINE: INTERACTIVE LEAFLET MAP & METRO / BUS TIMELINE */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
