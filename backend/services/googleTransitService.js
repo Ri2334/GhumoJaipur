@@ -196,6 +196,8 @@ export async function fetchGoogleTransitRoutes(originResolved, destResolved, mod
     destination: { location: { latLng: destLatLng } },
     travelMode: "TRANSIT",
     computeAlternativeRoutes: true,
+    languageCode: "en-US",
+    units: "METRIC",
     transitPreferences: {
       allowedTravelModes: allowedModes
     }

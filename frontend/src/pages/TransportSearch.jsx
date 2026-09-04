@@ -286,13 +286,21 @@ export default function TransportSearch() {
         // Construct cards for returned alternatives without inventing missing metrics
         const recommendations = canonicalRoutes.map((r, idx) => {
           const transitLegs = r.legs.filter(l => l.type === "TRANSIT");
-          const modeName = transitLegs.map(l => `${l.mode === 'SUBWAY' ? 'Metro' : l.mode} ${l.line?.shortName || ''}`).join(" + ") || "Transit";
+          const modeName = transitLegs.map(l => {
+            const shortName = l.line?.shortName || l.line?.name || '';
+            const mode = String(l.mode || '').toUpperCase();
+            if (mode === 'SUBWAY' || mode === 'METRO' || mode === 'TRAIN' || shortName.toLowerCase().includes('line')) {
+              return `Delhi Metro ${shortName.toLowerCase().includes('line') ? shortName : `${shortName} Line`}`;
+            }
+            return `DTC Bus ${shortName}`;
+          }).join(" + ") || "Transit Journey";
+
           const firstMile = r.legs.find(l => l.firstMileRecommendation);
 
-          let noteStr = `Transfers: ${r.transfers}`;
+          let noteStr = r.transfers === 0 ? "Direct Route" : `Transfers: ${r.transfers}`;
           if (firstMile && firstMile.firstMileRecommendation === "E_RICKSHAW_AUTO") {
             noteStr += ` • Take E-rickshaw (${Math.round(firstMile.distanceMeters / 100) / 10} km) to boarding stop`;
-          } else if (firstMile) {
+          } else if (firstMile && firstMile.distanceMeters > 0) {
             noteStr += ` • Walk (${firstMile.distanceMeters} m) to boarding stop`;
           }
 
@@ -361,6 +369,8 @@ export default function TransportSearch() {
                 : `Walk ${lastMileLeg.distanceMeters} m`
             } : null,
             route1: {
+              mode: transitLegs[0]?.mode,
+              vehicleType: transitLegs[0]?.line?.vehicleType || transitLegs[0]?.mode,
               routeNumber: transitLegs[0]?.line?.shortName || transitLegs[0]?.mode,
               routeName: transitLegs[0]?.line?.name || primaryRoute.summary,
               stopsPassed: [
@@ -370,6 +380,8 @@ export default function TransportSearch() {
               ].filter(Boolean)
             },
             route2: {
+              mode: transitLegs[1]?.mode,
+              vehicleType: transitLegs[1]?.line?.vehicleType || transitLegs[1]?.mode,
               routeNumber: transitLegs[1]?.line?.shortName || transitLegs[1]?.mode,
               routeName: transitLegs[1]?.line?.name || primaryRoute.summary,
               stopsPassed: [
@@ -803,7 +815,7 @@ export default function TransportSearch() {
                         : "text-[#2C1E18] hover:bg-[#FAF5EF]"
                     }`}
                   >
-                    <span>🚌 {isDelhi ? "DTC Electric Bus Route" : isUdaipur ? "UCTSL Municipal Bus Route" : "JCTSL City Bus Route"}</span>
+                    <span>🚌 {isDelhi ? "Transit Journey Timeline" : isUdaipur ? "UCTSL Municipal Bus Route" : "JCTSL City Bus Route"}</span>
                   </button>
                 </div>
 
