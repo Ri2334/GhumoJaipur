@@ -222,32 +222,32 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   const metroFare = Math.min(60, Math.max(10, Math.round(roadKm * 2.5)));
   const dtcBusFare = Math.min(25, Math.max(5, Math.round(roadKm * 1.2)));
 
-  // STRICT DOUBLE-CONDITIONAL INCLUSION CHECK ACROSS RAW DATASET (1,653 ROUTES)
-  const qOrig = origGeo.name.toLowerCase();
-  const qDest = destGeo.name.toLowerCase();
+  // STRICT ABSOLUTE SEQUENTIAL ORDER EVALUATION PATTERN (1,653 ROUTES)
+  const qOrig = origGeo.name.toLowerCase().trim();
+  const qDest = destGeo.name.toLowerCase().trim();
 
-  const validRoute = DTC_BUS_ROUTES.find(r => 
-    (r.stops || []).some(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase())) &&
-    (r.stops || []).some(s => s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase()))
-  );
+  let bOrigIdx = -1;
+  let bDestIdx = -1;
+
+  const validRoute = DTC_BUS_ROUTES.find(r => {
+    const stopsArray = r.stops || [];
+    const oIdx = stopsArray.findIndex(s => s.toLowerCase().trim() === qOrig || s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase().trim()));
+    const dIdx = stopsArray.findIndex(s => s.toLowerCase().trim() === qDest || s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase().trim()));
+    
+    // The route is ONLY valid if both stops exist AND originIndex < destIndex
+    if (oIdx !== -1 && dIdx !== -1 && oIdx < dIdx) {
+      bOrigIdx = oIdx;
+      bDestIdx = dIdx;
+      return true;
+    }
+    return false;
+  });
 
   const hasValidBus = Boolean(validRoute);
   let busStopsSliced = [];
 
-  if (validRoute) {
-    const stops = validRoute.stops || [];
-    const bOrigIdx = stops.findIndex(s => s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase()));
-    const bDestIdx = stops.findIndex(s => s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase()));
-
-    if (bOrigIdx !== -1 && bDestIdx !== -1) {
-      if (bOrigIdx <= bDestIdx) {
-        busStopsSliced = stops.slice(bOrigIdx, bDestIdx + 1);
-      } else {
-        busStopsSliced = stops.slice(bDestIdx, bOrigIdx + 1).reverse();
-      }
-    } else {
-      busStopsSliced = stops.slice(0, 6);
-    }
+  if (validRoute && bOrigIdx !== -1 && bDestIdx !== -1) {
+    busStopsSliced = (validRoute.stops || []).slice(bOrigIdx, bDestIdx + 1);
   }
 
   const metroSteps = [
