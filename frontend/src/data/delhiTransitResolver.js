@@ -4,11 +4,11 @@ import { DTC_BUS_ROUTES } from "./delhiDTCBusCatalog.js";
 import DTC_STOP_COORDS from "./dtc_stop_coords.json";
 
 // ============================================================================
-// SYSTEM OVERRIDE — DELHI TRANSIT ENGINE (GEOGRAPHIC SPATIAL ROUTER)
+// SYSTEM OVERRIDE — DELHI TRANSIT ENGINE (PURE GENERIC SPATIAL ROUTER)
 // Zero-Fabrication Deterministic Route Validation & Spatial Discovery Engine
 // ============================================================================
 
-// 1. CANONICAL ALIAS MAP & NORMALIZER
+// 1. CANONICAL ALIAS MAP & NORMALIZER (Spelling & Abbreviation Normalization Only)
 const CANONICAL_ALIASES = {
   "dwarka sec 10": "dwarka sector 10",
   "dwarka sec-10": "dwarka sector 10",
@@ -17,12 +17,10 @@ const CANONICAL_ALIASES = {
   "dwarka sec-21": "dwarka sector 21",
   "dwarka sector-21": "dwarka sector 21",
   "dwarka sec 8": "dwarka sector 8",
-  "lotus temple": "kalkaji mandir",
   "gurgaon": "gurugram",
   "mg road": "mg road",
   "m.g. road": "mg road",
   "iit": "iit delhi",
-  "iit delhi": "iit delhi",
   "aiims hospital": "aiims",
   "connaught place": "rajiv chowk",
   "cp": "rajiv chowk"
@@ -65,8 +63,9 @@ export function getHaversineKm(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-// 3. GEOGRAPHIC LOCATION ➔ NEARBY CANDIDATE TRANSIT STOPS RESOLVER
-export function findNearbyCandidateDTCStops(targetLat, targetLng, maxRadiusKm = 3.5) {
+// 3. PROXIMITY RANKING SYSTEM & CANDIDATE TRANSIT STOPS RESOLVER
+// Tiers: Tier 1 (<= 0.5km: +100), Tier 2 (0.5km - 1.0km: +50), Tier 3 (1.0km - 2.0km: +10)
+export function findNearbyCandidateDTCStops(targetLat, targetLng, maxRadiusKm = 2.5) {
   const safeLat = typeof targetLat === 'number' && !isNaN(targetLat) ? targetLat : 28.6315;
   const safeLng = typeof targetLng === 'number' && !isNaN(targetLng) ? targetLng : 77.2167;
 
@@ -76,10 +75,14 @@ export function findNearbyCandidateDTCStops(targetLat, targetLng, maxRadiusKm = 
   Object.entries(DTC_STOP_COORDS).forEach(([stopName, coords]) => {
     const dist = getHaversineKm(safeLat, safeLng, coords.lat, coords.lng);
     if (dist <= maxRadiusKm) {
+      const tier = dist <= 0.5 ? 1 : (dist <= 1.0 ? 2 : 3);
+      const score = dist <= 0.5 ? 100 : (dist <= 1.0 ? 50 : 10);
       candidates.push({
         stopName: stopName,
         normName: normalizeStopName(stopName),
-        distanceKm: Math.round(dist * 10) / 10,
+        distanceKm: Math.round(dist * 100) / 100,
+        tier: tier,
+        score: score,
         lat: coords.lat,
         lng: coords.lng
       });
@@ -94,10 +97,14 @@ export function findNearbyCandidateDTCStops(targetLat, targetLng, maxRadiusKm = 
     if (dist <= maxRadiusKm) {
       const normStName = normalizeStopName(st.station_name);
       if (!candidates.some(c => c.normName === normStName)) {
+        const tier = dist <= 0.5 ? 1 : (dist <= 1.0 ? 2 : 3);
+        const score = dist <= 0.5 ? 100 : (dist <= 1.0 ? 50 : 10);
         candidates.push({
           stopName: st.station_name,
           normName: normStName,
-          distanceKm: Math.round(dist * 10) / 10,
+          distanceKm: Math.round(dist * 100) / 100,
+          tier: tier,
+          score: score,
           lat: stLat,
           lng: stLng
         });
@@ -105,10 +112,9 @@ export function findNearbyCandidateDTCStops(targetLat, targetLng, maxRadiusKm = 
     }
   });
 
-  // Sort candidates by spatial distance ascending
+  // Sort candidates by proximity distance ascending
   candidates.sort((a, b) => a.distanceKm - b.distanceKm);
 
-  // Return top 8 nearest candidate transit stops
   return candidates.slice(0, 8);
 }
 
@@ -271,7 +277,7 @@ export function computeDMRCMultiLinePath(srcStation, dstStation) {
   };
 }
 
-// 5. GEOGRAPHIC SPATIAL TRANSIT NETWORK ROUTER (Multi-Candidate Discovery Engine)
+// 5. GEOGRAPHIC SPATIAL TRANSIT NETWORK ROUTER (Multi-Candidate Discovery & Ranking Engine)
 export function resolveVerifiedBusRoute(origLocation, destLocation) {
   const origLat = typeof origLocation === 'object' ? origLocation.lat : 28.6315;
   const origLng = typeof origLocation === 'object' ? origLocation.lng || origLocation.lon : 77.2167;
@@ -280,23 +286,20 @@ export function resolveVerifiedBusRoute(origLocation, destLocation) {
   const origName = (typeof origLocation === 'object' ? origLocation.name : origLocation) || "Origin";
   const destName = (typeof destLocation === 'object' ? destLocation.name : destLocation) || "Destination";
 
-  // 1. Resolve nearby candidate DTC transit stops
-  const origCandidates = findNearbyCandidateDTCStops(origLat, origLng, 3.5);
-  const destCandidates = findNearbyCandidateDTCStops(destLat, destLng, 3.5);
+  // 1. Resolve nearby candidate DTC transit stops with spatial distance tiering
+  const origCandidates = findNearbyCandidateDTCStops(origLat, origLng, 2.5);
+  const destCandidates = findNearbyCandidateDTCStops(destLat, destLng, 2.5);
 
-  // Diagnostic Trace Logging
-  console.log("[TRANSIT ROUTER DIAGNOSTIC TRACE]", {
-    originPlace: origName,
-    originCoords: [origLat, origLng],
-    resolvedOriginStops: origCandidates.map(c => `${c.stopName} (${c.distanceKm}km)`),
-    destPlace: destName,
-    destCoords: [destLat, destLng],
-    resolvedDestStops: destCandidates.map(c => `${c.stopName} (${c.distanceKm}km)`)
-  });
+  // Detailed Candidate Stop Pair Diagnostic Audit Log
+  console.log("\n=======================================================");
+  console.log(`[TRANSIT ROUTER AUDIT] Query: ${origName} (${origLat}, ${origLng}) ➔ ${destName} (${destLat}, ${destLng})`);
+  console.log("=======================================================");
+  console.log("Resolved Origin Candidate Stops:", origCandidates.map(c => `${c.stopName} (${c.distanceKm}km, Tier ${c.tier})`));
+  console.log("Resolved Destination Candidate Stops:", destCandidates.map(c => `${c.stopName} (${c.distanceKm}km, Tier ${c.tier})`));
 
-  const discoveredRoutes = [];
+  const evaluatedPairs = [];
 
-  // 2. Cross-Evaluate Origin & Destination Candidate Combinations
+  // 2. Cross-Evaluate Candidate Pairs
   for (const oCand of origCandidates) {
     const oEntries = stopIndexMap.get(oCand.normName) || [];
     for (const dCand of destCandidates) {
@@ -304,38 +307,55 @@ export function resolveVerifiedBusRoute(origLocation, destLocation) {
 
       for (const oEntry of oEntries) {
         const matchingDest = dEntries.find(d => d.routeIdx === oEntry.routeIdx);
+        const route = DTC_BUS_ROUTES[oEntry.routeIdx];
+        const busNo = route.busNumber || route.route_short_name || "DTC Bus";
+
         if (matchingDest) {
-          // STRICT CHRONOLOGICAL VALIDATION: originIndex < destIndex
-          if (oEntry.stopIdx < matchingDest.stopIdx) {
-            const route = DTC_BUS_ROUTES[oEntry.routeIdx];
-            const stopsPassed = (route.stops || []).slice(oEntry.stopIdx, matchingDest.stopIdx + 1);
-            
-            // Check if route already discovered
-            const busNo = route.busNumber || route.route_short_name || "DTC Bus";
-            if (!discoveredRoutes.some(r => r.routeNumber === busNo)) {
-              discoveredRoutes.push({
-                routeNumber: busNo,
-                operator: "DTC",
-                originStop: route.stops[oEntry.stopIdx],
-                destinationStop: route.stops[matchingDest.stopIdx],
-                direction: `${route.stops[oEntry.stopIdx]} → ${route.stops[matchingDest.stopIdx]}`,
-                stopCount: stopsPassed.length,
-                fare: Math.min(25, Math.max(5, Math.round(stopsPassed.length * 1.5))),
-                validChronology: true,
-                confidence: "VERIFIED",
-                stopsPassed: stopsPassed
-              });
-            }
-          }
+          // STRICT DIRECTIONAL CHRONOLOGY: originIndex < destIndex
+          const isValid = oEntry.stopIdx < matchingDest.stopIdx;
+          const stopsPassed = isValid ? (route.stops || []).slice(oEntry.stopIdx, matchingDest.stopIdx + 1) : [];
+          
+          const pairScore = isValid ? (oCand.score + dCand.score - (stopsPassed.length * 2)) : -999;
+
+          evaluatedPairs.push({
+            originStop: route.stops[oEntry.stopIdx],
+            originDistance: oCand.distanceKm,
+            destinationStop: route.stops[matchingDest.stopIdx],
+            destinationDistance: dCand.distanceKm,
+            routeVariant: busNo,
+            originIndex: oEntry.stopIdx,
+            destinationIndex: matchingDest.stopIdx,
+            valid: isValid,
+            score: pairScore,
+            stopsPassed: stopsPassed
+          });
+
+          console.log(`  [${isValid ? 'VALID' : 'INVALID'}] ${oCand.stopName} (${oCand.distanceKm}km) ➔ ${dCand.stopName} (${dCand.distanceKm}km) | Route: ${busNo} | Indices: ${oEntry.stopIdx} ➔ ${matchingDest.stopIdx}`);
         }
       }
     }
   }
 
-  // 3. Return Ranked Discovered Routes
-  if (discoveredRoutes.length > 0) {
-    discoveredRoutes.sort((a, b) => a.stopCount - b.stopCount);
-    return discoveredRoutes[0];
+  // 3. Rank & Select Best Discovered Valid Route
+  const validDiscovered = evaluatedPairs.filter(p => p.valid);
+  if (validDiscovered.length > 0) {
+    validDiscovered.sort((a, b) => b.score - a.score);
+    const winner = validDiscovered[0];
+    
+    console.log("🏆 BEST DISCOVERED ROUTE:", winner.routeVariant, "| Sequence:", winner.stopsPassed.join(" ➔ "));
+
+    return {
+      routeNumber: winner.routeVariant,
+      operator: "DTC",
+      originStop: winner.originStop,
+      destinationStop: winner.destinationStop,
+      direction: `${winner.originStop} → ${winner.destinationStop}`,
+      stopCount: winner.stopsPassed.length,
+      fare: Math.min(25, Math.max(5, Math.round(winner.stopsPassed.length * 1.5))),
+      validChronology: true,
+      confidence: "VERIFIED",
+      stopsPassed: winner.stopsPassed
+    };
   }
 
   // 4. Multi-Bus 2-Bus Interchange Engine (No Invented Stops)
