@@ -28,23 +28,32 @@ app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS - allows frontend to communicate with backend
 const allowedOrigins = (process.env.CORS_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
+const defaultOrigins = [
+  "https://shehersaathi.com",
+  "https://www.shehersaathi.com",
+  "http://localhost:5173",
+  "http://localhost:5001",
+  "http://localhost:3000"
+];
 
 app.use(cors({
   origin: function(origin, callback) {
     // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
-    
-    // In development, allow all origins if CORS_ORIGIN is not set
-    if (process.env.NODE_ENV === 'development' && allowedOrigins.length === 0) {
+
+    if (
+      defaultOrigins.includes(origin) ||
+      allowedOrigins.includes(origin) ||
+      allowedOrigins.includes("*") ||
+      origin.endsWith(".vercel.app") ||
+      origin.endsWith("shehersaathi.com") ||
+      process.env.NODE_ENV !== 'production'
+    ) {
       return callback(null, true);
     }
 
-    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes('*')) {
-      return callback(null, true);
-    } else {
-      console.warn(`CORS blocked for origin: ${origin}`);
-      return callback(new Error('CORS blocked by server'), false);
-    }
+    console.warn(`CORS blocked for origin: ${origin}`);
+    return callback(null, false);
   },
   credentials: true,
 }));

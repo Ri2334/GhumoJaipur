@@ -310,34 +310,76 @@ export default function TransportSearch() {
         const firstMileLeg = primaryRoute.legs.find(l => l.type === "WALK" && l.firstMileRecommendation);
         const lastMileLeg = primaryRoute.legs.find(l => l.type === "WALK" && l.lastMileRecommendation);
 
-        const busRoutePayload = transitLegs.length > 0 ? {
-          type: transitLegs.length > 1 ? "interchange" : "direct",
-          transfers: primaryRoute.transfers,
-          busNumber: transitLegs[0]?.line?.shortName || "Transit Line",
-          routeName: transitLegs[0]?.line?.name || primaryRoute.summary,
-          fare: primaryRoute.fare ? primaryRoute.fare.text : "Information unavailable",
-          boardStop: transitLegs[0]?.departureStop?.name || finalSource,
-          alightStop: transitLegs[transitLegs.length - 1]?.arrivalStop?.name || finalDest,
-          firstMile: firstMileLeg ? {
-            label: firstMileLeg.firstMileRecommendation === "E_RICKSHAW_AUTO" 
-              ? `Take E-rickshaw / Auto (${Math.round(firstMileLeg.distanceMeters / 100) / 10} km)` 
-              : `Walk ${firstMileLeg.distanceMeters} m`
-          } : null,
-          lastMile: lastMileLeg ? {
-            label: lastMileLeg.lastMileRecommendation === "E_RICKSHAW_AUTO"
-              ? `Take E-rickshaw / Auto (${Math.round(lastMileLeg.distanceMeters / 100) / 10} km)`
-              : `Walk ${lastMileLeg.distanceMeters} m`
-          } : null,
-          route: {
+        let busRoutePayload = null;
+        if (transitLegs.length === 1) {
+          busRoutePayload = {
+            type: "direct",
+            transfers: 0,
             busNumber: transitLegs[0]?.line?.shortName || "Transit Line",
+            routeName: transitLegs[0]?.line?.name || primaryRoute.summary,
+            fare: primaryRoute.fare ? primaryRoute.fare.text : "Information unavailable",
+            boardStop: transitLegs[0]?.departureStop?.name || finalSource,
+            alightStop: transitLegs[0]?.arrivalStop?.name || finalDest,
+            firstMile: firstMileLeg ? {
+              label: firstMileLeg.firstMileRecommendation === "E_RICKSHAW_AUTO" 
+                ? `Take E-rickshaw / Auto (${Math.round(firstMileLeg.distanceMeters / 100) / 10} km)` 
+                : `Walk ${firstMileLeg.distanceMeters} m`
+            } : null,
+            lastMile: lastMileLeg ? {
+              label: lastMileLeg.lastMileRecommendation === "E_RICKSHAW_AUTO"
+                ? `Take E-rickshaw / Auto (${Math.round(lastMileLeg.distanceMeters / 100) / 10} km)`
+                : `Walk ${lastMileLeg.distanceMeters} m`
+            } : null,
+            route: {
+              busNumber: transitLegs[0]?.line?.shortName || "Transit Line",
+              routeName: primaryRoute.summary,
+              stopsPassed: [
+                transitLegs[0]?.departureStop?.name,
+                ...(transitLegs[0]?.intermediateStops || []).map(s => s.name),
+                transitLegs[0]?.arrivalStop?.name
+              ].filter(Boolean)
+            }
+          };
+        } else if (transitLegs.length > 1) {
+          busRoutePayload = {
+            type: "interchange",
+            transfers: transitLegs.length - 1,
+            busNumber: transitLegs.map(l => l.line?.shortName || l.mode).join(" ➔ "),
             routeName: primaryRoute.summary,
-            stopsPassed: [
-              transitLegs[0]?.departureStop?.name,
-              ...(transitLegs[0]?.intermediateStops || []).map(s => s.name),
-              transitLegs[transitLegs.length - 1]?.arrivalStop?.name
-            ].filter(Boolean)
-          }
-        } : null;
+            fare: primaryRoute.fare ? primaryRoute.fare.text : "Information unavailable",
+            boardStop: transitLegs[0]?.departureStop?.name || finalSource,
+            transferStop: transitLegs[0]?.arrivalStop?.name || transitLegs[1]?.departureStop?.name,
+            alightStop: transitLegs[transitLegs.length - 1]?.arrivalStop?.name || finalDest,
+            firstMile: firstMileLeg ? {
+              label: firstMileLeg.firstMileRecommendation === "E_RICKSHAW_AUTO" 
+                ? `Take E-rickshaw / Auto (${Math.round(firstMileLeg.distanceMeters / 100) / 10} km)` 
+                : `Walk ${firstMileLeg.distanceMeters} m`
+            } : null,
+            lastMile: lastMileLeg ? {
+              label: lastMileLeg.lastMileRecommendation === "E_RICKSHAW_AUTO"
+                ? `Take E-rickshaw / Auto (${Math.round(lastMileLeg.distanceMeters / 100) / 10} km)`
+                : `Walk ${lastMileLeg.distanceMeters} m`
+            } : null,
+            route1: {
+              routeNumber: transitLegs[0]?.line?.shortName || transitLegs[0]?.mode,
+              routeName: transitLegs[0]?.line?.name || primaryRoute.summary,
+              stopsPassed: [
+                transitLegs[0]?.departureStop?.name,
+                ...(transitLegs[0]?.intermediateStops || []).map(s => s.name),
+                transitLegs[0]?.arrivalStop?.name
+              ].filter(Boolean)
+            },
+            route2: {
+              routeNumber: transitLegs[1]?.line?.shortName || transitLegs[1]?.mode,
+              routeName: transitLegs[1]?.line?.name || primaryRoute.summary,
+              stopsPassed: [
+                transitLegs[1]?.departureStop?.name,
+                ...(transitLegs[1]?.intermediateStops || []).map(s => s.name),
+                transitLegs[1]?.arrivalStop?.name
+              ].filter(Boolean)
+            }
+          };
+        }
 
         setResult({
           status: "FOUND",
