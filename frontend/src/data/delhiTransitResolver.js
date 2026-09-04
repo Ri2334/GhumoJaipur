@@ -2,6 +2,52 @@ import { DELHI_PLACES } from "./delhiPlacesData.js";
 import { RAW_DELHI_METRO_STATIONS } from "./delhiMetroData.js";
 import { DTC_BUS_ROUTES } from "./delhiDTCBusCatalog.js";
 
+// ============================================================================
+// SYSTEM OVERRIDE — DELHI TRANSIT ENGINE (ABSOLUTE MODE)
+// Zero-Fabrication Deterministic Route Validation Engine
+// ============================================================================
+
+// 1. CANONICAL ALIAS MAP & NORMALIZER
+const CANONICAL_ALIASES = {
+  "dwarka sec 10": "dwarka sector 10",
+  "dwarka sec-10": "dwarka sector 10",
+  "dwarka sector-10": "dwarka sector 10",
+  "dwarka sec 21": "dwarka sector 21",
+  "dwarka sec-21": "dwarka sector 21",
+  "dwarka sector-21": "dwarka sector 21",
+  "dwarka sec 8": "dwarka sector 8",
+  "lotus temple": "kalkaji mandir",
+  "gurgaon": "gurugram",
+  "mg road": "mg road",
+  "m.g. road": "mg road",
+  "iit": "iit delhi",
+  "aiims hospital": "aiims",
+  "connaught place": "rajiv chowk",
+  "cp": "rajiv chowk"
+};
+
+export function normalizeStopName(name) {
+  if (!name) return "";
+  let clean = name.toLowerCase().trim()
+    .replace(/[-_]/g, " ")
+    .replace(/\s+/g, " ");
+  return CANONICAL_ALIASES[clean] || clean;
+}
+
+// 2. STOP & ROUTE INVERTED INDEX MAP (O(1) Discovery Engine)
+const stopIndexMap = new Map();
+
+DTC_BUS_ROUTES.forEach((route, routeIdx) => {
+  const stops = route.stops || [];
+  stops.forEach((stopName, stopIdx) => {
+    const norm = normalizeStopName(stopName);
+    if (!stopIndexMap.has(norm)) {
+      stopIndexMap.set(norm, []);
+    }
+    stopIndexMap.get(norm).push({ routeIdx, stopIdx, originalName: stopName });
+  });
+});
+
 // Standard Haversine formula for exact physical distance calculation (in kilometers)
 export function getHaversineKm(lat1, lon1, lat2, lon2) {
   const R = 6371; // Earth radius in km
@@ -20,24 +66,26 @@ export function getHaversineKm(lat1, lon1, lat2, lon2) {
 // OpenStreetMap Nominatim Geocoding API with NCR viewbox bounding box (76.8, 28.4, 77.5, 28.9)
 export async function geocodeNominatimNCR(queryText) {
   if (!queryText) return { name: "Delhi Center", lat: 28.6315, lng: 77.2167 };
-  const q = queryText.toLowerCase().trim();
+  const normQuery = normalizeStopName(queryText);
 
-  // 1. Direct RAW_DELHI_METRO_STATIONS match with real coordinates
-  const metroMatch = RAW_DELHI_METRO_STATIONS.find(s => 
-    s.station_name.toLowerCase() === q || q.includes(s.station_name.toLowerCase())
-  );
+  // 1. Direct RAW_DELHI_METRO_STATIONS match
+  const metroMatch = RAW_DELHI_METRO_STATIONS.find(s => {
+    const sNorm = normalizeStopName(s.station_name);
+    return sNorm === normQuery || normQuery.includes(sNorm) || sNorm.includes(normQuery);
+  });
   if (metroMatch) {
     return { 
-      name: `${metroMatch.station_name} Metro Station`, 
+      name: metroMatch.station_name, 
       lat: typeof metroMatch.lat === 'number' ? metroMatch.lat : 28.6315, 
       lng: typeof metroMatch.lng === 'number' ? metroMatch.lng : 77.2167 
     };
   }
 
   // 2. Direct DELHI_PLACES match
-  const placeMatch = DELHI_PLACES.find(p => 
-    p.name.toLowerCase() === q || q.includes(p.name.toLowerCase())
-  );
+  const placeMatch = DELHI_PLACES.find(p => {
+    const pNorm = normalizeStopName(p.name);
+    return pNorm === normQuery || normQuery.includes(pNorm);
+  });
   if (placeMatch) {
     return { name: placeMatch.name, lat: placeMatch.lat, lng: placeMatch.lng };
   }
@@ -94,7 +142,7 @@ export function findNearestMetroStationByCoords(targetLat, targetLng) {
   };
 }
 
-// Authentic DMRC Multi-Line Transfer Pathfinder
+// 3. DETERMINISTIC DMRC METRO CHRONOLOGY VALIDATOR
 export function computeDMRCMultiLinePath(srcStation, dstStation) {
   // 1. Same Line Direct Corridor
   if (srcStation.line_color === dstStation.line_color) {
@@ -110,6 +158,7 @@ export function computeDMRCMultiLinePath(srcStation, dstStation) {
       if (sIdx <= dIdx) {
         seq = sameLine.slice(sIdx, dIdx + 1);
       } else {
+        // Strict Directional Chronology Reversal
         seq = sameLine.slice(dIdx, sIdx + 1).reverse();
       }
     }
@@ -173,6 +222,86 @@ export function computeDMRCMultiLinePath(srcStation, dstStation) {
   };
 }
 
+// 4. ZERO-FABRICATION DETERMINISTIC BUS ROUTE DISCOVERY ENGINE
+export function findVerifiedBusRoute(origName, destName) {
+  const normOrig = normalizeStopName(origName);
+  const normDest = normalizeStopName(normOrig === "lotus temple" ? "kalkaji mandir" : destName);
+
+  // 1. Direct Intersection Discovery via Inverted Index
+  const origEntries = stopIndexMap.get(normOrig) || [];
+  const destEntries = stopIndexMap.get(normDest) || [];
+
+  if (origEntries.length > 0 && destEntries.length > 0) {
+    for (const oEntry of origEntries) {
+      const matchingDest = destEntries.find(d => d.routeIdx === oEntry.routeIdx);
+      if (matchingDest) {
+        // STRICT CHRONOLOGICAL ORDER CHECK (originIndex < destIndex)
+        if (oEntry.stopIdx < matchingDest.stopIdx) {
+          const route = DTC_BUS_ROUTES[oEntry.routeIdx];
+          const stopsPassed = (route.stops || []).slice(oEntry.stopIdx, matchingDest.stopIdx + 1);
+          return {
+            routeNumber: route.busNumber || route.route_short_name || "DTC Bus",
+            operator: "DTC",
+            originStop: route.stops[oEntry.stopIdx],
+            destinationStop: route.stops[matchingDest.stopIdx],
+            direction: `${route.stops[oEntry.stopIdx]} → ${route.stops[matchingDest.stopIdx]}`,
+            stopCount: stopsPassed.length,
+            fare: Math.min(25, Math.max(5, Math.round(stopsPassed.length * 1.5))),
+            validChronology: true,
+            confidence: "VERIFIED",
+            stopsPassed: stopsPassed
+          };
+        }
+      }
+    }
+  }
+
+  // 2. Multi-Bus 2-Bus Interchange Engine (No Invented Stops)
+  if (origEntries.length > 0 && destEntries.length > 0) {
+    for (const oEntry of origEntries) {
+      const bus1Route = DTC_BUS_ROUTES[oEntry.routeIdx];
+      const bus1StopsAfterOrig = (bus1Route.stops || []).slice(oEntry.stopIdx + 1);
+
+      for (const transferStopName of bus1StopsAfterOrig) {
+        const normTransfer = normalizeStopName(transferStopName);
+        const transferBus2Entries = stopIndexMap.get(normTransfer) || [];
+
+        for (const dEntry of destEntries) {
+          const matchingBus2 = transferBus2Entries.find(t => t.routeIdx === dEntry.routeIdx);
+          if (matchingBus2 && matchingBus2.stopIdx < dEntry.stopIdx) {
+            const bus2Route = DTC_BUS_ROUTES[dEntry.routeIdx];
+            return {
+              routeNumber: `${bus1Route.busNumber || 'Bus 1'} ➔ ${bus2Route.busNumber || 'Bus 2'}`,
+              operator: "DTC Interchange",
+              originStop: bus1Route.stops[oEntry.stopIdx],
+              transferStop: transferStopName,
+              destinationStop: bus2Route.stops[dEntry.stopIdx],
+              direction: `${bus1Route.stops[oEntry.stopIdx]} ➔ ${transferStopName} (Transfer) ➔ ${bus2Route.stops[dEntry.stopIdx]}`,
+              stopCount: (bus1Route.stops.slice(oEntry.stopIdx).length) + (bus2Route.stops.slice(0, dEntry.stopIdx + 1).length),
+              fare: 25,
+              validChronology: true,
+              confidence: "INTERCHANGE",
+              stopsPassed: [
+                ...bus1Route.stops.slice(oEntry.stopIdx, bus1Route.stops.indexOf(transferStopName) + 1),
+                ...bus2Route.stops.slice(bus2Route.stops.indexOf(transferStopName), dEntry.stopIdx + 1)
+              ]
+            };
+          }
+        }
+      }
+    }
+  }
+
+  // 3. ZERO-FABRICATION HARD FAILURE (NO_ROUTE)
+  return {
+    status: "NO_DIRECT_ROUTE",
+    title: "No Direct DTC Bus Available",
+    description: "We found no bus operating between these two stops in the correct direction.",
+    confidence: "NO_ROUTE",
+    validChronology: false
+  };
+}
+
 export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   if (!origGeo || !destGeo) {
     throw new Error("Real-time transit path calculation failed for this corridor.");
@@ -196,7 +325,7 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   const srcStation = srcNearest.station;
   const dstStation = dstNearest.station;
 
-  // Compute multi-line transfer path dynamically
+  // Compute multi-line transfer path dynamically with strict chronology
   const pathResult = computeDMRCMultiLinePath(srcStation, dstStation);
   const evaluatedSequence = pathResult.sequence;
 
@@ -220,35 +349,10 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
 
   // Official DMRC Fare Stage Mapping (₹10 - ₹60)
   const metroFare = Math.min(60, Math.max(10, Math.round(roadKm * 2.5)));
-  const dtcBusFare = Math.min(25, Math.max(5, Math.round(roadKm * 1.2)));
 
-  // STRICT ABSOLUTE SEQUENTIAL ORDER EVALUATION PATTERN (1,653 ROUTES)
-  const qOrig = origGeo.name.toLowerCase().trim();
-  const qDest = destGeo.name.toLowerCase().trim();
-
-  let bOrigIdx = -1;
-  let bDestIdx = -1;
-
-  const validRoute = DTC_BUS_ROUTES.find(r => {
-    const stopsArray = r.stops || [];
-    const oIdx = stopsArray.findIndex(s => s.toLowerCase().trim() === qOrig || s.toLowerCase().includes(qOrig) || qOrig.includes(s.toLowerCase().trim()));
-    const dIdx = stopsArray.findIndex(s => s.toLowerCase().trim() === qDest || s.toLowerCase().includes(qDest) || qDest.includes(s.toLowerCase().trim()));
-    
-    // The route is ONLY valid if both stops exist AND originIndex < destIndex
-    if (oIdx !== -1 && dIdx !== -1 && oIdx < dIdx) {
-      bOrigIdx = oIdx;
-      bDestIdx = dIdx;
-      return true;
-    }
-    return false;
-  });
-
-  const hasValidBus = Boolean(validRoute);
-  let busStopsSliced = [];
-
-  if (validRoute && bOrigIdx !== -1 && bDestIdx !== -1) {
-    busStopsSliced = (validRoute.stops || []).slice(bOrigIdx, bDestIdx + 1);
-  }
+  // DETERMINISTIC BUS DISCOVERY ENGINE EXECUTION
+  const busResult = findVerifiedBusRoute(origGeo.name, destGeo.name);
+  const hasValidBus = busResult.confidence === "VERIFIED" || busResult.confidence === "INTERCHANGE";
 
   const metroSteps = [
     { type: "walk", title: `📍 Depart from ${origGeo.name}`, duration: "0 min", cost: "Free" },
@@ -277,7 +381,7 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
     distanceKm: roadKm,
     totalTimeMins: totalJourneyTimeMins,
     totalDuration: `${totalJourneyTimeMins} min`,
-    totalCost: `₹${metroFare} (Metro)${hasValidBus ? ` / ₹${dtcBusFare} (Bus)` : ''}`,
+    totalCost: `₹${metroFare} (Metro)${hasValidBus ? ` / ₹${busResult.fare} (Bus)` : ''}`,
     mode: `DMRC ${srcStation.line_color} Line`,
     summary: pathResult.summary,
     sourceCoords: { latitude: origGeo.lat, longitude: origGeo.lng },
@@ -291,22 +395,28 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
       area: `${s.line_color} Line Station (Seq ${s.sequence_index || 0})`
     })),
     hasValidBus: hasValidBus,
-    busNoDirectMsg: !hasValidBus ? "❌ No direct bus route connects these specific coordinates. Please use the DMRC Metro option above." : null,
+    busNoDirectMsg: !hasValidBus ? "🔴 No direct bus operating between these two stops in the correct direction." : null,
     busRoute: hasValidBus ? {
-      busNumber: validRoute.busNumber || validRoute.route_short_name,
-      routeName: validRoute.routeName || `${validRoute.origin} ⇄ ${validRoute.destination}`,
-      type: "direct",
-      transfers: 0,
-      fare: `₹${dtcBusFare}`,
+      busNumber: busResult.routeNumber,
+      routeName: busResult.direction,
+      type: busResult.confidence === "INTERCHANGE" ? "interchange" : "direct",
+      transfers: busResult.confidence === "INTERCHANGE" ? 1 : 0,
+      fare: `₹${busResult.fare}`,
       estimatedTimeMinutes: Math.round((roadKm / 20) * 60) + 5,
-      boardStop: origGeo.name,
-      alightStop: destGeo.name,
+      boardStop: busResult.originStop,
+      alightStop: busResult.destinationStop,
+      confidence: busResult.confidence,
       route: {
-        busNumber: validRoute.busNumber || validRoute.route_short_name,
-        routeName: validRoute.routeName || `${validRoute.origin} ⇄ ${validRoute.destination}`,
-        stopsPassed: busStopsSliced
+        busNumber: busResult.routeNumber,
+        routeName: busResult.direction,
+        stopsPassed: busResult.stopsPassed || []
       }
-    } : null,
+    } : {
+      confidence: "NO_ROUTE",
+      status: "NO_DIRECT_ROUTE",
+      title: "No Direct DTC Bus Available",
+      description: "We found no bus operating between these two stops in the correct direction."
+    },
     steps: metroSteps
   };
 }
