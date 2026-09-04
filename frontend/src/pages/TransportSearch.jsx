@@ -239,89 +239,127 @@ export default function TransportSearch() {
     setSuggestionsVisible(false);
     setError(null);
 
-    // DELHI CITY ROUTE RESOLUTION
+    // DELHI CITY ROUTE RESOLUTION (AUTHORITATIVE GOOGLE PLACES & GOOGLE ROUTES TRANSIT API)
     if (isDelhi) {
       try {
         const srcLocationObj = sourceCoordsObj || finalSource;
         const destLocationObj = destCoordsObj || finalDest;
         const routeRes = await getCityRouteResultAsync(srcLocationObj, destLocationObj, "delhi");
-        if (!routeRes || !routeRes.hasValidMetro) {
-          throw new Error("Routing engine could not verify location coordinate paths.");
-        }
-        const distKm = routeRes?.distanceKm || 8;
-      const recommendations = [];
 
-      const metroFare = Math.min(60, Math.max(10, Math.round(distKm * 2.5)));
-      const dtcBusFare = Math.min(25, Math.max(5, Math.round(distKm * 1.2)));
-      const autoCabFare = Math.min(350, Math.max(80, Math.round(distKm * 18 + 25)));
-
-      if (routeRes.hasValidMetro) {
-        recommendations.push({
-          mode: "DMRC Metro",
-          fare: `₹${metroFare}`,
-          time: `${routeRes.totalTimeMins} mins`,
-          badge: "best",
-          note: `DMRC ${routeRes.sourceMetroName} to ${routeRes.destMetroName}`
+        console.log("[PHASE 2 BROWSER LOG] Received Transit Payload:", {
+          source: "GOOGLE_ROUTES_API",
+          status: routeRes?.status,
+          routeCount: routeRes?.routes?.length || 0,
+          journeyId: (routeRes?.origin?.placeId || "orig") + "->" + (routeRes?.destination?.placeId || "dest"),
+          legs: routeRes?.routes?.[0]?.legs,
+          transitRoutes: routeRes?.routes?.map(r => r.summary),
+          durations: routeRes?.routes?.map(r => r.totalDurationMinutes)
         });
+
+
+        if (routeRes?.status === "MISSING_API_KEY") {
+          setError("MISSING_API_KEY: GOOGLE_MAPS_API_KEY is not set in backend/.env. Please configure a valid Google Maps API Key to perform transit routing.");
+          setResult({
+            isMissingApiKey: true,
+            status: "MISSING_API_KEY",
+            message: routeRes.message || "GOOGLE_MAPS_API_KEY missing in backend/.env."
+          });
+          setLoading(false);
+          return;
+        }
+
+        if (!routeRes || routeRes.status === "NO_ROUTE" || !routeRes.routes || routeRes.routes.length === 0) {
+          setResult({
+            status: "NO_ROUTE",
+            message: "NO VERIFIED TRANSIT ROUTE FOUND by Google Transit API for this origin and destination."
+          });
+          setLoading(false);
+          return;
+        }
+
+        // Map Google returned transit alternatives into canonical presentation format
+        const canonicalRoutes = routeRes.routes;
+        const primaryRoute = canonicalRoutes[0];
+        const originCoords = routeRes.origin || { latitude: 28.6315, longitude: 77.2167 };
+        const destCoords = routeRes.destination || { latitude: 28.5245, longitude: 77.1855 };
+
+        // Construct cards for returned alternatives without inventing missing metrics
+        const recommendations = canonicalRoutes.map((r, idx) => {
+          const transitLegs = r.legs.filter(l => l.type === "TRANSIT");
+          const modeName = transitLegs.map(l => `${l.mode === 'SUBWAY' ? 'Metro' : l.mode} ${l.line?.shortName || ''}`).join(" + ") || "Transit";
+          const firstMile = r.legs.find(l => l.firstMileRecommendation);
+
+          let noteStr = `Transfers: ${r.transfers}`;
+          if (firstMile && firstMile.firstMileRecommendation === "E_RICKSHAW_AUTO") {
+            noteStr += ` • Take E-rickshaw (${Math.round(firstMile.distanceMeters / 100) / 10} km) to boarding stop`;
+          } else if (firstMile) {
+            noteStr += ` • Walk (${firstMile.distanceMeters} m) to boarding stop`;
+          }
+
+          return {
+            mode: modeName,
+            fare: r.fare ? r.fare.text : "Information unavailable",
+            time: `${r.totalDurationMinutes} mins`,
+            badge: idx === 0 ? "best" : "default",
+            note: noteStr
+          };
+        });
+
+        // Map primary route transit legs into BusRouteTimeline format
+        const transitLegs = primaryRoute.legs.filter(l => l.type === "TRANSIT");
+        const firstMileLeg = primaryRoute.legs.find(l => l.type === "WALK" && l.firstMileRecommendation);
+        const lastMileLeg = primaryRoute.legs.find(l => l.type === "WALK" && l.lastMileRecommendation);
+
+        const busRoutePayload = transitLegs.length > 0 ? {
+          type: transitLegs.length > 1 ? "interchange" : "direct",
+          transfers: primaryRoute.transfers,
+          busNumber: transitLegs[0]?.line?.shortName || "Transit Line",
+          routeName: transitLegs[0]?.line?.name || primaryRoute.summary,
+          fare: primaryRoute.fare ? primaryRoute.fare.text : "Information unavailable",
+          boardStop: transitLegs[0]?.departureStop?.name || finalSource,
+          alightStop: transitLegs[transitLegs.length - 1]?.arrivalStop?.name || finalDest,
+          firstMile: firstMileLeg ? {
+            label: firstMileLeg.firstMileRecommendation === "E_RICKSHAW_AUTO" 
+              ? `Take E-rickshaw / Auto (${Math.round(firstMileLeg.distanceMeters / 100) / 10} km)` 
+              : `Walk ${firstMileLeg.distanceMeters} m`
+          } : null,
+          lastMile: lastMileLeg ? {
+            label: lastMileLeg.lastMileRecommendation === "E_RICKSHAW_AUTO"
+              ? `Take E-rickshaw / Auto (${Math.round(lastMileLeg.distanceMeters / 100) / 10} km)`
+              : `Walk ${lastMileLeg.distanceMeters} m`
+          } : null,
+          route: {
+            busNumber: transitLegs[0]?.line?.shortName || "Transit Line",
+            routeName: primaryRoute.summary,
+            stopsPassed: [
+              transitLegs[0]?.departureStop?.name,
+              ...(transitLegs[0]?.intermediateStops || []).map(s => s.name),
+              transitLegs[transitLegs.length - 1]?.arrivalStop?.name
+            ].filter(Boolean)
+          }
+        } : null;
+
+        setResult({
+          status: "FOUND",
+          canonicalJourney: routeRes,
+          currentTime: new Date().toISOString(),
+          busRoute: busRoutePayload,
+          map: {
+            source: { latitude: originCoords.latitude || 28.6315, longitude: originCoords.longitude || 77.2167 },
+            destination: { latitude: destCoords.latitude || 28.5245, longitude: destCoords.longitude || 77.1855 }
+          },
+          recommendations
+        });
+
+        setActiveTimeline("bus");
+        setLoading(false);
+        return;
+      } catch (err) {
+        setError(err.message || "Failed to fetch transit route from Google API.");
+        setLoading(false);
+        return;
       }
-
-      recommendations.push({
-        mode: "DTC Bus",
-        fare: `₹${dtcBusFare}`,
-        time: `${routeRes.totalTimeMins + 5} mins`,
-        badge: "cheapest",
-        note: routeRes.busRoute?.routeName || `DTC AC Electric Bus`
-      });
-
-      recommendations.push({
-        mode: "Auto / Cab",
-        fare: `₹${autoCabFare}`,
-        time: `${Math.max(10, routeRes.totalTimeMins - 5)} mins`,
-        badge: "fastest",
-        note: `Doorstep AC Sedan Cab / Auto via Ring Road`
-      });
-
-      setResult({
-        route: { distanceKm: distKm },
-        currentTime: new Date().toISOString(),
-        univRoute: routeRes,
-        metroRoute: routeRes.hasValidMetro ? {
-          stationSequence: routeRes.metroSequence || [
-            { name: routeRes.sourceMetroName, area: "Boarding DMRC Station" },
-            { name: "Rajiv Chowk (Interchange)", area: "DMRC Transfer Hub" },
-            { name: routeRes.destMetroName, area: "Destination DMRC Station" }
-          ],
-          sourceStation: { name: routeRes.sourceMetroName },
-          destinationStation: { name: routeRes.destMetroName },
-          fare: metroFare,
-          travelTimeMinutes: routeRes.totalTimeMins,
-          waitingTimeMinutes: 3
-        } : null,
-        busRoute: routeRes.busRoute || {
-          type: 'direct',
-          transfers: 0,
-          busNumber: "Route 419",
-          routeNumber: "Route 419",
-          fare: `₹${dtcBusFare}`,
-          estimatedTimeMinutes: routeRes.totalTimeMins + 5,
-          boardStop: finalSource,
-          alightStop: finalDest
-        },
-        map: {
-          source: routeRes.sourceCoords || { latitude: 28.6315, longitude: 77.2167 },
-          destination: routeRes.destCoords || { latitude: 28.5245, longitude: 77.1855 }
-        },
-        recommendations: recommendations
-      });
-      setActiveTimeline(routeRes.hasValidMetro ? "metro" : "bus");
-      setLoading(false);
-      return;
-    } catch (err) {
-      setError(err.message || "Routing engine could not verify location coordinate paths.");
-      setLoading(false);
-      return;
     }
-  }
 
     // UDAIPUR CITY ROUTE RESOLUTION
     if (isUdaipur) {

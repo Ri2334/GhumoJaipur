@@ -20,20 +20,8 @@ const iconFor = (mode) => {
   return <FaCar className="w-6 h-6 text-gray-600" />;
 };
 
-const getModeDetails = (mode) => {
-  const m = String(mode).toLowerCase();
-  if (m.includes('metro')) return { comfort: 'High', crowd: 'Medium', eco: 'A+', availability: 'High (Every 10 min)' };
-  if (m.includes('bus')) return { comfort: 'Low', crowd: 'High', eco: 'B+', availability: 'Medium' };
-  if (m.includes('cab') && m.includes('shared')) return { comfort: 'Medium', crowd: 'Medium', eco: 'B', availability: 'Medium' };
-  if (m.includes('cab')) return { comfort: 'High', crowd: 'Low', eco: 'C', availability: 'High' };
-  if (m.includes('auto')) return { comfort: 'Medium', crowd: 'Low', eco: 'C+', availability: 'High' };
-  if (m.includes('walk')) return { comfort: 'Low', crowd: 'Low', eco: 'A++', availability: 'Always' };
-  return { comfort: 'Standard', crowd: 'Medium', eco: 'B', availability: 'Medium' };
-};
-
 export default function TransportCard({ mode, fare, time, badge, note, source, destination, driver, cabFare, onSelect }) {
   const navigate = useNavigate();
-  const details = getModeDetails(mode);
 
   const isShared = mode.toLowerCase().includes('shared');
   const noSharedAvailable = isShared && note?.includes('No shared');
@@ -58,8 +46,9 @@ export default function TransportCard({ mode, fare, time, badge, note, source, d
       navigate('/book/cab', { state: { source, destination, driver, fare, time } });
       return;
     }
-    // default
   };
+
+  const formattedFare = typeof fare === 'number' ? `₹${fare}` : (String(fare).startsWith('₹') ? fare : `₹${fare}`);
 
   return (
     <div role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleClick()} onClick={handleClick} data-transport-card className={`cursor-pointer rounded-3xl border p-5 shadow-sm transition transform hover:-translate-y-1 ${!noSharedAvailable && fare <= 0 && (mode === 'Cab' || mode === 'Auto') ? 'opacity-60 grayscale cursor-not-allowed' : ''} ${toneClass[badge] || toneClass.default}`}>
@@ -71,10 +60,7 @@ export default function TransportCard({ mode, fare, time, badge, note, source, d
               {isShared ? 'Shared Cab' : mode}
             </div>
             <div className="mt-1 text-2xl font-black">
-              {isShared ? (
-                noSharedAvailable ? 'Starts at ₹' : 'As low as ₹'
-              ) : '₹'}
-              {fare}
+              {formattedFare}
             </div>
           </div>
         </div>
@@ -85,15 +71,6 @@ export default function TransportCard({ mode, fare, time, badge, note, source, d
       
       <div className="mt-4 flex items-center justify-between border-t border-black/5 pt-3">
          <div className="text-sm font-bold">{noSharedAvailable ? 'None Active' : time}</div>
-         <div className="flex items-center gap-1 text-xs font-semibold opacity-80">
-            <FaLeaf className="text-green-600" /> Eco: {details.eco}
-         </div>
-      </div>
-
-      <div className="mt-3 grid grid-cols-2 gap-2 text-[11px] font-medium opacity-75">
-         <div>• Comfort: {details.comfort}</div>
-         <div>• Crowd: {details.crowd}</div>
-         <div>• Availability: {noSharedAvailable ? 'Be the first!' : details.availability}</div>
       </div>
 
       {note && (

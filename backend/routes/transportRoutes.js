@@ -1,11 +1,13 @@
 import express from "express";
 import { getMetroStations, getTouristLocations, searchTransport } from "../controllers/transportController.js";
+import { searchGoogleTransit } from "../controllers/transitController.js";
 
 const router = express.Router();
 
 router.get("/stations", getMetroStations);
 router.get("/locations", getTouristLocations);
 router.post("/search", searchTransport);
+router.post("/google-transit", searchGoogleTransit);
 
 // Demo endpoint (no DB) — returns a mocked transport recommendation payload
 router.get("/demo", (req, res) => {

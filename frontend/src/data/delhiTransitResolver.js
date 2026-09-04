@@ -554,14 +554,48 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   };
 }
 
+const API_BASE = (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) ? import.meta.env.VITE_API_URL : "http://localhost:5001/api";
+
 export async function resolveDelhiRealRouteAsync(originParam, destParam) {
-  const origGeo = typeof originParam === 'object' ? originParam : await geocodeNominatimNCR(originParam);
-  const destGeo = typeof destParam === 'object' ? destParam : await geocodeNominatimNCR(destParam);
-  return resolveDelhiRouteWithCoords(origGeo, destGeo);
+  try {
+    const res = await fetch(`${API_BASE}/transport/google-transit`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        origin: originParam,
+        destination: destParam
+      })
+    });
+
+    const body = await res.json();
+
+    if (body && body.data) {
+      return body.data;
+    }
+
+    if (body && body.status === "MISSING_API_KEY") {
+      return {
+        status: "MISSING_API_KEY",
+        message: body.message,
+        routes: []
+      };
+    }
+  } catch (err) {
+    console.warn("[DelhiTransitResolver Google API Fetch Notice]", err.message);
+  }
+
+  return {
+    status: "NO_ROUTE",
+    origin: typeof originParam === "object" ? originParam : { name: String(originParam) },
+    destination: typeof destParam === "object" ? destParam : { name: String(destParam) },
+    routes: []
+  };
 }
 
 export function resolveDelhiRealRoute(originName, destName) {
-  const origGeo = { name: originName || "Delhi Center", lat: 28.6315, lng: 77.2167 };
-  const destGeo = { name: destName || "South Delhi Hub", lat: 28.5245, lng: 77.1855 };
-  return resolveDelhiRouteWithCoords(origGeo, destGeo);
+  return {
+    status: "NO_ROUTE",
+    message: "Synchronous static DTC routing is deprecated. Use resolveDelhiRealRouteAsync for Google Routes API transit routing."
+  };
 }
+
