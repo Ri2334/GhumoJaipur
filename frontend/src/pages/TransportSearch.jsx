@@ -768,24 +768,9 @@ export default function TransportSearch() {
                 {/* Render Selected Timeline */}
                 {activeTimeline === "metro" && result.metroRoute ? (
                   <RouteTimeline stations={result.metroRoute.stationSequence} />
-                ) : result.busRoute && result.busRoute.confidence !== "NO_ROUTE" && result.busRoute.busNumber ? (
+                ) : result.busRoute ? (
                   <BusRouteTimeline busRoute={result.busRoute} />
-                ) : (
-                  <div className="rounded-3xl border border-red-300 bg-red-50 p-6 text-red-950 shadow-md space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-red-700 font-extrabold text-lg">
-                        <span className="text-xl">🔴</span>
-                        <span>No Direct DTC Bus Available</span>
-                      </div>
-                      <span className="px-3 py-1 rounded-full bg-red-200 text-red-900 text-xs font-black uppercase tracking-wider">
-                        NO_ROUTE
-                      </span>
-                    </div>
-                    <p className="text-sm font-medium text-red-900">
-                      We found no bus operating between these two stops in the correct direction. Please use the DMRC Metro option above.
-                    </p>
-                  </div>
-                )}
+                ) : null}
 
               </div>
 
