@@ -34,6 +34,27 @@ export function logTransitRequest(stage, details) {
   }
 }
 
+const KNOWN_DELHI_LANDMARKS = [
+  { names: ["connaught place", "rajiv chowk", "cp"], lat: 28.6315, lng: 77.2167 },
+  { names: ["qutub minar", "qutab minar", "mehrauli"], lat: 28.5245, lng: 77.1855 },
+  { names: ["india gate", "kartavya path", "rajpath"], lat: 28.6129, lng: 77.2295 },
+  { names: ["red fort", "lal qila", "chandni chowk"], lat: 28.6562, lng: 77.2410 },
+  { names: ["humayun's tomb", "humayun tomb", "nizamuddin"], lat: 28.5933, lng: 77.2507 },
+  { names: ["lotus temple", "kalkaji", "bahai temple"], lat: 28.5535, lng: 77.2588 },
+  { names: ["akshardham", "swaminarayan akshardham"], lat: 28.6127, lng: 77.2773 },
+  { names: ["iit delhi", "iit", "hauz khas"], lat: 28.5450, lng: 77.1926 },
+  { names: ["new delhi railway station", "ndls", "paharganj"], lat: 28.6429, lng: 77.2192 },
+  { names: ["kashmere gate", "isbt kashmere gate"], lat: 28.6675, lng: 77.2283 },
+  { names: ["anand vihar", "anand vihar isbt"], lat: 28.6469, lng: 77.3162 },
+  { names: ["sarojini nagar", "sarojini nagar market"], lat: 28.5750, lng: 77.1983 },
+  { names: ["lajpat nagar", "central market"], lat: 28.5694, lng: 77.2435 },
+  { names: ["khan market"], lat: 28.6000, lng: 77.2272 },
+  { names: ["karol bagh", "gaffar market"], lat: 28.6514, lng: 77.1907 },
+  { names: ["select citywalk", "saket"], lat: 28.5286, lng: 77.2194 },
+  { names: ["dwarka sector 21", "dwarka sec 21"], lat: 28.5521, lng: 77.0583 },
+  { names: ["igi airport", "igi airport t3", "palam"], lat: 28.5562, lng: 77.1000 }
+];
+
 /**
  * Resolves user search input (text landmark, place name, address) to coordinates & place identity via Google Places / Geocoding API
  */
@@ -51,13 +72,30 @@ export async function resolvePlaceWithGooglePlaces(queryText, apiKey) {
     };
   }
 
-  const queryStr = String(queryText).trim();
+  const rawQuery = (typeof queryText === "object" && queryText.name) ? String(queryText.name) : String(queryText).trim();
+  const cleanQuery = rawQuery.replace(/\(.*?\)/g, "").trim().toLowerCase();
+
+  // 0. Check landmark dictionary for instant accurate coordinate resolution
+  const landmarkMatch = KNOWN_DELHI_LANDMARKS.find(lm => 
+    lm.names.some(n => cleanQuery.includes(n) || n.includes(cleanQuery))
+  );
+  if (landmarkMatch) {
+    logTransitRequest("Landmark Dictionary Match Succeeded", { rawQuery, lat: landmarkMatch.lat, lng: landmarkMatch.lng });
+    return {
+      placeId: `lm_${cleanQuery.replace(/\s+/g, "_")}`,
+      name: rawQuery,
+      formattedAddress: `${rawQuery}, Delhi, India`,
+      latitude: landmarkMatch.lat,
+      longitude: landmarkMatch.lng
+    };
+  }
+
   if (!apiKey) {
     throw new Error("MISSING_API_KEY: GOOGLE_MAPS_API_KEY is not configured in backend/.env");
   }
 
   // 1. Try Google Places Text Search / Geocoding API
-  const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(queryStr + ", Delhi, India")}&key=${apiKey}`;
+  const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(cleanQuery + ", Delhi, India")}&key=${apiKey}`;
   
   try {
     const res = await fetch(geocodeUrl);
@@ -67,7 +105,7 @@ export async function resolvePlaceWithGooglePlaces(queryText, apiKey) {
         const top = data.results[0];
         return {
           placeId: top.place_id,
-          name: queryStr,
+          name: rawQuery,
           formattedAddress: top.formatted_address,
           latitude: top.geometry.location.lat,
           longitude: top.geometry.location.lng
@@ -75,12 +113,12 @@ export async function resolvePlaceWithGooglePlaces(queryText, apiKey) {
       }
     }
   } catch (err) {
-    logTransitRequest("Google Geocoding API Notice", { queryStr, message: err.message });
+    logTransitRequest("Google Geocoding API Notice", { cleanQuery, message: err.message });
   }
 
   // 2. Fallback: OpenStreetMap Nominatim API bounded to Delhi NCR
   try {
-    const osmUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(queryStr + ", Delhi, India")}&viewbox=76.8,28.4,77.5,28.9&bounded=1`;
+    const osmUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cleanQuery + ", Delhi, India")}&viewbox=76.8,28.4,77.5,28.9&bounded=1`;
     const res = await fetch(osmUrl, { headers: { "User-Agent": "SheherSaathi-DelhiTransit/1.0" } });
     if (res.ok) {
       const data = await res.json();
@@ -89,10 +127,10 @@ export async function resolvePlaceWithGooglePlaces(queryText, apiKey) {
         const lat = parseFloat(top.lat);
         const lng = parseFloat(top.lon);
         if (!isNaN(lat) && !isNaN(lng)) {
-          logTransitRequest("OSM Geocoding Fallback Succeeded", { queryStr, lat, lng });
+          logTransitRequest("OSM Geocoding Fallback Succeeded", { cleanQuery, lat, lng });
           return {
             placeId: `osm_${top.place_id || Date.now()}`,
-            name: queryStr,
+            name: rawQuery,
             formattedAddress: top.display_name,
             latitude: lat,
             longitude: lng
@@ -101,13 +139,13 @@ export async function resolvePlaceWithGooglePlaces(queryText, apiKey) {
       }
     }
   } catch (err) {
-    logTransitRequest("OSM Geocoding Notice", { queryStr, message: err.message });
+    logTransitRequest("OSM Geocoding Notice", { cleanQuery, message: err.message });
   }
 
   return {
     placeId: `default_delhi_${Date.now()}`,
-    name: queryStr,
-    formattedAddress: `${queryStr}, Delhi, India`,
+    name: rawQuery,
+    formattedAddress: `${rawQuery}, Delhi, India`,
     latitude: 28.6315,
     longitude: 77.2167
   };
