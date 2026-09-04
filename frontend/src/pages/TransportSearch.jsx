@@ -154,13 +154,38 @@ export default function TransportSearch() {
         if (res.ok) {
           const data = await res.json();
           if (data && data.length > 0) {
-            setLiveSuggestions(data.map((item, idx) => ({
-              id: `osm-live-${idx}`,
-              name: item.display_name.split(',')[0].trim(),
-              subtitle: item.display_name,
-              lat: parseFloat(item.lat),
-              lon: parseFloat(item.lon)
-            })));
+            // Deduplicate by place_id & geographic coordinate proximity
+            const seenPlaceIds = new Set();
+            const deduplicated = [];
+            
+            for (const item of data) {
+              const placeId = item.place_id ? String(item.place_id) : `${item.lat}_${item.lon}`;
+              if (seenPlaceIds.has(placeId)) continue;
+
+              const itemLat = parseFloat(item.lat);
+              const itemLon = parseFloat(item.lon);
+              const nameStr = item.display_name.split(',')[0].trim();
+
+              // Secondary geographic deduplication: skip if identical coordinates & name already exist
+              const isGeoDuplicate = deduplicated.some(d => 
+                Math.abs(d.lat - itemLat) < 0.0005 && 
+                Math.abs(d.lon - itemLon) < 0.0005 && 
+                d.name.toLowerCase() === nameStr.toLowerCase()
+              );
+
+              if (!isGeoDuplicate) {
+                seenPlaceIds.add(placeId);
+                deduplicated.push({
+                  id: `osm-place-${placeId}`,
+                  placeId: placeId,
+                  name: nameStr,
+                  subtitle: item.display_name,
+                  lat: itemLat,
+                  lon: itemLon
+                });
+              }
+            }
+            setLiveSuggestions(deduplicated.slice(0, 6));
           } else {
             setLiveSuggestions([]);
           }
@@ -217,7 +242,9 @@ export default function TransportSearch() {
     // DELHI CITY ROUTE RESOLUTION
     if (isDelhi) {
       try {
-        const routeRes = await getCityRouteResultAsync(finalSource, finalDest, "delhi");
+        const srcLocationObj = sourceCoordsObj || finalSource;
+        const destLocationObj = destCoordsObj || finalDest;
+        const routeRes = await getCityRouteResultAsync(srcLocationObj, destLocationObj, "delhi");
         if (!routeRes || !routeRes.hasValidMetro) {
           throw new Error("Routing engine could not verify location coordinate paths.");
         }

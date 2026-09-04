@@ -1,0 +1,386 @@
+{
+  "AIIMS": {
+    "lat": 28.5672,
+    "lng": 77.21
+  },
+  "AIIMS Hospital": {
+    "lat": 28.5672,
+    "lng": 77.21
+  },
+  "Adchini": {
+    "lat": 28.5959,
+    "lng": 77.155
+  },
+  "Alipur Village": {
+    "lat": 28.7054,
+    "lng": 77.1835
+  },
+  "Ambedkar Nagar Terminal": {
+    "lat": 28.7219,
+    "lng": 77.233
+  },
+  "Anand Vihar ISBT": {
+    "lat": 28.6469,
+    "lng": 77.316
+  },
+  "Ashram": {
+    "lat": 28.5675,
+    "lng": 77.2007
+  },
+  "Azadpur": {
+    "lat": 28.7073,
+    "lng": 77.1798
+  },
+  "Azadpur Terminal": {
+    "lat": 28.7073,
+    "lng": 77.1798
+  },
+  "Badarpur Border": {
+    "lat": 28.4947,
+    "lng": 77.3075
+  },
+  "Badli": {
+    "lat": 28.746,
+    "lng": 77.135
+  },
+  "Bawana Industrial Area": {
+    "lat": 28.5869,
+    "lng": 77.128
+  },
+  "Burari Crossing": {
+    "lat": 28.5914,
+    "lng": 77.1415
+  },
+  "Chandni Chowk": {
+    "lat": 28.6578,
+    "lng": 77.2302
+  },
+  "Chirag Delhi": {
+    "lat": 28.5422,
+    "lng": 77.2281
+  },
+  "Connaught Place": {
+    "lat": 28.5419,
+    "lng": 77.293
+  },
+  "DTU Campus": {
+    "lat": 28.5929,
+    "lng": 77.146
+  },
+  "Delhi Aerocity": {
+    "lat": 28.5492,
+    "lng": 77.1214
+  },
+  "Delhi Gate": {
+    "lat": 28.6403,
+    "lng": 77.2403
+  },
+  "Dhaula Kuan": {
+    "lat": 28.5914,
+    "lng": 77.1614
+  },
+  "Dhaula Kuan Interchange": {
+    "lat": 28.5914,
+    "lng": 77.1614
+  },
+  "Dilli Haat INA": {
+    "lat": 28.5675,
+    "lng": 77.2647
+  },
+  "Dilshad Garden": {
+    "lat": 28.6955,
+    "lng": 77.2967
+  },
+  "Dwarka Sector 1": {
+    "lat": 28.581,
+    "lng": 77.057
+  },
+  "Dwarka Sector 10": {
+    "lat": 28.581,
+    "lng": 77.057
+  },
+  "Dwarka Sector 6": {
+    "lat": 28.6151,
+    "lng": 77.0244
+  },
+  "GTB Nagar": {
+    "lat": 28.6769,
+    "lng": 77.098
+  },
+  "Hazrat Nizamuddin": {
+    "lat": 28.5995,
+    "lng": 77.2967
+  },
+  "IGI Airport T1": {
+    "lat": 28.6904,
+    "lng": 77.1385
+  },
+  "IGI Airport T3 Terminal": {
+    "lat": 28.5562,
+    "lng": 77.1
+  },
+  "IIT Delhi": {
+    "lat": 28.545,
+    "lng": 77.1926
+  },
+  "IIT Delhi Gate": {
+    "lat": 28.6403,
+    "lng": 77.2403
+  },
+  "IIT Flyover": {
+    "lat": 28.4714,
+    "lng": 77.0815
+  },
+  "ISBT Kashmere Gate": {
+    "lat": 28.6675,
+    "lng": 77.2283
+  },
+  "ITO": {
+    "lat": 28.4842,
+    "lng": 77.1491
+  },
+  "Inderlok Metro": {
+    "lat": 28.6732,
+    "lng": 77.1706
+  },
+  "JLN Stadium": {
+    "lat": 28.5878,
+    "lng": 77.2344
+  },
+  "Jahangirpuri": {
+    "lat": 28.7258,
+    "lng": 77.162
+  },
+  "Janakpuri West": {
+    "lat": 28.6294,
+    "lng": 77.0778
+  },
+  "Jantar Mantar": {
+    "lat": 28.5404,
+    "lng": 77.2885
+  },
+  "Kalkaji Temple": {
+    "lat": 28.6769,
+    "lng": 77.098
+  },
+  "Kamla Market": {
+    "lat": 28.6589,
+    "lng": 77.344
+  },
+  "Karkardooma Court": {
+    "lat": 28.5974,
+    "lng": 77.1595
+  },
+  "Karol Bagh": {
+    "lat": 28.6514,
+    "lng": 77.1907
+  },
+  "Kashmere Gate": {
+    "lat": 28.6675,
+    "lng": 77.2283
+  },
+  "Kashmere Gate ISBT": {
+    "lat": 28.6675,
+    "lng": 77.2283
+  },
+  "Kendriya Terminal": {
+    "lat": 28.5884,
+    "lng": 77.1325
+  },
+  "Khanpur": {
+    "lat": 28.6574,
+    "lng": 77.3395
+  },
+  "Khanpur Depot": {
+    "lat": 28.5674,
+    "lng": 77.0695
+  },
+  "Kidwai Nagar": {
+    "lat": 28.6469,
+    "lng": 77.308
+  },
+  "Lado Sarai": {
+    "lat": 28.6075,
+    "lng": 77.2887
+  },
+  "Lajpat Nagar": {
+    "lat": 28.5677,
+    "lng": 77.2433
+  },
+  "Lajpat Nagar Market": {
+    "lat": 28.5677,
+    "lng": 77.2433
+  },
+  "Laxmi Nagar": {
+    "lat": 28.5059,
+    "lng": 77.185
+  },
+  "Laxmi Nagar Metro": {
+    "lat": 28.7324,
+    "lng": 77.2645
+  },
+  "Mall Road": {
+    "lat": 28.4819,
+    "lng": 77.113
+  },
+  "Mandi House": {
+    "lat": 28.6258,
+    "lng": 77.2342
+  },
+  "Mangolpuri Block Q": {
+    "lat": 28.5989,
+    "lng": 77.164
+  },
+  "Mehrauli": {
+    "lat": 28.4984,
+    "lng": 77.1625
+  },
+  "Mehrauli Terminal": {
+    "lat": 28.5884,
+    "lng": 77.1325
+  },
+  "Mori Gate Terminal": {
+    "lat": 28.5899,
+    "lng": 77.137
+  },
+  "Moti Bagh": {
+    "lat": 28.5435,
+    "lng": 77.2407
+  },
+  "Munirka": {
+    "lat": 28.5586,
+    "lng": 77.1728
+  },
+  "Najafgarh Depot": {
+    "lat": 28.5115,
+    "lng": 77.2407
+  },
+  "Narela Terminal": {
+    "lat": 28.5464,
+    "lng": 77.3065
+  },
+  "Nathupura": {
+    "lat": 28.6919,
+    "lng": 77.143
+  },
+  "Nehru Place": {
+    "lat": 28.5506,
+    "lng": 77.2514
+  },
+  "New Delhi Railway Station": {
+    "lat": 28.643,
+    "lng": 77.2194
+  },
+  "Nizamuddin": {
+    "lat": 28.5995,
+    "lng": 77.2967
+  },
+  "Old Delhi Railway Station": {
+    "lat": 28.6679,
+    "lng": 77.071
+  },
+  "Peera Garhi": {
+    "lat": 28.6955,
+    "lng": 77.1207
+  },
+  "Pragati Maidan": {
+    "lat": 28.6589,
+    "lng": 77.344
+  },
+  "Preet Vihar": {
+    "lat": 28.5389,
+    "lng": 77.284
+  },
+  "Punjabi Bagh": {
+    "lat": 28.6555,
+    "lng": 77.3207
+  },
+  "Pushp Vihar": {
+    "lat": 28.5629,
+    "lng": 77.356
+  },
+  "Qutub Minar": {
+    "lat": 28.5245,
+    "lng": 77.1855
+  },
+  "Qutubgarh": {
+    "lat": 28.6844,
+    "lng": 77.1205
+  },
+  "Rajouri Garden": {
+    "lat": 28.6493,
+    "lng": 77.123
+  },
+  "Red Fort": {
+    "lat": 28.6529,
+    "lng": 77.326
+  },
+  "Rohini Sector 18": {
+    "lat": 28.5755,
+    "lng": 77.1927
+  },
+  "Safdarjung Enclave": {
+    "lat": 28.7084,
+    "lng": 77.1925
+  },
+  "Safdarjung Hospital": {
+    "lat": 28.6094,
+    "lng": 77.1955
+  },
+  "Saket Crossing": {
+    "lat": 28.5208,
+    "lng": 77.2016
+  },
+  "Saket Metro": {
+    "lat": 28.5208,
+    "lng": 77.2016
+  },
+  "Samaypur Badli": {
+    "lat": 28.746,
+    "lng": 77.135
+  },
+  "Sarai Kale Khan": {
+    "lat": 28.6075,
+    "lng": 77.2887
+  },
+  "Sarai Kale Khan ISBT": {
+    "lat": 28.6075,
+    "lng": 77.2887
+  },
+  "Seelampur": {
+    "lat": 28.6555,
+    "lng": 77.2567
+  },
+  "Shahbad Daulatpur": {
+    "lat": 28.5554,
+    "lng": 77.3335
+  },
+  "Shahdara": {
+    "lat": 28.6715,
+    "lng": 77.2727
+  },
+  "South Extension": {
+    "lat": 28.5755,
+    "lng": 77.2727
+  },
+  "Tilak Nagar": {
+    "lat": 28.6366,
+    "lng": 77.0964
+  },
+  "Uttam Nagar Terminal": {
+    "lat": 28.6199,
+    "lng": 77.227
+  },
+  "Vasant Vihar": {
+    "lat": 28.5275,
+    "lng": 77.2407
+  },
+  "Vishwa Vidyalaya Metro": {
+    "lat": 28.6946,
+    "lng": 77.214
+  },
+  "Zakhira": {
+    "lat": 28.6349,
+    "lng": 77.272
+  }
+}

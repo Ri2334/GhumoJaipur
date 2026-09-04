@@ -1,10 +1,11 @@
 import { DELHI_PLACES } from "./delhiPlacesData.js";
 import { RAW_DELHI_METRO_STATIONS } from "./delhiMetroData.js";
 import { DTC_BUS_ROUTES } from "./delhiDTCBusCatalog.js";
+import DTC_STOP_COORDS from "./dtc_stop_coords.json";
 
 // ============================================================================
-// SYSTEM OVERRIDE — DELHI TRANSIT ENGINE (ABSOLUTE MODE)
-// Zero-Fabrication Deterministic Route Validation Engine
+// SYSTEM OVERRIDE — DELHI TRANSIT ENGINE (GEOGRAPHIC SPATIAL ROUTER)
+// Zero-Fabrication Deterministic Route Validation & Spatial Discovery Engine
 // ============================================================================
 
 // 1. CANONICAL ALIAS MAP & NORMALIZER
@@ -21,6 +22,7 @@ const CANONICAL_ALIASES = {
   "mg road": "mg road",
   "m.g. road": "mg road",
   "iit": "iit delhi",
+  "iit delhi": "iit delhi",
   "aiims hospital": "aiims",
   "connaught place": "rajiv chowk",
   "cp": "rajiv chowk"
@@ -34,7 +36,7 @@ export function normalizeStopName(name) {
   return CANONICAL_ALIASES[clean] || clean;
 }
 
-// 2. STOP & ROUTE INVERTED INDEX MAP (O(1) Discovery Engine)
+// 2. INVERTED STOP INDEX MAP (O(1) Route Discovery Engine)
 const stopIndexMap = new Map();
 
 DTC_BUS_ROUTES.forEach((route, routeIdx) => {
@@ -61,6 +63,53 @@ export function getHaversineKm(lat1, lon1, lat2, lon2) {
       Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
+}
+
+// 3. GEOGRAPHIC LOCATION ➔ NEARBY CANDIDATE TRANSIT STOPS RESOLVER
+export function findNearbyCandidateDTCStops(targetLat, targetLng, maxRadiusKm = 3.5) {
+  const safeLat = typeof targetLat === 'number' && !isNaN(targetLat) ? targetLat : 28.6315;
+  const safeLng = typeof targetLng === 'number' && !isNaN(targetLng) ? targetLng : 77.2167;
+
+  const candidates = [];
+
+  // 1. Search DTC_STOP_COORDS dataset
+  Object.entries(DTC_STOP_COORDS).forEach(([stopName, coords]) => {
+    const dist = getHaversineKm(safeLat, safeLng, coords.lat, coords.lng);
+    if (dist <= maxRadiusKm) {
+      candidates.push({
+        stopName: stopName,
+        normName: normalizeStopName(stopName),
+        distanceKm: Math.round(dist * 10) / 10,
+        lat: coords.lat,
+        lng: coords.lng
+      });
+    }
+  });
+
+  // 2. Search RAW_DELHI_METRO_STATIONS for station/stop crossovers
+  RAW_DELHI_METRO_STATIONS.forEach(st => {
+    const stLat = st.lat || 28.6315;
+    const stLng = st.lng || 77.2167;
+    const dist = getHaversineKm(safeLat, safeLng, stLat, stLng);
+    if (dist <= maxRadiusKm) {
+      const normStName = normalizeStopName(st.station_name);
+      if (!candidates.some(c => c.normName === normStName)) {
+        candidates.push({
+          stopName: st.station_name,
+          normName: normStName,
+          distanceKm: Math.round(dist * 10) / 10,
+          lat: stLat,
+          lng: stLng
+        });
+      }
+    }
+  });
+
+  // Sort candidates by spatial distance ascending
+  candidates.sort((a, b) => a.distanceKm - b.distanceKm);
+
+  // Return top 8 nearest candidate transit stops
+  return candidates.slice(0, 8);
 }
 
 // OpenStreetMap Nominatim Geocoding API with NCR viewbox bounding box (76.8, 28.4, 77.5, 28.9)
@@ -142,7 +191,7 @@ export function findNearestMetroStationByCoords(targetLat, targetLng) {
   };
 }
 
-// 3. DETERMINISTIC DMRC METRO CHRONOLOGY VALIDATOR
+// 4. DETERMINISTIC DMRC METRO CHRONOLOGY VALIDATOR
 export function computeDMRCMultiLinePath(srcStation, dstStation) {
   // 1. Same Line Direct Corridor
   if (srcStation.line_color === dstStation.line_color) {
@@ -222,77 +271,115 @@ export function computeDMRCMultiLinePath(srcStation, dstStation) {
   };
 }
 
-// 4. ZERO-FABRICATION DETERMINISTIC BUS ROUTE DISCOVERY ENGINE
-export function findVerifiedBusRoute(origName, destName) {
-  const normOrig = normalizeStopName(origName);
-  const normDest = normalizeStopName(normOrig === "lotus temple" ? "kalkaji mandir" : destName);
+// 5. GEOGRAPHIC SPATIAL TRANSIT NETWORK ROUTER (Multi-Candidate Discovery Engine)
+export function resolveVerifiedBusRoute(origLocation, destLocation) {
+  const origLat = typeof origLocation === 'object' ? origLocation.lat : 28.6315;
+  const origLng = typeof origLocation === 'object' ? origLocation.lng || origLocation.lon : 77.2167;
+  const destLat = typeof destLocation === 'object' ? destLocation.lat : 28.5245;
+  const destLng = typeof destLocation === 'object' ? destLocation.lng || destLocation.lon : 77.1855;
+  const origName = (typeof origLocation === 'object' ? origLocation.name : origLocation) || "Origin";
+  const destName = (typeof destLocation === 'object' ? destLocation.name : destLocation) || "Destination";
 
-  // 1. Direct Intersection Discovery via Inverted Index
-  const origEntries = stopIndexMap.get(normOrig) || [];
-  const destEntries = stopIndexMap.get(normDest) || [];
+  // 1. Resolve nearby candidate DTC transit stops
+  const origCandidates = findNearbyCandidateDTCStops(origLat, origLng, 3.5);
+  const destCandidates = findNearbyCandidateDTCStops(destLat, destLng, 3.5);
 
-  if (origEntries.length > 0 && destEntries.length > 0) {
-    for (const oEntry of origEntries) {
-      const matchingDest = destEntries.find(d => d.routeIdx === oEntry.routeIdx);
-      if (matchingDest) {
-        // STRICT CHRONOLOGICAL ORDER CHECK (originIndex < destIndex)
-        if (oEntry.stopIdx < matchingDest.stopIdx) {
-          const route = DTC_BUS_ROUTES[oEntry.routeIdx];
-          const stopsPassed = (route.stops || []).slice(oEntry.stopIdx, matchingDest.stopIdx + 1);
-          return {
-            routeNumber: route.busNumber || route.route_short_name || "DTC Bus",
-            operator: "DTC",
-            originStop: route.stops[oEntry.stopIdx],
-            destinationStop: route.stops[matchingDest.stopIdx],
-            direction: `${route.stops[oEntry.stopIdx]} → ${route.stops[matchingDest.stopIdx]}`,
-            stopCount: stopsPassed.length,
-            fare: Math.min(25, Math.max(5, Math.round(stopsPassed.length * 1.5))),
-            validChronology: true,
-            confidence: "VERIFIED",
-            stopsPassed: stopsPassed
-          };
-        }
-      }
-    }
-  }
+  // Diagnostic Trace Logging
+  console.log("[TRANSIT ROUTER DIAGNOSTIC TRACE]", {
+    originPlace: origName,
+    originCoords: [origLat, origLng],
+    resolvedOriginStops: origCandidates.map(c => `${c.stopName} (${c.distanceKm}km)`),
+    destPlace: destName,
+    destCoords: [destLat, destLng],
+    resolvedDestStops: destCandidates.map(c => `${c.stopName} (${c.distanceKm}km)`)
+  });
 
-  // 2. Multi-Bus 2-Bus Interchange Engine (No Invented Stops)
-  if (origEntries.length > 0 && destEntries.length > 0) {
-    for (const oEntry of origEntries) {
-      const bus1Route = DTC_BUS_ROUTES[oEntry.routeIdx];
-      const bus1StopsAfterOrig = (bus1Route.stops || []).slice(oEntry.stopIdx + 1);
+  const discoveredRoutes = [];
 
-      for (const transferStopName of bus1StopsAfterOrig) {
-        const normTransfer = normalizeStopName(transferStopName);
-        const transferBus2Entries = stopIndexMap.get(normTransfer) || [];
+  // 2. Cross-Evaluate Origin & Destination Candidate Combinations
+  for (const oCand of origCandidates) {
+    const oEntries = stopIndexMap.get(oCand.normName) || [];
+    for (const dCand of destCandidates) {
+      const dEntries = stopIndexMap.get(dCand.normName) || [];
 
-        for (const dEntry of destEntries) {
-          const matchingBus2 = transferBus2Entries.find(t => t.routeIdx === dEntry.routeIdx);
-          if (matchingBus2 && matchingBus2.stopIdx < dEntry.stopIdx) {
-            const bus2Route = DTC_BUS_ROUTES[dEntry.routeIdx];
-            return {
-              routeNumber: `${bus1Route.busNumber || 'Bus 1'} ➔ ${bus2Route.busNumber || 'Bus 2'}`,
-              operator: "DTC Interchange",
-              originStop: bus1Route.stops[oEntry.stopIdx],
-              transferStop: transferStopName,
-              destinationStop: bus2Route.stops[dEntry.stopIdx],
-              direction: `${bus1Route.stops[oEntry.stopIdx]} ➔ ${transferStopName} (Transfer) ➔ ${bus2Route.stops[dEntry.stopIdx]}`,
-              stopCount: (bus1Route.stops.slice(oEntry.stopIdx).length) + (bus2Route.stops.slice(0, dEntry.stopIdx + 1).length),
-              fare: 25,
-              validChronology: true,
-              confidence: "INTERCHANGE",
-              stopsPassed: [
-                ...bus1Route.stops.slice(oEntry.stopIdx, bus1Route.stops.indexOf(transferStopName) + 1),
-                ...bus2Route.stops.slice(bus2Route.stops.indexOf(transferStopName), dEntry.stopIdx + 1)
-              ]
-            };
+      for (const oEntry of oEntries) {
+        const matchingDest = dEntries.find(d => d.routeIdx === oEntry.routeIdx);
+        if (matchingDest) {
+          // STRICT CHRONOLOGICAL VALIDATION: originIndex < destIndex
+          if (oEntry.stopIdx < matchingDest.stopIdx) {
+            const route = DTC_BUS_ROUTES[oEntry.routeIdx];
+            const stopsPassed = (route.stops || []).slice(oEntry.stopIdx, matchingDest.stopIdx + 1);
+            
+            // Check if route already discovered
+            const busNo = route.busNumber || route.route_short_name || "DTC Bus";
+            if (!discoveredRoutes.some(r => r.routeNumber === busNo)) {
+              discoveredRoutes.push({
+                routeNumber: busNo,
+                operator: "DTC",
+                originStop: route.stops[oEntry.stopIdx],
+                destinationStop: route.stops[matchingDest.stopIdx],
+                direction: `${route.stops[oEntry.stopIdx]} → ${route.stops[matchingDest.stopIdx]}`,
+                stopCount: stopsPassed.length,
+                fare: Math.min(25, Math.max(5, Math.round(stopsPassed.length * 1.5))),
+                validChronology: true,
+                confidence: "VERIFIED",
+                stopsPassed: stopsPassed
+              });
+            }
           }
         }
       }
     }
   }
 
-  // 3. ZERO-FABRICATION HARD FAILURE (NO_ROUTE)
+  // 3. Return Ranked Discovered Routes
+  if (discoveredRoutes.length > 0) {
+    discoveredRoutes.sort((a, b) => a.stopCount - b.stopCount);
+    return discoveredRoutes[0];
+  }
+
+  // 4. Multi-Bus 2-Bus Interchange Engine (No Invented Stops)
+  for (const oCand of origCandidates) {
+    const oEntries = stopIndexMap.get(oCand.normName) || [];
+    for (const dCand of destCandidates) {
+      const dEntries = stopIndexMap.get(dCand.normName) || [];
+
+      for (const oEntry of oEntries) {
+        const bus1Route = DTC_BUS_ROUTES[oEntry.routeIdx];
+        const bus1StopsAfterOrig = (bus1Route.stops || []).slice(oEntry.stopIdx + 1);
+
+        for (const transferStopName of bus1StopsAfterOrig) {
+          const normTransfer = normalizeStopName(transferStopName);
+          const transferBus2Entries = stopIndexMap.get(normTransfer) || [];
+
+          for (const dEntry of dEntries) {
+            const matchingBus2 = transferBus2Entries.find(t => t.routeIdx === dEntry.routeIdx);
+            if (matchingBus2 && matchingBus2.stopIdx < dEntry.stopIdx) {
+              const bus2Route = DTC_BUS_ROUTES[dEntry.routeIdx];
+              return {
+                routeNumber: `${bus1Route.busNumber || 'Bus 1'} ➔ ${bus2Route.busNumber || 'Bus 2'}`,
+                operator: "DTC Interchange",
+                originStop: bus1Route.stops[oEntry.stopIdx],
+                transferStop: transferStopName,
+                destinationStop: bus2Route.stops[dEntry.stopIdx],
+                direction: `${bus1Route.stops[oEntry.stopIdx]} ➔ ${transferStopName} (Transfer) ➔ ${bus2Route.stops[dEntry.stopIdx]}`,
+                stopCount: (bus1Route.stops.slice(oEntry.stopIdx).length) + (bus2Route.stops.slice(0, dEntry.stopIdx + 1).length),
+                fare: 25,
+                validChronology: true,
+                confidence: "INTERCHANGE",
+                stopsPassed: [
+                  ...bus1Route.stops.slice(oEntry.stopIdx, bus1Route.stops.indexOf(transferStopName) + 1),
+                  ...bus2Route.stops.slice(bus2Route.stops.indexOf(transferStopName), dEntry.stopIdx + 1)
+                ]
+              };
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // 5. HARD FAILURE BADGE (NO_ROUTE)
   return {
     status: "NO_DIRECT_ROUTE",
     title: "No Direct DTC Bus Available",
@@ -350,8 +437,8 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   // Official DMRC Fare Stage Mapping (₹10 - ₹60)
   const metroFare = Math.min(60, Math.max(10, Math.round(roadKm * 2.5)));
 
-  // DETERMINISTIC BUS DISCOVERY ENGINE EXECUTION
-  const busResult = findVerifiedBusRoute(origGeo.name, destGeo.name);
+  // DETERMINISTIC GEOGRAPHIC SPATIAL BUS ENGINE EXECUTION
+  const busResult = resolveVerifiedBusRoute(origGeo, destGeo);
   const hasValidBus = busResult.confidence === "VERIFIED" || busResult.confidence === "INTERCHANGE";
 
   const metroSteps = [
@@ -421,9 +508,9 @@ export function resolveDelhiRouteWithCoords(origGeo, destGeo) {
   };
 }
 
-export async function resolveDelhiRealRouteAsync(originName, destName) {
-  const origGeo = await geocodeNominatimNCR(originName);
-  const destGeo = await geocodeNominatimNCR(destName);
+export async function resolveDelhiRealRouteAsync(originParam, destParam) {
+  const origGeo = typeof originParam === 'object' ? originParam : await geocodeNominatimNCR(originParam);
+  const destGeo = typeof destParam === 'object' ? destParam : await geocodeNominatimNCR(destParam);
   return resolveDelhiRouteWithCoords(origGeo, destGeo);
 }
 
