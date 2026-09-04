@@ -60,13 +60,18 @@ export default function BusRouteTimeline({ busRoute }) {
         </div>
       </div>
 
-      {/* First-Mile Walk/Auto Banner if place differs from bus stop */}
-      {busRoute.originPlace && busRoute.originPlace !== busRoute.sourceStop && (
+      {/* First-Mile Walk/Auto Banner */}
+      {busRoute.firstMile ? (
+        <div className="mb-3 rounded-2xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900 font-semibold flex items-center gap-2">
+          <span>🚶 First-Mile Access:</span>
+          <span>{busRoute.firstMile.label} to official boarding stop <strong>{busRoute.boardStop || busRoute.sourceStop}</strong>.</span>
+        </div>
+      ) : (busRoute.originPlace && busRoute.originPlace !== busRoute.sourceStop && (
         <div className="mb-3 rounded-2xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900 font-semibold flex items-center gap-2">
           <span>🚶 First-Mile Access:</span>
           <span>{busRoute.firstLegWalk || "Walk / Auto"} from <strong>{busRoute.originPlace}</strong> to official <strong>{busRoute.sourceStop}</strong>.</span>
         </div>
-      )}
+      ))}
 
       {/* Direct Walk Card */}
       {busRoute.type === 'walk' && (
@@ -83,26 +88,26 @@ export default function BusRouteTimeline({ busRoute }) {
 
       {/* Direct Route */}
       {busRoute.type !== 'walk' && (!busRoute.transfers || busRoute.transfers === 0 || busRoute.type === 'direct') && (
-        renderLeg(busRoute.route || busRoute, "Direct Bus", busRoute.sourceStop, busRoute.destStop)
+        renderLeg(busRoute.route || busRoute, "Direct Bus", busRoute.boardStop || busRoute.sourceStop, busRoute.alightStop || busRoute.destStop)
       )}
 
       {/* 1 Transfer (2 Buses) */}
       {busRoute.transfers === 1 && (
         <>
-          {renderLeg(busRoute.route1, "Step 1: First Bus", busRoute.sourceStop, busRoute.transferStop)}
+          {renderLeg(busRoute.route1, "Step 1: First Bus", busRoute.boardStop || busRoute.sourceStop, busRoute.transferStop)}
           <div className="my-4 border-t-2 border-dashed border-[#B35D38]/40 pt-4 text-center">
             <span className="inline-block bg-[#2C1E18] text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-xl shadow-sm">
               🔄 Change Bus at {busRoute.transferStop}
             </span>
           </div>
-          {renderLeg(busRoute.route2, "Step 2: Second Bus", busRoute.transferStop, busRoute.destStop)}
+          {renderLeg(busRoute.route2, "Step 2: Second Bus", busRoute.transferStop, busRoute.alightStop || busRoute.destStop)}
         </>
       )}
 
       {/* 2 Transfers (3 Buses) */}
       {busRoute.transfers === 2 && (
         <>
-          {renderLeg(busRoute.route1, "Step 1: First Bus", busRoute.sourceStop, busRoute.transferStop1)}
+          {renderLeg(busRoute.route1, "Step 1: First Bus", busRoute.boardStop || busRoute.sourceStop, busRoute.transferStop1)}
           <div className="my-4 border-t-2 border-dashed border-[#B35D38]/40 pt-4 text-center">
             <span className="inline-block bg-[#2C1E18] text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-xl shadow-sm">
               🔄 1st Transfer at {busRoute.transferStop1}
@@ -114,8 +119,16 @@ export default function BusRouteTimeline({ busRoute }) {
               🔄 2nd Transfer at {busRoute.transferStop2}
             </span>
           </div>
-          {renderLeg(busRoute.route3, "Step 3: Third Bus", busRoute.transferStop2, busRoute.destStop)}
+          {renderLeg(busRoute.route3, "Step 3: Third Bus", busRoute.transferStop2, busRoute.alightStop || busRoute.destStop)}
         </>
+      )}
+
+      {/* Last-Mile Walk/Auto Banner */}
+      {busRoute.lastMile && (
+        <div className="mt-3 rounded-2xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900 font-semibold flex items-center gap-2">
+          <span>🏁 Last-Mile Access:</span>
+          <span>{busRoute.lastMile.label} from alighting stop <strong>{busRoute.alightStop || busRoute.destStop}</strong> to destination.</span>
+        </div>
       )}
     </div>
   );
